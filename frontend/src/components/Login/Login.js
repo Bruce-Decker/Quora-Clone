@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { loginUser } from '../../actions/authActions'
-
+import { Link } from 'react-router-dom';
 import './Login.css'
 
 class Login extends Component {
@@ -14,22 +14,52 @@ class Login extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.auth.isAuthenticated) {
+           
+             this.props.history.push('/dashboard')
+        }
+        if (nextProps.errors) {
+          
+            this.setState({errors: nextProps.errors})
+        }
+    }
+
     onChange = (e) => {
 
         this.setState({[e.target.name]: e.target.value})
-        //console.log(this.state.email)
-        console.log(this.state.password)
+       
     }
+
+    onSubmit = (e) => {
+        e.preventDefault()
+        const user = {
+           
+            email: this.state.email,
+            password: this.state.password,
+           
+        }
+        console.log(user)
+   
+       this.props.loginUser(user)
+       //this.state.errors = null
+       //  axios.post('/createBasicUser', newUser)
+       //     .then(result => console.log(result.data))
+       //     .catch(err => this.setState({errors: err.response.data}))
+     }
+
 
    
     render() {
-
+        
+        const { errors } = this.state
       
 
         return (
             <div className = "web_page logged_out lang_en q_ltr logged_out_page_big_signup">
             <div id="__w2_modal_container_"><div className="modal_overlay hidden" id="__w2_modal_overlay_">
             <div className="modal_wrapper normal" id="__w2_modal_wrapper_" />
+           
             </div>
             </div>
             <div className="ContentWrapper">
@@ -40,9 +70,11 @@ class Login extends Component {
             <div className="BaseSignupForm HomePageSignupForm continue_with_text">
             <div className="NetworkLogo">
             <a className="logo hidden" href="https://www.quora.com/">
+            
             <span>Quora</span>
             </a>
             </div>
+           
             <h2 className="NetworkLogoTagline tagline">A place to share knowledge and better understand the world</h2>
             <div className="container" id="__w2_wlw57v6U8_actionable">
             <div className="content_inner">
@@ -51,7 +83,7 @@ class Login extends Component {
             <div id="__w2_wlw57v6U8_initial_signup_column">
             <div className="connect_buttons_row">
             <div><span data-clog-trigger="impression" data-clog-metadata="{&quot;action_log_target&quot;: {&quot;type&quot;: 43, &quot;hash&quot;: &quot;googleConnectButton|911sfjyAdgAMUheK3uC2MA==_1554443907605983&quot;}}" data-clog-event-type="ActionLogImpression" id="__w2_wlw57v6U14_actionable" data-clog-processed={1}><a className="google_button submit_button" href="https://www.quora.com/#" tabIndex={5} action_mousedown="SignupGoogleClick" action_stop_propagation="True" id="__w2_wlw57v6U14_google_connect_button"><span className="google_button_text">Continue with Google</span></a></span></div>
-            <div><span data-clog-trigger="impression" data-clog-metadata="{&quot;action_log_target&quot;: {&quot;type&quot;: 43, &quot;hash&quot;: &quot;facebookConnectButton|911sfjyAdgAMUheK3uC2MA==_1554443907605983&quot;}}" data-clog-event-type="ActionLogImpression" id="__w2_wlw57v6U15_actionable" data-clog-processed={1}><a className="facebook_button submit_button" href="https://www.quora.com/#" tabIndex={6} action_mousedown="SignupFacebookClick" action_stop_propagation="True" id="__w2_wlw57v6U15_facebook_connect_button"><span className="facebook_button_text">Continue with Facebook</span></a></span></div></div><div id="__w2_wlw57v6U8_connect_explanation"><a className="signup_email_link" href="https://www.quora.com/#" tabIndex={8} id="__w2_wlw57v6U8_continue_with_email">Continue With Email</a><span className="tos_disclaimer">. <span className="light_gray TosDisclaimer">By signing up you indicate that you have read and agree to Quora's <a className="tos_link" href="https://www.quora.com/about/tos" nav_style="modal_present" target="_blank" rel="noopener">Terms of Service</a> and <a className="tos_link" href="https://www.quora.com/about/privacy" nav_style="modal_present" target="_blank" rel="noopener">Privacy Policy</a>.</span></span></div></div><div className="hidden" id="__w2_wlw57v6U8_toggled_signup_column"><h2>Sign Up</h2>
+            <div><span data-clog-trigger="impression" data-clog-metadata="{&quot;action_log_target&quot;: {&quot;type&quot;: 43, &quot;hash&quot;: &quot;facebookConnectButton|911sfjyAdgAMUheK3uC2MA==_1554443907605983&quot;}}" data-clog-event-type="ActionLogImpression" id="__w2_wlw57v6U15_actionable" data-clog-processed={1}><a className="facebook_button submit_button" href="https://www.quora.com/#" tabIndex={6} action_mousedown="SignupFacebookClick" action_stop_propagation="True" id="__w2_wlw57v6U15_facebook_connect_button"><span className="facebook_button_text">Continue with Facebook</span></a></span></div></div><div id="__w2_wlw57v6U8_connect_explanation"><Link to = "/register" className="signup_email_link" tabIndex={8} id="__w2_wlw57v6U8_continue_with_email">Continue With Email</Link><span className="tos_disclaimer">. <span className="light_gray TosDisclaimer">By signing up you indicate that you have read and agree to Quora's <a className="tos_link" href="https://www.quora.com/about/tos" nav_style="modal_present" target="_blank" rel="noopener">Terms of Service</a> and <a className="tos_link" href="https://www.quora.com/about/privacy" nav_style="modal_present" target="_blank" rel="noopener">Privacy Policy</a>.</span></span></div></div><div className="hidden" id="__w2_wlw57v6U8_toggled_signup_column"><h2>Sign Up</h2>
             <form method="post" id="__w2_wlw57v6U8_home_page_email_signup_form">
                 <div className="w2_5"><div className="row">
                      <div className="EmailSignupForm"><div className="stacked_form e_col p1" id="__w2_wlw57v6U12_email_signup_form">
@@ -137,18 +169,28 @@ class Login extends Component {
                                                                                                                  <div id="wlw57v6U17">
                                                                                                                       <div className="LoggedOutHomeLogin InlineLogin" id="__w2_wlw57v6U18_logged_out_header_login">
                                                                                                                           <div className="regular_login">
-                                                                                                                             <form className="inline_login_form" method="POST" id="__w2_wlw57v6U18_login_form">
+                                                                                                                             <form className="inline_login_form" onSubmit = {this.onSubmit} id="__w2_wlw57v6U18_login_form">
                                                                                                                                   <div className="title login_title">Login</div>
                                                                                                                                   <div className="form_inputs">
                                                                                                                                        <div className="form_column">
                                                                                                                                            <input className="text header_login_text_box ignore_interaction" type="text" name="email" tabIndex={1} data-group="js-editable" placeholder="Email" w2cid="wlw57v6U18" id="__w2_wlw57v6U18_email" value = {this.state.email} onChange = {this.onChange}/></div>
+                                                                                                                                           
+                                                                                                                                           <div className = "inputError">
+                                                                                                                                                 {errors.email }
+                                                                                                                                           </div>  
+
                                                                                                                                                  <div className="form_column">
                                                                                                                                                      <input className="text header_login_text_box ignore_interaction" type="password" name="password" tabIndex={2} data-group="js-editable" placeholder="Password" w2cid="wlw57v6U18" id="__w2_wlw57v6U18_password" value = {this.state.password} onChange = {this.onChange}/></div>
+
+                                                                                                                                                     <div className = "inputError">
+                                                                                                                                                              {errors.password }
+                                                                                                                                                     </div> 
+
                                                                                                                                                          <div className="form_column">
                                                                                                                                                              <span className="login_options">
                                                                                                                                                                  <a className="forgot_password" href="https://www.quora.com/#" id="__w2_wlw57v6U18_forgot_password_link">Forgot Password?</a>
                                                                                                                                                             </span>
-                                                                                                  <input className="submit_button submit_button_disabled ignore_interaction" name = "email" type="submit" tabIndex={4} data-group="js-editable" w2cid="wlw57v6U18" id="__w2_wlw57v6U18_submit_button" value = "Login" onChange = {this.onChange}/>
+                                                                                                  <input className="submit_button  ignore_interaction" name = "email" type="submit" tabIndex={4} data-group="js-editable" w2cid="wlw57v6U18" id="__w2_wlw57v6U18_submit_button" value = "Login" />
                                                                                                        </div>
                                                                                                 <div id="__w2_wlw57v6U18_errors">
                                                                                                      <div className="hidden input_validation_error_text" id="__w2_wlw57v6U18_email_not_confirmed_error">Please confirm your email address. 
@@ -172,14 +214,14 @@ class Login extends Component {
                                                                 </div>
                                                             </div>
                                                         <div className="HomepageSignupNetworkRedirectLink" id="__w2_wlw57v6U20_link">New: 
-                                                               <a className="new_network" href="https://nl.quora.com/" data-nid={13}>Dutch</a>,
-                                                               <a className="new_network" href="https://da.quora.com/" data-nid={14}>Danish</a>, 
-                                                               <a className="new_network" href="https://fi.quora.com/" data-nid={15}>Finnish</a>, 
-                                                               <a className="new_network" href="https://no.quora.com/" data-nid={16}>Norwegian</a>, 
-                                                               <a className="new_network" href="https://sv.quora.com/" data-nid={17}>Swedish</a>, 
-                                                               <a className="new_network" href="https://mr.quora.com/" data-nid={18}>Marathi</a>, 
-                                                               <a className="new_network" href="https://bn.quora.com/" data-nid={19}>Bengali</a>, and 
-                                                               <a className="new_network" href="https://ta.quora.com/" data-nid={20}>Tamil</a>
+                                                               <a className="new_network" href="https://nl.quora.com/" data-nid={13}> Dutch</a>,
+                                                               <a className="new_network" href="https://da.quora.com/" data-nid={14}> Danish</a>, 
+                                                               <a className="new_network" href="https://fi.quora.com/" data-nid={15}> Finnish</a>, 
+                                                               <a className="new_network" href="https://no.quora.com/" data-nid={16}> Norwegian</a>, 
+                                                               <a className="new_network" href="https://sv.quora.com/" data-nid={17}> Swedish</a>, 
+                                                               <a className="new_network" href="https://mr.quora.com/" data-nid={18}> Marathi</a>, 
+                                                               <a className="new_network" href="https://bn.quora.com/" data-nid={19}> Bengali</a>, and 
+                                                               <a className="new_network" href="https://ta.quora.com/" data-nid={20}> Tamil</a>
                                                         </div>
                                                         <div className="FooterNav">
                                                             <ul className="nav_list">

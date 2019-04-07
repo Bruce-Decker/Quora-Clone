@@ -18,6 +18,8 @@ router.post('/register', function(req, res) {
                if (result.errors) {
                   return res.status(400).json(result.errors);
                } else {
+                   console.log("safsdf123")
+                   console.log(result)
                   res.send(result)
                }
         }
