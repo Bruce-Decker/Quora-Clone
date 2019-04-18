@@ -7,6 +7,7 @@ const morgan = require('morgan')
 const cors = require('cors')
 var kafka = require('./kafka/client')
 const authRouter = require('./routes/authentication')
+const profileRouter = require('./routes/userProfile')
 
 const url = process.env.MONGODB_URI || "mongodb://localhost:27017/Quora_Clone"
 
@@ -30,6 +31,7 @@ app.use(passport.initialize());
 
 
 app.use('/', authRouter)
+app.use('/profile', profileRouter)
 
 app.post('/test', function(req, res) {
     res.send("test")

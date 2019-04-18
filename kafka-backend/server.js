@@ -10,6 +10,7 @@ mongoose.connect(url2, { useNewUrlParser : true })
 
 //Services
 var auth = require('./services/authentication')
+var profile = require('./services/profile')
 
 
 
@@ -27,6 +28,12 @@ function handleTopicRequest(topic_name,fname){
 
             case 'auth':
                 auth.authService(data.data, function(err, res) {
+                    response(data, res, producer)
+                    return
+                })
+                break
+            case 'profile':
+                profile.profileService(data.data, function(err, res) {
                     response(data, res, producer)
                     return
                 })
@@ -56,5 +63,6 @@ function response(data, res, producer) {
 
 
 handleTopicRequest("auth", auth)
+handleTopicRequest("profile", profile)
 
 
