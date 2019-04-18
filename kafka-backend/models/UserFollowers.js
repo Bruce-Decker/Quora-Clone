@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
-const FollowSchema = new Schema({
+const UserFollowersSchema = new Schema({
     follower_email: {
         type: String,
         required: true
@@ -16,4 +16,4 @@ const FollowSchema = new Schema({
     }
 })
 
-module.exports = Follow = mongoose.model('follow', FollowSchema)
+module.exports = Follow = mongoose.model('UserFollowers', UserFollowersSchema)
