@@ -22,6 +22,7 @@ exports.authService = function authService(info, callback) {
 
 
 function login(info, callback) {
+    console.log("242sff")
     const { errors, isValid } = validateLogin(info.body);
 
     if (!isValid) {

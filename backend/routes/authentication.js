@@ -27,6 +27,8 @@ router.post('/register', function(req, res) {
 })
 
 router.post('/login', function(req, res) {
+    console.log("Sdfdfs")
+    console.log(req.body)
     kafka.make_request('auth', {"method": "login", "body": req.body}, function(error, result) {
         if (error) {
             console.log(error)
