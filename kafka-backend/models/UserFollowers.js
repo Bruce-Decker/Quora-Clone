@@ -16,4 +16,4 @@ const UserFollowersSchema = new Schema({
     }
 })
 
-module.exports = Follow = mongoose.model('UserFollowers', UserFollowersSchema)
+module.exports = UserFollowers = mongoose.model('UserFollowers', UserFollowersSchema)

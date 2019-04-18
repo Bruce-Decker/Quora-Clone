@@ -45,6 +45,10 @@ const AnswerSchema = new Schema({
         comment: {
             type: String,
             required: true
+        },
+        time: {
+            type: String,
+            required: true
         }
      }
     ],
@@ -54,4 +58,4 @@ const AnswerSchema = new Schema({
     }
 })
 
-module.exports = Follow = mongoose.model('Answer', AnswerSchema)
+module.exports = Answer = mongoose.model('Answer', AnswerSchema)

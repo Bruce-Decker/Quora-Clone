@@ -41,4 +41,4 @@ const QuestionSchema = new Schema({
     }
 })
 
-module.exports = Follow = mongoose.model('Question', QuestionSchema)
+module.exports = Question = mongoose.model('Question', QuestionSchema)
