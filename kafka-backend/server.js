@@ -3,7 +3,7 @@ var connection =  new require('./kafka/Connection');
 var mongoose = require('mongoose');
 const db_url = require('./config/keys').mlab_url
 const url = process.env.MONGODB_URI || db_url
-const url2 = "mongodb://localhost:27017/Quora_Clone"
+const url2 = 'mongodb+srv://admin:admin@quoracluster-v64on.mongodb.net/test?retryWrites=true'
 mongoose.connect(url2, { useNewUrlParser : true })
      .then(() => console.log("Mongo Database is alive"))
      .catch(err => console.log(err))
