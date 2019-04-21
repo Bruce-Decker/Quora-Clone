@@ -13,6 +13,7 @@ mongoose
 var auth = require("./services/authentication");
 var profile = require("./services/profile");
 var topic = require("./services/topic");
+var question = require("./services/question");
 
 function handleTopicRequest(topic_name, fname) {
   //var topic_name = 'root_topic';
@@ -43,6 +44,12 @@ function handleTopicRequest(topic_name, fname) {
           return;
         });
         break;
+      case "question":
+        question.questionService(data.data, function(err, res) {
+          response(data, res, producer);
+          return;
+        });
+        break;
     }
   });
 }
@@ -68,3 +75,4 @@ function response(data, res, producer) {
 handleTopicRequest("auth", auth);
 handleTopicRequest("profile", profile);
 handleTopicRequest("topic", topic);
+handleTopicRequest("question", question);
