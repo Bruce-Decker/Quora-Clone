@@ -5,6 +5,9 @@ const QuestionSchema = new Schema({
   question_id: {
     type: String
   },
+  question: {
+    type: String
+  },
   topic_name: [
     {
       type: String
