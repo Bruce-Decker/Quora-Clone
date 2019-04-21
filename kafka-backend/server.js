@@ -13,7 +13,10 @@ mongoose
 var auth = require("./services/authentication");
 var profile = require("./services/profile");
 var topic = require("./services/topic");
+var userFollowers = require("./services/userFollowers");
+var userFollowing = require("./services/userFollowing");
 var question = require("./services/question");
+var inbox = require("./services/inbox");
 
 function handleTopicRequest(topic_name, fname) {
   //var topic_name = 'root_topic';
@@ -75,4 +78,7 @@ function response(data, res, producer) {
 handleTopicRequest("auth", auth);
 handleTopicRequest("profile", profile);
 handleTopicRequest("topic", topic);
+handleTopicRequest("userFollowers", userFollowers);
+handleTopicRequest("userFollowing", userFollowing);
 handleTopicRequest("question", question);
+handleTopicRequest("inbox", inbox);
