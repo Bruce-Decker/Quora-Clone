@@ -10,7 +10,7 @@ exports.topicService = function topicService(info, callback) {
 
 function searchTopic(info, callback) {
   var topic = info.message.topic_name;
-  Topic.find({ topic_name: topic }, function(err, docs) {
+  Topic.find({ topic_name: new RegExp(topic, "i") }, function(err, docs) {
     console.log(docs);
     console.log(err);
     if (docs) {
