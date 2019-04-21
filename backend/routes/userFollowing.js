@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 const kafka = require("../kafka/client");
 
-router.get("/userFollowers", function(req, res) {
+router.get("/userFollowing", function(req, res) {
   kafka.make_request(
     "followers",
-    { method: "userFollowers", message: req.query },
+    { method: "userFollowing", message: req.query },
     function(error, result) {
       if (error) {
         console.log(error);

@@ -14,6 +14,7 @@ var auth = require("./services/authentication");
 var profile = require("./services/profile");
 var topic = require("./services/topic");
 var userFollowers = require("./services/userFollowers");
+var userFollowing = require("./services/userFollowing");
 
 function handleTopicRequest(topic_name, fname) {
   //var topic_name = 'root_topic';
@@ -70,3 +71,4 @@ handleTopicRequest("auth", auth);
 handleTopicRequest("profile", profile);
 handleTopicRequest("topic", topic);
 handleTopicRequest("userFollowers", userFollowers);
+handleTopicRequest("userFollowing", userFollowing);
