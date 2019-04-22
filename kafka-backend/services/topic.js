@@ -8,6 +8,9 @@ exports.topicService = function topicService(info, callback) {
     case "postTopic":
       postTopic(info, callback);
       break;
+    case "folowTopic":
+      folowTopic(info, callback);
+      break;
   }
 };
 
@@ -55,4 +58,23 @@ function searchTopic(info, callback) {
       callback(err, "error");
     }
   });
+}
+
+function folowTopic(info, callback){
+  console.log(`info.body`);
+  console.log(info.body);
+  var email = info.body.email;
+  var topic_id = info.body.topic_id;
+  var data = {
+    email:email
+  }
+
+  Topic.findOneAndUpdate({topic_id: topic_id}, {followers:data}, function(error, result) {
+    if (error) {
+        callback(error,"error");
+    } else {
+        console.log(result)
+        callback(null, data);
+     }
+  })
 }
