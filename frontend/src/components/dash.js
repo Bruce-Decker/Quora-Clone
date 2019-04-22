@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import "./Dashboard.css";
+//import "../Dashboard.css";
+import axios from "axios";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -23,40 +24,31 @@ class Dashboard extends Component {
   }
 
   answerHandler = e => {
-    console.log("in answer.....", e.target.textContent);
-    // let answerElements = this.state.answerElements;
-    // if (type == "text") {
-    //   answerElements[index] = { type: "text", value: e.target.textContent };
-    //   this.setState({
-    //     answerElements: answerElements
-    //   });
-    // }
-    //console.log("answer", this.state.answerElements, e.target.textContent);
+    console.log(
+      "in answer.....",
+      document.getElementById("editable").outerHTML
+    );
+    this.setState({
+      currentElem: document.getElementById("editable").outerHTML
+    });
+    axios
+      .post("/answer", {
+        currentElem: document.getElementById("editable").outerHTML
+      })
+      .then(res => {
+        let editable = document.getElementById("editable");
+        editable.outerHTML = res.data.currentElem;
+        console.log(res.data);
+      });
   };
 
-  addHyperlink = (e, index) => {
-    let answerElements = this.state.answerElements;
+  addHyperlink = e => {
     if (this.state.hyperlink) {
-      // if (this.state.text !== false) {
-      //   answerElements.push({ type: "text", value: this.state.textValue });
-      // }
-      // this.setState(
-      //   {
-      //     textValue: false
-      //   },
-      //   function() {
-      //     console.log("array elements 22244.....", this.state.textValue);
-      //   }
-      // );
       let editable = document.getElementById("editable");
-      var x = document.createElement("div");
-      var newContent = document.createTextNode(this.state.hyperlink);
-      x.append(newContent);
-      editable.append(x);
-      //     answerElements.push({ type: "hyperlink", value: this.state.hyperlink });
-      //   this.setState({
-      //   answerElements: answerElements
-      //});
+      var aTag = document.createElement("a");
+      aTag.setAttribute("href", this.state.hyperlink);
+      aTag.innerHTML = this.state.hyperlink;
+      editable.appendChild(aTag);
       this.setState({
         showHyperlink: false
       });
@@ -118,12 +110,11 @@ class Dashboard extends Component {
           ""
         )}
         <div class="border-bottom border-gray pb-2 mb-0">
-          <div
-            contentEditable="true"
-            onInput={this.answerHandler}
-            id="editable"
-          />
+          <div contentEditable="true" id="editable" />
         </div>
+        <button onClick={this.answerHandler} class="btn btn-primary">
+          Add
+        </button>
       </div>
     );
   }
