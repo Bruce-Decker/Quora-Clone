@@ -1,18 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-//import "../Dashboard.css";
 import axios from "axios";
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      answerElements: [{ type: "text", value: "", index: 0 }],
       currentElem: "",
-      current: "",
       showHyperlink: false,
-      hyperlink: "",
-      textValue: false
+      hyperlink: ""
     };
 
     this.answerHandler = this.answerHandler.bind(this);
@@ -24,10 +20,6 @@ class Dashboard extends Component {
   }
 
   answerHandler = e => {
-    console.log(
-      "in answer.....",
-      document.getElementById("editable").outerHTML
-    );
     this.setState({
       currentElem: document.getElementById("editable").outerHTML
     });
@@ -38,7 +30,6 @@ class Dashboard extends Component {
       .then(res => {
         let editable = document.getElementById("editable");
         editable.outerHTML = res.data.currentElem;
-        console.log(res.data);
       });
   };
 
