@@ -8,6 +8,9 @@ exports.questionService = function questionService(info, callback) {
     case "userQuestion":
       userQuestion(info, callback);
       break;
+    case "followQuestion":
+      folowQuestion(info, callback);
+      break;
   }
 };
 
@@ -39,4 +42,23 @@ function userQuestion(info, callback) {
       callback(err, "error");
     }
   });
+}
+
+function folowQuestion(info, callback) {
+  console.log(`info.body`);
+  console.log(info.body);
+  var email = info.body.email;
+  var question_id = info.body.question_id;
+  var data = {
+    email:email
+  }
+
+  Question.findOneAndUpdate({question_id: question_id}, {followers:data}, function(error, result) {
+    if (error) {
+        callback(error,"error");
+    } else {
+        console.log(result)
+        callback(null, data);
+     }
+})
 }

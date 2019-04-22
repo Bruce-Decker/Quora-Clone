@@ -22,4 +22,25 @@ router.get("/", function(req, res) {
   );
 });
 
+router.post("/follow", function(req, res) {
+  console.log(req.body);
+  kafka.make_request(
+    "question",
+    { method: "followQuestion", body: req.body },
+    function(error, result) {
+      if (error) {
+        console.log(error);
+        res.status(400).json({ msg: "cannot follow questions" });
+      } else {
+        if (result.errors) {
+          return res.status(400).json(result.errors);
+        } else {
+          console.log(result);
+          res.send(result);
+        }
+      }
+    }
+  );
+});
+
 module.exports = router;
