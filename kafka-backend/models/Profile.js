@@ -46,10 +46,6 @@ const ProfileSchema = new Schema({
                 type: String,
                 required: true
             },
-            subject: {
-                type: String,
-                required: true
-            },
             message: {
                 type: String,
                 required: true
@@ -75,10 +71,6 @@ const ProfileSchema = new Schema({
                 required: true
             },
             receiver_email: {
-                type: String,
-                required: true
-            },
-            subject: {
                 type: String,
                 required: true
             },

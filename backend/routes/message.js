@@ -5,7 +5,7 @@ const kafka = require("../kafka/client");
 router.post('/', function(req, res) {
     console.log(req.body);
 
-    kafka.make_request('message', {"method": "message", "body": req.body}, function(error, result) {
+    kafka.make_request('message', {"method": "sendMessage", "body": req.body}, function(error, result) {
         if (error) {
             console.log(error)
             res.status(400).json({msg: 'cannot create user'});
@@ -19,7 +19,7 @@ router.post('/', function(req, res) {
                }
         }
     })
-    res.status(200).json({success:`success`});
+    //res.status(200).json({success:`success`});
 })
 
 module.exports = router;
