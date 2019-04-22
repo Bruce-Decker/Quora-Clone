@@ -1,4 +1,5 @@
 const Question = require("../models/Question");
+const Profile = require("../models/Profile");
 
 exports.questionService = function questionService(info, callback) {
   switch (info.method) {
@@ -10,6 +11,8 @@ exports.questionService = function questionService(info, callback) {
       break;
     case "followQuestion":
       folowQuestion(info, callback);
+    case "dashboardQuestion":
+      dashboardQuestion(info, callback);
       break;
   }
 };
@@ -44,6 +47,26 @@ function userQuestion(info, callback) {
   });
 }
 
+function dashboardQuestion(info, callback) {
+  var email = info.body.email;
+  Profile.findOne({ email: email }, { topics: 1 }, function(err, userTopics) {
+    console.log(userTopics);
+    console.log(err);
+    if (userTopics) {
+      console.log(userTopics);
+      Question.find({ topics: userTopics });
+    } else {
+      Question.find({}, (err, questions) => {
+        if (err) {
+          callback(err, null);
+        } else {
+          callback(null, questions);
+        }
+      });
+    }
+  });
+}
+
 function folowQuestion(info, callback) {
   console.log(`info.body`);
   console.log(info.body);
@@ -55,10 +78,10 @@ function folowQuestion(info, callback) {
 
   Question.findOneAndUpdate({question_id: question_id}, {followers:data}, function(error, result) {
     if (error) {
-        callback(error,"error");
+      callback(error,"error");
     } else {
         console.log(result)
         callback(null, data);
      }
-})
+  })
 }

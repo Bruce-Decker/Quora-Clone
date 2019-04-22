@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import './Dashboard.css'
+import Navbar from '../Navbar/Navbar'
 
 class Dashboard extends Component {
 
@@ -8,6 +9,7 @@ class Dashboard extends Component {
 
         return (
             <div>
+                <Navbar />
                 <h1>Dashboard</h1>
             </div>
         )

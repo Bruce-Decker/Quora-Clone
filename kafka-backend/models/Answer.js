@@ -22,6 +22,10 @@ const AnswerSchema = new Schema({
       email: {
         type: String,
         required: true
+      },
+      time: {
+        type: String,
+        required: true
       }
     }
   ],
@@ -30,12 +34,20 @@ const AnswerSchema = new Schema({
       email: {
         type: String,
         required: true
+      },
+      time: {
+        type: String,
+        required: true
       }
     }
   ],
   bookmark: [
     {
       email: {
+        type: String,
+        required: true
+      },
+      time: {
         type: String,
         required: true
       }

@@ -8,11 +8,7 @@ const QuestionSchema = new Schema({
   question: {
     type: String
   },
-  topic_name: [
-    {
-      type: String
-    }
-  ],
+  topics: [{ topic_name: { type: String } }],
   owner: {
     type: String
   },
