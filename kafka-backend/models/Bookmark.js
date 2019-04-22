@@ -1,15 +1,15 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const BookMarkSchema = new Schema({
-    marker_email: {
-        type: String,
-        required: true
-    },
-    time: {
-        type: String,
-        required: true
-    }
-})
+var BookMarkSchema = new Schema({
+  marker_email: {
+    type: String,
+    required: true
+  },
+  time: {
+    type: String,
+    required: true
+  }
+});
 
-module.exports = BookMarkSchema = mongoose.model('bookmark', BookMarkSchema)
+module.exports = BookMarkSchema = mongoose.model("bookmark", BookMarkSchema);
