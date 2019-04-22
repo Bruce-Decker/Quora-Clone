@@ -2,6 +2,18 @@ const express = require("express");
 const router = express.Router();
 const kafka = require("../kafka/client");
 
+router.post("/createTopics", function(req, res) {
+  kafka.make_request('topic', {"method": "postTopic", "message": req.body}, function(error, result) {
+    if (error) {
+        console.log(error)
+        res.status(400).json({msg: 'profile not found'});
+    } else {
+        res.send(result)
+    }
+})
+})
+
+
 router.get("/", function(req, res) {
   kafka.make_request(
     "topic",

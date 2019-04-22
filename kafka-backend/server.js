@@ -13,6 +13,11 @@ mongoose
 var auth = require("./services/authentication");
 var profile = require("./services/profile");
 var topic = require("./services/topic");
+var userFollowers = require("./services/userFollowers");
+var userFollowing = require("./services/userFollowing");
+var question = require("./services/question");
+var inbox = require("./services/inbox");
+var content = require("./services/content");
 
 function handleTopicRequest(topic_name, fname) {
   //var topic_name = 'root_topic';
@@ -43,6 +48,12 @@ function handleTopicRequest(topic_name, fname) {
           return;
         });
         break;
+      case "question":
+        question.questionService(data.data, function(err, res) {
+          response(data, res, producer);
+          return;
+        });
+        break;
     }
   });
 }
@@ -68,3 +79,8 @@ function response(data, res, producer) {
 handleTopicRequest("auth", auth);
 handleTopicRequest("profile", profile);
 handleTopicRequest("topic", topic);
+handleTopicRequest("userFollowers", userFollowers);
+handleTopicRequest("userFollowing", userFollowing);
+handleTopicRequest("question", question);
+handleTopicRequest("inbox", inbox);
+handleTopicRequest("content", content);
