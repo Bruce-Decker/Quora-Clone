@@ -1,10 +1,13 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const uniqueRandom = require("unique-random");
+const rand = uniqueRandom(1, 1000000);
 
 var AnswerSchema = new Schema({
   answer_id: {
     type: String,
-    required: true
+    required: true,
+    default: rand
   },
   question_id: {
     type: String,

@@ -8,7 +8,9 @@ class Dashboard extends Component {
     this.state = {
       currentElem: "",
       showHyperlink: false,
-      hyperlink: ""
+      hyperlink: "",
+      showImage: false,
+      selectedFile: null
     };
 
     this.answerHandler = this.answerHandler.bind(this);
@@ -17,7 +19,26 @@ class Dashboard extends Component {
     this.addHyperlink = this.addHyperlink.bind(this);
     this.editHyperLink = this.editHyperLink.bind(this);
     this.cancelHyperlink = this.cancelHyperlink.bind(this);
+    this.handleselectedFile = this.handleselectedFile.bind(this);
+    this.handleUpload = this.handleUpload.bind(this);
+    this.cancelImage = this.cancelImage.bind(this);
   }
+
+  handleselectedFile = event => {
+    this.setState({
+      selectedFile: event.target.files[0],
+      loaded: 0
+    });
+  };
+
+  handleUpload = () => {
+    const fileURL = URL.createObjectURL(this.state.selectedFile);
+    var x = document.createElement("img");
+    x.setAttribute("height", "300px");
+    x.setAttribute("weight", "300px");
+    x.src = fileURL;
+    document.getElementById("editable").appendChild(x);
+  };
 
   answerHandler = e => {
     this.setState({
@@ -29,7 +50,7 @@ class Dashboard extends Component {
       })
       .then(res => {
         let editable = document.getElementById("editable");
-        editable.outerHTML = res.data.currentElem;
+        //  editable.outerHTML = res.data.currentElem;
       });
   };
 
@@ -65,9 +86,14 @@ class Dashboard extends Component {
   };
 
   imageHandler = e => {
-    console.log("answer", e.target.textContent);
     this.setState({
-      currentElem: e.target.textContent
+      showImage: true
+    });
+  };
+
+  cancelImage = e => {
+    this.setState({
+      showImage: false
     });
   };
 
@@ -96,6 +122,22 @@ class Dashboard extends Component {
             <button onClick={this.cancelHyperlink} class="btn btn-primary">
               Cancel
             </button>
+          </div>
+        ) : (
+          ""
+        )}
+        {this.state.showImage == true ? (
+          <div class="d-flex justify-content-between align-items-center w-100">
+            <div>
+              <input
+                type="file"
+                name="studentFile"
+                id="studentFile"
+                onChange={this.handleselectedFile}
+              />
+              <button onClick={this.handleUpload}>Upload</button>
+              <button onClick={this.cancelImage}>Cancel</button>
+            </div>
           </div>
         ) : (
           ""
