@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
+
 import './Navbar.css'
+import { Link } from 'react-router-dom' 
+import { connect } from 'react-redux';
+import { logout  } from '../../actions/authActions'
+import default_image from './default.png'
 
 class Navbar extends Component {
 
@@ -9,6 +13,35 @@ class Navbar extends Component {
         this.state = {
             isHidden: true
         }
+    }
+
+    componentDidMount() {
+      document.addEventListener('mousedown', this.handleClickOutside);
+    }
+  
+    componentWillUnmount() {
+      document.removeEventListener('mousedown', this.handleClickOutside);
+    }
+
+    setWrapperRef = (node) => {
+      this.wrapperRef = node;
+    }
+
+    handleClickOutside = (event) => {
+      if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+         this.setState({
+            isHidden: true
+          })
+      }
+    }
+  
+
+    LogoutButton = (e) => {
+   
+    
+     
+      this.props.logout();
+      
     }
     
     onClick = () => {
@@ -19,7 +52,7 @@ class Navbar extends Component {
     render() {
 
         return (
-            <div>
+            <div ref={this.setWrapperRef}>
 <div style={{visibility: 'hidden', overflow: 'hidden', position: 'absolute', top: '0px', height: '1px', width: 'auto', padding: '0px', border: '0px', margin: '0px', textAlign: 'left', textIndent: '0px', textTransform: 'none', lineHeight: 'normal', letterSpacing: 'normal', wordSpacing: 'normal'}}>
 <div id="MathJax_Hidden" /></div>
 <div id="MathJax_Message" style={{display: 'none'}} />
@@ -65,7 +98,7 @@ class Navbar extends Component {
    </ul>
 </div>
 <div className="ask_modal_header">
-   <div className="user_asks_header"><span className="user_action"><span className="IdentityNameWithPhoto NameWithPhoto"><span id="wdgZpkyi14"><span className="photo_tooltip PhotoSpan HoverMenu Photo IdentityPhoto" id="__w2_wdgZpkyi15_link"><a href="https://www.quora.com/profile/Bruce-Decker-12" id="__w2_wdgZpkyi18_link"><img className="profile_photo_img" src="./Home - Quora_files/main-thumb-782622776-50-izcdaymwbtomzguzorfwyoknxfqoqixc.jpeg" alt=" " height={50} width={50} /></a></span></span><span id="wdgZpkyi16"><span id="__w2_wdgZpkyi17_link"><a className="user" href="https://www.quora.com/profile/Bruce-Decker-12" action_mousedown="UserLinkClickthrough" id="__w2_wdgZpkyi17_name_link"></a></span></span></span> asked</span></div>
+   <div className="user_asks_header"><span className="user_action"><span className="IdentityNameWithPhoto NameWithPhoto"><span id="wdgZpkyi14"><span className="photo_tooltip PhotoSpan HoverMenu Photo IdentityPhoto" id="__w2_wdgZpkyi15_link"><a href="https://www.quora.com/profile/Bruce-Decker-12" id="__w2_wdgZpkyi18_link"><img className="profile_photo_img" src="default-image.png" alt=" " height={50} width={50} /></a></span></span><span id="wdgZpkyi16"><span id="__w2_wdgZpkyi17_link"><a className="user" href="https://www.quora.com/profile/Bruce-Decker-12" action_mousedown="UserLinkClickthrough" id="__w2_wdgZpkyi17_name_link"></a></span></span></span> asked</span></div>
    <div className="mini_distribution_switcher">
       <div className="u-relative button_area" id="__w2_wdgZpkyi7_pop_over_link">
          <span className="multi_state_button" id="__w2_wdgZpkyi7_button_0">
@@ -229,7 +262,7 @@ class Navbar extends Component {
    <div className="hidden" id="__w2_wdgZpkyi1_content_inner_link">
       <div className="QuoraShareEditor">
          <div className="ask_modal_header">
-            <div className="user_asks_header"><span className="user_action"><span className="IdentityNameWithPhoto NameWithPhoto"><span id="wdgZpkyi30"><span className="photo_tooltip PhotoSpan HoverMenu Photo IdentityPhoto" id="__w2_wdgZpkyi31_link"><a href="https://www.quora.com/profile/Bruce-Decker-12" id="__w2_wdgZpkyi34_link"><img className="profile_photo_img" src="./Home - Quora_files/main-thumb-782622776-50-izcdaymwbtomzguzorfwyoknxfqoqixc.jpeg" alt="" height={50} width={50} /></a></span></span><span id="wdgZpkyi32"><span id="__w2_wdgZpkyi33_link"><a className="user" href="https://www.quora.com/profile/Bruce-Decker-12" action_mousedown="UserLinkClickthrough" id="__w2_wdgZpkyi33_name_link"></a></span></span></span> shared</span></div>
+            <div className="user_asks_header"><span className="user_action"><span className="IdentityNameWithPhoto NameWithPhoto"><span id="wdgZpkyi30"><span className="photo_tooltip PhotoSpan HoverMenu Photo IdentityPhoto" id="__w2_wdgZpkyi31_link"><a href="https://www.quora.com/profile/Bruce-Decker-12" id="__w2_wdgZpkyi34_link"><img className="profile_photo_img" src="default-image.png" alt="" height={50} width={50} /></a></span></span><span id="wdgZpkyi32"><span id="__w2_wdgZpkyi33_link"><a className="user" href="https://www.quora.com/profile/Bruce-Decker-12" action_mousedown="UserLinkClickthrough" id="__w2_wdgZpkyi33_name_link"></a></span></span></span> shared</span></div>
          </div>
          <div className="selector_input_interaction">
             <div cname="quora_share_editor" id="share_input"><textarea className="selector_input selector_input_link_comment" autofocus="True" name="description" rows={1} type="text" cname="quora_share_editor" data-group="js-editable" placeholder="Say something about this..." w2cid="wdgZpkyi12" id="__w2_wdgZpkyi12_share_comment" style={{overflowX: 'hidden', overflowWrap: 'break-word'}} defaultValue={""} /></div>
@@ -283,8 +316,10 @@ class Navbar extends Component {
 <div className="header_contents u-flex u-flex-auto u-margin-left--sm">
 <div className="header_nav" role="navigation" id="__w2_wlKOhcos14_nav">
 <span id="wGp3JsZF1">
+
    <div className="SiteHeaderNavItem FeedNavItem HoverMenu">
-      <a className="nav_item_link selected" href="https://www.quora.com/" target id="__w2_wGp3JsZF2_link">
+
+      <a className= {this.props.Home} href="https://www.quora.com/" target id="__w2_wGp3JsZF2_link">
          <div className="u-margin-right--xs u-flex-inline">
             <span className="ui_icon ui_icon_color--red ui_icon_size--regular ui_icon_outline--filled" aria-hidden="true">
                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
@@ -295,10 +330,11 @@ class Navbar extends Component {
          <span className="truncated">Home</span> 
       </a>
    </div>
+
 </span>
 <span id="wGp3JsZF3">
    <div className="SiteHeaderNavItem WriteNavItem HoverMenu">
-   <a className="nav_item_link" href="https://www.quora.com/answer" target id="__w2_wGp3JsZF4_link">
+   <a className={this.props.Answer} href="https://www.quora.com/answer" target id="__w2_wGp3JsZF4_link">
       <div className="u-margin-right--xs u-flex-inline">
          <span className="ui_icon ui_icon_color--gray ui_icon_size--regular ui_icon_outline--default" aria-hidden="true">
             <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
@@ -312,7 +348,7 @@ class Navbar extends Component {
 </span>
 <span id="wGp3JsZF5">
    <div className="SiteHeaderNavItem TribeFeedNavItem HoverMenu">
-      <a className="nav_item_link" href="https://www.quora.com/spaces" target id="__w2_wGp3JsZF6_link">
+      <a className={this.props.Spaces} href="https://www.quora.com/spaces" target id="__w2_wGp3JsZF6_link">
          <div className="u-margin-right--xs u-flex-inline">
             <span className="ui_icon ui_icon_color--gray ui_icon_size--regular ui_icon_outline--default" aria-hidden="true">
                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
@@ -469,7 +505,7 @@ class Navbar extends Component {
                <li><a href="/business?medium=businesses&source=dropdown_footer">Businesses</a><span className="bullet"> · </span><a href="/settings/languages">Languages</a><span className="bullet"> · </span></li>
                <li />
                <li className="logout">
-                  <form action="/login/logout_POST" target="_top" method="POST" id="__w2_wsnWwGwm6_logout_form"><input type="hidden" name="formkey" defaultValue="3a0d82d20c785c0597bd466055bf173d" /><input type="hidden" name="next" defaultValue="https://www.quora.com/topic/Mathematics" data-group="js-editable" w2cid="wsnWwGwm6" /><a className="logout" href="#" id="__w2_wsnWwGwm6_logout_link">Logout</a></form>
+                 <Link className = "logout" to = "/" onClick = {this.LogoutButton}> <i className="fas fa-sign-out-alt"></i> Logout </Link>
                </li>
             </ul>
          </div>
@@ -500,7 +536,7 @@ class Navbar extends Component {
                               <span className="photo_wrapper">
                                  <div id="wGp3JsZF27">
                                  <span className="photo_tooltip IdentityPhoto Photo HoverMenu" id="__w2_wGp3JsZF28_link">
-                                    <img className="profile_photo_img" src alt height={50} width={50} onClick = {this.onClick}/></span>
+                                    <img className="profile_photo_img" src = {default_image}  height={150} width={150} onClick = {this.onClick}/></span>
                                  </div>
                               </span>
                            </span>
@@ -531,5 +567,9 @@ class Navbar extends Component {
 
 }
 
+const mapStateToProps = (state) => ({
+   auth: state.auth
+})
 
-export default Navbar;
+
+export default connect(mapStateToProps, { logout })(Navbar);

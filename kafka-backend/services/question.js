@@ -12,8 +12,58 @@ exports.questionService = function questionService(info, callback) {
     case "dashboardQuestion":
       dashboardQuestion(info, callback);
       break;
+    case "postQuestion":
+      postQuestion(info, callback);
+      break;
   }
 };
+
+function postQuestion(info, callback) {
+  var question_id = info.message.question_id
+  var question = info.message.question
+  var topics = info.message.topics
+  var owner = info.message.owner
+  var followers = info.message.followers
+  var answers = info.message.answers
+  var postedDate = info.message.postedDate
+  var data = {
+    question_id,
+    question,
+    topics,
+    owner,
+    followers,
+    answers,
+    postedDate,
+  }
+
+  Question.findOne({question_id: question_id}, function(err, docs) {
+		if (docs) {
+			Question.findOneAndUpdate({question_id: question_id}, data, function(err, result) {
+				 if (err) {
+                     //res.send("Fail")
+                     callback(null, "Fail")
+				 } else {
+				 	console.log(result)
+                     //res.send("Update successfully")
+                     callback(null, "Update successfully")
+	 			 }
+			})
+		} else {
+			  
+               Question.create(data, function(err, newlyCreated) {
+					if (err) {
+                         //res.send({msg: "False"});
+                         callback(null, {msg: "False"})
+					} else {
+                         //res.send({msg: "True"});
+                         callback(null, {msg: "True"})
+					}
+			   })
+		}
+	})
+}
+
+
 
 function searchQuestion(info, callback) {
   var question = info.message.question;

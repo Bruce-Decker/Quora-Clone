@@ -2,6 +2,22 @@ const express = require("express");
 const router = express.Router();
 const kafka = require("../kafka/client");
 
+
+router.post('/createQuestion', function(req, res) {
+  kafka.make_request('question', {"method": "postQuestion", "message": req.body}, function(error, result) {
+      if (error) {
+          console.log(error)
+          res.status(400).json({msg: 'cannot question'});
+      } else {
+             if (result.errors) {
+                return res.status(400).json(result.errors);
+             } else {
+                res.send(result)
+             }
+      }
+  })
+})
+
 router.get("/keyword", function(req, res) {
   kafka.make_request(
     "question",

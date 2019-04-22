@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
-const BookMarkSchema = new Schema({
+var BookMarkSchema = new Schema({
     marker_email: {
         type: String,
         required: true

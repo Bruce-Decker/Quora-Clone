@@ -9,7 +9,11 @@ class Dashboard extends Component {
 
         return (
             <div>
-                <Navbar />
+                <Navbar Home= {"nav_item_link selected"} 
+                        Answer = {"nav_item_link"} 
+                        Spaces = {"nav_item_link"} 
+                        Notifications = {"nav_item_link"}
+                />
                 <h1>Dashboard</h1>
             </div>
         )
