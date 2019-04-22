@@ -45,7 +45,11 @@ const ProfileSchema = new Schema({
     type: String,
     required: true
   },
-  topics: [{ topic_name: { type: String } }]
+  topics: [{ topic_name: { type: String } }],
+  time: {
+    type: String,
+    required: true
+  }
 });
 
 module.exports = Profile = mongoose.model("profile", ProfileSchema);
