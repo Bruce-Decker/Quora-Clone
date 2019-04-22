@@ -10,6 +10,7 @@ const authRouter = require("./routes/authentication");
 const profileRouter = require("./routes/userProfile");
 const topicRouter = require("./routes/topic");
 const messageRouter = require("./routes/message");
+const questionRouter = require("./routes/question");
 const Auth = require("./schema/AuthModel");
 var validateRegister = require("./validation/validateRegister");
 var validateLogin = require("./validation/validateLogin");
@@ -94,6 +95,7 @@ app.use("/", authRouter);
 app.use("/profile", profileRouter);
 app.use("/topic", topicRouter);
 app.use("/message",messageRouter);
+app.use("/question", questionRouter);
 
 app.post("/test", function(req, res) {
   res.send("test");
