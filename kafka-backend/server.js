@@ -76,6 +76,12 @@ function handleTopicRequest(topic_name, fname) {
           return;
         });
         break;
+  case "answer":
+        answer.answerService(data.data, function(err, res) {
+          response(data, res, producer);
+          return;
+        });
+        break;
     }
   });
 }
@@ -110,3 +116,4 @@ handleTopicRequest("createanswer", createanswer);
 handleTopicRequest("getanswer", getanswer);
 handleTopicRequest("fetchanswers", fetchanswers);
 handleTopicRequest("message", messages);
+handleTopicRequest("answer", answer);

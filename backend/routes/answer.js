@@ -102,4 +102,19 @@ router.get("/list", function(req, res) {
   );
 });
 
+router.post("/comment", function(req, res) {
+  kafka.make_request('answer', {"method": "addComment", "message": req.body}, function(error, result) {
+    if (error) {
+        console.log(error)
+        res.status(400).json({msg: 'cannot question'});
+    } else {
+           if (result.errors) {
+              return res.status(400).json(result.errors);
+           } else {
+              res.send(result)
+           }
+    }
+  })
+});
+
 module.exports = router;
