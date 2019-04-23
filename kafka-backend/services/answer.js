@@ -30,6 +30,95 @@ exports.answerService = function answerService(info, callback) {
       break;
   }
 };
+  
+
+function bookmarkAnswer(info, callback) {
+  var answerid = info.message.answerid;
+  Question.findOne({ "answers.answer_id": answerid }, function(err, question) {
+    console.log(question);
+    console.log(err);
+    if (question) {
+      let currentAnswer = question.answers.find(
+        answer => answer.answer_id === answerid
+      );
+      let bookmarks = currentAnswer.bookmark || [];
+      let bookmark;
+      bookmarks.push(info.message.email);
+      console.log(question);
+      question.save().then(
+        doc => {
+          console.log("bookmark added.", doc);
+          callback(null, doc);
+        },
+        err => {
+          console.log("Unable to add bookmark.", err);
+          callback(err, null);
+        }
+      );
+    } else {
+      console.log(err);
+      callback(err, "error");
+    }
+  });
+}
+
+function upvoteAnswer(info, callback) {
+  var answerid = info.message.answerid;
+  Question.find({ "answers.answer_id": answerid }, function(err, question) {
+    console.log(question);
+    console.log(err);
+    if (question) {
+      let currentAnswer = question.answers.find(
+        answer => answer.answer_id === answerid
+      );
+      let upvotes = currentAnswer.upvote || [];
+      upvotes.push(info.message.email);
+      console.log(question);
+      question.save().then(
+        doc => {
+          console.log("upvote added.", doc);
+          callback(null, doc);
+        },
+        err => {
+          console.log("Unable to add upvote.", err);
+          callback(err, null);
+        }
+      );
+    } else {
+      console.log(err);
+      callback(err, "error");
+    }
+  });
+}
+
+function downvoteAnswer(info, callback) {
+  var answerid = info.message.answerid;
+  Question.find({ "answers.answer_id": answerid }, function(err, question) {
+    console.log(question);
+    console.log(err);
+    if (question) {
+      let currentAnswer = question.answers.find(
+        answer => answer.answer_id === answerid
+      );
+      let downvotes = currentAnswer.downvote || [];
+      downvotes.push(info.message.email);
+      console.log(question);
+      question.save().then(
+        doc => {
+          console.log("downvote added.", doc);
+          callback(null, doc);
+        },
+        err => {
+          console.log("Unable to add downvote.", err);
+          callback(err, null);
+        }
+      );
+    } else {
+      console.log(err);
+      callback(err, "error");
+    }
+  });
+}
 
 function addComment(info, callback) {
   var email = info.message.email;

@@ -81,37 +81,38 @@ function searchTopic(info, callback) {
   });
 }
 
+function getTopic(info, callback) {
+  Topic.find({}, function(err, docs) {
+    console.log(docs);
+    console.log(err);
+    if (docs) {
+      console.log(docs);
+      callback(null, docs);
+    } else {
+      console.log(err);
+      callback(err, "error");
+    }
+  });
+}
+
 function folowTopic(info, callback) {
+  console.log(`info.body`);
   console.log(info.body);
   var email = info.body.email;
   var topic_name = info.body.topic_name;
   var data = {
-    topic_name: topic_name
+    email: email
   };
 
-  Profile.findOne({ email: email }, function(error, result) {
+  Topic.findOneAndUpdate({ topic_id: topic_id }, { followers: data }, function(
+    error,
+    result
+  ) {
     if (error) {
-      callback(error, "error1");
+      callback(error, "error");
     } else {
-      //console.log(result.topics)
       console.log(result);
-      console.log("A1 " + JSON.stringify(result.topics));
-
-      result.topics = result.topics.push(data);
-      console.log("A2 " + JSON.stringify(result.topics));
       callback(null, data);
-      Profile.findOneAndUpdate(
-        { email: email },
-        { $set: { topics: result.topics } },
-        function(err, result) {
-          if (err) {
-            //console.log(topics_update)
-            callback(error, "error2");
-          } else {
-            callback(null, result);
-          }
-        }
-      );
     }
   });
 }
