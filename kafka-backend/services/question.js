@@ -17,11 +17,15 @@ exports.questionService = function questionService(info, callback) {
     case "postQuestion":
       postQuestion(info, callback);
       break;
+    case "getQuestions":
+      getQuestions(info, callback);
+      break;
     case "unfollowQuestion":
       unfollowQuestion(info, callback);
       break;
   }
 };
+
 
 function postQuestion(info, callback) {
   var question_id = info.message.question_id;
@@ -101,13 +105,15 @@ function userQuestion(info, callback) {
 }
 
 function dashboardQuestion(info, callback) {
-  var email = info.body.email;
+  console.log(info.message)
+  var email = info.message.email;
   Profile.findOne({ email: email }, { topics: 1 }, function(err, userTopics) {
     console.log(userTopics);
     console.log(err);
     if (userTopics) {
       console.log(userTopics);
       Question.find({ topics: userTopics });
+      console.log("sfd9sdf")
     } else {
       const options = {
         page: 1,
