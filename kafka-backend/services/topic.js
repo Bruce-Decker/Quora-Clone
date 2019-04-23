@@ -22,7 +22,6 @@ exports.topicService = function topicService(info, callback) {
   }
 };
 
-<<<<<<< HEAD
 
 function getUserTopic(info, callback) {
    var email = info.email
@@ -37,8 +36,6 @@ function getUserTopic(info, callback) {
 }
 
 
-=======
->>>>>>> d4d8f7704d48132f83001709fa1a1f8a6705cf78
 function postTopic(info, callback) {
   var topic_id = info.message.topic_id;
   var topic_name = info.message.topic_name;
@@ -87,7 +84,6 @@ function searchTopic(info, callback) {
   });
 }
 
-<<<<<<< HEAD
 function folowTopic(info, callback){
   
   console.log(info.body);
@@ -118,40 +114,4 @@ function folowTopic(info, callback){
         })
      }
   })
-=======
-function getTopic(info, callback) {
-  Topic.find({}, function(err, docs) {
-    console.log(docs);
-    console.log(err);
-    if (docs) {
-      console.log(docs);
-      callback(null, docs);
-    } else {
-      console.log(err);
-      callback(err, "error");
-    }
-  });
-  function folowTopic(info, callback) {
-    console.log(`info.body`);
-    console.log(info.body);
-    var email = info.body.email;
-    var topic_id = info.body.topic_id;
-    var data = {
-      email: email
-    };
-
-    Topic.findOneAndUpdate(
-      { topic_id: topic_id },
-      { followers: data },
-      function(error, result) {
-        if (error) {
-          callback(error, "error");
-        } else {
-          console.log(result);
-          callback(null, data);
-        }
-      }
-    );
-  }
->>>>>>> d4d8f7704d48132f83001709fa1a1f8a6705cf78
 }
