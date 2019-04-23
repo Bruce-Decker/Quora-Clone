@@ -101,13 +101,21 @@ function userQuestion(info, callback) {
 }
 
 function dashboardQuestion(info, callback) {
-  var email = info.body.email;
-  Profile.findOne({ email: email }, { topics: 1 }, function(err, userTopics) {
-    console.log(userTopics);
+  var email = info.email;
+  let projection = {
+    answers: 0,
+    question_id: 0,
+    question: 0,
+    owner: 0,
+    followers: 0,
+    posted_date: 0
+  };
+  Profile.findOne({ email: email }, function(err, user) {
+    console.log(user);
     console.log(err);
-    if (userTopics) {
-      console.log(userTopics);
-      Question.find({ topics: userTopics }, (err, questions) => {
+    if (user) {
+      console.log(user);
+      Question.find({ topics: user.topics }, (err, questions) => {
         if (err) {
           callback(err, null);
         } else {
@@ -116,7 +124,7 @@ function dashboardQuestion(info, callback) {
       });
     } else {
       const options = {
-        page: info.body.pageno,
+        page: info.pageno,
         limit: 10
       };
       Question.paginate({}, options, (err, questions) => {
