@@ -46,7 +46,8 @@ class Answer extends Component {
     });
     axios
       .post("/answer", {
-        currentElem: document.getElementById("editable").outerHTML
+        currentElem: document.getElementById("editable").outerHTML,
+        question_id: "1"
       })
       .then(res => {
         console.log("res....", res.data);

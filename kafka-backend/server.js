@@ -19,8 +19,9 @@ var question = require("./services/question");
 var inbox = require("./services/inbox");
 var content = require("./services/content");
 var answer = require("./services/answer");
-var answerTemp = require("./services/answerTemp");
+var createanswer = require("./services/createanswer");
 var getanswer = require("./services/getanswer");
+var fetchanswers = require("./services/fetchanswers");
 
 function handleTopicRequest(topic_name, fname) {
   //var topic_name = 'root_topic';
@@ -57,14 +58,14 @@ function handleTopicRequest(topic_name, fname) {
           return;
         });
         break;
-      case "answerTemp":
-        answerTemp.handle_request(data.data, function(err, res) {
+      case "createanswer":
+        createanswer.handle_request(data.data, function(err, res) {
           response(data, res, producer);
           return;
         });
         break;
-      case "getanswer":
-        getanswer.handle_request(data.data, function(err, res) {
+      case "fetchanswers":
+        fetchanswers.handle_request(data.data, function(err, res) {
           response(data, res, producer);
           return;
         });
@@ -100,5 +101,6 @@ handleTopicRequest("question", question);
 handleTopicRequest("answer", answer);
 handleTopicRequest("inbox", inbox);
 handleTopicRequest("content", content);
-handleTopicRequest("answerTemp", answerTemp);
+handleTopicRequest("createanswer", createanswer);
 handleTopicRequest("getanswer", getanswer);
+handleTopicRequest("fetchanswers", fetchanswers);

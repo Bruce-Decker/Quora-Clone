@@ -46,33 +46,4 @@ router.post("/login", function(req, res) {
   });
 });
 
-router.post("/answer", function(req, res) {
-  console.log("Sdfdfs", req.body);
-  console.log(req.body);
-  kafka.make_request("answerTemp", { body: req.body.currentElem }, function(
-    error,
-    result
-  ) {
-    if (error) {
-      console.log(error);
-      res.status(400).json({ msg: "cannot login user" });
-    } else {
-      res.send(result);
-    }
-  });
-});
-
-router.get("/answer", function(req, res) {
-  // console.log("Sdfdfs", req.body);
-  //  console.log(req.body);
-  kafka.make_request("getanswer", {}, function(error, result) {
-    if (error) {
-      console.log(error);
-      res.status(400).json({ msg: "cannot login user" });
-    } else {
-      res.send(result);
-    }
-  });
-});
-
 module.exports = router;
