@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 var mongoosePaginate = require("mongoose-paginate");
 const Schema = mongoose.Schema;
 
-const QuestionSchema = new Schema({
+var QuestionSchema = new Schema({
   question_id: {
     type: String
   },
