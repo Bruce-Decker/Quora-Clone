@@ -1,4 +1,5 @@
 const Question = require("../models/Question");
+const Answer = require("../models/Answer");
 const Profile = require("../models/Profile");
 
 exports.answerService = function answerService(info, callback) {
@@ -12,8 +13,15 @@ exports.answerService = function answerService(info, callback) {
     case "downvoteAnswer":
       downvoteAnswer(info, callback);
       break;
+    case "addComment":
+      addComment(info, callback);
+      break;
+    case "deleteComment":
+      deleteComment(info, callback);
+        break;
   }
 };
+
 function bookmarkAnswer(info, callback) {
   var answerid = info.message.answerid;
   Question.findOne({ "answers.answer_id": answerid }, function(err, question) {
@@ -100,4 +108,45 @@ function downvoteAnswer(info, callback) {
       callback(err, "error");
     }
   });
+
+
+
+function addComment(info, callback) {
+  var email = info.message.email;
+  var answer_id = info.message.answer_id;
+  var comment = info.message.comment;
+  var data = {
+    email,
+    answer_id,
+    comment
+  }
+
+  Answer.findOneAndUpdate({answer_id: answer_id}, {$push: {comments: data}}, (error, result) => {
+    if (error) {
+        callback(error,"error");
+    } else {
+        callback(null, data);
+    }
+  })
+}
+
+function deleteComment(info, callback) {
+  var email = info.message.email;
+  var answer_id = info.message.answer_id;
+  var comment = info.message.comment;
+  var data = {
+    email,
+    answer_id,
+    comment
+  }
+
+  Answer.findOneAndUpdate({answer_id: answer_id}, {$pull: {comments: data}}, function(error, result) {
+    if (error) {
+      callback(error,"error");
+    } else {
+        console.log(result)
+        callback(null, data);
+     }
+  })
+
 }

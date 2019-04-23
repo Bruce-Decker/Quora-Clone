@@ -1,4 +1,6 @@
 const Topic = require("../models/Topic");
+const Profile = require("../models/Profile");
+var async = require("async");
 
 exports.topicService = function topicService(info, callback) {
   switch (info.method) {
@@ -14,8 +16,22 @@ exports.topicService = function topicService(info, callback) {
     case "folowTopic":
       folowTopic(info, callback);
       break;
+    case "getUserTopic":
+      getUserTopic(info, callback);
+      break;
   }
 };
+
+function getUserTopic(info, callback) {
+  var email = info.email;
+  Profile.findOne({ email: email }, function(err, docs) {
+    if (docs) {
+      callback(null, docs);
+    } else {
+      callback(null, []);
+    }
+  });
+}
 
 function postTopic(info, callback) {
   var topic_id = info.message.topic_id;
@@ -83,7 +99,7 @@ function folowTopic(info, callback) {
   console.log(`info.body`);
   console.log(info.body);
   var email = info.body.email;
-  var topic_id = info.body.topic_id;
+  var topic_name = info.body.topic_name;
   var data = {
     email: email
   };

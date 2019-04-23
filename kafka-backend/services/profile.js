@@ -25,6 +25,7 @@ function createProfile(info, callback) {
    var career_information = info.message.career_information
    var description = info.message.description
    var profile_credential = info.message.profile_credential
+   
 
    var data = {
        first_name, 
