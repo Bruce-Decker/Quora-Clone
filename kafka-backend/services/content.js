@@ -1,4 +1,3 @@
-import { activeUser } from "../../frontend/src/actions/authActions";
 var AnswerModel = require("../models/Answer");
 //var BookmarkModel = require("../models/Bookmark");
 var ProfileModel = require("../models/Profile");

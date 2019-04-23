@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import { registerUser } from "../../actions/authActions";
 import { Link } from "react-router-dom";
 import "./Register.css";
-import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
 
 class Register extends Component {
   constructor() {
