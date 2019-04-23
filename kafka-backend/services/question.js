@@ -17,11 +17,15 @@ exports.questionService = function questionService(info, callback) {
     case "postQuestion":
       postQuestion(info, callback);
       break;
+    case "getQuestions":
+      getQuestions(info, callback);
+      break;
     case "unfollowQuestion":
       unfollowQuestion(info, callback);
       break;
   }
 };
+
 
 function postQuestion(info, callback) {
   var question_id = info.message.question_id;
@@ -101,6 +105,7 @@ function userQuestion(info, callback) {
 }
 
 function dashboardQuestion(info, callback) {
+<<<<<<< HEAD
   var email = info.email;
   let projection = {
     answers: 0,
@@ -112,6 +117,12 @@ function dashboardQuestion(info, callback) {
   };
   Profile.findOne({ email: email }, function(err, user) {
     console.log(user);
+
+  console.log(info.message)
+  var email = info.message.email;
+  Profile.findOne({ email: email }, { topics: 1 }, function(err, userTopics) {
+    console.log(userTopics);
+
     console.log(err);
     if (user) {
       console.log(user);

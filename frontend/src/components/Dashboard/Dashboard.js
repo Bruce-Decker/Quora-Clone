@@ -9,7 +9,8 @@ class Dashboard extends Component {
     constructor() {
         super();
         this.state = {
-            topics: []
+            topics: [],
+            test: []
         }
         
          
@@ -18,9 +19,12 @@ class Dashboard extends Component {
    async componentDidMount() {
         
          var response = await axios.get('/topic/getUserTopic/' +  this.props.auth.user.email)
-         this.setState({
-             topics: response.data.topics
-         })
+         console.log(response)
+         if (response.data.topics) {
+            this.setState({
+               topics: response.data.topics
+            })
+        } 
          console.log(response.data)
     
        
