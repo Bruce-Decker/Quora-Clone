@@ -2,8 +2,29 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import './Dashboard.css'
 import Navbar from '../Navbar/Navbar'
+import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 class Dashboard extends Component {
+    constructor() {
+        super();
+        this.state = {
+            topics: []
+        }
+        
+         
+    }
+
+   async componentDidMount() {
+        
+         var response = await axios.get('/topic/getUserTopic/' +  this.props.auth.user.email)
+         this.setState({
+             topics: response.data.topics
+         })
+         console.log(response.data)
+    
+       
+    }
 
     render() {
 
@@ -34,20 +55,25 @@ class Dashboard extends Component {
 
             <ul className="switcher">
             <li className="switcher_item switcher_item_with_image is_active">
-                <a className="link" href="/">
+                <Link className="link" to="/dashboard">
                     <div className="switcher_item_image u-flex-none u-relative is_active"><div className="u-bg--square u-bg--center switcher_item_icon u-border-radius--2" style={{backgroundImage: 'url(https://qsf2.c7.quoracdn.net/-3-images.icons.mobile_feed_switcher.feed_3x.png-26-94e21de5c18cba55.png)'}} /></div>
                     <div className="label">Feed</div>
-                </a>
+                </Link>
             </li>
-            <li className="switcher_item switcher_item_with_image">
-                <a className="link" href="/topic/Inventors">
+         
+
+            {this.state.topics.map(topic => 
+                <li className="switcher_item switcher_item_with_image">
+                <a className="link" href="/topic/Tech-News-and-Journalism">
                     <div className="switcher_item_image u-flex-none u-relative">
-                    <div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-thumb-t-15309-100-JGFZ0aNoyZ5cVkc870peji170soyXK6z.jpeg)'}} />
+                    <div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-thumb-t-19293-100-dwvOEDzBr8zVXCxi30VD03rrlXAY0Aqq.jpeg)'}} />
                     <div className="u-absolute unread_dot u-border-radius--ellipse" /></div>
-                    <div className="label">Inventors</div>
+                    <div className="label">{topic.topic_name}</div>
                 </a>
             </li>
-            <li className="switcher_item switcher_item_with_image">
+
+            )}
+            {/* <li className="switcher_item switcher_item_with_image">
                 <a className="link" href="/topic/Technological-Innovation">
                     <div className="switcher_item_image u-flex-none u-relative">
                     <div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-thumb-t-226820-100-dxnaqebsiamigebllcqellmfhuvqtjzs.jpeg)'}} />
@@ -70,8 +96,8 @@ class Dashboard extends Component {
                         <div className="u-absolute unread_dot u-border-radius--ellipse" /></div>
                         <div className="label">Latest Technology</div>
                 </a>
-            </li>
-            <li className="switcher_item switcher_item_with_image"><a className="link" href="/topic/Current-Events-in-Technology"><div className="switcher_item_image u-flex-none u-relative"><div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-thumb-t-2177-100-JiR07D1TQSfeQzRvWXomVaY4Poj2f8Yb.jpeg)'}} /><div className="u-absolute unread_dot u-border-radius--ellipse" /></div><div className="label">Current Events in Technology</div></a></li><li className="switcher_item switcher_item_with_image"><a className="link" href="/topic/Mathematics"><div className="switcher_item_image u-flex-none u-relative"><div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-thumb-t-951-100-N3P1sk6vsq72as9qqwA30zUMvxgBPWJ1.jpeg)'}} /><div className="u-absolute unread_dot u-border-radius--ellipse" /></div><div className="label">Mathematics</div></a></li><li className="switcher_item switcher_item_with_image"><a className="link" href="/topic/Psychology"><div className="switcher_item_image u-flex-none u-relative"><div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-thumb-t-1913-100-B8JrwaVauFzsaTSqXDqoWLCXzQb2mTE9.jpeg)'}} /><div className="u-absolute unread_dot u-border-radius--ellipse" /></div><div className="label">Psychology</div></a></li><li className="switcher_item switcher_item_with_image"><a className="link" href="/topic/Movies"><div className="switcher_item_image u-flex-none u-relative"><div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-thumb-t-843-100-W7FzODceTO2aQmp8D7E4rKZ8YgSv21eR.jpeg)'}} /><div className="u-absolute unread_dot u-border-radius--ellipse" /></div><div className="label">Movies</div></a></li><li className="switcher_item switcher_item_with_image"><a className="link" href="/topic/Science"><div className="switcher_item_image u-flex-none u-relative"><div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph.fs.quoracdn.net/main-answer_header_graphic_v0_931.png)'}} /><div className="u-absolute unread_dot u-border-radius--ellipse" /></div><div className="label">Science</div></a></li><li className="switcher_item switcher_item_with_image"><a className="link" href="/topic/Technology"><div className="switcher_item_image u-flex-none u-relative"><div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-answer_header_graphic_v0_2177.png)'}} /><div className="u-absolute unread_dot u-border-radius--ellipse" /></div><div className="label">Technology</div></a></li><li className="switcher_item switcher_item_with_image"><a className="link" href="/sessions"><div className="switcher_item_image u-flex-none u-relative"><div className="u-bg--square u-bg--center switcher_item_icon u-border-radius--2" style={{backgroundImage: 'url(https://qsf2.c7.quoracdn.net/-3-images.icons.mobile_feed_switcher.ama_microphone_3x.png-26-062920c66bb560d3.png)'}} /></div><div className="label">Sessions</div></a></li><li className="switcher_item switcher_item_with_image"><a className="link" href="/bookmarks"><div className="switcher_item_image u-flex-none u-relative"><div className="u-bg--square u-bg--center switcher_item_icon u-border-radius--2" style={{backgroundImage: 'url(https://qsf2.c7.quoracdn.net/-3-images.icons.mobile_feed_switcher.bookmark_3x.png-26-fd5bb1ef5737065f.png)'}} /></div><div className="label">Bookmarks</div></a></li>
+            </li> */}
+        
             </ul>
 
 
@@ -370,7 +396,7 @@ class Dashboard extends Component {
    </div>
    <div id="wnuFD7sM21" /></div>
 </div>
-<div className="layout_3col_right home_feed_right_col" id="__w2_w2OzgLAU2_right_col">
+{/* <div className="layout_3col_right home_feed_right_col" id="__w2_w2OzgLAU2_right_col">
    <div className="fixable_clone" style={{height: '357px', width: '172px', margin: '0px'}}><div className="fixed_sidebar fixable_fixed" style={{top: '83px', position: 'fixed', width: '172px'}}>
    <div className="zapdos_sidebar_wrapper">
       <div id="whIqsbBW1">
@@ -429,14 +455,15 @@ class Dashboard extends Component {
                                        </div>
                                     </div>
                                     <div style={{display: 'block', clear: 'both'}} />
-                                 </div>
-                              </div>
+                                 
+                                   </div>
+                                </div>
                            </div>
                         </div>
                      </div>
                   </div>
                </div>
-            </div>
+            </div> */}
          </div>
       </div>
    </div>
