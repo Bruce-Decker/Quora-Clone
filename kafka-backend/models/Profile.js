@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const ProfileSchema = new Schema({
+var ProfileSchema = new Schema({
   first_name: {
     type: String,
     required: true
@@ -45,10 +45,67 @@ const ProfileSchema = new Schema({
     type: String,
     required: true
   },
+  topics: [{ topic_name: { type: String } }],
   time: {
     type: String,
     required: true
-  }
+  },
+  revievedMessage:[
+        { 
+            sender_email: {
+                type: String,
+                required: true
+            },
+            receiver_email: {
+                type: String,
+                required: true
+            },
+            message: {
+                type: String,
+                required: true
+            },
+            isRead: {
+                type: Boolean,
+                required: true
+            }, 
+            time: {
+                type: String,
+                required: true
+            },
+            isDeleted: {
+                type: Boolean,
+                required: true
+            }
+        }
+     ],
+     sentMessages:[
+            { 
+            sender_email: {
+                type: String,
+                required: true
+            },
+            receiver_email: {
+                type: String,
+                required: true
+            },
+            message: {
+                type: String,
+                required: true
+            },
+            isRead: {
+                type: Boolean,
+                required: true
+            }, 
+            time: {
+                type: String,
+                required: true
+            },
+            isDeleted: {
+                type: Boolean,
+                required: true
+            }
+        }
+     ]
 });
 
 module.exports = Profile = mongoose.model("profile", ProfileSchema);

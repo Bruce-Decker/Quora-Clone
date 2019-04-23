@@ -1,6 +1,6 @@
 import { activeUser } from "../../frontend/src/actions/authActions";
 var AnswerModel = require("../models/Answer");
-var BookmarkModel = require("../models/Bookmark");
+//var BookmarkModel = require("../models/Bookmark");
 var ProfileModel = require("../models/Profile");
 var QuestionModel = require("../models/Question");
 var followersModel = require("../models/UserFollowers");

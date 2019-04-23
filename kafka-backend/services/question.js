@@ -1,4 +1,5 @@
 const Question = require("../models/Question");
+const Profile = require("../models/Profile");
 
 exports.questionService = function questionService(info, callback) {
   switch (info.method) {
@@ -8,8 +9,66 @@ exports.questionService = function questionService(info, callback) {
     case "userQuestion":
       userQuestion(info, callback);
       break;
+    case "followQuestion":
+      folowQuestion(info, callback);
+    case "dashboardQuestion":
+      dashboardQuestion(info, callback);
+      break;
+    case "postQuestion":
+      postQuestion(info, callback);
+      break;
+    case "unfollowQuestion":
+      unfollowQuestion(info, callback);
+      break;
   }
 };
+
+function postQuestion(info, callback) {
+  var question_id = info.message.question_id;
+  var question = info.message.question;
+  var topics = info.message.topics;
+  var owner = info.message.owner;
+  var followers = info.message.followers;
+  var answers = info.message.answers;
+  var postedDate = info.message.postedDate;
+  var data = {
+    question_id,
+    question,
+    topics,
+    owner,
+    followers,
+    answers,
+    postedDate
+  };
+
+  Question.findOne({ question_id: question_id }, function(err, docs) {
+    if (docs) {
+      Question.findOneAndUpdate({ question_id: question_id }, data, function(
+        err,
+        result
+      ) {
+        if (err) {
+          //res.send("Fail")
+          callback(null, "Fail");
+        } else {
+          console.log(result);
+          //res.send("Update successfully")
+          callback(null, "Update successfully");
+        }
+      });
+    } else {
+      Question.create(data, function(err, newlyCreated) {
+        if (err) {
+          //res.send({msg: "False"});
+          callback(null, { msg: "False" });
+        } else {
+          //res.send({msg: "True"});
+          callback(null, { msg: "True" });
+        }
+      });
+    }
+  });
+}
 
 function searchQuestion(info, callback) {
   var question = info.message.question;
@@ -39,4 +98,65 @@ function userQuestion(info, callback) {
       callback(err, "error");
     }
   });
+}
+
+function dashboardQuestion(info, callback) {
+  var email = info.body.email;
+  Profile.findOne({ email: email }, { topics: 1 }, function(err, userTopics) {
+    console.log(userTopics);
+    console.log(err);
+    if (userTopics) {
+      console.log(userTopics);
+      Question.find({ topics: userTopics });
+    } else {
+      const options = {
+        page: 1,
+        limit: 10
+      };
+      Question.paginate({}, options, (err, questions) => {
+        if (err) {
+          callback(err, null);
+        } else {
+          callback(null, questions);
+        }
+      });
+    }
+  });
+}
+
+function folowQuestion(info, callback) {
+  console.log(`info.body`);
+  console.log(info.body);
+  var email = info.body.email;
+  var question_id = info.body.question_id;
+  var data = {
+    email:email
+  }
+
+  Question.findOneAndUpdate({question_id: question_id}, {$push: {followers: data}}, (error, result) => {
+    if (error) {
+        callback(error,"error");
+    } else {
+        callback(null, data);
+    }
+  })
+}
+
+function unfollowQuestion(info, callback) {
+  console.log(`info.body`);
+  console.log(info.body);
+  var email = info.body.email;
+  var question_id = info.body.question_id;
+  var data = {
+    email:email
+  }
+
+  Question.findOneAndUpdate({question_id: question_id}, {$pull: {followers: data}}, function(error, result) {
+    if (error) {
+      callback(error,"error");
+    } else {
+        console.log(result)
+        callback(null, data);
+     }
+  })
 }
