@@ -18,6 +18,7 @@ var userFollowing = require("./services/userFollowing");
 var question = require("./services/question");
 var inbox = require("./services/inbox");
 var content = require("./services/content");
+var messages = require("./services/message");
 var answer = require("./services/answer");
 
 function handleTopicRequest(topic_name, fname) {
@@ -55,6 +56,12 @@ function handleTopicRequest(topic_name, fname) {
           return;
         });
         break;
+      case "message":
+        messages.messageService(data.data, function(err, res) {
+          response(data, res, producer);
+          return;
+        });
+        break;
     }
   });
 }
@@ -86,3 +93,4 @@ handleTopicRequest("question", question);
 handleTopicRequest("answer", answer);
 handleTopicRequest("inbox", inbox);
 handleTopicRequest("content", content);
+handleTopicRequest("message", messages);

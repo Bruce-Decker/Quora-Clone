@@ -29,47 +29,52 @@ class Dashboard extends Component {
 <div id="w2OzgLAU31">
 <div id="w2OzgLAU33">
 <div className="mweb_switcher" id="mweb_sub_header">
-<ul className="switcher">
-   <li className="switcher_item switcher_item_with_image is_active">
-      <a className="link" href="/">
-         <div className="switcher_item_image u-flex-none u-relative is_active"><div className="u-bg--square u-bg--center switcher_item_icon u-border-radius--2" style={{backgroundImage: 'url(https://qsf2.c7.quoracdn.net/-3-images.icons.mobile_feed_switcher.feed_3x.png-26-94e21de5c18cba55.png)'}} /></div>
-         <div className="label">Feed</div>
-      </a>
-   </li>
-   <li className="switcher_item switcher_item_with_image">
-      <a className="link" href="/topic/Inventors">
-         <div className="switcher_item_image u-flex-none u-relative">
-         <div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-thumb-t-15309-100-JGFZ0aNoyZ5cVkc870peji170soyXK6z.jpeg)'}} />
-         <div className="u-absolute unread_dot u-border-radius--ellipse" /></div>
-         <div className="label">Inventors</div>
-      </a>
-   </li>
-   <li className="switcher_item switcher_item_with_image">
-      <a className="link" href="/topic/Technological-Innovation">
-         <div className="switcher_item_image u-flex-none u-relative">
-         <div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-thumb-t-226820-100-dxnaqebsiamigebllcqellmfhuvqtjzs.jpeg)'}} />
-         <div className="u-absolute unread_dot u-border-radius--ellipse" /></div>
-         <div className="label">Technological Innovation</div>
-      </a>
-   </li>
-   <li className="switcher_item switcher_item_with_image">
-      <a className="link" href="/topic/Tech-News-and-Journalism">
-         <div className="switcher_item_image u-flex-none u-relative">
-         <div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-thumb-t-19293-100-dwvOEDzBr8zVXCxi30VD03rrlXAY0Aqq.jpeg)'}} />
-         <div className="u-absolute unread_dot u-border-radius--ellipse" /></div>
-         <div className="label">Tech News and Journalism</div>
-      </a>
-   </li>
-   <li className="switcher_item switcher_item_with_image">
-      <a className="link" href="/topic/Latest-Technology-1">
-         <div className="switcher_item_image u-flex-none u-relative">
-            <div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-thumb-t-375821-100-QJDgmnrkAqU6tNC39GOzLqN7N7MbPPAd.jpeg)'}} />
-            <div className="u-absolute unread_dot u-border-radius--ellipse" /></div>
-            <div className="label">Latest Technology</div>
-      </a>
-   </li>
-   <li className="switcher_item switcher_item_with_image"><a className="link" href="/topic/Current-Events-in-Technology"><div className="switcher_item_image u-flex-none u-relative"><div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-thumb-t-2177-100-JiR07D1TQSfeQzRvWXomVaY4Poj2f8Yb.jpeg)'}} /><div className="u-absolute unread_dot u-border-radius--ellipse" /></div><div className="label">Current Events in Technology</div></a></li><li className="switcher_item switcher_item_with_image"><a className="link" href="/topic/Mathematics"><div className="switcher_item_image u-flex-none u-relative"><div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-thumb-t-951-100-N3P1sk6vsq72as9qqwA30zUMvxgBPWJ1.jpeg)'}} /><div className="u-absolute unread_dot u-border-radius--ellipse" /></div><div className="label">Mathematics</div></a></li><li className="switcher_item switcher_item_with_image"><a className="link" href="/topic/Psychology"><div className="switcher_item_image u-flex-none u-relative"><div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-thumb-t-1913-100-B8JrwaVauFzsaTSqXDqoWLCXzQb2mTE9.jpeg)'}} /><div className="u-absolute unread_dot u-border-radius--ellipse" /></div><div className="label">Psychology</div></a></li><li className="switcher_item switcher_item_with_image"><a className="link" href="/topic/Movies"><div className="switcher_item_image u-flex-none u-relative"><div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-thumb-t-843-100-W7FzODceTO2aQmp8D7E4rKZ8YgSv21eR.jpeg)'}} /><div className="u-absolute unread_dot u-border-radius--ellipse" /></div><div className="label">Movies</div></a></li><li className="switcher_item switcher_item_with_image"><a className="link" href="/topic/Science"><div className="switcher_item_image u-flex-none u-relative"><div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph.fs.quoracdn.net/main-answer_header_graphic_v0_931.png)'}} /><div className="u-absolute unread_dot u-border-radius--ellipse" /></div><div className="label">Science</div></a></li><li className="switcher_item switcher_item_with_image"><a className="link" href="/topic/Technology"><div className="switcher_item_image u-flex-none u-relative"><div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-answer_header_graphic_v0_2177.png)'}} /><div className="u-absolute unread_dot u-border-radius--ellipse" /></div><div className="label">Technology</div></a></li><li className="switcher_item switcher_item_with_image"><a className="link" href="/sessions"><div className="switcher_item_image u-flex-none u-relative"><div className="u-bg--square u-bg--center switcher_item_icon u-border-radius--2" style={{backgroundImage: 'url(https://qsf2.c7.quoracdn.net/-3-images.icons.mobile_feed_switcher.ama_microphone_3x.png-26-062920c66bb560d3.png)'}} /></div><div className="label">Sessions</div></a></li><li className="switcher_item switcher_item_with_image"><a className="link" href="/bookmarks"><div className="switcher_item_image u-flex-none u-relative"><div className="u-bg--square u-bg--center switcher_item_icon u-border-radius--2" style={{backgroundImage: 'url(https://qsf2.c7.quoracdn.net/-3-images.icons.mobile_feed_switcher.bookmark_3x.png-26-fd5bb1ef5737065f.png)'}} /></div><div className="label">Bookmarks</div></a></li>
-</ul>
+
+
+
+            <ul className="switcher">
+            <li className="switcher_item switcher_item_with_image is_active">
+                <a className="link" href="/">
+                    <div className="switcher_item_image u-flex-none u-relative is_active"><div className="u-bg--square u-bg--center switcher_item_icon u-border-radius--2" style={{backgroundImage: 'url(https://qsf2.c7.quoracdn.net/-3-images.icons.mobile_feed_switcher.feed_3x.png-26-94e21de5c18cba55.png)'}} /></div>
+                    <div className="label">Feed</div>
+                </a>
+            </li>
+            <li className="switcher_item switcher_item_with_image">
+                <a className="link" href="/topic/Inventors">
+                    <div className="switcher_item_image u-flex-none u-relative">
+                    <div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-thumb-t-15309-100-JGFZ0aNoyZ5cVkc870peji170soyXK6z.jpeg)'}} />
+                    <div className="u-absolute unread_dot u-border-radius--ellipse" /></div>
+                    <div className="label">Inventors</div>
+                </a>
+            </li>
+            <li className="switcher_item switcher_item_with_image">
+                <a className="link" href="/topic/Technological-Innovation">
+                    <div className="switcher_item_image u-flex-none u-relative">
+                    <div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-thumb-t-226820-100-dxnaqebsiamigebllcqellmfhuvqtjzs.jpeg)'}} />
+                    <div className="u-absolute unread_dot u-border-radius--ellipse" /></div>
+                    <div className="label">Technological Innovation</div>
+                </a>
+            </li>
+            <li className="switcher_item switcher_item_with_image">
+                <a className="link" href="/topic/Tech-News-and-Journalism">
+                    <div className="switcher_item_image u-flex-none u-relative">
+                    <div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-thumb-t-19293-100-dwvOEDzBr8zVXCxi30VD03rrlXAY0Aqq.jpeg)'}} />
+                    <div className="u-absolute unread_dot u-border-radius--ellipse" /></div>
+                    <div className="label">Tech News and Journalism</div>
+                </a>
+            </li>
+            <li className="switcher_item switcher_item_with_image">
+                <a className="link" href="/topic/Latest-Technology-1">
+                    <div className="switcher_item_image u-flex-none u-relative">
+                        <div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-thumb-t-375821-100-QJDgmnrkAqU6tNC39GOzLqN7N7MbPPAd.jpeg)'}} />
+                        <div className="u-absolute unread_dot u-border-radius--ellipse" /></div>
+                        <div className="label">Latest Technology</div>
+                </a>
+            </li>
+            <li className="switcher_item switcher_item_with_image"><a className="link" href="/topic/Current-Events-in-Technology"><div className="switcher_item_image u-flex-none u-relative"><div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-thumb-t-2177-100-JiR07D1TQSfeQzRvWXomVaY4Poj2f8Yb.jpeg)'}} /><div className="u-absolute unread_dot u-border-radius--ellipse" /></div><div className="label">Current Events in Technology</div></a></li><li className="switcher_item switcher_item_with_image"><a className="link" href="/topic/Mathematics"><div className="switcher_item_image u-flex-none u-relative"><div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-thumb-t-951-100-N3P1sk6vsq72as9qqwA30zUMvxgBPWJ1.jpeg)'}} /><div className="u-absolute unread_dot u-border-radius--ellipse" /></div><div className="label">Mathematics</div></a></li><li className="switcher_item switcher_item_with_image"><a className="link" href="/topic/Psychology"><div className="switcher_item_image u-flex-none u-relative"><div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-thumb-t-1913-100-B8JrwaVauFzsaTSqXDqoWLCXzQb2mTE9.jpeg)'}} /><div className="u-absolute unread_dot u-border-radius--ellipse" /></div><div className="label">Psychology</div></a></li><li className="switcher_item switcher_item_with_image"><a className="link" href="/topic/Movies"><div className="switcher_item_image u-flex-none u-relative"><div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-thumb-t-843-100-W7FzODceTO2aQmp8D7E4rKZ8YgSv21eR.jpeg)'}} /><div className="u-absolute unread_dot u-border-radius--ellipse" /></div><div className="label">Movies</div></a></li><li className="switcher_item switcher_item_with_image"><a className="link" href="/topic/Science"><div className="switcher_item_image u-flex-none u-relative"><div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph.fs.quoracdn.net/main-answer_header_graphic_v0_931.png)'}} /><div className="u-absolute unread_dot u-border-radius--ellipse" /></div><div className="label">Science</div></a></li><li className="switcher_item switcher_item_with_image"><a className="link" href="/topic/Technology"><div className="switcher_item_image u-flex-none u-relative"><div className="u-bg--square u-bg--center u-bg--cover u-border-radius--2" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-answer_header_graphic_v0_2177.png)'}} /><div className="u-absolute unread_dot u-border-radius--ellipse" /></div><div className="label">Technology</div></a></li><li className="switcher_item switcher_item_with_image"><a className="link" href="/sessions"><div className="switcher_item_image u-flex-none u-relative"><div className="u-bg--square u-bg--center switcher_item_icon u-border-radius--2" style={{backgroundImage: 'url(https://qsf2.c7.quoracdn.net/-3-images.icons.mobile_feed_switcher.ama_microphone_3x.png-26-062920c66bb560d3.png)'}} /></div><div className="label">Sessions</div></a></li><li className="switcher_item switcher_item_with_image"><a className="link" href="/bookmarks"><div className="switcher_item_image u-flex-none u-relative"><div className="u-bg--square u-bg--center switcher_item_icon u-border-radius--2" style={{backgroundImage: 'url(https://qsf2.c7.quoracdn.net/-3-images.icons.mobile_feed_switcher.bookmark_3x.png-26-fd5bb1ef5737065f.png)'}} /></div><div className="label">Bookmarks</div></a></li>
+            </ul>
+
+
 </div></div></div></div></div></div></div>
 <div className="layout_3col_center">
 <div id="w2OzgLAU29" />
@@ -77,16 +82,7 @@ class Dashboard extends Component {
 <div id="w2OzgLAU35" />
 <div className="PagedListFoo HomeMultifeed Multifeed unified" data-clog-metadata="{&quot;feed_page_type&quot;: 1, &quot;feed_page_data&quot;: 0}" id="__w2_w2OzgLAU9_paged_list">
 <div className="paged_list_wrapper" id="__w2_w2OzgLAU9_paged_list_wrapper">
-<div id="wnuFD7sM1">
-<div className="Bundle AskQuestionPromptBundle" data-clog-metadata="{&quot;feed_bundle_hash&quot;: &quot;7278565844370145228&quot;}">
-   <div className="main_feed singleton_bundle">
-      <div className="FeedAddQuestionPrompt AddQuestionPrompt">
-         <div className="user_asks_header"><span className="IdentityNameWithPhoto NameWithPhoto"><span id="wyWsLrMt9"><span className="photo_tooltip PhotoSpan Photo IdentityPhoto HoverMenu" id="__w2_wyWsLrMt10_link"><a href="/profile/Bruce-Decker-12" id="__w2_wyWsLrMt13_link"><img className="profile_photo_img" src="https://qph2.c7.quoracdn.net/main-thumb-782622776-50-izcdaymwbtomzguzorfwyoknxfqoqixc.jpeg" alt="Bruce Decker" height={50} width={50} /></a></span></span><span id="wyWsLrMt11"><span id="__w2_wyWsLrMt12_link"><a className="user" href="/profile/Bruce-Decker-12" action_mousedown="UserLinkClickthrough" id="__w2_wyWsLrMt12_name_link">Bruce Decker</a></span></span></span></div>
-         <a className="AskQuestionButton" href="#" id="__w2_wyWsLrMt5_button">What is your question or link?</a>
-      </div>
-      <div id="wyWsLrMt7" /></div>
-   </div>
-</div>
+
 <div id="wnuFD7sM4">
 <div className="AnswerStoryBundle Bundle" data-clog-metadata="{&quot;feed_bundle_hash&quot;: &quot;7193063593613012604&quot;}">
 <div className="main_feed singleton_bundle">
@@ -98,59 +94,18 @@ class Dashboard extends Component {
 <div className="feedback_wrapper hidden" id="__w2_wOqAWcfd8_quora_share_feedback" />
 <div className="feedback_wrapper hidden negative_action" id="__w2_wOqAWcfd8_negative_feedback_options" />
 <div className="feedback_wrapper hidden negative_action" id="__w2_wOqAWcfd8_negative_feedback_message" />
-<div className="AnswerFeedStory FeedStory feed_item" id="__w2_wOqAWcfd8_item">
-   <div className="EventHeader many_faces pass_color_to_child_links FeedReason TopicAnswerWrittenReason">
-      <div className="reason_main">
-         <div className="reason_text_and_icon">
-            Answer<span className="topic"><span className="bullet"> · </span></span>
-            <div className="TopicListItem" id="__w2_wOqAWcfd16_topic_list_item">
-               <div className="u-inline-block u-white-space--nowrap">
-                  <div id="wOqAWcfd20">
-                     <div className="hover_menu hidden white_bg show_nub" id="__w2_wOqAWcfd21_menu">
-                        <div className="hover_menu_contents" id="__w2_wOqAWcfd21_menu_contents"> </div>
-                     </div>
-                     <a className="TopicNameLink HoverMenu topic_name" href="/topic/Psychology" action_mousedown="TopicLinkClickthrough" id="__w2_wOqAWcfd21_link"><span className="name_text"><span id="wOqAWcfd24"><span className="TopicNameSpan TopicName" id="__w2_wOqAWcfd25_card">Psychology</span></span></span></a>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <div className="reason_overflow">
-         <div className="u-absolute u-absolute--center u-zindex--2" id="__w2_wOqAWcfd17_close">
-            <a className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only" href="#" role="button" aria-label="Hide" id="__w2_wOqAWcfd23_button">
-               <div className="ui_button_inner" id="__w2_wOqAWcfd23_inner">
-                  <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                     <div id="__w2_wOqAWcfd23_icon">
-                        <span className="ui_button_icon" aria-hidden="true">
-                           <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-                              <g id="small_close" className="icon_svg-stroke" fill="none" fillRule="evenodd" strokeLinecap="round" stroke="#666666" strokeWidth="1.5">
-                                 <path d="M12,6 L12,18" transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) " />
-                                 <path d="M18,12 L6,12" transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) " />
-                              </g>
-                           </svg>
-                        </span>
-                     </div>
-                  </div>
-               </div>
-            </a>
-         </div>
-      </div>
+
+
+
    </div>
-   <span id="__w2_wOqAWcfd11_answer_story">
-    
-   </span>
-   <span className="hidden" id="__w2_wOqAWcfd11_question_answer_story_editable" /><div className="Toggle ToggleAnswerFooterWrapper SimpleToggle" id="__w2_wOqAWcfd14__truncated" /><div className="Toggle ToggleAnswerFooterWrapper SimpleToggle hidden" id="__w2_wOqAWcfd14__expanded" /></div></div></div></div></div></div>
+   </div>
+   </div>
+   </div>
+   </div>
 </div>
-<div id="wnuFD7sM7"><div className="Bundle" data-clog-metadata="{&quot;feed_bundle_hash&quot;: &quot;5563072535793998590&quot;}"><div className="main_feed singleton_bundle"><div className="multifeed_bundle_story"><div id="wpq5vtwL28"><div className="u-inherit" data-clog-metadata="{&quot;feed_story_hash&quot;: &quot;7276622664976078071&quot;}"><div className="feedback_wrapper hidden" id="__w2_wpq5vtwL30_question_feedback" /><div className="FeedStory AnswerFeedStory feed_item" id="__w2_wpq5vtwL30_item"><span><div className="gtugbwwoamfmhktiyyjh" id="__w2_wpq5vtwL32_fzpakanqwogzgoqixuvk"><div className="rbmacscdldvqygakhytb bnlgvcstcrcmutblkjhg yymlhbvgcnplhtwjufdt tdhdjsnqiwanaejwtuuu"><div id="__w2_wpq5vtwL33_vezucoovmxaqtgfrjevl"><div className="lykcyalyqnhwgocbioik" /><div className="ijipxydcyvcanecrhatt"><a className="outpfeqgsskhjaexxyez veciwgamivtrbyohiznx" href="https://www.aha.io/software/product-roadmap/" target="_blank" rel="noopener nofollow" id="__w2_wpq5vtwL52_kpsavpqpeckacbbnprxr"><p className="nmhwocvnrmkppyprizpt">s<span style={{display: 'none'}}>NHmu</span>p<span style={{display: 'none'}}>yQfo</span>o<span style={{display: 'none'}}>Q</span>n<span style={{display: 'none'}}>Bw</span>s<span style={{display: 'none'}}>ka</span>o<span style={{display: 'none'}}>mY</span>r<span style={{display: 'none'}}>rI</span>e<span style={{display: 'none'}}>NxY</span>d<span style={{display: 'none'}}>qolP</span> <span style={{display: 'none'}}>sNUCH</span>b<span style={{display: 'none'}}>Tv</span>y<span style={{display: 'none'}}>ZEYM</span> <span style={{display: 'none'}}>Sp</span>A<span style={{display: 'none'}}>sYF</span>h<span style={{display: 'none'}}>IAbK</span>a<span style={{display: 'none'}}>IYB</span>!<span style={{display: 'none'}}>YQFk</span></p></a></div><div className="nyqekaobqrzmvsrvmmxc" id="__w2_wpq5vtwL35_close"><a className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only" href="#" role="button" aria-label="Close" id="__w2_wpq5vtwL48_button"><div className="ui_button_inner" id="__w2_wpq5vtwL48_inner"><div className="ui_button_icon_wrapper u-relative u-flex-inline"><div id="__w2_wpq5vtwL48_icon"><span className="ui_button_icon" aria-hidden="true"><svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-<g id="small_close" className="icon_svg-stroke" fill="none" fillRule="evenodd" strokeLinecap="round" stroke="#666666" strokeWidth="1.5">
-<path d="M12,6 L12,18" transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) " />
-<path d="M18,12 L6,12" transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) " />
-</g>
-</svg></span></div></div></div></a></div><div className="wekstnbjupluzdnqxaaj"><a className="outpfeqgsskhjaexxyez" href="https://www.aha.io/software/product-roadmap/" target="_blank" rel="noopener nofollow" id="__w2_wpq5vtwL36_pamqqczhgtbkbrklgdct"><div id="__w2_wpq5vtwL37_lrtdjsiqnyoawfwitymu"><div className="tkjovfchleqslawckoxb">What is the best product roadmap tool?</div></div></a><div className="u-flex content_flex"><div className="u-flex-2"><div className="zpuqypjzzvrhoaannbpb"><div className="htzsxkprybpcrgkmgkbc"><div className="icon_frame"><div id="__w2_wpq5vtwL38_jhbkgziwvgbfratjgjsi"><div className="account_logo_img" style={{backgroundImage: 'url("https://qph2.c7.quoracdn.net/main-qimg-67acaf035d3e829ee47bb53976f58b88")'}} /></div></div><div className="account_description"><div><a className="outpfeqgsskhjaexxyez veciwgamivtrbyohiznx" href="https://www.aha.io/software/product-roadmap/" target="_blank" rel="noopener nofollow" id="__w2_wpq5vtwL53_uyalrcnzvdueibplpauk"><p className="nmhwocvnrmkppyprizpt">Aha!</p></a><div className="teinrbcaokuiqeumpijf">S<span style={{display: 'none'}}>SCHeR</span>p<span style={{display: 'none'}}>N</span>o<span style={{display: 'none'}}>nVV</span>n<span style={{display: 'none'}}>bxS</span>s<span style={{display: 'none'}}>C</span>o<span style={{display: 'none'}}>l</span>r<span style={{display: 'none'}}>za</span>e<span style={{display: 'none'}}>l</span>d<span style={{display: 'none'}}>JNIhp</span></div></div></div></div></div><div className="u-flex"><div className="u-flex-2"><a className="outpfeqgsskhjaexxyez" href="https://www.aha.io/software/product-roadmap/" target="_blank" rel="noopener nofollow" id="__w2_wpq5vtwL40_wkjxilswdsquceibdwbb"><div id="__w2_wpq5vtwL41_tqbhkpckzogbwvjuiope"><div className="wviirzktyglsssfquffi">Build brilliant roadmaps in minutes. Trusted by over 250,000 users worldwide. Start a free 30-day trial.</div></div></a></div></div></div><div className="ieudvqyilfivrtnscwmr"><div className="u-flex"><div className="u-flex-2"><a className="outpfeqgsskhjaexxyez" href="https://www.aha.io/software/product-roadmap/" target="_blank" rel="noopener nofollow" id="__w2_wpq5vtwL42_eygeasutzmnmqhmzbpbj"><div id="__w2_wpq5vtwL43_nxpcnkndcjjsjvwxsuoa"><div className="u-flex-auto"><div className="xctgldfnrditxvdfwkyr" style={{backgroundImage: 'url("https://qph2.c7.quoracdn.net/main-qimg-16ab1c5bd6c0406dc6144c458606a81a")'}} /></div></div></a></div></div></div></div><div id="__w2_wpq5vtwL44_acfygtrygpushsbthhtt"><div className="czekpqkahlexgvrjrqkk"><a className="fzitnuyvntskzwiutwbx" href="https://www.aha.io/software/product-roadmap/" target="_blank" rel="noopener nofollow" id="__w2_wpq5vtwL51_danxmpxdosfqcqqjesbg">F<span style={{display: 'none'}}>ltHHb</span>r<span style={{display: 'none'}}>lC</span>e<span style={{display: 'none'}}>LjmpJ</span>e<span style={{display: 'none'}}>MNZNx</span> <span style={{display: 'none'}}>hdqZ</span>T<span style={{display: 'none'}}>wm</span>r<span style={{display: 'none'}}>Zk</span>i<span style={{display: 'none'}}>js</span>a<span style={{display: 'none'}}>B</span>l<span style={{display: 'none'}}>GVF</span> <span style={{display: 'none'}}>i</span>a<span style={{display: 'none'}}>j</span>t<span style={{display: 'none'}}>KZ</span> <span style={{display: 'none'}}>O</span>a<span style={{display: 'none'}}>Thmpx</span>h<span style={{display: 'none'}}>fPF</span>a<span style={{display: 'none'}}>tHMZ</span>.<span style={{display: 'none'}}>YrhH</span>i<span style={{display: 'none'}}>uf</span>o<span style={{display: 'none'}}>XF</span></a></div></div><div className="aahfxnsufnalcvfkntfj"><div id="wpq5vtwL45"><div className="icon_action_bar" id="__w2_wpq5vtwL46_action_bar"><div className="action_bar_inner u-flex"><div className="action_bar_inner_spacer u-margin-left--auto">&nbsp;</div><div className="overflow action_item overflow_link u-relative u-pointer-events--auto"><div className="overflow_link" id="__w2_wpq5vtwL46_overflow_link"><a className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only" href="#" role="button" aria-label="More options" id="__w2_wpq5vtwL50_button"><div className="ui_button_inner" id="__w2_wpq5vtwL50_inner"><div className="ui_button_icon_wrapper u-relative u-flex-inline"><div id="__w2_wpq5vtwL50_icon"><span className="ui_button_icon" aria-hidden="true"><svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-<g id="overflow" className="icon_svg-stroke" strokeWidth="1.5" stroke="#666" fill="none" fillRule="evenodd">
-<path d="M5,14 C3.8954305,14 3,13.1045695 3,12 C3,10.8954305 3.8954305,10 5,10 C6.1045695,10 7,10.8954305 7,12 C7,13.1045695 6.1045695,14 5,14 Z M12,14 C10.8954305,14 10,13.1045695 10,12 C10,10.8954305 10.8954305,10 12,10 C13.1045695,10 14,10.8954305 14,12 C14,13.1045695 13.1045695,14 12,14 Z M19,14 C17.8954305,14 17,13.1045695 17,12 C17,10.8954305 17.8954305,10 19,10 C20.1045695,10 21,10.8954305 21,12 C21,13.1045695 20.1045695,14 19,14 Z" />
-</g>
-</svg></span></div></div></div></a></div></div><div className="hover_menu hidden show_nub right_align fixed_menu_width no_body_attach" id="__w2_wpq5vtwL46_overflow_menu"><div className="hover_menu_contents lazy" id="__w2_wpq5vtwL46_overflow_menu_contents" /></div></div></div></div></div></div></div><div className="ovppzrzxcbazfobxuggz hidden" id="__w2_wpq5vtwL33_oustdrpzsvutuhiepcij"><div className="content_dismiss_title">You dismissed this ad.</div><div className="content_dismiss_body">The feedback you provide will help us show you more relevant content in the future.</div><a className="undo" id="__w2_wpq5vtwL33_enthfilsdphczllmgmny">Undo</a></div></div></div></span></div></div></div></div></div></div></div>
+
+
+
 <div id="wnuFD7sM10">
 <div className="ClickthroughBundle Bundle QuestionStoryBundle" data-clog-metadata="{&quot;feed_bundle_hash&quot;: &quot;7017303820097396363&quot;}">
 <div className="main_feed full_bundle">
@@ -327,7 +282,21 @@ class Dashboard extends Component {
 <g id="overflow" className="icon_svg-stroke" strokeWidth="1.5" stroke="#666" fill="none" fillRule="evenodd">
 <path d="M5,14 C3.8954305,14 3,13.1045695 3,12 C3,10.8954305 3.8954305,10 5,10 C6.1045695,10 7,10.8954305 7,12 C7,13.1045695 6.1045695,14 5,14 Z M12,14 C10.8954305,14 10,13.1045695 10,12 C10,10.8954305 10.8954305,10 12,10 C13.1045695,10 14,10.8954305 14,12 C14,13.1045695 13.1045695,14 12,14 Z M19,14 C17.8954305,14 17,13.1045695 17,12 C17,10.8954305 17.8954305,10 19,10 C20.1045695,10 21,10.8954305 21,12 C21,13.1045695 20.1045695,14 19,14 Z" />
 </g>
-</svg></span></div></div></div></a></div></div><div className="hover_menu hidden show_nub right_align fixed_menu_width no_body_attach" id="__w2_wMBpsM627_overflow_menu"><div className="hover_menu_contents lazy" id="__w2_wMBpsM627_overflow_menu_contents" /></div></div><div id="wyWsLrMt22"><div className="hidden answer_editor_wrapper" id="__w2_wyWsLrMt23_add_answer_editor_wrapper" /></div></div></div></div></div></div></div></div></div></div></div></div></div><div id="wnuFD7sM13"><div className="AnswerStoryBundle Bundle" data-clog-metadata="{&quot;feed_bundle_hash&quot;: &quot;5604222101795743386&quot;}"><div className="main_feed singleton_bundle"><div className="multifeed_bundle_story"><div id="wIrMUyjy6"><div className="u-inherit" data-clog-metadata="{&quot;feed_story_hash&quot;: &quot;8794457905264421782&quot;}"><div className="feedback_wrapper hidden" id="__w2_wIrMUyjy8_question_feedback" /><div className="feedback_wrapper hidden" id="__w2_wIrMUyjy8_answer_feedback" /><div className="feedback_wrapper hidden" id="__w2_wIrMUyjy8_quora_share_feedback" /><div className="feedback_wrapper hidden negative_action" id="__w2_wIrMUyjy8_negative_feedback_options" /><div className="feedback_wrapper hidden negative_action" id="__w2_wIrMUyjy8_negative_feedback_message" /><div className="AnswerFeedStory FeedStory feed_item" id="__w2_wIrMUyjy8_item"><div className="EventHeader many_faces pass_color_to_child_links FeedReason TopicAnswerWrittenReason"><div className="reason_main"><div className="reason_text_and_icon">Answer<span className="topic"><span className="bullet"> · </span></span><div className="TopicListItem" id="__w2_wIrMUyjy16_topic_list_item"><div className="u-inline-block u-white-space--nowrap"><div id="wIrMUyjy20"><div className="hover_menu hidden white_bg show_nub" id="__w2_wIrMUyjy21_menu"><div className="hover_menu_contents" id="__w2_wIrMUyjy21_menu_contents"> </div></div><a className="TopicNameLink HoverMenu topic_name" href="/topic/Technology" action_mousedown="TopicLinkClickthrough" id="__w2_wIrMUyjy21_link"><span className="name_text"><span id="wIrMUyjy24"><span className="TopicNameSpan TopicName" id="__w2_wIrMUyjy25_card">Technology</span></span></span></a></div></div></div></div></div><div className="reason_overflow"><div className="u-absolute u-absolute--center u-zindex--2" id="__w2_wIrMUyjy17_close"><a className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only" href="#" role="button" aria-label="Hide" id="__w2_wIrMUyjy23_button"><div className="ui_button_inner" id="__w2_wIrMUyjy23_inner"><div className="ui_button_icon_wrapper u-relative u-flex-inline"><div id="__w2_wIrMUyjy23_icon"><span className="ui_button_icon" aria-hidden="true"><svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+</svg></span></div></div></div></a></div></div><div className="hover_menu hidden show_nub right_align fixed_menu_width no_body_attach" id="__w2_wMBpsM627_overflow_menu"><div className="hover_menu_contents lazy" id="__w2_wMBpsM627_overflow_menu_contents" /></div></div><div id="wyWsLrMt22"><div className="hidden answer_editor_wrapper" id="__w2_wyWsLrMt23_add_answer_editor_wrapper" /></div></div></div></div></div></div></div></div></div></div></div></div></div><div id="wnuFD7sM13"><div className="AnswerStoryBundle Bundle" data-clog-metadata="{&quot;feed_bundle_hash&quot;: &quot;5604222101795743386&quot;}"><div className="main_feed singleton_bundle"><div className="multifeed_bundle_story"><div id="wIrMUyjy6"><div className="u-inherit" data-clog-metadata="{&quot;feed_story_hash&quot;: &quot;8794457905264421782&quot;}"><div className="feedback_wrapper hidden" id="__w2_wIrMUyjy8_question_feedback" /><div className="feedback_wrapper hidden" id="__w2_wIrMUyjy8_answer_feedback" /><div className="feedback_wrapper hidden" id="__w2_wIrMUyjy8_quora_share_feedback" /><div className="feedback_wrapper hidden negative_action" id="__w2_wIrMUyjy8_negative_feedback_options" /><div className="feedback_wrapper hidden negative_action" id="__w2_wIrMUyjy8_negative_feedback_message" />
+
+
+<div className="AnswerFeedStory FeedStory feed_item" id="__w2_wIrMUyjy8_item">
+<div className="EventHeader many_faces pass_color_to_child_links FeedReason TopicAnswerWrittenReason">
+<div className="reason_main">
+<div className="reason_text_and_icon">Answer<span className="topic"><span className="bullet"> · </span></span>
+<div className="TopicListItem" id="__w2_wIrMUyjy16_topic_list_item">
+<div className="u-inline-block u-white-space--nowrap">
+<div id="wIrMUyjy20">
+<div className="hover_menu hidden white_bg show_nub" id="__w2_wIrMUyjy21_menu">
+<div className="hover_menu_contents" id="__w2_wIrMUyjy21_menu_contents"> 
+</div>
+</div>
+<a className="TopicNameLink HoverMenu topic_name" href="/topic/Technology" action_mousedown="TopicLinkClickthrough" id="__w2_wIrMUyjy21_link"><span className="name_text"><span id="wIrMUyjy24"><span className="TopicNameSpan TopicName" id="__w2_wIrMUyjy25_card">Technology</span></span></span></a></div></div></div></div></div><div className="reason_overflow"><div className="u-absolute u-absolute--center u-zindex--2" id="__w2_wIrMUyjy17_close"><a className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only" href="#" role="button" aria-label="Hide" id="__w2_wIrMUyjy23_button"><div className="ui_button_inner" id="__w2_wIrMUyjy23_inner"><div className="ui_button_icon_wrapper u-relative u-flex-inline"><div id="__w2_wIrMUyjy23_icon"><span className="ui_button_icon" aria-hidden="true"><svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
 <g id="small_close" className="icon_svg-stroke" fill="none" fillRule="evenodd" strokeLinecap="round" stroke="#666666" strokeWidth="1.5">
 <path d="M12,6 L12,18" transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) " />
 <path d="M18,12 L6,12" transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) " />

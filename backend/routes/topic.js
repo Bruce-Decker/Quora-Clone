@@ -56,5 +56,19 @@ router.get("/all", function(req, res) {
     }
   );
 });
+router.post("/follow", function(req, res) {
+  kafka.make_request(
+    "topic",
+    { method: "folowTopic", body: req.body },
+    function(error, result) {
+      if (error) {
+        console.log(error);
+        res.status(400).json({ msg: "profile not found" });
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
 
 module.exports = router;
