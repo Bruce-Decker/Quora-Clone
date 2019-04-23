@@ -18,6 +18,7 @@ var userFollowing = require("./services/userFollowing");
 var question = require("./services/question");
 var inbox = require("./services/inbox");
 var content = require("./services/content");
+var answer = require("./services/answer");
 
 function handleTopicRequest(topic_name, fname) {
   //var topic_name = 'root_topic';
@@ -82,5 +83,6 @@ handleTopicRequest("topic", topic);
 handleTopicRequest("userFollowers", userFollowers);
 handleTopicRequest("userFollowing", userFollowing);
 handleTopicRequest("question", question);
+handleTopicRequest("answer", answer);
 handleTopicRequest("inbox", inbox);
 handleTopicRequest("content", content);
