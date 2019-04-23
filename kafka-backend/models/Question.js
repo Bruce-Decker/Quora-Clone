@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
 var mongoosePaginate = require("mongoose-paginate");
 const Schema = mongoose.Schema;
+const uniqueRandom = require("unique-random");
+const rand = uniqueRandom(1, 1000000);
 
-const QuestionSchema = new Schema({
+var QuestionSchema = new Schema({
   question_id: {
     type: String
   },
@@ -18,6 +20,10 @@ const QuestionSchema = new Schema({
       email: {
         type: String,
         required: true
+      },
+      time: {
+        type: String,
+        required: true
       }
     }
   ],
@@ -25,7 +31,7 @@ const QuestionSchema = new Schema({
     {
       answer_id: {
         type: String,
-        required: true
+        default: rand
       },
       answerContent: {
         type: String,
@@ -37,24 +43,21 @@ const QuestionSchema = new Schema({
       upvote: [
         {
           email: {
-            type: String,
-            required: true
+            type: String
           }
         }
       ],
       downvote: [
         {
           email: {
-            type: String,
-            required: true
+            type: String
           }
         }
       ],
       bookmark: [
         {
           email: {
-            type: String,
-            required: true
+            type: String
           }
         }
       ],
@@ -67,12 +70,10 @@ const QuestionSchema = new Schema({
       comments: [
         {
           email: {
-            type: String,
-            required: true
+            type: String
           },
           comment: {
-            type: String,
-            required: true
+            type: String
           },
           time: {
             type: String,

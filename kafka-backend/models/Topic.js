@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const TopicSchema = new Schema({
+var TopicSchema = new Schema({
   topic_id: {
     type: String
   },
