@@ -55,18 +55,6 @@ function handleTopicRequest(topic_name, fname) {
           return;
         });
         break;
-      case "createanswer":
-        createanswer.handle_request(data.data, function(err, res) {
-          response(data, res, producer);
-          return;
-        });
-        break;
-      case "fetchanswers":
-        fetchanswers.handle_request(data.data, function(err, res) {
-          response(data, res, producer);
-          return;
-        });
-        break;
       case "message":
         messages.messageService(data.data, function(err, res) {
           response(data, res, producer);
@@ -110,4 +98,3 @@ handleTopicRequest("answer", answer);
 handleTopicRequest("inbox", inbox);
 handleTopicRequest("content", content);
 handleTopicRequest("message", messages);
-handleTopicRequest("answer", answer);
