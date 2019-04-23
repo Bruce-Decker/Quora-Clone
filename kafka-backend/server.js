@@ -62,6 +62,12 @@ function handleTopicRequest(topic_name, fname) {
           return;
         });
         break;
+      case "answer":
+        answer.answerService(data.data, function(err, res) {
+          response(data, res, producer);
+          return;
+        });
+        break;
     }
   });
 }

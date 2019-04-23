@@ -16,8 +16,7 @@ const QuestionSchema = new Schema({
   followers: [
     {
       email: {
-        type: String,
-        required: true
+        type: String
       }
     }
   ],
@@ -36,28 +35,15 @@ const QuestionSchema = new Schema({
       },
       upvote: [
         {
-          email: {
-            type: String,
-            required: true
-          }
+          type: String
         }
       ],
       downvote: [
         {
-          email: {
-            type: String,
-            required: true
-          }
+          type: String
         }
       ],
-      bookmark: [
-        {
-          email: {
-            type: String,
-            required: true
-          }
-        }
-      ],
+      bookmark: [{ type: String }],
       image: {
         type: String
       },
@@ -67,28 +53,23 @@ const QuestionSchema = new Schema({
       comments: [
         {
           email: {
-            type: String,
-            required: true
+            type: String
           },
           comment: {
-            type: String,
-            required: true
+            type: String
           },
           time: {
-            type: String,
-            required: true
+            type: String
           }
         }
       ],
       answered_time: {
-        type: String,
-        required: true
+        type: String
       }
     }
   ],
   postedDate: {
-    type: String,
-    required: true
+    type: String
   }
 });
 
