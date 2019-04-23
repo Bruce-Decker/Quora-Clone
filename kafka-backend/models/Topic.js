@@ -7,7 +7,15 @@ var TopicSchema = new Schema({
   },
   topic_name: {
     type: String
-  }
+  },
+  followers: [
+    {
+      email: {
+        type: String,
+        required: true
+      }
+    }
+  ]
 });
 
 module.exports = Topic = mongoose.model("topic", TopicSchema);

@@ -9,6 +9,7 @@ var kafka = require("./kafka/client");
 const authRouter = require("./routes/authentication");
 const profileRouter = require("./routes/userProfile");
 const topicRouter = require("./routes/topic");
+const messageRouter = require("./routes/message");
 const questionRouter = require("./routes/question");
 const answerRouter = require("./routes/answer");
 const Auth = require("./schema/AuthModel");
@@ -45,6 +46,7 @@ app.use(passport.initialize());
 app.use("/", authRouter);
 app.use("/profile", profileRouter);
 app.use("/topic", topicRouter);
+app.use("/message",messageRouter);
 app.use("/question", questionRouter);
 app.use("/answer", answerRouter);
 

@@ -49,7 +49,63 @@ var ProfileSchema = new Schema({
   time: {
     type: String,
     required: true
-  }
+  },
+  revievedMessage:[
+        { 
+            sender_email: {
+                type: String,
+                required: true
+            },
+            receiver_email: {
+                type: String,
+                required: true
+            },
+            message: {
+                type: String,
+                required: true
+            },
+            isRead: {
+                type: Boolean,
+                required: true
+            }, 
+            time: {
+                type: String,
+                required: true
+            },
+            isDeleted: {
+                type: Boolean,
+                required: true
+            }
+        }
+     ],
+     sentMessages:[
+            { 
+            sender_email: {
+                type: String,
+                required: true
+            },
+            receiver_email: {
+                type: String,
+                required: true
+            },
+            message: {
+                type: String,
+                required: true
+            },
+            isRead: {
+                type: Boolean,
+                required: true
+            }, 
+            time: {
+                type: String,
+                required: true
+            },
+            isDeleted: {
+                type: Boolean,
+                required: true
+            }
+        }
+     ]
 });
 
 module.exports = Profile = mongoose.model("profile", ProfileSchema);
