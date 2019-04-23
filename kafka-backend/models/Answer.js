@@ -1,18 +1,21 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const uniqueRandom = require("unique-random");
+const rand = uniqueRandom(1, 1000000);
 
-const AnswerSchema = new Schema({
+var AnswerSchema = new Schema({
   answer_id: {
     type: String,
-    required: true
+    required: true,
+    default: rand
   },
   question_id: {
-    type: String,
-    required: true
+    type: String
+    //required: true
   },
   answerContent: {
-    type: String,
-    required: true
+    type: String
+    //  required: true
   },
   owner: {
     type: String
@@ -20,36 +23,36 @@ const AnswerSchema = new Schema({
   upvote: [
     {
       email: {
-        type: String,
-        required: true
+        type: String
+        //  required: true
       },
       time: {
-        type: String,
-        required: true
+        type: String
+        //  required: true
       }
     }
   ],
   downvote: [
     {
       email: {
-        type: String,
-        required: true
+        type: String
+        //  required: true
       },
       time: {
-        type: String,
-        required: true
+        type: String
+        //  required: true
       }
     }
   ],
   bookmark: [
     {
       email: {
-        type: String,
-        required: true
+        type: String
+        //  required: true
       },
       time: {
-        type: String,
-        required: true
+        type: String
+        //  required: true
       }
     }
   ],
@@ -62,22 +65,22 @@ const AnswerSchema = new Schema({
   comments: [
     {
       email: {
-        type: String,
-        required: true
+        type: String
+        // required: true
       },
       comment: {
-        type: String,
-        required: true
+        type: String
+        // required: true
       },
       time: {
-        type: String,
-        required: true
+        type: String
+        // required: true
       }
     }
   ],
   answered_time: {
-    type: String,
-    required: true
+    type: String
+    //  required: true
   }
 });
 
