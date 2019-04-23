@@ -24,8 +24,6 @@ exports.answerService = function answerService(info, callback) {
 
 
 function addComment(info, callback) {
-  console.log(`info.body`);
-  console.log(info);
   var email = info.message.email;
   var answer_id = info.message.answer_id;
   var comment = info.message.comment;
@@ -45,11 +43,9 @@ function addComment(info, callback) {
 }
 
 function deleteComment(info, callback) {
-  console.log(`info.body`);
-  console.log(info.body);
-  var email = info.body.email;
-  var answer_id = info.body.answer_id;
-  var comment = info.body.comment;
+  var email = info.message.email;
+  var answer_id = info.message.answer_id;
+  var comment = info.message.comment;
   var data = {
     email,
     answer_id,
