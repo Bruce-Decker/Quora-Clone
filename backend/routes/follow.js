@@ -5,7 +5,27 @@ const kafka = require("../kafka/client");
 router.get("/userFollowers", function(req, res) {
   kafka.make_request(
     "followers",
-    { method: "userFollowers", message: req.query },
+    { method: "follower", message: req.query },
+    function(error, result) {
+      if (error) {
+        console.log(error);
+        res.status(400).json({ msg: "cannot find user" });
+      } else {
+        if (result.errors) {
+          return res.status(400).json(result.errors);
+        } else {
+          console.log(result);
+          res.send(result);
+        }
+      }
+    }
+  );
+});
+
+router.get("/userFollowing", function(req, res) {
+  kafka.make_request(
+    "followers",
+    { method: "followee", message: req.query },
     function(error, result) {
       if (error) {
         console.log(error);
