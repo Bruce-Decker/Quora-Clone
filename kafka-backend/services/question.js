@@ -17,6 +17,9 @@ exports.questionService = function questionService(info, callback) {
     case "postQuestion":
       postQuestion(info, callback);
       break;
+    case "unfollowQuestion":
+      unfollowQuestion(info, callback);
+      break;
   }
 };
 
@@ -130,7 +133,25 @@ function folowQuestion(info, callback) {
     email:email
   }
 
-  Question.findOneAndUpdate({question_id: question_id}, {followers:data}, function(error, result) {
+  Question.findOneAndUpdate({question_id: question_id}, {$push: {followers: data}}, (error, result) => {
+    if (error) {
+        callback(error,"error");
+    } else {
+        callback(null, data);
+    }
+  })
+}
+
+function unfollowQuestion(info, callback) {
+  console.log(`info.body`);
+  console.log(info.body);
+  var email = info.body.email;
+  var question_id = info.body.question_id;
+  var data = {
+    email:email
+  }
+
+  Question.findOneAndUpdate({question_id: question_id}, {$pull: {followers: data}}, function(error, result) {
     if (error) {
       callback(error,"error");
     } else {

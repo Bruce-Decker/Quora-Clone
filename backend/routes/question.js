@@ -99,4 +99,25 @@ router.post("/follow", function(req, res) {
   );
 });
 
+router.post("/unfollow", function(req, res) {
+  console.log(req.body);
+  kafka.make_request(
+    "question",
+    { method: "unfollowQuestion", body: req.body },
+    function(error, result) {
+      if (error) {
+        console.log(error);
+        res.status(400).json({ msg: "cannot unfollow question" });
+      } else {
+        if (result.errors) {
+          return res.status(400).json(result.errors);
+        } else {
+          console.log(result);
+          res.send(result);
+        }
+      }
+    }
+  );
+});
+
 module.exports = router;
