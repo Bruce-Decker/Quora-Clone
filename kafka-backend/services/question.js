@@ -105,7 +105,7 @@ function userQuestion(info, callback) {
 }
 
 function dashboardQuestion(info, callback) {
-<<<<<<< HEAD
+
   var email = info.email;
   let projection = {
     answers: 0,
