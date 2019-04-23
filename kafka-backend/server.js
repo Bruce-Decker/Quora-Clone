@@ -20,6 +20,9 @@ var inbox = require("./services/inbox");
 var content = require("./services/content");
 var messages = require("./services/message");
 var answer = require("./services/answer");
+var createanswer = require("./services/createanswer");
+var getanswer = require("./services/getanswer");
+var fetchanswers = require("./services/fetchanswers");
 
 function handleTopicRequest(topic_name, fname) {
   //var topic_name = 'root_topic';
@@ -56,7 +59,19 @@ function handleTopicRequest(topic_name, fname) {
           return;
         });
         break;
-      case "message":
+      case "createanswer":
+        createanswer.handle_request(data.data, function(err, res) {
+          response(data, res, producer);
+          return;
+        });
+        break;
+      case "fetchanswers":
+        fetchanswers.handle_request(data.data, function(err, res) {
+       response(data, res, producer);
+          return;
+        });
+        break;
+	case "message":
         messages.messageService(data.data, function(err, res) {
           response(data, res, producer);
           return;
@@ -93,4 +108,7 @@ handleTopicRequest("question", question);
 handleTopicRequest("answer", answer);
 handleTopicRequest("inbox", inbox);
 handleTopicRequest("content", content);
+handleTopicRequest("createanswer", createanswer);
+handleTopicRequest("getanswer", getanswer);
+handleTopicRequest("fetchanswers", fetchanswers);
 handleTopicRequest("message", messages);
