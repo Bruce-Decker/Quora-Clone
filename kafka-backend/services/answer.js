@@ -18,7 +18,7 @@ exports.answerService = function answerService(info, callback) {
       break;
     case "deleteComment":
       deleteComment(info, callback);
-        break;
+      break;
   }
 };
 
@@ -108,8 +108,7 @@ function downvoteAnswer(info, callback) {
       callback(err, "error");
     }
   });
-
-
+}
 
 function addComment(info, callback) {
   var email = info.message.email;
@@ -119,15 +118,19 @@ function addComment(info, callback) {
     email,
     answer_id,
     comment
-  }
+  };
 
-  Answer.findOneAndUpdate({answer_id: answer_id}, {$push: {comments: data}}, (error, result) => {
-    if (error) {
-        callback(error,"error");
-    } else {
+  Answer.findOneAndUpdate(
+    { answer_id: answer_id },
+    { $push: { comments: data } },
+    (error, result) => {
+      if (error) {
+        callback(error, "error");
+      } else {
         callback(null, data);
+      }
     }
-  })
+  );
 }
 
 function deleteComment(info, callback) {
@@ -138,15 +141,18 @@ function deleteComment(info, callback) {
     email,
     answer_id,
     comment
-  }
+  };
 
-  Answer.findOneAndUpdate({answer_id: answer_id}, {$pull: {comments: data}}, function(error, result) {
-    if (error) {
-      callback(error,"error");
-    } else {
-        console.log(result)
+  Answer.findOneAndUpdate(
+    { answer_id: answer_id },
+    { $pull: { comments: data } },
+    function(error, result) {
+      if (error) {
+        callback(error, "error");
+      } else {
+        console.log(result);
         callback(null, data);
-     }
-  })
-
+      }
+    }
+  );
 }
