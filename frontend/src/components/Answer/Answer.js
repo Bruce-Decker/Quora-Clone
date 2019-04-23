@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
 
-class Dashboard extends Component {
+class Answer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -49,8 +49,7 @@ class Dashboard extends Component {
         currentElem: document.getElementById("editable").outerHTML
       })
       .then(res => {
-        let editable = document.getElementById("editable");
-        //  editable.outerHTML = res.data.currentElem;
+        console.log("res....", res.data);
       });
   };
 
@@ -158,4 +157,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps)(Answer);

@@ -10,12 +10,12 @@ var AnswerSchema = new Schema({
     default: rand
   },
   question_id: {
-    type: String,
-    required: true
+    type: String
+    //required: true
   },
   answerContent: {
-    type: String,
-    required: true
+    type: String
+    //  required: true
   },
   owner: {
     type: String
@@ -23,36 +23,36 @@ var AnswerSchema = new Schema({
   upvote: [
     {
       email: {
-        type: String,
-        required: true
+        type: String
+        //  required: true
       },
       time: {
-        type: String,
-        required: true
+        type: String
+        //  required: true
       }
     }
   ],
   downvote: [
     {
       email: {
-        type: String,
-        required: true
+        type: String
+        //  required: true
       },
       time: {
-        type: String,
-        required: true
+        type: String
+        //  required: true
       }
     }
   ],
   bookmark: [
     {
       email: {
-        type: String,
-        required: true
+        type: String
+        //  required: true
       },
       time: {
-        type: String,
-        required: true
+        type: String
+        //  required: true
       }
     }
   ],
@@ -65,22 +65,22 @@ var AnswerSchema = new Schema({
   comments: [
     {
       email: {
-        type: String,
-        required: true
+        type: String
+        // required: true
       },
       comment: {
-        type: String,
-        required: true
+        type: String
+        // required: true
       },
       time: {
-        type: String,
-        required: true
+        type: String
+        // required: true
       }
     }
   ],
   answered_time: {
-    type: String,
-    required: true
+    type: String
+    //  required: true
   }
 });
 

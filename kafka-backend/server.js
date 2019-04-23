@@ -19,6 +19,7 @@ var question = require("./services/question");
 var inbox = require("./services/inbox");
 var content = require("./services/content");
 var answerTemp = require("./services/answerTemp");
+var getanswer = require("./services/getanswer");
 
 function handleTopicRequest(topic_name, fname) {
   //var topic_name = 'root_topic';
@@ -61,6 +62,12 @@ function handleTopicRequest(topic_name, fname) {
           return;
         });
         break;
+      case "getanswer":
+        getanswer.handle_request(data.data, function(err, res) {
+          response(data, res, producer);
+          return;
+        });
+        break;
     }
   });
 }
@@ -92,3 +99,4 @@ handleTopicRequest("question", question);
 handleTopicRequest("inbox", inbox);
 handleTopicRequest("content", content);
 handleTopicRequest("answerTemp", answerTemp);
+handleTopicRequest("getanswer", getanswer);

@@ -5,7 +5,7 @@ import store from "./store";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Dashboard from "./components/Dashboard/Dashboard";
-import dash from "./components/dash";
+import Answer from "./components/Answer/Answer";
 
 class App extends Component {
   render() {
@@ -16,7 +16,7 @@ class App extends Component {
             <Route exact path="/" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/dashboard" component={Dashboard} />
-            <Route exact path="/dash" component={dash} />
+            <Route exact path="/answer" component={Answer} />
           </div>
         </BrowserRouter>
       </Provider>
