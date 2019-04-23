@@ -30,7 +30,7 @@ function handleTopicRequest(topic_name, fname) {
     console.log("message received for " + topic_name + " ", fname);
     console.log(JSON.stringify(message.value));
     var data = JSON.parse(message.value);
-    console.log("Sdfsdf  " + topic_name);
+   
     switch (topic_name) {
       case "auth":
         auth.authService(data.data, function(err, res) {

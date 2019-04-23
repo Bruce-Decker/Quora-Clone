@@ -2,6 +2,19 @@ const express = require("express");
 const router = express.Router();
 const kafka = require("../kafka/client");
 
+
+router.get('/getUserTopic/:email', function(req, res) {
+  kafka.make_request('topic', {"method": "getUserTopic", "email": req.params.email}, function(error, result) {
+      if (error) {
+          console.log(error)
+          res.status(400).json({msg: 'assignments are not found'});
+      } else {
+          res.send(result)
+      }
+  })
+})
+
+
 router.post("/createTopics", function(req, res) {
   kafka.make_request('topic', {"method": "postTopic", "message": req.body}, function(error, result) {
     if (error) {

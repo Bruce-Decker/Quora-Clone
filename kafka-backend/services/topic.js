@@ -1,4 +1,6 @@
 const Topic = require("../models/Topic");
+const Profile = require('../models/Profile')
+var async = require('async');
 
 exports.topicService = function topicService(info, callback) {
   switch (info.method) {
@@ -11,8 +13,24 @@ exports.topicService = function topicService(info, callback) {
     case "folowTopic":
       folowTopic(info, callback);
       break;
+    case "getUserTopic":
+      getUserTopic(info, callback);
+      break;
   }
 };
+
+
+function getUserTopic(info, callback) {
+   var email = info.email
+   Profile.findOne({email: email}, function(err, docs) {
+     if (docs) {
+      callback(null, docs)
+     } else {
+      callback(null, [])
+     }
+   })
+
+}
 
 
 function postTopic(info, callback) {
@@ -61,20 +79,33 @@ function searchTopic(info, callback) {
 }
 
 function folowTopic(info, callback){
-  console.log(`info.body`);
+  
   console.log(info.body);
   var email = info.body.email;
-  var topic_id = info.body.topic_id;
+  var topic_name = info.body.topic_name;
   var data = {
-    email:email
+    topic_name: topic_name
   }
 
-  Topic.findOneAndUpdate({topic_id: topic_id}, {followers:data}, function(error, result) {
+  Profile.findOne({email: email}, function(error, result) {
     if (error) {
-        callback(error,"error");
+        callback(error,"error1");
     } else {
+        //console.log(result.topics)
         console.log(result)
+        console.log("A1 " + JSON.stringify(result.topics))
+      
+        result.topics = result.topics.push(data)
+        console.log("A2 " + JSON.stringify(result.topics))
         callback(null, data);
+        Profile.findOneAndUpdate({email: email}, {$set: {topics: result.topics}}, function(err, result) {
+            if (err) {
+              //console.log(topics_update)
+              callback(error,"error2");
+            } else {
+              callback(null, result);
+            }
+        })
      }
   })
 }
