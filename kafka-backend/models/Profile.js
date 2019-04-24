@@ -3,71 +3,70 @@ const Schema = mongoose.Schema;
 
 var ProfileSchema = new Schema({
   first_name: {
-    type: String,
+    type: String
   },
   last_name: {
-    type: String,
+    type: String
   },
   email: {
-    type: String,
+    type: String
   },
   city: {
-    type: String,
+    type: String
   },
   zip_code: {
-    type: String,
+    type: String
   },
   state: {
-    type: String,
+    type: String
   },
   profile_image: {
     type: String
   },
   education: {
-    type: String,
+    type: String
   },
   career_information: {
-    type: String,
+    type: String
   },
   description: {
-    type: String,
+    type: String
   },
   profile_credential: {
-    type: String,
+    type: String
   },
-  topics: [{ topic_name: { type: String } }],
+  topics: [{ type: String }],
   time: {
-    type: String,
+    type: String
   },
-  message:[
-        { 
-            sender_email: {
-                type: String,
-                required: true
-            },
-            receiver_email: {
-                type: String,
-                required: true
-            },
-            message: {
-                type: String,
-                required: true
-            },
-            isRead: {
-                type: Boolean,
-                required: true
-            }, 
-            time: {
-                type: String,
-                required: true
-            },
-            isDeleted: {
-                type: Boolean,
-                required: true
-            }
-        }
-     ],
-    
+  message: [
+    {
+      sender_email: {
+        type: String,
+        required: true
+      },
+      receiver_email: {
+        type: String,
+        required: true
+      },
+      message: {
+        type: String,
+        required: true
+      },
+      isRead: {
+        type: Boolean,
+        required: true
+      },
+      time: {
+        type: String,
+        required: true
+      },
+      isDeleted: {
+        type: Boolean,
+        required: true
+      }
+    }
+  ]
 });
 
 module.exports = Profile = mongoose.model("profile", ProfileSchema);

@@ -26,8 +26,6 @@ exports.questionService = function questionService(info, callback) {
   }
 };
 
-
-
 function postQuestion(info, callback) {
   var question_id = info.message.question_id;
   var question = info.message.question;
@@ -106,28 +104,47 @@ function userQuestion(info, callback) {
 }
 
 function dashboardQuestion(info, callback) {
-  console.log(info.message)
   var email = info.message.email;
-  Profile.findOne({ email: email }, { topics: 1 }, function(err, userTopics) {
-    console.log(userTopics);
-    console.log(err);
-    if (userTopics) {
+  let projection = {
+    answers: 0,
+    question_id: 0,
+    question: 0,
+    owner: 0,
+    followers: 0,
+    posted_date: 0
+  };
+  Profile.findOne({ email: email }, function(err, user) {
+    console.log(user);
+
+    console.log(info.message);
+    var email = info.message.email;
+    Profile.findOne({ email: email }, { topics: 1 }, function(err, userTopics) {
       console.log(userTopics);
-      Question.find({ topics: userTopics });
-      console.log("sfd9sdf")
-    } else {
-      const options = {
-        page: 1,
-        limit: 10
-      };
-      Question.paginate({}, options, (err, questions) => {
-        if (err) {
-          callback(err, null);
-        } else {
-          callback(null, questions);
-        }
-      });
-    }
+
+      console.log(err);
+      if (user) {
+        console.log(user);
+        Question.paginate({ topics: user.topics }, (err, questions) => {
+          if (err) {
+            callback(err, null);
+          } else {
+            callback(null, questions);
+          }
+        });
+      } else {
+        const options = {
+          page: info.message.pageno,
+          limit: 10
+        };
+        Question.paginate({}, options, (err, questions) => {
+          if (err) {
+            callback(err, null);
+          } else {
+            callback(null, questions);
+          }
+        });
+      }
+    });
   });
 }
 
