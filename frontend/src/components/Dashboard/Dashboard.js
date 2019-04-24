@@ -5,7 +5,47 @@ import Navbar from "../Navbar/Navbar";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+// var dashboard_questions
 class Dashboard extends Component {
+<<<<<<< HEAD
+    constructor() {
+        super();
+        this.state = {
+            topics: [],
+            questions: [],
+            showQuestions: false
+        }
+        
+         
+    }
+
+   async componentWillMount() {
+        
+         var response = await axios.get('/topic/getUserTopic/' +  this.props.auth.user.email)
+         var dashboard_questions = await axios.get('/question/dashboard/?email=' + this.props.auth.user.email)
+        
+         if (response.data.topics) {
+            this.setState({
+               topics: response.data.topics
+            })
+        } 
+
+        if (dashboard_questions.docs) {
+         this.setState({
+            questions: dashboard_questions.data.docs,
+            showQuestions: true
+         })
+         console.log(this.state.questions[0].question)
+     } 
+
+     
+     
+     
+         //console.log(response.data)
+       
+    
+       
+=======
   constructor() {
     super();
     this.state = {
@@ -23,6 +63,7 @@ class Dashboard extends Component {
       this.setState({
         topics: response.data.topics
       });
+>>>>>>> 6b230bab79c5b1bb693b2eb64b1f40803b980623
     }
     console.log(response.data);
   }
@@ -1232,6 +1273,65 @@ class Dashboard extends Component {
                                                                       />
                                                                     </g>
 
+<<<<<<< HEAD
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div className="story_title_container"><div className="pass_color_to_child_links">
+<div id="wIrMUyjy31"><a className="question_link" href="/What-is-the-most-useless-key-on-a-QWERTY-keyboard" target="_top" action_mousedown="QuestionLinkClickthrough" id="__w2_wIrMUyjy32_link"><span className="ui_content_title ui_content_title--default ui_content_title--medium">
+<span className="ui_qtext_rendered_qtext">What is the most useless key on a QWERTY keyboard?</span></span></a></div></div><div id="wIrMUyjy27" /></div><div className="Answer" id="__w2_wIrMUyjy19_answer"><div className="inline_editor_content suggestions_editor_content" id="__w2_wIrMUyjy30_content">
+<div id="wIrMUyjy33"><div className="feed_item_answer answer_text" id="__w2_wIrMUyjy37_content">
+<div className="feed_item_answer_content answer_content">
+<div className="answer_user answer_user_inline">
+<div id="wIrMUyjy40">
+<div className="ContentHeader AnswerHeader">
+<div className="ui_layout_photo_text u-flex ui_layout_size--small">
+<div className="ui_layout_photo_wrapper u-flex-none">
+<div className="ui_layout_photo u-relative">
+<div className="u-flex-inline" id="wIrMUyjy47">
+<div className="hover_menu hidden show_nub" id="__w2_wIrMUyjy58_menu">
+<div className="hover_menu_contents" id="__w2_wIrMUyjy58_menu_contents"> 
+</div>
+</div>
+<span className="photo_tooltip u-flex-inline" id="__w2_wIrMUyjy58_link">
+<a className="u-flex-inline" href="/profile/David-Waldo">
+<span className="ui_avatar u-flex-inline ui_avatar--large u-flex-none">
+<img className="ui_avatar_photo ui_avatar--border-circular" src="https://qph2.c7.quoracdn.net/main-thumb-61094682-50-rurmmktydhdidogtppqbmksjzngcbxuv.jpeg" alt="David Waldo" /></span></a></span></div></div></div><div className="ui_layout_text u-flex-auto u-width--100 u-flex-align-self--center"><div className="u-flex u-flex-justify--between"><div className="u-margin-right--sm u-width--100"><div className="feed_item_answer_user"><span id="wIrMUyjy49"><span id="wIrMUyjy54"><div className="hover_menu hidden white_bg show_nub" id="__w2_wIrMUyjy55_menu"><div className="hover_menu_contents" id="__w2_wIrMUyjy55_menu_contents"> </div></div><span id="__w2_wIrMUyjy55_link"><a className="user" href="/profile/David-Waldo" action_mousedown="UserLinkClickthrough" id="__w2_wIrMUyjy55_name_link">David Waldo</a></span></span><span className="NameCredential">, Windows/network admin for &gt;10 years</span></span></div><span className="credibility_wrapper"><div className="AnswerCredibilityFacts CredibilityFacts pass_color_to_child_links"><span id="wIrMUyjy56"><a className="answer_permalink" action_mousedown="AnswerPermalinkClickthrough" href="/What-is-the-most-useless-key-on-a-QWERTY-keyboard/answer/David-Waldo" id="__w2_wIrMUyjy57_link">Answered 17h ago</a></span></div></span></div><div id="__w2_wIrMUyjy42_follow_button_section"><div className="u-relative icon_follow_button_wrapper"><div className="u-absolute u-absolute--center u-border-radius--ellipse u-padding-right--xs u-padding-left--xs icon_follow_button fadeIn hidden" id="__w2_wIrMUyjy42_follow_button"><span id="wIrMUyjy51"><a className="ui_button u-nowrap ui_button--styled ui_button--PillStyle ui_button--PillStyle--light_blue ui_button--size_small u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only" href="#" role="button" aria-label="Follow David" action_target="{&quot;type&quot;: &quot;user&quot;, &quot;uid&quot;: 61094682}" id="__w2_wIrMUyjy64_button"><div className="ui_button_inner" id="__w2_wIrMUyjy64_inner"><div className="ui_button_icon_wrapper u-relative u-flex-inline"><div id="__w2_wIrMUyjy64_icon"><span className="ui_button_icon ui_button-unpressed_icon" aria-hidden="true"><svg width={24} height={24} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<g className="icon_svg-stroke" stroke="#666" strokeWidth="1.5" fill="none" fillRule="evenodd">
+<path d="M12 12.5A2.25 2.25 0 1 0 12 8a2.25 2.25 0 0 0 0 4.5zm3 4a3 3 0 1 0-6 0" />
+<path d="M13.5 19.5h-6a3 3 0 0 1-3-3v-9a3 3 0 0 1 3-3h9a3 3 0 0 1 3 3v6m-2.5 6h5M19.5 17v5" strokeLinecap="round" />
+</g>
+</svg></span><span className="ui_button_icon ui_button-pressed_icon" aria-hidden="true"><svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+<g stroke="none" fill="none" fillRule="evenodd">
+<path d="M10.7321831,12.9697305 C9.28500703,13.4895228 8.25,14.873892 8.25,16.5 L15.75,16.5 C15.75,14.873892 14.714993,13.4895228 13.2678169,12.9697305 C14.2910047,12.4919502 15,11.4537725 15,10.25 C15,8.59314575 13.6568542,7.25 12,7.25 C10.3431458,7.25 9,8.59314575 9,10.25 C9,11.4537725 9.70899528,12.4919502 10.7321831,12.9697305 Z M20.25,14.3388626 C19.9783814,14.4955 19.7318899,14.7061926 19.5273952,14.9688404 L17.7662908,17.2307581 C16.7898614,16.2559226 15.2080519,16.2564142 14.232233,17.232233 C13.4142783,18.0501878 13.2816074,19.2939234 13.8342204,20.25 L7.5,20.25 C5.42893219,20.25 3.75,18.5710678 3.75,16.5 L3.75,7.5 C3.75,5.42893219 5.42893219,3.75 7.5,3.75 L16.5,3.75 C18.5710678,3.75 20.25,5.42893219 20.25,7.5 L20.25,14.3388626 Z" className="icon_svg-fill_as_stroke" fill="#666" fillRule="nonzero" />
+<polyline className="icon_svg-stroke" stroke="#666" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" points="16 19 18 21 21.5 16.5046888" />
+</g>
+</svg></span></div></div></div></a></span></div></div></div></div></div></div><div id="__w2_wIrMUyjy53_suggested_section" /></div></div></div><div className="answer_body_preview"><div className="Expandable SimpleToggle Toggle AnswerInFeedExpandable AnswerExpandable" id="__w2_wIrMUyjy44__truncated"><div className="u-serif-font-main--regular"><div className="ui_qtext_truncated ui_qtext_truncated_compact"><div className="ui_layout_content_thumbnail u-flex"><div className="ui_layout_content_wrapper u-relative u-flex-2 u-margin-right--sm"><div className="ui_qtext_truncated_text"><span className="ui_qtext_rendered_qtext"><p className="ui_qtext_para u-ltr u-text-align--start">First of all, Iâ€™m assuming youâ€™re referring not to the specific â€œQWERTYâ€ layout but instead the fairly standard 104-key US keyboard, like this:</p><p className="ui_qtext_para u-ltr u-text-align--start">Which is the least useful? Letâ€™s narrow this down. Obv...</p></span></div><a className="ui_qtext_more_link" href="/What-is-the-most-useless-key-on-a-QWERTY-keyboard/answer/David-Waldo" id="__w2_wIrMUyjy60_more"><span>(more)</span></a><span className="hidden" id="__w2_wIrMUyjy60_loading"><span className="loading">Loadingâ€¦</span></span></div><div className="ui_layout_thumbnail u-flex-auto short_width fixed_height u-bg--center u-bg--cover" style={{backgroundImage: 'url(https://qph2.c7.quoracdn.net/main-qimg-cc8d0c7e330111cc996c120e6ef9f032)'}} /></div></div></div></div><div className="Expandable SimpleToggle Toggle AnswerInFeedExpandable AnswerExpandable hidden" id="__w2_wIrMUyjy44__expanded" /></div></div></div></div><div className="hidden" id="__w2_wIrMUyjy30_loading"><span className="loading">Loadingâ€¦</span></div></div><div className="hidden" id="__w2_wIrMUyjy30_editor" /></div></span><span className="hidden" id="__w2_wIrMUyjy11_question_answer_story_editable" /><div className="Toggle ToggleAnswerFooterWrapper SimpleToggle" id="__w2_wIrMUyjy14__truncated" /><div className="Toggle ToggleAnswerFooterWrapper SimpleToggle hidden" id="__w2_wIrMUyjy14__expanded" /></div></div></div></div></div></div></div><div id="wnuFD7sM16"><div className="Bundle" data-clog-metadata="{&quot;feed_bundle_hash&quot;: &quot;5626514486867238018&quot;}"><div className="main_feed singleton_bundle"><div className="multifeed_bundle_story"><div id="w281EJmN6"><div className="u-inherit" data-clog-metadata="{&quot;feed_story_hash&quot;: &quot;7460863583399511853&quot;}"><div className="feedback_wrapper hidden" id="__w2_w281EJmN8_question_feedback" /><div className="FeedStory AnswerFeedStory feed_item" id="__w2_w281EJmN8_item"><span><div className="gtugbwwoamfmhktiyyjh" id="__w2_w281EJmN10_znfwjbinlomgtxwrsinq"><div className="rbmacscdldvqygakhytb bnlgvcstcrcmutblkjhg yymlhbvgcnplhtwjufdt tdhdjsnqiwanaejwtuuu"><div id="__w2_w281EJmN11_oblutynpcryvlvxkjhzo"><div className="lykcyalyqnhwgocbioik" /><div className="ijipxydcyvcanecrhatt"><a className="outpfeqgsskhjaexxyez veciwgamivtrbyohiznx" href="https://wikibuy.com/blog/how-i-afford-to-travel-on-a-budget-aa9bd1f0871a?title=Here%27s+the+best+way+to+book+travel+on+a+budget" target="_blank" rel="noopener nofollow" id="__w2_w281EJmN30_khjedabhmtkwxjkicbwu"><p className="nmhwocvnrmkppyprizpt">s<span style={{display: 'none'}}>WWrSW</span>p<span style={{display: 'none'}}>npp</span>o<span style={{display: 'none'}}>OAKn</span>n<span style={{display: 'none'}}>fV</span>s<span style={{display: 'none'}}>XD</span>o<span style={{display: 'none'}}>pSU</span>r<span style={{display: 'none'}}>gG</span>e<span style={{display: 'none'}}>P</span>d<span style={{display: 'none'}}>Qdj</span> <span style={{display: 'none'}}>A</span>b<span style={{display: 'none'}}>FmXM</span>y<span style={{display: 'none'}}>YvTyd</span> <span style={{display: 'none'}}>oEUuh</span>W<span style={{display: 'none'}}>ejy</span>i<span style={{display: 'none'}}>ymt</span>k<span style={{display: 'none'}}>FXO</span>i<span style={{display: 'none'}}>GcgCN</span>b<span style={{display: 'none'}}>Jj</span>u<span style={{display: 'none'}}>NV</span>y<span style={{display: 'none'}}>k</span></p></a></div><div className="nyqekaobqrzmvsrvmmxc" id="__w2_w281EJmN13_close"><a className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only" href="#" role="button" aria-label="Close" id="__w2_w281EJmN26_button"><div className="ui_button_inner" id="__w2_w281EJmN26_inner"><div className="ui_button_icon_wrapper u-relative u-flex-inline"><div id="__w2_w281EJmN26_icon"><span className="ui_button_icon" aria-hidden="true"><svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+<g id="small_close" className="icon_svg-stroke" fill="none" fillRule="evenodd" strokeLinecap="round" stroke="#666666" strokeWidth="1.5">
+<path d="M12,6 L12,18" transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) " />
+<path d="M18,12 L6,12" transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) " />
+</g>
+</svg></span></div></div></div></a></div><div className="wekstnbjupluzdnqxaaj"><a className="outpfeqgsskhjaexxyez" href="https://wikibuy.com/blog/how-i-afford-to-travel-on-a-budget-aa9bd1f0871a?title=Here%27s+the+best+way+to+book+travel+on+a+budget" target="_blank" rel="noopener nofollow" id="__w2_w281EJmN14_mnlzjqaenuldsuoawsbg"><div id="__w2_w281EJmN15_gevuojjckysjjfahljsq"><div className="tkjovfchleqslawckoxb">How to save money on airfare â€” without using a â€œcheapâ€ airline.</div></div></a><div className="u-flex content_flex"><div className="u-flex-2"><div className="zpuqypjzzvrhoaannbpb"><div className="htzsxkprybpcrgkmgkbc"><div className="icon_frame"><div id="__w2_w281EJmN16_szfgacohhbzlinjxdnhv"><div className="account_logo_img" style={{backgroundImage: 'url("https://qph2.c7.quoracdn.net/main-qimg-727f0ae4ddbc6ada7c8043093b4658c3")'}} /></div></div><div className="account_description"><div><a className="outpfeqgsskhjaexxyez veciwgamivtrbyohiznx" href="https://wikibuy.com/blog/how-i-afford-to-travel-on-a-budget-aa9bd1f0871a?title=Here%27s+the+best+way+to+book+travel+on+a+budget" target="_blank" rel="noopener nofollow" id="__w2_w281EJmN31_suhwmqgrgckhtnuqukic"><p className="nmhwocvnrmkppyprizpt">Wikibuy</p></a><div className="teinrbcaokuiqeumpijf">S<span style={{display: 'none'}}>Zl</span>p<span style={{display: 'none'}}>bKifX</span>o<span style={{display: 'none'}}>YES</span>n<span style={{display: 'none'}}>Ir</span>s<span style={{display: 'none'}}>Kw</span>o<span style={{display: 'none'}}>pRSCC</span>r<span style={{display: 'none'}}>lIlR</span>e<span style={{display: 'none'}}>E</span>d<span style={{display: 'none'}}>m</span></div></div></div></div></div><div className="u-flex"><div className="u-flex-2"><a className="outpfeqgsskhjaexxyez" href="https://wikibuy.com/blog/how-i-afford-to-travel-on-a-budget-aa9bd1f0871a?title=Here%27s+the+best+way+to+book+travel+on+a+budget" target="_blank" rel="noopener nofollow" id="__w2_w281EJmN18_pwdczifwpjhlikvgpyhu"><div id="__w2_w281EJmN19_dddfghwrvgmqfaxabdgm"><div className="wviirzktyglsssfquffi">You should use Wikibuy. It automatically applies discounts when you book plane tickets and hotels.</div></div></a></div></div></div><div className="ieudvqyilfivrtnscwmr"><div className="u-flex"><div className="u-flex-2"><a className="outpfeqgsskhjaexxyez" href="https://wikibuy.com/blog/how-i-afford-to-travel-on-a-budget-aa9bd1f0871a?title=Here%27s+the+best+way+to+book+travel+on+a+budget" target="_blank" rel="noopener nofollow" id="__w2_w281EJmN20_dobemvtnckscefctnsvz"><div id="__w2_w281EJmN21_hbqqnkzkcsofuekgtvpn"><div className="u-flex-auto"><div className="xctgldfnrditxvdfwkyr" style={{backgroundImage: 'url("https://qph2.c7.quoracdn.net/main-qimg-8313b8c5eb1ae0fb50f5e184da645ef0")'}} /></div></div></a></div></div></div></div><div id="__w2_w281EJmN22_jxzxqzarsjucsyuckkmw"><div className="czekpqkahlexgvrjrqkk"><a className="fzitnuyvntskzwiutwbx" href="https://wikibuy.com/blog/how-i-afford-to-travel-on-a-budget-aa9bd1f0871a?title=Here%27s+the+best+way+to+book+travel+on+a+budget" target="_blank" rel="noopener nofollow" id="__w2_w281EJmN29_ftpvvoxlmzstbmrqmvaz">L<span style={{display: 'none'}}>K</span>e<span style={{display: 'none'}}>nEr</span>a<span style={{display: 'none'}}>iKciW</span>r<span style={{display: 'none'}}>f</span>n<span style={{display: 'none'}}>sxRsR</span> <span style={{display: 'none'}}>gm</span>M<span style={{display: 'none'}}>tsIWZ</span>o<span style={{display: 'none'}}>rE</span>r<span style={{display: 'none'}}>ze</span>e<span style={{display: 'none'}}>Ith</span> <span style={{display: 'none'}}>yL</span>a<span style={{display: 'none'}}>MxoMO</span>t<span style={{display: 'none'}}>oWFwV</span> <span style={{display: 'none'}}>u</span>w<span style={{display: 'none'}}>FKXTh</span>i<span style={{display: 'none'}}>Wpn</span>k<span style={{display: 'none'}}>G</span>i<span style={{display: 'none'}}>jl</span>b<span style={{display: 'none'}}>S</span>u<span style={{display: 'none'}}>mR</span>y<span style={{display: 'none'}}>DPN</span>.<span style={{display: 'none'}}>FUd</span>c<span style={{display: 'none'}}>cWAAi</span>o<span style={{display: 'none'}}>Ar</span>m<span style={{display: 'none'}}>pG</span></a></div></div><div className="aahfxnsufnalcvfkntfj"><div id="w281EJmN23"><div className="icon_action_bar" id="__w2_w281EJmN24_action_bar"><div className="action_bar_inner u-flex"><div className="action_bar_inner_spacer u-margin-left--auto">&nbsp;</div><div className="overflow action_item overflow_link u-relative u-pointer-events--auto"><div className="overflow_link" id="__w2_w281EJmN24_overflow_link"><a className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only" href="#" role="button" aria-label="More options" id="__w2_w281EJmN28_button"><div className="ui_button_inner" id="__w2_w281EJmN28_inner"><div className="ui_button_icon_wrapper u-relative u-flex-inline"><div id="__w2_w281EJmN28_icon"><span className="ui_button_icon" aria-hidden="true"><svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+<g id="overflow" className="icon_svg-stroke" strokeWidth="1.5" stroke="#666" fill="none" fillRule="evenodd">
+<path d="M5,14 C3.8954305,14 3,13.1045695 3,12 C3,10.8954305 3.8954305,10 5,10 C6.1045695,10 7,10.8954305 7,12 C7,13.1045695 6.1045695,14 5,14 Z M12,14 C10.8954305,14 10,13.1045695 10,12 C10,10.8954305 10.8954305,10 12,10 C13.1045695,10 14,10.8954305 14,12 C14,13.1045695 13.1045695,14 12,14 Z M19,14 C17.8954305,14 17,13.1045695 17,12 C17,10.8954305 17.8954305,10 19,10 C20.1045695,10 21,10.8954305 21,12 C21,13.1045695 20.1045695,14 19,14 Z" />
+</g>
+</svg></span></div></div></div></a></div></div><div className="hover_menu hidden show_nub right_align fixed_menu_width no_body_attach" id="__w2_w281EJmN24_overflow_menu"><div className="hover_menu_contents lazy" id="__w2_w281EJmN24_overflow_menu_contents" /></div></div></div></div></div></div></div><div className="ovppzrzxcbazfobxuggz hidden" id="__w2_w281EJmN11_yfsijadbxgrasmgopujm"><div className="content_dismiss_title">You dismissed this ad.</div><div className="content_dismiss_body">The feedback you provide will help us show you more relevant content in the future.</div><a className="undo" id="__w2_w281EJmN11_zekqdfcprffhvpefgemo">Undo</a></div></div></div></span></div></div></div></div></div></div></div></div>
+<div className="hidden" id="__w2_w2OzgLAU9_more">
+   <div className="pagedlist_item pagedlist_invisible" id="wnuFD7sM19">
+      <div className="PagedListInvisibleItem FeedBottomIndicator">You've reached the end of your feed.<span className="primary_button" id="__w2_wnuFD7sM20_feed_bottom">More Stories</span></div>
+   </div>
+</div>
+=======
                                                                     <path
                                                                       d="M12,16 L17,16 L17,11 M7,1 L2,1 L2,6"
                                                                       id="bg"
@@ -1677,6 +1777,7 @@ class Dashboard extends Component {
                                       className="feedback_wrapper hidden negative_action"
                                       id="__w2_wIrMUyjy8_negative_feedback_message"
                                     />
+>>>>>>> 6b230bab79c5b1bb693b2eb64b1f40803b980623
 
                                     <div
                                       className="AnswerFeedStory FeedStory feed_item"
@@ -2885,6 +2986,33 @@ class Dashboard extends Component {
                         </div>
                       </div>
 
+<<<<<<< HEAD
+<div className="spinner_display_area" id="__w2_w2OzgLAU9_spinner">
+<div className="LoadingDots regular">
+   <div className="dot first" />
+      <div className="dot second" />
+         <div className="dot third" /></div>
+      </div>
+   </div>
+   <div id="wnuFD7sM21" /></div>
+</div>
+
+         </div>
+      </div>
+   </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+=======
                       <div
                         className="spinner_display_area"
                         id="__w2_w2OzgLAU9_spinner"
@@ -2968,6 +3096,7 @@ class Dashboard extends Component {
                </div>
             </div> */}
               </div>
+>>>>>>> 6b230bab79c5b1bb693b2eb64b1f40803b980623
             </div>
           </div>
         </div>
