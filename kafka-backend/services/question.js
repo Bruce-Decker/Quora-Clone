@@ -113,38 +113,36 @@ function dashboardQuestion(info, callback) {
     followers: 0,
     posted_date: 0
   };
-  Profile.findOne({ email: email }, function(err, user) {
-    console.log(user);
-
-    console.log(info.message);
-    var email = info.message.email;
-    Profile.findOne({ email: email }, { topics: 1 }, function(err, userTopics) {
-      console.log(userTopics);
-
-      console.log(err);
-      if (user) {
-        console.log(user);
-        Question.paginate({ topics: user.topics }, (err, questions) => {
+  const options = {
+    page: info.message.pageno,
+    limit: 10
+  };
+  var email = info.message.email;
+  Profile.findOne({ email: email }, function(err, userTopics) {
+    console.log(userTopics);
+    if (userTopics.topics.length > 0) {
+      console.log("User topics");
+      console.log(userTopics.topics);
+      Question.paginate(
+        { topics: userTopics.topics },
+        options,
+        (err, questions) => {
           if (err) {
             callback(err, null);
           } else {
             callback(null, questions);
           }
-        });
-      } else {
-        const options = {
-          page: info.message.pageno,
-          limit: 10
-        };
-        Question.paginate({}, options, (err, questions) => {
-          if (err) {
-            callback(err, null);
-          } else {
-            callback(null, questions);
-          }
-        });
-      }
-    });
+        }
+      );
+    } else {
+      Question.paginate({}, options, (err, questions) => {
+        if (err) {
+          callback(err, null);
+        } else {
+          callback(null, questions);
+        }
+      });
+    }
   });
 }
 
