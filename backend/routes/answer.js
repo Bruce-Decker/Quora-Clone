@@ -123,4 +123,19 @@ router.post("/comment", function(req, res) {
   );
 });
 
+router.get("/userList", function(req, res) {
+  kafka.make_request(
+    "answer",
+    { method: "userList", email: req.query.email },
+    function(error, result) {
+      if (error) {
+        console.log(error);
+        res.status(400).json({ msg: "cannot login user" });
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 module.exports = router;
