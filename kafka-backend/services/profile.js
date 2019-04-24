@@ -78,10 +78,21 @@ function viewProfile(info, callback){
         
         if (docs) {
             console.log(docs)
+            updateProfileViews(email);   
             callback(null, docs);
         } else {
             console.log(err)
             callback(err,"error");
         }
+    })
+}
+
+
+function updateProfileViews(email){
+    var data= {
+        time:new Date().toLocaleString()
+    }
+    Profile.findOneAndUpdate({email: email}, {$push: {views: data}}, function(err, docs) {
+
     })
 }
