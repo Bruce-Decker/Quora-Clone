@@ -79,26 +79,18 @@ function searchQuestion(info, callback) {
   let searchObj = {
     question: new RegExp(question, "i")
   };
-  cache.get(searchObj, function(err, res) {
-    if (!err && res) {
-      console.log("Returning from redis......");
-      return callback(null, res);
-    }
-    Question.find({ question: new RegExp(question, "i") }, function(err, docs) {
+
+  Question.find({ question: new RegExp(question, "i") }, function(err, docs) {
+    console.log(docs);
+    console.log(err);
+    if (docs) {
       console.log(docs);
+      callback(null, docs);
+      console.log("in here........");
+    } else {
       console.log(err);
-      if (docs) {
-        console.log(docs);
-        callback(null, docs);
-        cache.set({
-          keyObj: searchObj,
-          value: docs
-        });
-      } else {
-        console.log(err);
-        callback(err, "error");
-      }
-    });
+      callback(err, "error");
+    }
   });
 }
 
