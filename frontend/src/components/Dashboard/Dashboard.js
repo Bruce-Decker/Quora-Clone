@@ -9,7 +9,8 @@ class Dashboard extends Component {
     constructor() {
         super();
         this.state = {
-            topics: []
+            topics: [],
+            test: []
         }
         
          
@@ -18,9 +19,12 @@ class Dashboard extends Component {
    async componentDidMount() {
         
          var response = await axios.get('/topic/getUserTopic/' +  this.props.auth.user.email)
-         this.setState({
-             topics: response.data.topics
-         })
+         console.log(response)
+         if (response.data.topics) {
+            this.setState({
+               topics: response.data.topics
+            })
+        } 
          console.log(response.data)
     
        
@@ -275,6 +279,7 @@ class Dashboard extends Component {
 <path d="M2,8.8817842e-16 L2,8.8817842e-16 L2,8.8817842e-16 C3.1045695,6.85269983e-16 4,0.8954305 4,2 L4,16 L2.00256278,20 L0,16 L0,2 L0,2 C-1.35267774e-16,0.8954305 0.8954305,1.09108686e-15 2,8.8817842e-16 Z" id="pen_body" className="icon_svg-stroke" stroke="#666" strokeLinecap="round" strokeLinejoin="round" />
 <polygon id="pen_tip" className="icon_svg-fill_as_stroke" fill="#666" transform="translate(2.000000, 18.750000) scale(1, -1) translate(-2.000000, -18.750000) " points="2 17.5 3.25 20 0.75 20" />
 </g>
+
 <path d="M12,16 L17,16 L17,11 M7,1 L2,1 L2,6" id="bg" className="icon_svg-stroke" stroke="#666" strokeLinecap="round" strokeLinejoin="round" />
 </g>
 </svg></span></div></div><div className="ui_button_label_count_wrapper"><span className="ui_button_label" id="__w2_wyWsLrMt41_label">Answer</span></div></div></a></span></div><div className="ItemComponent CantAnswerActionItem primary_item u-relative"><a className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon" href="#" role="button" action_click="PassWritePage" id="__w2_wyWsLrMt27_button"><div className="ui_button_inner" id="__w2_wyWsLrMt27_inner"><div className="ui_button_icon_wrapper u-relative u-flex-inline"><div id="__w2_wyWsLrMt27_icon"><span className="ui_button_icon" aria-hidden="true"><svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
@@ -387,6 +392,8 @@ class Dashboard extends Component {
       <div className="PagedListInvisibleItem FeedBottomIndicator">You've reached the end of your feed.<span className="primary_button" id="__w2_wnuFD7sM20_feed_bottom">More Stories</span></div>
    </div>
 </div>
+
+
 <div className="spinner_display_area" id="__w2_w2OzgLAU9_spinner">
 <div className="LoadingDots regular">
    <div className="dot first" />
@@ -468,6 +475,8 @@ class Dashboard extends Component {
       </div>
    </div>
 </div>
+
+
 
 
 
