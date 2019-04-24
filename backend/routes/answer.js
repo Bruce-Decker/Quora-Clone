@@ -60,37 +60,39 @@ router.post("/downvote", function(req, res) {
 });
 
 router.post("/", function(req, res) {
-  kafka.make_request("createanswer", { body: req.body }, function(
-    error,
-    result
-  ) {
-    if (error) {
-      console.log(error);
-      res.status(400).json({ msg: "Unable to save answer" });
-    } else {
-      res.send(result);
+  kafka.make_request(
+    "answer",
+    { method: "createanswer", body: req.body },
+    function(error, result) {
+      if (error) {
+        console.log(error);
+        res.status(400).json({ msg: "Unable to save answer" });
+      } else {
+        res.send(result);
+      }
     }
-  });
+  );
 });
 
 router.get("/", function(req, res) {
-  kafka.make_request("getanswer", { answer_id: req.query.answer_id }, function(
-    error,
-    result
-  ) {
-    if (error) {
-      console.log(error);
-      res.status(400).json({ msg: "cannot login user" });
-    } else {
-      res.send(result);
+  kafka.make_request(
+    "answer",
+    { method: "getanswer", answer_id: req.query.answer_id },
+    function(error, result) {
+      if (error) {
+        console.log(error);
+        res.status(400).json({ msg: "cannot login user" });
+      } else {
+        res.send(result);
+      }
     }
-  });
+  );
 });
 
 router.get("/list", function(req, res) {
   kafka.make_request(
-    "fetchanswers",
-    { question_id: req.query.question_id },
+    "answer",
+    { method: "fetchanswers", question_id: req.query.question_id },
     function(error, result) {
       if (error) {
         console.log(error);
@@ -103,18 +105,37 @@ router.get("/list", function(req, res) {
 });
 
 router.post("/comment", function(req, res) {
-  kafka.make_request('answer', {"method": "addComment", "message": req.body}, function(error, result) {
-    if (error) {
-        console.log(error)
-        res.status(400).json({msg: 'cannot question'});
-    } else {
-           if (result.errors) {
-              return res.status(400).json(result.errors);
-           } else {
-              res.send(result)
-           }
+  kafka.make_request(
+    "answer",
+    { method: "addComment", message: req.body },
+    function(error, result) {
+      if (error) {
+        console.log(error);
+        res.status(400).json({ msg: "cannot question" });
+      } else {
+        if (result.errors) {
+          return res.status(400).json(result.errors);
+        } else {
+          res.send(result);
+        }
+      }
     }
-  })
+  );
+});
+
+router.get("/userList", function(req, res) {
+  kafka.make_request(
+    "answer",
+    { method: "userList", email: req.query.email },
+    function(error, result) {
+      if (error) {
+        console.log(error);
+        res.status(400).json({ msg: "cannot login user" });
+      } else {
+        res.send(result);
+      }
+    }
+  );
 });
 
 module.exports = router;

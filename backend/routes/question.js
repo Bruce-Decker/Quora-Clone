@@ -18,6 +18,8 @@ router.post('/createQuestion', function(req, res) {
   })
 })
 
+
+
 router.get("/keyword", function(req, res) {
   kafka.make_request(
     "question",
