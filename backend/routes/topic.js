@@ -69,10 +69,26 @@ router.get("/all", function(req, res) {
     }
   );
 });
+
 router.post("/follow", function(req, res) {
   kafka.make_request(
     "topic",
-    { method: "folowTopic", body: req.body },
+    { method: "followTopic", body: req.body },
+    function(error, result) {
+      if (error) {
+        console.log(error);
+        res.status(400).json({ msg: "profile not found" });
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+router.post("/unfollow", function(req, res) {
+  kafka.make_request(
+    "topic",
+    { method: "unfollowTopic", body: req.body },
     function(error, result) {
       if (error) {
         console.log(error);
