@@ -128,8 +128,8 @@ function dashboardQuestion(info, callback) {
     console.log(userTopics);
     if (userTopics) {
       console.log("User topics");
-      console.log(userTopics.topics);
-      let searchObj = { email: email, userTopics: userTopics };
+
+      let searchObj = { email: email, userTopics: userTopics.topics };
       cache.get(searchObj, function(err, res) {
         if (!err && res) {
           return callback(null, res);
