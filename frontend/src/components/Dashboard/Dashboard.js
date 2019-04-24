@@ -81,14 +81,14 @@ class Dashboard extends Component {
                                   <li className="switcher_item switcher_item_with_image">
                                     <a
                                       className="link"
-                                      href="/topic/Tech-News-and-Journalism"
+                                      href="/topic/Science and Technology.jpeg"
                                     >
                                       <div className="switcher_item_image u-flex-none u-relative">
                                         <div
                                           className="u-bg--square u-bg--center u-bg--cover u-border-radius--2"
                                           style={{
                                             backgroundImage:
-                                              "url(https://qph2.c7.quoracdn.net/main-thumb-t-19293-100-dwvOEDzBr8zVXCxi30VD03rrlXAY0Aqq.jpeg)"
+                                              "url(./topic/Science and Technology.jpeg)"
                                           }}
                                         />
                                         <div className="u-absolute unread_dot u-border-radius--ellipse" />
