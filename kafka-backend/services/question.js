@@ -1,5 +1,6 @@
 const Question = require("../models/Question");
 const Profile = require("../models/Profile");
+const cache = require("../cache");
 
 exports.questionService = function questionService(info, callback) {
   switch (info.method) {
@@ -75,16 +76,28 @@ function postQuestion(info, callback) {
 
 function searchQuestion(info, callback) {
   var question = info.message.question;
-  Question.find({ question: new RegExp(question, "i") }, function(err, docs) {
-    console.log(docs);
-    console.log(err);
-    if (docs) {
-      console.log(docs);
-      callback(null, docs);
-    } else {
-      console.log(err);
-      callback(err, "error");
+  let searchObj = {
+    question: new RegExp(question, "i")
+  };
+  cache.get(searchObj, function(err, res) {
+    if (!err && res) {
+      return callback(null, res);
     }
+    Question.find({ question: new RegExp(question, "i") }, function(err, docs) {
+      console.log(docs);
+      console.log(err);
+      if (docs) {
+        console.log(docs);
+        callback(null, docs);
+        cache.set({
+          keyObj: searchObj,
+          value: docs
+        });
+      } else {
+        console.log(err);
+        callback(err, "error");
+      }
+    });
   });
 }
 
@@ -154,16 +167,20 @@ function folowQuestion(info, callback) {
   var email = info.body.email;
   var question_id = info.body.question_id;
   var data = {
-    email:email
-  }
+    email: email
+  };
 
-  Question.findOneAndUpdate({question_id: question_id}, {$push: {followers: data}}, (error, result) => {
-    if (error) {
-        callback(error,"error");
-    } else {
+  Question.findOneAndUpdate(
+    { question_id: question_id },
+    { $push: { followers: data } },
+    (error, result) => {
+      if (error) {
+        callback(error, "error");
+      } else {
         callback(null, data);
+      }
     }
-  })
+  );
 }
 
 function unfollowQuestion(info, callback) {
@@ -172,15 +189,19 @@ function unfollowQuestion(info, callback) {
   var email = info.body.email;
   var question_id = info.body.question_id;
   var data = {
-    email:email
-  }
+    email: email
+  };
 
-  Question.findOneAndUpdate({question_id: question_id}, {$pull: {followers: data}}, function(error, result) {
-    if (error) {
-      callback(error,"error");
-    } else {
-        console.log(result)
+  Question.findOneAndUpdate(
+    { question_id: question_id },
+    { $pull: { followers: data } },
+    function(error, result) {
+      if (error) {
+        callback(error, "error");
+      } else {
+        console.log(result);
         callback(null, data);
-     }
-  })
+      }
+    }
+  );
 }
