@@ -8,3 +8,4 @@ client.on("connect", function() {
 client.on("error", function(err) {
   console.log("Something went wrong " + err);
 });
+module.exports = client;

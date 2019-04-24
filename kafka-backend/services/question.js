@@ -81,6 +81,7 @@ function searchQuestion(info, callback) {
   };
   cache.get(searchObj, function(err, res) {
     if (!err && res) {
+      console.log("Returning from redis......");
       return callback(null, res);
     }
     Question.find({ question: new RegExp(question, "i") }, function(err, docs) {

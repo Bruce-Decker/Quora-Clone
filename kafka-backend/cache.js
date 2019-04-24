@@ -19,10 +19,7 @@ module.exports = {
     let objStr = JSON.stringify(opts.value);
     let key = objectHash(keyObj);
     redisClient.set(key, objStr, function(err, res) {
-      if (err) {
-        return cb("Unable to set data in redis");
-      }
-      return cb();
+      console.log(err);
     });
   }
 };
