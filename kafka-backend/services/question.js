@@ -1,5 +1,6 @@
 const Question = require("../models/Question");
 const Profile = require("../models/Profile");
+const cache = require("../cache");
 
 exports.questionService = function questionService(info, callback) {
   switch (info.method) {
@@ -75,16 +76,29 @@ function postQuestion(info, callback) {
 
 function searchQuestion(info, callback) {
   var question = info.message.question;
-  Question.find({ question: new RegExp(question, "i") }, function(err, docs) {
-    console.log(docs);
-    console.log(err);
-    if (docs) {
-      console.log(docs);
-      callback(null, docs);
-    } else {
-      console.log(err);
-      callback(err, "error");
+  let searchObj = {
+    question: new RegExp(question, "i")
+  };
+  cache.get(searchObj, function(err, res) {
+    if (!err && res) {
+      console.log("Returning from redis......");
+      return callback(null, res);
     }
+    Question.find({ question: new RegExp(question, "i") }, function(err, docs) {
+      console.log(docs);
+      console.log(err);
+      if (docs) {
+        console.log(docs);
+        callback(null, docs);
+        cache.set({
+          keyObj: searchObj,
+          value: docs
+        });
+      } else {
+        console.log(err);
+        callback(err, "error");
+      }
+    });
   });
 }
 
