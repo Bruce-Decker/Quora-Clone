@@ -26,7 +26,6 @@ exports.questionService = function questionService(info, callback) {
   }
 };
 
-
 function postQuestion(info, callback) {
   var question_id = info.message.question_id;
   var question = info.message.question;
@@ -105,8 +104,7 @@ function userQuestion(info, callback) {
 }
 
 function dashboardQuestion(info, callback) {
-
-  var email = info.email;
+  var email = info.message.email;
   let projection = {
     answers: 0,
     question_id: 0,
@@ -118,34 +116,35 @@ function dashboardQuestion(info, callback) {
   Profile.findOne({ email: email }, function(err, user) {
     console.log(user);
 
-  console.log(info.message)
-  var email = info.message.email;
-  Profile.findOne({ email: email }, { topics: 1 }, function(err, userTopics) {
-    console.log(userTopics);
+    console.log(info.message);
+    var email = info.message.email;
+    Profile.findOne({ email: email }, { topics: 1 }, function(err, userTopics) {
+      console.log(userTopics);
 
-    console.log(err);
-    if (user) {
-      console.log(user);
-      Question.find({ topics: user.topics }, (err, questions) => {
-        if (err) {
-          callback(err, null);
-        } else {
-          callback(null, questions);
-        }
-      });
-    } else {
-      const options = {
-        page: info.pageno,
-        limit: 10
-      };
-      Question.paginate({}, options, (err, questions) => {
-        if (err) {
-          callback(err, null);
-        } else {
-          callback(null, questions);
-        }
-      });
-    }
+      console.log(err);
+      if (user) {
+        console.log(user);
+        Question.paginate({ topics: user.topics }, (err, questions) => {
+          if (err) {
+            callback(err, null);
+          } else {
+            callback(null, questions);
+          }
+        });
+      } else {
+        const options = {
+          page: info.message.pageno,
+          limit: 10
+        };
+        Question.paginate({}, options, (err, questions) => {
+          if (err) {
+            callback(err, null);
+          } else {
+            callback(null, questions);
+          }
+        });
+      }
+    });
   });
 }
 
