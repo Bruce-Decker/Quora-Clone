@@ -1,9 +1,10 @@
 var redisClient = require("./config/redisClient");
-//var objectHash = require("object-hash");
+var objectHash = require("object-hash");
 
 module.exports = {
   get: function(opts, cb) {
-    let key = "A"; //objectHash(opts);
+    console.log("get......", opts);
+    let key = objectHash(opts);
     redisClient.get(key, function(err, res) {
       if (!err && res) {
         res = JSON.parse(res);
@@ -17,7 +18,7 @@ module.exports = {
   set: function(opts) {
     let keyObj = opts.keyObj;
     let objStr = JSON.stringify(opts.value);
-    let key = "a"; //objectHash(keyObj);
+    let key = objectHash(keyObj);
     redisClient.set(key, objStr, function(err, res) {
       console.log(err);
     });
