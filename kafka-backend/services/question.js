@@ -137,17 +137,24 @@ function dashboardQuestion(info, callback) {
     if (userTopics) {
       console.log("User topics");
       console.log(userTopics.topics);
-      Question.paginate(
-        { topics: userTopics.topics },
-        options,
-        (err, questions) => {
-          if (err) {
-            callback(err, null);
-          } else {
-            callback(null, questions);
-          }
+      let searchObj = { email: email, userTopics: userTopics };
+      cache.get(searchObj, function(err, res) {
+        if (!err && res) {
+          return callback(null, res);
         }
-      );
+        Question.paginate(
+          { topics: userTopics.topics },
+          options,
+          (err, questions) => {
+            if (err) {
+              callback(err, null);
+            } else {
+              callback(null, questions);
+              cache.set({ keyObj: searchObj, value: questions });
+            }
+          }
+        );
+      });
     } else {
       Question.paginate({}, options, (err, questions) => {
         if (err) {
