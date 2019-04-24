@@ -28,9 +28,11 @@ exports.answerService = function answerService(info, callback) {
     case "createanswer":
       createanswer(info, callback);
       break;
+    case "userList":
+      userList(info, callback);
+      break;
   }
 };
-  
 
 function bookmarkAnswer(info, callback) {
   var answerid = info.message.answerid;
@@ -207,6 +209,29 @@ function createanswer(msg, callback) {
   )
     .then(data => {
       return callback(null, msg.body);
+    })
+    .catch(err => {
+      return callback(err);
+    });
+}
+
+function userList(msg, callback) {
+  let email = msg.email;
+  Question.find({ "answers.owner": email })
+    .then(data => {
+      if (!data.length) return callback({ msg: "No question found" });
+      const resp = data.map(function(d) {
+        let res = { answer: [] };
+        let answers = d.answers;
+
+        for (var i = 0; i < answers.length; i++) {
+          let answer = answers[i];
+          if (answer.owner === email) res["answer"].push(answer);
+        }
+        res["question"] = d.question;
+        return res;
+      });
+      return callback(null, resp);
     })
     .catch(err => {
       return callback(err);

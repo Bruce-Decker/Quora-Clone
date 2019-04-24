@@ -152,20 +152,16 @@ function folowQuestion(info, callback) {
   var email = info.body.email;
   var question_id = info.body.question_id;
   var data = {
-    email: email
-  };
+    email:email
+  }
 
-  Question.findOneAndUpdate(
-    { question_id: question_id },
-    { $push: { followers: data } },
-    (error, result) => {
-      if (error) {
-        callback(error, "error");
-      } else {
+  Question.findOneAndUpdate({question_id: question_id}, {$push: {followers: data}}, (error, result) => {
+    if (error) {
+        callback(error,"error");
+    } else {
         callback(null, data);
-      }
     }
-  );
+  })
 }
 
 function unfollowQuestion(info, callback) {
@@ -174,19 +170,15 @@ function unfollowQuestion(info, callback) {
   var email = info.body.email;
   var question_id = info.body.question_id;
   var data = {
-    email: email
-  };
+    email:email
+  }
 
-  Question.findOneAndUpdate(
-    { question_id: question_id },
-    { $pull: { followers: data } },
-    function(error, result) {
-      if (error) {
-        callback(error, "error");
-      } else {
-        console.log(result);
+  Question.findOneAndUpdate({question_id: question_id}, {$pull: {followers: data}}, function(error, result) {
+    if (error) {
+      callback(error,"error");
+    } else {
+        console.log(result)
         callback(null, data);
-      }
-    }
-  );
+     }
+  })
 }
