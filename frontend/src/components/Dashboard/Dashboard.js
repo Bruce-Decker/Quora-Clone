@@ -43,13 +43,13 @@ class Dashboard extends Component {
                showQuestions: true
             })
         } 
-        console.log("w34fsdf")
+       
         if (dashboard_questions.docs) {
          this.setState({
             //questions: dashboard_questions.data.docs,
             //showQuestions: true
          })
-         console.log("w34fsdf")
+        
          console.log(dashboard_questions.data.docs[0].question)
      } 
    }
@@ -64,7 +64,9 @@ class Dashboard extends Component {
       <div>
         <Navbar
           Home={"nav_item_link selected"}
+          Home_Color = {"ui_icon ui_icon_color--red ui_icon_size--regular ui_icon_outline--filled"}
           Answer={"nav_item_link"}
+          Answer_Color = {"ui_icon ui_icon_color--gray ui_icon_size--regular ui_icon_outline--default"}
           Spaces={"nav_item_link"}
           Notifications={"nav_item_link"}
         />
