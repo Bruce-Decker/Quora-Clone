@@ -128,14 +128,14 @@ function dashboardQuestion(info, callback) {
     console.log(userTopics);
     if (userTopics) {
       console.log("User topics");
-
       let searchObj = { email: email, userTopics: userTopics.topics };
       cache.get(searchObj, function(err, res) {
         if (!err && res) {
           return callback(null, res);
+
         }
         Question.paginate(
-          { topics: userTopics.topics },
+           { topics: { $in: userTopics.topics } },
           options,
           (err, questions) => {
             if (err) {
