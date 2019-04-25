@@ -37,4 +37,21 @@ router.get('/viewProfile', function(req, res) {
 })
 
 
+router.get('/getProfileViews', function(req, res) {
+    kafka.make_request('profile', {"method": "getProfileViews", "message": req.query}, function(error, result) {
+        if (error) {
+            console.log(error)
+            res.status(400).json({msg: 'cannot find user'});
+        } else {
+               if (result.errors) {
+                  return res.status(400).json(result.errors);
+               } else {
+                  console.log(result)
+                  res.send(result)
+               }
+        }
+    })
+})
+
+
 module.exports = router;

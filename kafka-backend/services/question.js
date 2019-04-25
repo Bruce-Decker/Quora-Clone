@@ -1,5 +1,6 @@
 const Question = require("../models/Question");
 const Profile = require("../models/Profile");
+const cache = require("../cache");
 
 exports.questionService = function questionService(info, callback) {
   switch (info.method) {
@@ -16,6 +17,9 @@ exports.questionService = function questionService(info, callback) {
       break;
     case "postQuestion":
       postQuestion(info, callback);
+      break;
+    case "getQuestions":
+      getQuestions(info, callback);
       break;
     case "unfollowQuestion":
       unfollowQuestion(info, callback);
@@ -72,12 +76,17 @@ function postQuestion(info, callback) {
 
 function searchQuestion(info, callback) {
   var question = info.message.question;
+  let searchObj = {
+    question: new RegExp(question, "i")
+  };
+
   Question.find({ question: new RegExp(question, "i") }, function(err, docs) {
     console.log(docs);
     console.log(err);
     if (docs) {
       console.log(docs);
       callback(null, docs);
+      console.log("in here........");
     } else {
       console.log(err);
       callback(err, "error");
@@ -101,18 +110,44 @@ function userQuestion(info, callback) {
 }
 
 function dashboardQuestion(info, callback) {
-  var email = info.body.email;
-  Profile.findOne({ email: email }, { topics: 1 }, function(err, userTopics) {
+  var email = info.message.email;
+  let projection = {
+    answers: 0,
+    question_id: 0,
+    question: 0,
+    owner: 0,
+    followers: 0,
+    posted_date: 0
+  };
+  const options = {
+    page: info.message.pageno,
+    limit: 10
+  };
+  var email = info.message.email;
+  Profile.findOne({ email: email }, function(err, userTopics) {
     console.log(userTopics);
-    console.log(err);
     if (userTopics) {
-      console.log(userTopics);
-      Question.find({ topics: userTopics });
+      console.log("User topics");
+      let searchObj = { email: email, userTopics: userTopics.topics };
+      // cache.get(searchObj, function(err, res) {
+      //   if (!err && res) {
+      //     return callback(null, res);
+
+      //   }
+        Question.paginate(
+           { topics: { $in: userTopics.topics } },
+          options,
+          (err, questions) => {
+            if (err) {
+              callback(err, null);
+            } else {
+              callback(null, questions);
+             // cache.set({ keyObj: searchObj, value: questions });
+            }
+          }
+        );
+     // });
     } else {
-      const options = {
-        page: 1,
-        limit: 10
-      };
       Question.paginate({}, options, (err, questions) => {
         if (err) {
           callback(err, null);
@@ -130,16 +165,20 @@ function folowQuestion(info, callback) {
   var email = info.body.email;
   var question_id = info.body.question_id;
   var data = {
-    email:email
-  }
+    email: email
+  };
 
-  Question.findOneAndUpdate({question_id: question_id}, {$push: {followers: data}}, (error, result) => {
-    if (error) {
-        callback(error,"error");
-    } else {
+  Question.findOneAndUpdate(
+    { question_id: question_id },
+    { $push: { followers: data } },
+    (error, result) => {
+      if (error) {
+        callback(error, "error");
+      } else {
         callback(null, data);
+      }
     }
-  })
+  );
 }
 
 function unfollowQuestion(info, callback) {
@@ -148,15 +187,19 @@ function unfollowQuestion(info, callback) {
   var email = info.body.email;
   var question_id = info.body.question_id;
   var data = {
-    email:email
-  }
+    email: email
+  };
 
-  Question.findOneAndUpdate({question_id: question_id}, {$pull: {followers: data}}, function(error, result) {
-    if (error) {
-      callback(error,"error");
-    } else {
-        console.log(result)
+  Question.findOneAndUpdate(
+    { question_id: question_id },
+    { $pull: { followers: data } },
+    function(error, result) {
+      if (error) {
+        callback(error, "error");
+      } else {
+        console.log(result);
         callback(null, data);
-     }
-  })
+      }
+    }
+  );
 }

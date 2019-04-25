@@ -1,6 +1,6 @@
 const Topic = require("../models/Topic");
-const Profile = require('../models/Profile')
-var async = require('async');
+const Profile = require("../models/Profile");
+var async = require("async");
 
 exports.topicService = function topicService(info, callback) {
   switch (info.method) {
@@ -13,28 +13,28 @@ exports.topicService = function topicService(info, callback) {
     case "postTopic":
       postTopic(info, callback);
       break;
-    case "folowTopic":
-      folowTopic(info, callback);
+    case "followTopic":
+      followTopic(info, callback);
       break;
     case "getUserTopic":
       getUserTopic(info, callback);
       break;
+    case "unfollowTopic":
+      unfollowTopic(info, callback);
+        break;
   }
 };
 
-
 function getUserTopic(info, callback) {
-   var email = info.email
-   Profile.findOne({email: email}, function(err, docs) {
-     if (docs) {
-      callback(null, docs)
-     } else {
-      callback(null, [])
-     }
-   })
-
+  var email = info.email;
+  Profile.findOne({ email: email }, function(err, docs) {
+    if (docs) {
+      callback(null, docs);
+    } else {
+      callback(null, []);
+    }
+  });
 }
-
 
 function postTopic(info, callback) {
   var topic_id = info.message.topic_id;
@@ -84,34 +84,54 @@ function searchTopic(info, callback) {
   });
 }
 
-function folowTopic(info, callback){
-  
+function getTopic(info, callback) {
+  Topic.find({}, function(err, docs) {
+    console.log(docs);
+    console.log(err);
+    if (docs) {
+      console.log(docs);
+      callback(null, docs);
+    } else {
+      console.log(err);
+      callback(err, "error");
+    }
+  });
+}
+
+function followTopic(info, callback) {
+  console.log(`info.body`);
   console.log(info.body);
   var email = info.body.email;
   var topic_name = info.body.topic_name;
-  var data = {
-    topic_name: topic_name
-  }
 
-  Profile.findOne({email: email}, function(error, result) {
+  Profile.findOneAndUpdate({ email: email }, { $push: { topics: topic_name } }, function(
+    error,
+    result
+  ) {
     if (error) {
-        callback(error,"error1");
+      callback(error, "error");
     } else {
-        //console.log(result.topics)
-        console.log(result)
-        console.log("A1 " + JSON.stringify(result.topics))
-      
-        result.topics = result.topics.push(data)
-        console.log("A2 " + JSON.stringify(result.topics))
-        callback(null, data);
-        Profile.findOneAndUpdate({email: email}, {$set: {topics: result.topics}}, function(err, result) {
-            if (err) {
-              //console.log(topics_update)
-              callback(error,"error2");
-            } else {
-              callback(null, result);
-            }
-        })
-     }
-  })
+      console.log(result);
+      callback(null, topic_name);
+    }
+  });
+}
+
+function unfollowTopic(info, callback) {
+  console.log(`info.body`);
+  console.log(info.body);
+  var email = info.body.email;
+  var topic_name = info.body.topic_name;
+
+  Profile.findOneAndUpdate({ email: email }, { $pull: { topics: topic_name } }, function(
+    error,
+    result
+  ) {
+    if (error) {
+      callback(error, "error");
+    } else {
+      console.log(result);
+      callback(null, topic_name);
+    }
+  });
 }
