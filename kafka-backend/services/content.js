@@ -1,6 +1,6 @@
 var AnswerModel = require("../models/Answer");
 //var BookmarkModel = require("../models/Bookmark");
-var ProfileModel = require("../models/Profile");
+//var ProfileModel = require("../models/Profile");
 var QuestionModel = require("../models/Question");
 var followersModel = require("../models/UserFollowers");
 
@@ -19,60 +19,75 @@ function content(info, callback) {
   var response = {};
   var email = info.message.email;
 
-  console.log(info);
-  AnswerModel.find(
-    { owner: email },
-    { sort: [["answered_time", "desc"]] },
-    function(err, docs) {
-      if (docs) {
-        console.log(docs);
-        response.Answer = docs;
-      } else {
-        console.log(err);
-        callback(err, " Answer error");
-      }
-    }
-  );
+  console.log("info", info);
 
   QuestionModel.find(
     { owner: email },
-    { sort: [["posted_date", "desc"]] },
+    // { sort: [["posted_date", "desc"]] },
     function(err, docs) {
       if (docs) {
-        console.log(docs);
-        response.Email = docs;
+        console.log("docs", docs);
+        response.QuestionsAsked = docs;
+        console.log("response", response);
+        AnswerModel.find(
+          { owner: email },
+          // { sort: [["answerers.answered_date", "desc"]] },
+          function(err, docs) {
+            if (docs) {
+              console.log(docs);
+              response.Answers = docs;
+              QuestionModel.find(
+                { "followers.email": email },
+                // { sort: [["answerers.answered_date", "desc"]] },
+                function(err, docs) {
+                  if (docs) {
+                    console.log(docs);
+                    response.QuestionsFollowed = docs;
+                    console.log("resonse in kafka", response);
+                    callback(null, response);
+                  } else {
+                    console.log(err);
+                    callback(err, " Question followed error");
+                  }
+                }
+              );
+            } else {
+              console.log(err);
+              callback(err, " Answered error");
+            }
+          }
+        );
       } else {
         console.log(err);
         callback(err, " Question error");
       }
     }
   );
-
-  followersModel.find({ follower_email: email }, function(err, docs) {
-    if (docs) {
-      console.log(docs);
-      response.Following = docs;
-    } else {
-      console.log(err);
-      callback(err, " Followers error");
-    }
-  });
-  callback(null, response);
 }
 
 //API: /content/sort?email=<email>activityType=<activityType>&year=<year>&order=<order> (Get request)
 
 function filteredContent(info, callback) {
-  var response = {};
+  console.log("filteredContent in Kafka");
   var email = info.message.email;
   var activityType = info.message.activityType;
   var year = info.message.year;
   var order = info.message.order;
+  var start = new Date(`${year}-01-01`);
+  var end = new Date(`${Number(year) + 1}-01-01`);
+  console.log("start=", start, "end=", end);
   console.log(info);
   switch (activityType) {
     case "QuestionAsked":
       QuestionModel.find(
-        { postDate: year, owner: email },
+        {
+          postedDate: {
+            $gt: start,
+            $lt: end
+          },
+          owner: email
+        },
+
         { sort: [["postedDate", order]] },
         function(err, docs) {
           if (docs) {
@@ -87,7 +102,13 @@ function filteredContent(info, callback) {
       break;
     case "QuestionFollowed":
       QuestionModel.find(
-        { postDate: year, "followers.email": email },
+        {
+          "followers.time": {
+            $gte: start,
+            $lt: end
+          },
+          "followers.email": email
+        },
         { sort: [["followers.time", order]] },
         function(err, docs) {
           if (docs) {
@@ -102,7 +123,13 @@ function filteredContent(info, callback) {
       break;
     case "Answers":
       AnswerModel.find(
-        { postDate: year, owner: email },
+        {
+          answered_time: {
+            $gte: start,
+            $lt: end
+          },
+          owner: email
+        },
         { sort: [["answered_time", order]] },
         function(err, docs) {
           if (docs) {

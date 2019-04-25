@@ -17,6 +17,8 @@ var validateRegister = require("./validation/validateRegister");
 var validateLogin = require("./validation/validateLogin");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+var contentRouter = require("./routes/content");
+var followRouter = require("./routes/follow");
 
 const db_url = require("./config/keys").mongo_atlas;
 const url = process.env.MONGODB_URI || "mongodb://localhost:27017/Quora_Clone";
@@ -46,8 +48,10 @@ app.use(passport.initialize());
 app.use("/", authRouter);
 app.use("/profile", profileRouter);
 app.use("/topic", topicRouter);
-app.use("/message",messageRouter);
+app.use("/message", messageRouter);
 app.use("/question", questionRouter);
 app.use("/answer", answerRouter);
+app.use("/content", contentRouter);
+app.use("/follow", followRouter);
 
 app.listen(port, () => console.log(`Server running on port ${port}`));

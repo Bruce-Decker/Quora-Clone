@@ -32,10 +32,28 @@ function handleTopicRequest(topic_name, fname) {
     console.log("message received for " + topic_name + " ", fname);
     console.log(JSON.stringify(message.value));
     var data = JSON.parse(message.value);
-   
+
     switch (topic_name) {
       case "auth":
         auth.authService(data.data, function(err, res) {
+          response(data, res, producer);
+          return;
+        });
+        break;
+      case "content":
+        content.contentService(data.data, function(err, res) {
+          response(data, res, producer);
+          return;
+        });
+        break;
+      case "filteredContent":
+        content.contentService(data.data, function(err, res) {
+          response(data, res, producer);
+          return;
+        });
+        break;
+      case "follow":
+        follow.followService(data.data, function(err, res) {
           response(data, res, producer);
           return;
         });
@@ -66,17 +84,17 @@ function handleTopicRequest(topic_name, fname) {
         break;
       case "fetchanswers":
         fetchanswers.handle_request(data.data, function(err, res) {
-       response(data, res, producer);
+          response(data, res, producer);
           return;
         });
         break;
-	case "message":
+      case "message":
         messages.messageService(data.data, function(err, res) {
           response(data, res, producer);
           return;
         });
         break;
-  case "answer":
+      case "answer":
         answer.answerService(data.data, function(err, res) {
           response(data, res, producer);
           return;

@@ -88,7 +88,7 @@ var QuestionSchema = new Schema({
     }
   ],
   postedDate: {
-    type: String,
+    type: Date,
     required: true
   }
 });
