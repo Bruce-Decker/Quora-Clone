@@ -11,7 +11,8 @@ exports.questionService = function questionService(info, callback) {
       userQuestion(info, callback);
       break;
     case "followQuestion":
-      folowQuestion(info, callback);
+      followQuestion(info, callback);
+      break;
     case "dashboardQuestion":
       dashboardQuestion(info, callback);
       break;
@@ -110,6 +111,7 @@ function userQuestion(info, callback) {
 }
 
 function dashboardQuestion(info, callback) {
+  console.log(info);  
   var email = info.message.email;
   let projection = {
     answers: 0,
@@ -159,7 +161,7 @@ function dashboardQuestion(info, callback) {
   });
 }
 
-function folowQuestion(info, callback) {
+function followQuestion(info, callback) {
   console.log(`info.body`);
   console.log(info.body);
   var email = info.body.email;

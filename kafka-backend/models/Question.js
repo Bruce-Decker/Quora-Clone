@@ -15,9 +15,7 @@ const QuestionSchema = new Schema({
   },
   followers: [
     {
-      email: {
-        type: String
-      }
+      type: String
     }
   ],
   answers: [
