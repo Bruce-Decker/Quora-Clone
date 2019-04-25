@@ -123,13 +123,16 @@ function dashboardQuestion(info, callback) {
     if (userTopics) {
       console.log("User topics");
       console.log(userTopics.topics);
+
       Question.paginate(
-        { topics: userTopics.topics },
+        { topics: { $in: userTopics.topics } },
         options,
         (err, questions) => {
           if (err) {
             callback(err, null);
           } else {
+            console.log("all questions:");
+            console.log(questions);
             callback(null, questions);
           }
         }
