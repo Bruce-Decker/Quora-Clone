@@ -16,14 +16,19 @@ class Dashboard extends Component {
         this.state = {
             topics: [],
             questions: [],
-            showQuestions: false
+            showQuestions: false,
+            showBox: false,
+            key: ''
         }
         
          
     }
 
-    onClick = () => {
-       alert("tsefsdfsdf")
+    onClick = (keyId) => {
+      this.setState({
+         showBox: !this.state.showBox,
+         key: keyId
+       })
     }
 
    async componentDidMount() {
@@ -526,7 +531,7 @@ class Dashboard extends Component {
                                                           className="ui_button_inner"
                                                           id="__w2_wLjahHEI28_inner"
                                                           key = {question._id}
-                                                          onClick = {this.onClick}
+                                                          onClick = {() => this.onClick(question._id)}
                                                         >
                                                           <div className="ui_button_icon_wrapper u-relative u-flex-inline">
                                                             <div id="__w2_wLjahHEI28_icon">
@@ -982,8 +987,8 @@ class Dashboard extends Component {
 
 
 
-
-
+{this.state.showBox && this.state.key == question._id ?
+<div className = {question._id} id = {question._id}>
 <div className="AnswerEditorHeader">
    <div className="ui_layout_photo_text u-flex ui_layout_size--small">
       <div className="ui_layout_photo_wrapper u-flex-none">
@@ -1071,8 +1076,8 @@ class Dashboard extends Component {
 
 <a className="submit_button" href="#" action_mousedown="InlineEditorAnswerAdd" id="__w2_w1SM6R3W26_inline_editor_submit">Submit</a>
 
-
-
+</div>
+: null }
 
 
 
@@ -1098,6 +1103,10 @@ class Dashboard extends Component {
                                   </div>
                                 </div>
                               </div>
+
+
+
+                           
                               <div className="multifeed_bundle_story">
                                 <div id="wZZq9P0w14">
                                   <div

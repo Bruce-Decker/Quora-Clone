@@ -6,6 +6,7 @@ import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Answer from "./components/Answer/Answer";
+import Content from "./components/Content/Content";
 import { activeUser } from "./actions/authActions";
 import jwt_decode from "jwt-decode";
 
@@ -38,6 +39,7 @@ class App extends Component {
             <Route exact path="/register" component={Register} />
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/answer" component={Answer} />
+            <Route exact path="/content" component={Content} />
           </div>
         </BrowserRouter>
       </Provider>

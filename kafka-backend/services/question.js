@@ -129,11 +129,11 @@ function dashboardQuestion(info, callback) {
     if (userTopics) {
       console.log("User topics");
       let searchObj = { email: email, userTopics: userTopics.topics };
-      cache.get(searchObj, function(err, res) {
-        if (!err && res) {
-          return callback(null, res);
+      // cache.get(searchObj, function(err, res) {
+      //   if (!err && res) {
+      //     return callback(null, res);
 
-        }
+      //   }
         Question.paginate(
            { topics: { $in: userTopics.topics } },
           options,
@@ -142,11 +142,11 @@ function dashboardQuestion(info, callback) {
               callback(err, null);
             } else {
               callback(null, questions);
-              cache.set({ keyObj: searchObj, value: questions });
+             // cache.set({ keyObj: searchObj, value: questions });
             }
           }
         );
-      });
+     // });
     } else {
       Question.paginate({}, options, (err, questions) => {
         if (err) {
