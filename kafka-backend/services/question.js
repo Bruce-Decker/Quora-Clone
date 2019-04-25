@@ -1,5 +1,6 @@
 const Question = require("../models/Question");
 const Profile = require("../models/Profile");
+const cache = require("../cache");
 
 exports.questionService = function questionService(info, callback) {
   switch (info.method) {
@@ -75,12 +76,17 @@ function postQuestion(info, callback) {
 
 function searchQuestion(info, callback) {
   var question = info.message.question;
+  let searchObj = {
+    question: new RegExp(question, "i")
+  };
+
   Question.find({ question: new RegExp(question, "i") }, function(err, docs) {
     console.log(docs);
     console.log(err);
     if (docs) {
       console.log(docs);
       callback(null, docs);
+      console.log("in here........");
     } else {
       console.log(err);
       callback(err, "error");
@@ -122,21 +128,25 @@ function dashboardQuestion(info, callback) {
     console.log(userTopics);
     if (userTopics) {
       console.log("User topics");
-      console.log(userTopics.topics);
+      let searchObj = { email: email, userTopics: userTopics.topics };
+      cache.get(searchObj, function(err, res) {
+        if (!err && res) {
+          return callback(null, res);
 
-      Question.paginate(
-        { topics: { $in: userTopics.topics } },
-        options,
-        (err, questions) => {
-          if (err) {
-            callback(err, null);
-          } else {
-            console.log("all questions:");
-            console.log(questions);
-            callback(null, questions);
-          }
         }
-      );
+        Question.paginate(
+           { topics: { $in: userTopics.topics } },
+          options,
+          (err, questions) => {
+            if (err) {
+              callback(err, null);
+            } else {
+              callback(null, questions);
+              cache.set({ keyObj: searchObj, value: questions });
+            }
+          }
+        );
+      });
     } else {
       Question.paginate({}, options, (err, questions) => {
         if (err) {

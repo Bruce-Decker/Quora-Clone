@@ -13,12 +13,15 @@ exports.topicService = function topicService(info, callback) {
     case "postTopic":
       postTopic(info, callback);
       break;
-    case "folowTopic":
-      folowTopic(info, callback);
+    case "followTopic":
+      followTopic(info, callback);
       break;
     case "getUserTopic":
       getUserTopic(info, callback);
       break;
+    case "unfollowTopic":
+      unfollowTopic(info, callback);
+        break;
   }
 };
 
@@ -95,16 +98,13 @@ function getTopic(info, callback) {
   });
 }
 
-function folowTopic(info, callback) {
+function followTopic(info, callback) {
   console.log(`info.body`);
   console.log(info.body);
   var email = info.body.email;
   var topic_name = info.body.topic_name;
-  var data = {
-    email: email
-  };
 
-  Topic.findOneAndUpdate({ topic_id: topic_id }, { followers: data }, function(
+  Profile.findOneAndUpdate({ email: email }, { $push: { topics: topic_name } }, function(
     error,
     result
   ) {
@@ -112,7 +112,26 @@ function folowTopic(info, callback) {
       callback(error, "error");
     } else {
       console.log(result);
-      callback(null, data);
+      callback(null, topic_name);
+    }
+  });
+}
+
+function unfollowTopic(info, callback) {
+  console.log(`info.body`);
+  console.log(info.body);
+  var email = info.body.email;
+  var topic_name = info.body.topic_name;
+
+  Profile.findOneAndUpdate({ email: email }, { $pull: { topics: topic_name } }, function(
+    error,
+    result
+  ) {
+    if (error) {
+      callback(error, "error");
+    } else {
+      console.log(result);
+      callback(null, topic_name);
     }
   });
 }
