@@ -29,28 +29,27 @@ function createMessage(info, callback) {
         time,
         isDeleted
     }
-    Profile.findOne({sender_email: sender_email}, function(err, docs) {
-        if (docs) {
-            Profile.findOneAndUpdate({email: sender_email}, {messages:data}, function(err, result) {
-                 if (err) {
-                     //res.send("Fail")
-                     callback(err,"error");
-                 } else {
-                     console.log(result);
-                    Profile.findOneAndUpdate({email: receiver_email}, {message:data}, function(error, resultdata) {
-                        if (error) {
-                            //res.send("Fail")
-                            callback(error,"error");
-                        } else {
-                            console.log(resultdata)
-                            callback(null, data);
-                         }
-                    })
-                  }
-            })
+    Profile.findOneAndUpdate({email: sender_email}, {message:data}, function(err, result) {
+        if (err) {
+            //res.send("Fail")
+            console.log(`err`);
+            console.log(err);
+            callback(err,"error");
+        } else {
+            console.log(result);
+        Profile.findOneAndUpdate({email: receiver_email}, {message:data}, function(error, resultdata) {
+            if (error) {
+                //res.send("Fail")
+                console.log(`error`);
+                console.log(error);
+                callback(error,"error");
+            } else {
+                console.log(resultdata)
+                callback(null, data);
+                }
+        })
         }
     })
-    callback(null, data);
 }
 
 function viewMessage(info, callback) {
