@@ -31,6 +31,9 @@ exports.answerService = function answerService(info, callback) {
     case "userList":
       userList(info, callback);
       break;
+    case "updateAnswer":
+      updateAnswer(info, callback);
+      break;
   }
 };
 
@@ -236,4 +239,40 @@ function userList(msg, callback) {
     .catch(err => {
       return callback(err);
     });
+}
+
+function updateAnswer(msg, callback) {
+  msg = msg.body;
+  let currentElem = msg.currentElem;
+  let question_id = msg.question_id;
+  let answer_id = msg.answer_id;
+
+  Question.find({
+    question_id: question_id,
+    "answers.answer_id": answer_id
+  }).then(data => {
+    if (!data || !data.length) {
+      return callback("Unable to fetch question");
+    }
+    data = data[0];
+    let answers = data.answers;
+    let index = -1;
+    for (var i = 0; i < answers.length; i++) {
+      if (answers[i].answer_id == answer_id) {
+        index = i;
+      }
+    }
+
+    if (index == -1) return callback("Answer does not exist");
+    answers[index].answerContent = currentElem;
+
+    Question.findOneAndUpdate(
+      { question_id: question_id },
+      {
+        $set: { answers: answers }
+      }
+    ).then(data => {
+      return callback();
+    });
+  });
 }

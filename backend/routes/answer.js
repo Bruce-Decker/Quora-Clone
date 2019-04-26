@@ -138,4 +138,19 @@ router.get("/userList", function(req, res) {
   );
 });
 
+router.put("/", function(req, res) {
+  kafka.make_request(
+    "answer",
+    { method: "updateAnswer", body: req.body },
+    function(error, result) {
+      if (error) {
+        console.log(error);
+        res.status(400).json({ msg: "cannot login user" });
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 module.exports = router;
