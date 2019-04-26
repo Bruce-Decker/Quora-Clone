@@ -422,9 +422,8 @@ class Dashboard extends Component {
                                                           <div className="story_title_container">
                                                             <div className="pass_color_to_child_links">
                                                               <div id="whIqsbBW40">
-                                                                <a
+                                                                <Link to = {`/question/${question.question_id}`}
                                                                   className="question_link"
-                                                                  href="/What-is-the-square-root-of-40-41"
                                                                   target="_top"
                                                                   action_mousedown="QuestionLinkClickthrough"
                                                                   id="__w2_whIqsbBW41_link"
@@ -436,7 +435,7 @@ class Dashboard extends Component {
                                                                       }
                                                                     </span>
                                                                   </span>
-                                                                </a>
+                                                                </Link>
                                                               </div>
                                                             </div>
                                                           </div>
