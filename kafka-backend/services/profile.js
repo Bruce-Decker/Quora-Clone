@@ -96,3 +96,17 @@ function updateProfileViews(email){
 
     })
 }
+
+function getProfileViews(info, callback) {
+    var email = info.message.email
+    Profile.find({email: email}, function(err, docs) {
+        
+        if (docs) {
+            console.log(docs)   
+            callback(null, docs);
+        } else {
+            console.log(err)
+            callback(err,"error");
+        }
+    })
+}

@@ -5,10 +5,10 @@ exports.messageService = function messageService(info, callback) {
     switch(info.method) {
         case "sendMessage":
             createMessage(info, callback)
-            break   
+            break;  
         case "inbox":
             viewMessage(info, callback)  
-            break  
+            break;
     }
 }
 
@@ -31,13 +31,13 @@ function createMessage(info, callback) {
     }
     Profile.findOne({sender_email: sender_email}, function(err, docs) {
         if (docs) {
-            Profile.findOneAndUpdate({email: sender_email}, {sentMessages:data}, function(err, result) {
+            Profile.findOneAndUpdate({email: sender_email}, {messages:data}, function(err, result) {
                  if (err) {
                      //res.send("Fail")
                      callback(err,"error");
                  } else {
                      console.log(result);
-                    Profile.findOneAndUpdate({email: receiver_email}, {revievedMessage:data}, function(error, resultdata) {
+                    Profile.findOneAndUpdate({email: receiver_email}, {message:data}, function(error, resultdata) {
                         if (error) {
                             //res.send("Fail")
                             callback(error,"error");
