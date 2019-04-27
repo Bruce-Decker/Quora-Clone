@@ -1,0 +1,4 @@
+[2019-04-09 22:29:12,257] INFO Accepted socket connection from /127.0.0.1:54830 (org.apache.zookeeper.server.NIOServerCnxnFactory)
+[2019-04-09 22:29:12,267] WARN Connection request from old client /127.0.0.1:54830; will be dropped if server is in r-o mode (org.apache.zookeeper.server.ZooKeeperServer)
+[2019-04-09 22:29:12,267] INFO Client attempting to establish new session at /127.0.0.1:54830 (org.apache.zookeeper.server.ZooKeeperServer)
+[2019-04-09 22:29:12,269] INFO Established session 0x16a04e849160031 with negotiated timeout 30000 for client /127.0.0.1:54830 (org.apache.zookeeper.server.ZooKeeperServer)
