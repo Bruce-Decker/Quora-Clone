@@ -18,6 +18,21 @@ router.post('/createQuestion', function(req, res) {
   })
 })
 
+router.get('/getQuestion/:question_id', function(req, res) {
+  kafka.make_request('question', {"method": "getQuestion", "question_id": req.params.question_id}, function(error, result) {
+      if (error) {
+          console.log(error)
+          res.status(400).json({msg: 'cannot get question'});
+      } else {
+             if (result.errors) {
+                return res.status(400).json(result.errors);
+             } else {
+                res.send(result)
+             }
+      }
+  })
+})
+
 
 
 router.get("/keyword", function(req, res) {

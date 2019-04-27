@@ -39,9 +39,11 @@ var ProfileSchema = new Schema({
   time: {
     type: String
   },
-  views: [{
-    time: {type: String}
-  }],
+  views: [
+    {
+      time: { type: String }
+    }
+  ],
   message: [
     {
       sender_email: {
