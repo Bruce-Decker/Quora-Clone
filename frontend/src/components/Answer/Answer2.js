@@ -33,12 +33,24 @@ class Answer extends Component {
 
   handleUpload = () => {
     const fileURL = URL.createObjectURL(this.state.selectedFile);
-    var x = document.createElement("img");
-    x.setAttribute("height", "300px");
-    x.setAttribute("weight", "300px");
-    x.src = fileURL;
-    document.getElementById("editable").appendChild(x);
+
+    const data = new FormData();
+    data.append("image", this.state.selectedFile, this.state.selectedFile.name);
+    axios.post("/answer/upload", data, {}).then(res => {
+      console.log(res.data.imageUrl);
+      var x = document.createElement("img");
+      x.setAttribute("height", "300px");
+      x.setAttribute("weight", "300px");
+      x.src = res.data.imageUrl;
+      document.getElementById("editable").appendChild(x);
+    });
   };
+
+  componentWillMount() {
+    axios.get("/answer", { params: { answer_id: "985865" } }).then(res => {
+      document.getElementById("editable").outerHTML = res.data.answerContent;
+    });
+  }
 
   answerHandler = e => {
     this.setState({
