@@ -1,3 +1,0 @@
-[2019-04-02 16:37:42,238] INFO The cleaning for partition message-0 is aborted and paused (kafka.log.LogCleaner)
-[2019-04-02 16:37:42,242] INFO Compaction for partition message-0 is resumed (kafka.log.LogCleaner)
-[2019-04-02 16:37:42,243] INFO The cleaning for partition message-0 is aborted (kafka.log.LogCleaner)
