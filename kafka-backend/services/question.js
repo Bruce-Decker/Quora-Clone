@@ -18,14 +18,27 @@ exports.questionService = function questionService(info, callback) {
     case "postQuestion":
       postQuestion(info, callback);
       break;
-    case "getQuestions":
-      getQuestions(info, callback);
+    case "getQuestion":
+      getQuestion(info, callback);
       break;
     case "unfollowQuestion":
       unfollowQuestion(info, callback);
       break;
   }
 };
+
+function getQuestion(info, callback) {
+   var question_id = info.question_id
+   Question.findOne({question_id, question_id}, function(err, docs) {
+    if (docs) {
+      console.log(docs)
+      callback(null, docs);
+  } else {
+      console.log(err)
+      callback(err,"error");
+  }
+   })
+}
 
 function postQuestion(info, callback) {
   var question_id = info.message.question_id;
