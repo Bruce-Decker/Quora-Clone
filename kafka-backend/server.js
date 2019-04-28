@@ -73,21 +73,6 @@ function handleTopicRequest(topic_name, fname) {
           return;
         });
         break;
-<<<<<<< HEAD
-      case "createanswer":
-        createanswer.handle_request(data.data, function(err, res) {
-          response(data, res, producer);
-          return;
-        });
-        break;
-      case "fetchanswers":
-        fetchanswers.handle_request(data.data, function(err, res) {
-          response(data, res, producer);
-          return;
-        });
-        break;
-=======
->>>>>>> c178e1a78f54cdea960bdcd61378a5f73464defe
       case "message":
         messages.messageService(data.data, function(err, res) {
           response(data, res, producer);
