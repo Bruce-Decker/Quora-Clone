@@ -29,12 +29,12 @@ function createMessage(info, callback) {
         time,
         isDeleted
     }
-    Profile.findOneAndUpdate({email: sender_email}, {message:data}, function(err, result) {
+    Profile.findOneAndUpdate({email: sender_email}, { $push: { message: data } }, function(err, result) {
         if (err) {
             callback(err,"error");
         } else {
             console.log(result);
-        Profile.findOneAndUpdate({email: receiver_email}, {message:data}, function(error, resultdata) {
+        Profile.findOneAndUpdate({email: receiver_email}, { $push: { message: data } }, function(error, resultdata) {
             if (error) {
                 callback(error,"error");
             } else {
