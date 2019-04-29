@@ -5,7 +5,7 @@ import Navbar from "../Navbar/Navbar";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import default_image from "./default.png";
-
+import rooturl from "../../utility/url";
 // var dashboard_questions
 var dashboard_questions;
 var response;
@@ -31,10 +31,10 @@ class Dashboard extends Component {
   async componentDidMount() {
     // var response = await axios.get('/topic/getUserTopic/' +  this.props.auth.user.email)
     dashboard_questions = await axios.get(
-      "/question/dashboard/?email=" + this.props.auth.user.email
+      rooturl + "/question/dashboard/?email=" + this.props.auth.user.email
     );
     response = await axios.get(
-      "/topic/getUserTopic/" + this.props.auth.user.email
+      rooturl + "/topic/getUserTopic/" + this.props.auth.user.email
     );
 
     if (response.data.topics) {
@@ -422,7 +422,10 @@ class Dashboard extends Component {
                                                           <div className="story_title_container">
                                                             <div className="pass_color_to_child_links">
                                                               <div id="whIqsbBW40">
-                                                                <Link to = {`/question/${question.question_id}`}
+                                                                <Link
+                                                                  to={`/question/${
+                                                                    question.question_id
+                                                                  }`}
                                                                   className="question_link"
                                                                   target="_top"
                                                                   action_mousedown="QuestionLinkClickthrough"

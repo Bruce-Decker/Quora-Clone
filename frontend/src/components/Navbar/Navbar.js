@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../../actions/authActions";
 import default_image from "./default.png";
-
+import rooturl from "../../utility/url";
 class Navbar extends Component {
   constructor() {
     super();
@@ -33,16 +33,16 @@ class Navbar extends Component {
   };
   search = e => {
     e.preventDefault();
-    let url = "";
+    let url = rooturl;
     switch (this.state.searchCriteria) {
       case "topic":
-        url = "/topic?topic_name=";
+        url += "/topic?topic_name=";
         break;
       case "question":
-        url = "/question/keyword?question=";
+        url += "/question/keyword?question=";
         break;
       case "people":
-        url = "/profile/viewProfile?email=";
+        url += "/profile/viewProfile?email=";
         break;
       default:
     }
