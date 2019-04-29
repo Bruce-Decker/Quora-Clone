@@ -4,12 +4,15 @@ import Navbar from "../Navbar/Navbar";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import rooturl from "../../utility/url";
+
 class Question extends Component {
   constructor() {
     super();
     this.state = {
       answers: [],
-      showAnswers: false
+      showAnswers: false,
+      topics: [],
+      follower_count: 0
     };
   }
 
@@ -21,7 +24,9 @@ class Question extends Component {
       this.setState({
         answers: response.data.answers,
         question: response.data.question,
-        showAnswers: true
+        topics: response.data.topics,
+        showAnswers: true,
+        follower_count: response.data.followers.length
       });
     }
     console.log(response.data);
@@ -69,123 +74,47 @@ class Question extends Component {
                                         className="TopicListItems2 QuestionTopicHorizontalListItems Toggle QuestionTopicListItems SimpleToggle"
                                         id="__w2_w2cECm6L13__truncated"
                                       >
-                                        <span id="w0Ia0Toj3">
-                                          <div
-                                            className="TopicListItem QuestionTopicListItem topic_pill"
-                                            id="__w2_w0Ia0Toj4_topic_list_item"
-                                          >
-                                            <div className="u-inline-block u-nowrap">
-                                              <div id="w0Ia0Toj9">
-                                                <div
-                                                  className="hover_menu hidden white_bg show_nub"
-                                                  id="__w2_w0Ia0Toj10_menu"
-                                                >
+                                        {this.state.topics.map(topic => (
+                                          <span id="w0Ia0Toj3">
+                                            <div
+                                              className="TopicListItem QuestionTopicListItem topic_pill"
+                                              id="__w2_w0Ia0Toj4_topic_list_item"
+                                            >
+                                              <div className="u-inline-block u-nowrap">
+                                                <div id="w0Ia0Toj9">
                                                   <div
-                                                    className="hover_menu_contents"
-                                                    id="__w2_w0Ia0Toj10_menu_contents"
+                                                    className="hover_menu hidden white_bg show_nub"
+                                                    id="__w2_w0Ia0Toj10_menu"
                                                   >
-                                                    {" "}
+                                                    <div
+                                                      className="hover_menu_contents"
+                                                      id="__w2_w0Ia0Toj10_menu_contents"
+                                                    >
+                                                      {" "}
+                                                    </div>
                                                   </div>
-                                                </div>
-                                                <a
-                                                  className="TopicNameLink HoverMenu topic_name"
-                                                  href="/topic/History-of-Inventions"
-                                                  action_mousedown="TopicLinkClickthrough"
-                                                  id="__w2_w0Ia0Toj10_link"
-                                                >
-                                                  <span className="name_text">
-                                                    <span id="w0Ia0Toj16">
-                                                      <span
-                                                        className="TopicName TopicNameSpan"
-                                                        id="__w2_w0Ia0Toj17_card"
-                                                      >
-                                                        History of Inventions
+                                                  <a
+                                                    className="TopicNameLink HoverMenu topic_name"
+                                                    href="/topic/History-of-Inventions"
+                                                    action_mousedown="TopicLinkClickthrough"
+                                                    id="__w2_w0Ia0Toj10_link"
+                                                  >
+                                                    <span className="name_text">
+                                                      <span id="w0Ia0Toj16">
+                                                        <span
+                                                          className="TopicName TopicNameSpan"
+                                                          id="__w2_w0Ia0Toj17_card"
+                                                        >
+                                                          {topic}
+                                                        </span>
                                                       </span>
                                                     </span>
-                                                  </span>
-                                                </a>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </span>
-                                        <span id="w0Ia0Toj5">
-                                          <div
-                                            className="TopicListItem QuestionTopicListItem topic_pill"
-                                            id="__w2_w0Ia0Toj6_topic_list_item"
-                                          >
-                                            <div className="u-inline-block u-nowrap">
-                                              <div id="w0Ia0Toj11">
-                                                <div
-                                                  className="hover_menu hidden white_bg show_nub"
-                                                  id="__w2_w0Ia0Toj12_menu"
-                                                >
-                                                  <div
-                                                    className="hover_menu_contents"
-                                                    id="__w2_w0Ia0Toj12_menu_contents"
-                                                  >
-                                                    {" "}
-                                                  </div>
+                                                  </a>
                                                 </div>
-                                                <a
-                                                  className="TopicNameLink HoverMenu topic_name"
-                                                  href="/topic/Inventors"
-                                                  action_mousedown="TopicLinkClickthrough"
-                                                  id="__w2_w0Ia0Toj12_link"
-                                                >
-                                                  <span className="name_text">
-                                                    <span id="w0Ia0Toj18">
-                                                      <span
-                                                        className="TopicName TopicNameSpan"
-                                                        id="__w2_w0Ia0Toj19_card"
-                                                      >
-                                                        Inventors
-                                                      </span>
-                                                    </span>
-                                                  </span>
-                                                </a>
                                               </div>
                                             </div>
-                                          </div>
-                                        </span>
-                                        <span id="w0Ia0Toj7">
-                                          <div
-                                            className="TopicListItem QuestionTopicListItem topic_pill"
-                                            id="__w2_w0Ia0Toj8_topic_list_item"
-                                          >
-                                            <div className="u-inline-block u-nowrap">
-                                              <div id="w0Ia0Toj13">
-                                                <div
-                                                  className="hover_menu hidden white_bg show_nub"
-                                                  id="__w2_w0Ia0Toj14_menu"
-                                                >
-                                                  <div
-                                                    className="hover_menu_contents"
-                                                    id="__w2_w0Ia0Toj14_menu_contents"
-                                                  >
-                                                    {" "}
-                                                  </div>
-                                                </div>
-                                                <a
-                                                  className="TopicNameLink HoverMenu topic_name"
-                                                  href="/topic/Invention-and-Inventions"
-                                                  action_mousedown="TopicLinkClickthrough"
-                                                  id="__w2_w0Ia0Toj14_link"
-                                                >
-                                                  <span className="name_text">
-                                                    <span id="w0Ia0Toj20">
-                                                      <span
-                                                        className="TopicName TopicNameSpan"
-                                                        id="__w2_w0Ia0Toj21_card"
-                                                      >
-                                                        Invention and Inventions
-                                                      </span>
-                                                    </span>
-                                                  </span>
-                                                </a>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </span>
+                                          </span>
+                                        ))}
                                         <span id="w0Ia0Toj1">
                                           <div
                                             className="QuestionTopicEditButton edit_topics_link u-inline"
@@ -535,7 +464,7 @@ class Question extends Component {
                                                     className="ui_button_count_inner"
                                                     id="__w2_wEimc2ML37_count"
                                                   >
-                                                    2
+                                                    {this.state.follower_count}
                                                   </span>
                                                 </span>
                                               </div>
@@ -2516,7 +2445,9 @@ class Question extends Component {
                                                                     action_mousedown="UserLinkClickthrough"
                                                                     id="__w2_wzwmJKBZ30_name_link"
                                                                   >
-                                                                    Brian Lee
+                                                                    {
+                                                                      answer.owner
+                                                                    }
                                                                   </a>
                                                                 </span>
                                                               </span>
@@ -2674,63 +2605,11 @@ class Question extends Component {
                                                                       />
                                                                     </div>
                                                                   </div>
+
                                                                   <p className="ui_qtext_para u-ltr u-text-align--start">
-                                                                    We do not
-                                                                    know the
-                                                                    specific
-                                                                    person who
-                                                                    invented it.
-                                                                    We only know
-                                                                    of the group
-                                                                    of people.
-                                                                  </p>
-                                                                  <p className="ui_qtext_para u-ltr u-text-align--start">
-                                                                    If you’re
-                                                                    talking
-                                                                    about coins,
-                                                                    then the
-                                                                    answer would
-                                                                    be the
-                                                                    earliest
-                                                                    known
-                                                                    civilization:
-                                                                    the{" "}
-                                                                    <span className="qlink_container">
-                                                                      <a
-                                                                        href="https://en.wikipedia.org/wiki/Sumer"
-                                                                        rel="noopener nofollow"
-                                                                        target="_blank"
-                                                                        onclick="return Q.openUrl(this, 104359258);"
-                                                                        className="external_link"
-                                                                        data-qt-tooltip="wikipedia.org"
-                                                                      >
-                                                                        Sumerians
-                                                                      </a>
-                                                                    </span>
-                                                                    . If you’re
-                                                                    talking
-                                                                    about paper
-                                                                    money, which
-                                                                    came much
-                                                                    later than
-                                                                    metal coins,
-                                                                    then the
-                                                                    answer would
-                                                                    be the{" "}
-                                                                    <span className="qlink_container">
-                                                                      <a
-                                                                        href="https://en.wikipedia.org/wiki/Song_dynasty"
-                                                                        rel="noopener nofollow"
-                                                                        target="_blank"
-                                                                        onclick="return Q.openUrl(this, 104359258);"
-                                                                        className="external_link"
-                                                                        data-qt-tooltip="wikipedia.org"
-                                                                      >
-                                                                        Song
-                                                                        Dynasty
-                                                                      </a>
-                                                                    </span>{" "}
-                                                                    of China.
+                                                                    {
+                                                                      answer.answerContent
+                                                                    }
                                                                   </p>
                                                                 </span>
                                                               </div>
