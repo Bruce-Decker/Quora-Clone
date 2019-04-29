@@ -19,6 +19,7 @@ class Question extends Component {
     async componentDidMount() {
       
         var response = await axios.get("/question/getQuestion/" + this.props.match.params.question_id);
+        console.log(response.data)
         if (response.data) {
           this.setState({
             answers: response.data.answers,

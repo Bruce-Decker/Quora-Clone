@@ -812,9 +812,8 @@ class Navbar extends Component {
                 >
                   <span id="wGp3JsZF1">
                     <div className="SiteHeaderNavItem FeedNavItem HoverMenu">
-                      <a
+                      <Link to = "/dashboard"
                         className={this.props.Home}
-                        href="https://www.quora.com/"
                         target
                         id="__w2_wGp3JsZF2_link"
                       >
@@ -844,7 +843,7 @@ class Navbar extends Component {
                         </div>
                         <span className="expanded">Home</span>
                         <span className="truncated">Home</span>
-                      </a>
+                      </Link>
                     </div>
                   </span>
                   <span id="wGp3JsZF3">
