@@ -6,7 +6,7 @@ exports.messageService = function messageService(info, callback) {
         case "sendMessage":
             createMessage(info, callback)
             break;  
-        case "inbox":
+        case "viewMessage":
             viewMessage(info, callback)  
             break;
     }
@@ -46,7 +46,23 @@ function createMessage(info, callback) {
 }
 
 function viewMessage(info, callback) {
-    console.log(info);
-    let data = [];
-    callback(null, data);
+    console.log(`info.body`);
+    console.log(info.body);
+    Profile.findOne({email: sender_email}, (err,res) => {
+        if(err){
+            callback(err,"error");
+        } else {
+            chatHistory(res.message, 
+                (result)=> {
+                    callback(null, result);                
+                }
+            )
+        }
+    })
+    // let data = [];
+    // callback(null, data);
+}
+
+chatHistory = (message, callback) => {
+    callback(message);
 }
