@@ -5,6 +5,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import './Question.css'
 import uuid from "uuid";
+import rooturl from "../../utility/url";
 
 class Question extends Component {
     constructor() {
@@ -16,7 +17,25 @@ class Question extends Component {
             follower_count: 0,
             comment: ''
         }  
+
     }
+
+
+  async componentDidMount() {
+    var response = await axios.get(
+      rooturl + "/question/getQuestion/" + this.props.match.params.question_id
+    );
+    if (response.data) {
+      this.setState({
+        answers: response.data.answers,
+        question: response.data.question,
+        topics: response.data.topics,
+        showAnswers: true,
+        follower_count: response.data.followers.length
+      });
+    }
+    console.log(response.data);
+  }
 
     onChange = (e) => {
        
@@ -33,43 +52,48 @@ class Question extends Component {
             comment
         }
 
-        axios.post('/answer/comment', data)
+        axios.post(rooturl + '/answer/comment', data)
            .then(res => {
                console.log(res.data)
                window.location.reload()
            })
            .catch(err => console.log(err))
+          }
          
              
-    }
+    
 
-    async componentDidMount() {
+    // async componentDidMount() {
       
-        var response = await axios.get("/question/getQuestion/" + this.props.match.params.question_id);
-        console.log(response.data)
-        if (response.data) {
-          this.setState({
-            answers: response.data.answers,
-            question: response.data.question,
-            topics: response.data.topics,
-            showAnswers: true,
-            follower_count: response.data.followers.length
-          });
-        }
-      }
+    //     var response = await axios.get(rooturl + "/question/getQuestion/" + this.props.match.params.question_id);
+    //     console.log(response.data)
+    //     if (response.data) {
+    //       this.setState({
+    //         answers: response.data.answers,
+    //         question: response.data.question,
+    //         topics: response.data.topics,
+    //         showAnswers: true,
+    //         follower_count: response.data.followers.length
+    //       });
+    //     }
+    //   }
+  render() {
+    return (
+      <div>
+        <Navbar
+          Home={"nav_item_link"}
+          Home_Color={
+            "ui_icon ui_icon_color--gray ui_icon_size--regular ui_icon_outline--default"
+          }
+          Answer={"nav_item_link"}
+          Answer_Color={
+            "ui_icon ui_icon_color--gray ui_icon_size--regular ui_icon_outline--default"
+          }
+          Spaces={"nav_item_link"}
+          Notifications={"nav_item_link"}
+        />
 
-    render() {
-        return (
-          <div>
-            <Navbar
-              Home={"nav_item_link"}
-              Home_Color = {"ui_icon ui_icon_color--gray ui_icon_size--regular ui_icon_outline--default"}
-              Answer={"nav_item_link"}
-              Answer_Color = {"ui_icon ui_icon_color--gray ui_icon_size--regular ui_icon_outline--default"}
-              Spaces={"nav_item_link"}
-              Notifications={"nav_item_link"}
-            />
-
+      
 
 
 
@@ -1456,15 +1480,15 @@ class Question extends Component {
                             : null }
             
          </div>
-       
+        
         )
     }
 }
 
+
 const mapStateToProps = state => ({
-    auth: state.auth,
-    errors: state.errors
-  });
-  
-  export default connect(mapStateToProps)(Question);
-  
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(mapStateToProps)(Question);
