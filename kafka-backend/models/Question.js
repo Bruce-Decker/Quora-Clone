@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 var mongoosePaginate = require("mongoose-paginate");
 const Schema = mongoose.Schema;
+const uniqueRandom = require("unique-random");
+const rand = uniqueRandom(1, 1000000);
 
 const QuestionSchema = new Schema({
   question_id: {
@@ -9,9 +11,7 @@ const QuestionSchema = new Schema({
   question: {
     type: String
   },
-  topics: [
-    { type: String }
-  ],
+  topics: [{ type: String }],
   owner: {
     type: String
   },
@@ -24,7 +24,8 @@ const QuestionSchema = new Schema({
     {
       answer_id: {
         type: String,
-        required: true
+        required: true,
+        default: rand
       },
       answerContent: {
         type: String,

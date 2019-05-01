@@ -173,6 +173,7 @@ function deleteComment(info, callback) {
 }
 
 function getanswer(msg, callback) {
+  console.log("aaaaaaaaa.......", msg.answer_id);
   let answer_id = msg.answer_id;
   Question.find({ "answers.answer_id": answer_id })
     .then(data => {

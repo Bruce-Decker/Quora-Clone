@@ -3,8 +3,9 @@ var connection = new require("./kafka/Connection");
 var mongoose = require("mongoose");
 const db_url = require("./config/keys").mlab_url;
 const url = process.env.MONGODB_URI || db_url;
-const url2 = "mongodb+srv://admin:admin@quoracluster-v64on.mongodb.net/quoradb";
-mongoose
+//const url2 = "mongodb+srv://admin:admin@quoracluster-v64on.mongodb.net/quoradb";
+const url2 = "mongodb+srv://admin:admin@quora-aj5tb.mongodb.net/quoradb";
+mongoose 
   .connect(url2, { useNewUrlParser: true })
   .then(() => console.log("Mongo Database is alive"))
   .catch(err => console.log(err));

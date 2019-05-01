@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const kafka = require("../kafka/client");
 
-router.get("content", function(req, res) {
+router.get("/content", function(req, res) {
   kafka.make_request(
     "content",
     { method: "content", message: req.query },

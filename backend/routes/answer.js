@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const kafka = require("../kafka/client");
+const awsConfig = require("../config/awsConfig");
+
+const singleUpload = awsConfig.single("image");
 
 router.post("/bookmark", function(req, res) {
   kafka.make_request(
@@ -75,6 +78,7 @@ router.post("/", function(req, res) {
 });
 
 router.get("/", function(req, res) {
+  console.log("bbbbbb....", req.query);
   kafka.make_request(
     "answer",
     { method: "getanswer", answer_id: req.query.answer_id },
@@ -151,6 +155,18 @@ router.put("/", function(req, res) {
       }
     }
   );
+});
+
+router.post("/upload", function(req, res) {
+  singleUpload(req, res, function(err, some) {
+    if (err) {
+      return res.status(422).send({
+        errors: [{ title: "Image Upload Error", detail: err.message }]
+      });
+    }
+    console.log("Aaaaaaa", req.file);
+    return res.json({ imageUrl: req.file.location });
+  });
 });
 
 module.exports = router;

@@ -8,6 +8,8 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import Answer from "./components/Answer/Answer";
 import Answer2 from "./components/Answer/Answer2";
 import Content from "./components/Content/Content";
+import Question from './components/Question/Question'
+import Profile from './components/Profile/Profile'
 import { activeUser } from "./actions/authActions";
 import jwt_decode from "jwt-decode";
 
@@ -42,6 +44,8 @@ class App extends Component {
             <Route exact path="/answer" component={Answer} />
             <Route exact path="/answer2" component={Answer2} />
             <Route exact path="/content" component={Content} />
+            <Route exact path="/question/:question_id" component={Question} />
+            <Route exact path="/profile" component={Profile} />
           </div>
         </BrowserRouter>
       </Provider>
