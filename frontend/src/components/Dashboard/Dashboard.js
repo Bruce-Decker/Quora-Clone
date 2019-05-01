@@ -69,6 +69,7 @@ class Dashboard extends Component {
  }
 
  answerHandler = e => {
+   console.log(e)
     
    this.setState({
      currentElem: document.getElementById("editable").outerHTML
@@ -76,10 +77,11 @@ class Dashboard extends Component {
    axios
      .post("/answer", {
        currentElem: document.getElementById("editable").outerHTML,
-       question_id: "1"
+       question_id: e
      })
      .then(res => {
        console.log("res....", res.data);
+       window.location.reload()
      });
  };
 
@@ -154,7 +156,7 @@ class Dashboard extends Component {
 
     if (dashboard_questions.data) {
       this.setState({
-       
+        //questions: dashboard_questions.data.docs,
         showQuestions: true
       });
      
@@ -1380,32 +1382,14 @@ class Dashboard extends Component {
                                                                       contentEditable="true"
                                                                     >
 
-                                                                   </div>
+                                                                  
                                                                     
+                                                                     
+                                                                   
                                                                       <div className="content">
-                                                                        <br />
-                                                                      </div>
-                                                                      <div className="content">
-                                                                        <br />
-                                                                      </div>
-                                                                      <div className="content">
-                                                                        <br />
-                                                                      </div>
-                                                                      <div
-                                                                        className="span active"
-                                                                        data-kind="span"
-                                                                      >
-                                                                        <div
-                                                                        className="span active"
-                                                                        data-kind="span"
-                                                                      >
-                                                                      
-        </div>
-                                                                        <div className="content">
                                                                           <br />
                                                                         </div>
-                                                                       
-                                                                      </div>
+                                                                        </div>
                                                                     
                                                                   </div>
                                                                 </div>
@@ -1451,7 +1435,7 @@ class Dashboard extends Component {
                                                                 className="submit_button"
                                                                 action_mousedown="InlineEditorAnswerAdd"
                                                                 id="__w2_w1SM6R3W26_inline_editor_submit"
-                                                                onClick={this.answerHandler}
+                                                                onClick={() => this.answerHandler(question.question_id)}
                                                               >
                                                                 Submit
                                                               </button>
