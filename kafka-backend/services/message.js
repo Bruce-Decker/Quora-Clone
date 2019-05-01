@@ -63,6 +63,9 @@ function viewMessage(info, callback) {
     // callback(null, data);
 }
 
-chatHistory = (message, callback) => {
+chatHistory = (useremail, message, callback) => {
+    message.forEach(function(element) {
+            
+    })
     callback(message);
 }
