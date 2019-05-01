@@ -1129,21 +1129,14 @@ class Navbar extends Component {
                                   <h3 className="hover_menu_title" />
                                   <ul className="main_menu">
                                     <li>
-                                      <a
+                                      <Link
                                         className="hover_menu_item"
-                                        href="/profile/Bruce-Decker-12"
+                                        to = "/profile"
                                       >
                                         Profile
-                                      </a>
+                                      </Link>
                                     </li>
-                                    <li>
-                                      <a
-                                        className="hover_menu_item"
-                                        href="/profile/Bruce-Decker-12/blogs"
-                                      >
-                                        Blogs
-                                      </a>
-                                    </li>
+                                   
                                     <li>
                                       <a
                                         className="hover_menu_item"
@@ -1154,100 +1147,22 @@ class Navbar extends Component {
                                       </a>
                                     </li>
                                     <li>
-                                      <a
+                                      <Link
                                         className="hover_menu_item"
-                                        href="/content"
+                                        to = "/content"
                                       >
                                         Your Content
-                                      </a>
+                                      </Link>
                                     </li>
-                                    <li>
-                                      <a
-                                        className="hover_menu_item"
-                                        href="/stats"
-                                      >
-                                        Stats
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a
-                                        className="hover_menu_item"
-                                        href="/ads/create_account?medium=create_ad&source=dropdown_menu"
-                                        target="_blank"
-                                        rel="noopener"
-                                      >
-                                        Create Ad
-                                        <span
-                                          className="ui_icon ui_icon_color--gray_light ui_icon_size--small ui_icon_outline--default"
-                                          aria-hidden="true"
-                                        >
-                                          <svg
-                                            width="24px"
-                                            height="24px"
-                                            viewBox="0 0 24 24"
-                                            version="1.1"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            xmlnsXlink="http://www.w3.org/1999/xlink"
-                                          >
-                                            <g
-                                              id="external_link"
-                                              className="icon_svg-stroke"
-                                              stroke="#666"
-                                              strokeWidth="1.5"
-                                              fill="none"
-                                              fillRule="evenodd"
-                                              strokeLinecap="round"
-                                              strokeLinejoin="round"
-                                            >
-                                              <polyline points="17 13.5 17 19.5 5 19.5 5 7.5 11 7.5" />
-                                              <path d="M14,4.5 L20,4.5 L20,10.5 M20,4.5 L11,13.5" />
-                                            </g>
-                                          </svg>
-                                        </span>
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a
-                                        className="hover_menu_item"
-                                        href="/settings"
-                                      >
-                                        Settings
-                                      </a>
-                                    </li>
+                                    
+                                   
+                                  
                                   </ul>
                                   <ul className="LegalNavLinks">
-                                    <li className="feedback">
-                                      <a href="https://help.quora.com/hc/en">
-                                        Help
-                                      </a>
-                                      <span className="bullet"> · </span>
-                                    </li>
-                                    <li>
-                                      <a href="/about">About</a>
-                                      <span className="bullet"> · </span>
-                                      <a href="/careers">Careers</a>
-                                      <span className="bullet"> · </span>
-                                      <a href="/about/tos">Terms</a>
-                                      <span className="bullet"> · </span>
-                                    </li>
-                                    <li>
-                                      <a href="/about/privacy">Privacy</a>
-                                      <span className="bullet"> · </span>
-                                      <a href="/about/acceptable_use">
-                                        Acceptable Use
-                                      </a>
-                                      <span className="bullet"> · </span>
-                                    </li>
-                                    <li>
-                                      <a href="/business?medium=businesses&source=dropdown_footer">
-                                        Businesses
-                                      </a>
-                                      <span className="bullet"> · </span>
-                                      <a href="/settings/languages">
-                                        Languages
-                                      </a>
-                                      <span className="bullet"> · </span>
-                                    </li>
+                                  
+                                   
+                                    
+                                  
                                     <li />
                                     <li className="logout">
                                       <Link

@@ -145,6 +145,7 @@ class Dashboard extends Component {
     response = await axios.get(
       rooturl + "/topic/getUserTopic/" + this.props.auth.user.email
     );
+   
 
     if (response.data.topics) {
       this.setState({
@@ -152,6 +153,8 @@ class Dashboard extends Component {
         showQuestions: true
       });
     }
+
+    
     console.log(dashboard_questions.data)
 
     if (dashboard_questions.data) {
