@@ -6,7 +6,7 @@ exports.messageService = function messageService(info, callback) {
         case "sendMessage":
             createMessage(info, callback)
             break;  
-        case "inbox":
+        case "viewMessage":
             viewMessage(info, callback)  
             break;
     }
@@ -29,12 +29,12 @@ function createMessage(info, callback) {
         time,
         isDeleted
     }
-    Profile.findOneAndUpdate({email: sender_email}, {message:data}, function(err, result) {
+    Profile.findOneAndUpdate({email: sender_email}, { $push: { message: data } }, function(err, result) {
         if (err) {
             callback(err,"error");
         } else {
             console.log(result);
-        Profile.findOneAndUpdate({email: receiver_email}, {message:data}, function(error, resultdata) {
+        Profile.findOneAndUpdate({email: receiver_email}, { $push: { message: data } }, function(error, resultdata) {
             if (error) {
                 callback(error,"error");
             } else {
@@ -46,7 +46,26 @@ function createMessage(info, callback) {
 }
 
 function viewMessage(info, callback) {
-    console.log(info);
-    let data = [];
-    callback(null, data);
+    console.log(`info.body`);
+    console.log(info.body);
+    Profile.findOne({email: sender_email}, (err,res) => {
+        if(err){
+            callback(err,"error");
+        } else {
+            chatHistory(res.message, 
+                (result)=> {
+                    callback(null, result);                
+                }
+            )
+        }
+    })
+    // let data = [];
+    // callback(null, data);
+}
+
+chatHistory = (useremail, message, callback) => {
+    message.forEach(function(element) {
+            
+    })
+    callback(message);
 }
