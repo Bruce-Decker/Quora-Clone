@@ -5,7 +5,7 @@ import Navbar from "../Navbar/Navbar";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import default_image from "./default.png";
-
+import rooturl from "../../utility/url";
 // var dashboard_questions
 var dashboard_questions;
 var response;
@@ -69,6 +69,7 @@ class Dashboard extends Component {
  }
 
  answerHandler = e => {
+   console.log(e)
     
    this.setState({
      currentElem: document.getElementById("editable").outerHTML
@@ -76,10 +77,11 @@ class Dashboard extends Component {
    axios
      .post("/answer", {
        currentElem: document.getElementById("editable").outerHTML,
-       question_id: "1"
+       question_id: e
      })
      .then(res => {
        console.log("res....", res.data);
+       window.location.reload()
      });
  };
 
@@ -135,13 +137,15 @@ class Dashboard extends Component {
   };
 
   async componentDidMount() {
+   
     // var response = await axios.get('/topic/getUserTopic/' +  this.props.auth.user.email)
     dashboard_questions = await axios.get(
-      "/question/dashboard/?email=" + this.props.auth.user.email
+      rooturl + "/question/dashboard/?email=" + this.props.auth.user.email
     );
     response = await axios.get(
-      "/topic/getUserTopic/" + this.props.auth.user.email
+      rooturl + "/topic/getUserTopic/" + this.props.auth.user.email
     );
+   
 
     if (response.data.topics) {
       this.setState({
@@ -150,12 +154,15 @@ class Dashboard extends Component {
       });
     }
 
-    if (dashboard_questions.docs) {
+    
+    console.log(dashboard_questions.data)
+
+    if (dashboard_questions.data) {
       this.setState({
         //questions: dashboard_questions.data.docs,
-        //showQuestions: true
+        showQuestions: true
       });
-
+     
       console.log(dashboard_questions.data.docs[0].question);
     }
   }
@@ -528,7 +535,10 @@ class Dashboard extends Component {
                                                           <div className="story_title_container">
                                                             <div className="pass_color_to_child_links">
                                                               <div id="whIqsbBW40">
-                                                                <Link to = {`/question/${question.question_id}`}
+                                                                <Link
+                                                                  to={`/question/${
+                                                                    question.question_id
+                                                                  }`}
                                                                   className="question_link"
                                                                   target="_top"
                                                                   action_mousedown="QuestionLinkClickthrough"
@@ -1378,32 +1388,14 @@ class Dashboard extends Component {
                                                                       contentEditable="true"
                                                                     >
 
-                                                                   </div>
+                                                                  
                                                                     
+                                                                     
+                                                                   
                                                                       <div className="content">
-                                                                        <br />
-                                                                      </div>
-                                                                      <div className="content">
-                                                                        <br />
-                                                                      </div>
-                                                                      <div className="content">
-                                                                        <br />
-                                                                      </div>
-                                                                      <div
-                                                                        className="span active"
-                                                                        data-kind="span"
-                                                                      >
-                                                                        <div
-                                                                        className="span active"
-                                                                        data-kind="span"
-                                                                      >
-                                                                      
-        </div>
-                                                                        <div className="content">
                                                                           <br />
                                                                         </div>
-                                                                       
-                                                                      </div>
+                                                                        </div>
                                                                     
                                                                   </div>
                                                                 </div>
@@ -1449,7 +1441,7 @@ class Dashboard extends Component {
                                                                 className="submit_button"
                                                                 action_mousedown="InlineEditorAnswerAdd"
                                                                 id="__w2_w1SM6R3W26_inline_editor_submit"
-                                                                onClick={this.answerHandler}
+                                                                onClick={() => this.answerHandler(question.question_id)}
                                                               >
                                                                 Submit
                                                               </button>
@@ -1990,728 +1982,7 @@ class Dashboard extends Component {
                                       className="feedback_wrapper hidden"
                                       id="__w2_w281EJmN8_question_feedback"
                                     />
-                                    <div
-                                      className="FeedStory AnswerFeedStory feed_item"
-                                      id="__w2_w281EJmN8_item"
-                                    >
-                                      <span>
-                                        <div
-                                          className="gtugbwwoamfmhktiyyjh"
-                                          id="__w2_w281EJmN10_znfwjbinlomgtxwrsinq"
-                                        >
-                                          <div className="rbmacscdldvqygakhytb bnlgvcstcrcmutblkjhg yymlhbvgcnplhtwjufdt tdhdjsnqiwanaejwtuuu">
-                                            <div id="__w2_w281EJmN11_oblutynpcryvlvxkjhzo">
-                                              <div className="lykcyalyqnhwgocbioik" />
-                                              <div className="ijipxydcyvcanecrhatt">
-                                                <a
-                                                  className="outpfeqgsskhjaexxyez veciwgamivtrbyohiznx"
-                                                  href="https://wikibuy.com/blog/how-i-afford-to-travel-on-a-budget-aa9bd1f0871a?title=Here%27s+the+best+way+to+book+travel+on+a+budget"
-                                                  target="_blank"
-                                                  rel="noopener nofollow"
-                                                  id="__w2_w281EJmN30_khjedabhmtkwxjkicbwu"
-                                                >
-                                                  <p className="nmhwocvnrmkppyprizpt">
-                                                    s
-                                                    <span
-                                                      style={{
-                                                        display: "none"
-                                                      }}
-                                                    >
-                                                      WWrSW
-                                                    </span>
-                                                    p
-                                                    <span
-                                                      style={{
-                                                        display: "none"
-                                                      }}
-                                                    >
-                                                      npp
-                                                    </span>
-                                                    o
-                                                    <span
-                                                      style={{
-                                                        display: "none"
-                                                      }}
-                                                    >
-                                                      OAKn
-                                                    </span>
-                                                    n
-                                                    <span
-                                                      style={{
-                                                        display: "none"
-                                                      }}
-                                                    >
-                                                      fV
-                                                    </span>
-                                                    s
-                                                    <span
-                                                      style={{
-                                                        display: "none"
-                                                      }}
-                                                    >
-                                                      XD
-                                                    </span>
-                                                    o
-                                                    <span
-                                                      style={{
-                                                        display: "none"
-                                                      }}
-                                                    >
-                                                      pSU
-                                                    </span>
-                                                    r
-                                                    <span
-                                                      style={{
-                                                        display: "none"
-                                                      }}
-                                                    >
-                                                      gG
-                                                    </span>
-                                                    e
-                                                    <span
-                                                      style={{
-                                                        display: "none"
-                                                      }}
-                                                    >
-                                                      P
-                                                    </span>
-                                                    d
-                                                    <span
-                                                      style={{
-                                                        display: "none"
-                                                      }}
-                                                    >
-                                                      Qdj
-                                                    </span>{" "}
-                                                    <span
-                                                      style={{
-                                                        display: "none"
-                                                      }}
-                                                    >
-                                                      A
-                                                    </span>
-                                                    b
-                                                    <span
-                                                      style={{
-                                                        display: "none"
-                                                      }}
-                                                    >
-                                                      FmXM
-                                                    </span>
-                                                    y
-                                                    <span
-                                                      style={{
-                                                        display: "none"
-                                                      }}
-                                                    >
-                                                      YvTyd
-                                                    </span>{" "}
-                                                    <span
-                                                      style={{
-                                                        display: "none"
-                                                      }}
-                                                    >
-                                                      oEUuh
-                                                    </span>
-                                                    W
-                                                    <span
-                                                      style={{
-                                                        display: "none"
-                                                      }}
-                                                    >
-                                                      ejy
-                                                    </span>
-                                                    i
-                                                    <span
-                                                      style={{
-                                                        display: "none"
-                                                      }}
-                                                    >
-                                                      ymt
-                                                    </span>
-                                                    k
-                                                    <span
-                                                      style={{
-                                                        display: "none"
-                                                      }}
-                                                    >
-                                                      FXO
-                                                    </span>
-                                                    i
-                                                    <span
-                                                      style={{
-                                                        display: "none"
-                                                      }}
-                                                    >
-                                                      GcgCN
-                                                    </span>
-                                                    b
-                                                    <span
-                                                      style={{
-                                                        display: "none"
-                                                      }}
-                                                    >
-                                                      Jj
-                                                    </span>
-                                                    u
-                                                    <span
-                                                      style={{
-                                                        display: "none"
-                                                      }}
-                                                    >
-                                                      NV
-                                                    </span>
-                                                    y
-                                                    <span
-                                                      style={{
-                                                        display: "none"
-                                                      }}
-                                                    >
-                                                      k
-                                                    </span>
-                                                  </p>
-                                                </a>
-                                              </div>
-                                              <div
-                                                className="nyqekaobqrzmvsrvmmxc"
-                                                id="__w2_w281EJmN13_close"
-                                              >
-                                                <a
-                                                  className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only"
-                                                  href="#"
-                                                  role="button"
-                                                  aria-label="Close"
-                                                  id="__w2_w281EJmN26_button"
-                                                >
-                                                  <div
-                                                    className="ui_button_inner"
-                                                    id="__w2_w281EJmN26_inner"
-                                                  >
-                                                    <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                                                      <div id="__w2_w281EJmN26_icon">
-                                                        <span
-                                                          className="ui_button_icon"
-                                                          aria-hidden="true"
-                                                        >
-                                                          <svg
-                                                            width="24px"
-                                                            height="24px"
-                                                            viewBox="0 0 24 24"
-                                                            version="1.1"
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                          >
-                                                            <g
-                                                              id="small_close"
-                                                              className="icon_svg-stroke"
-                                                              fill="none"
-                                                              fillRule="evenodd"
-                                                              strokeLinecap="round"
-                                                              stroke="#666666"
-                                                              strokeWidth="1.5"
-                                                            >
-                                                              <path
-                                                                d="M12,6 L12,18"
-                                                                transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) "
-                                                              />
-                                                              <path
-                                                                d="M18,12 L6,12"
-                                                                transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) "
-                                                              />
-                                                            </g>
-                                                          </svg>
-                                                        </span>
-                                                      </div>
-                                                    </div>
-                                                  </div>
-                                                </a>
-                                              </div>
-                                              <div className="wekstnbjupluzdnqxaaj">
-                                                <a
-                                                  className="outpfeqgsskhjaexxyez"
-                                                  href="https://wikibuy.com/blog/how-i-afford-to-travel-on-a-budget-aa9bd1f0871a?title=Here%27s+the+best+way+to+book+travel+on+a+budget"
-                                                  target="_blank"
-                                                  rel="noopener nofollow"
-                                                  id="__w2_w281EJmN14_mnlzjqaenuldsuoawsbg"
-                                                >
-                                                  <div id="__w2_w281EJmN15_gevuojjckysjjfahljsq">
-                                                    <div className="tkjovfchleqslawckoxb">
-                                                      How to save money on
-                                                      airfare â€” without using
-                                                      a â€œcheapâ€ airline.
-                                                    </div>
-                                                  </div>
-                                                </a>
-                                                <div className="u-flex content_flex">
-                                                  <div className="u-flex-2">
-                                                    <div className="zpuqypjzzvrhoaannbpb">
-                                                      <div className="htzsxkprybpcrgkmgkbc">
-                                                        <div className="icon_frame">
-                                                          <div id="__w2_w281EJmN16_szfgacohhbzlinjxdnhv">
-                                                            <div
-                                                              className="account_logo_img"
-                                                              style={{
-                                                                backgroundImage:
-                                                                  'url("https://qph2.c7.quoracdn.net/main-qimg-727f0ae4ddbc6ada7c8043093b4658c3")'
-                                                              }}
-                                                            />
-                                                          </div>
-                                                        </div>
-                                                        <div className="account_description">
-                                                          <div>
-                                                            <a
-                                                              className="outpfeqgsskhjaexxyez veciwgamivtrbyohiznx"
-                                                              href="https://wikibuy.com/blog/how-i-afford-to-travel-on-a-budget-aa9bd1f0871a?title=Here%27s+the+best+way+to+book+travel+on+a+budget"
-                                                              target="_blank"
-                                                              rel="noopener nofollow"
-                                                              id="__w2_w281EJmN31_suhwmqgrgckhtnuqukic"
-                                                            >
-                                                              <p className="nmhwocvnrmkppyprizpt">
-                                                                Wikibuy
-                                                              </p>
-                                                            </a>
-                                                            <div className="teinrbcaokuiqeumpijf">
-                                                              S
-                                                              <span
-                                                                style={{
-                                                                  display:
-                                                                    "none"
-                                                                }}
-                                                              >
-                                                                Zl
-                                                              </span>
-                                                              p
-                                                              <span
-                                                                style={{
-                                                                  display:
-                                                                    "none"
-                                                                }}
-                                                              >
-                                                                bKifX
-                                                              </span>
-                                                              o
-                                                              <span
-                                                                style={{
-                                                                  display:
-                                                                    "none"
-                                                                }}
-                                                              >
-                                                                YES
-                                                              </span>
-                                                              n
-                                                              <span
-                                                                style={{
-                                                                  display:
-                                                                    "none"
-                                                                }}
-                                                              >
-                                                                Ir
-                                                              </span>
-                                                              s
-                                                              <span
-                                                                style={{
-                                                                  display:
-                                                                    "none"
-                                                                }}
-                                                              >
-                                                                Kw
-                                                              </span>
-                                                              o
-                                                              <span
-                                                                style={{
-                                                                  display:
-                                                                    "none"
-                                                                }}
-                                                              >
-                                                                pRSCC
-                                                              </span>
-                                                              r
-                                                              <span
-                                                                style={{
-                                                                  display:
-                                                                    "none"
-                                                                }}
-                                                              >
-                                                                lIlR
-                                                              </span>
-                                                              e
-                                                              <span
-                                                                style={{
-                                                                  display:
-                                                                    "none"
-                                                                }}
-                                                              >
-                                                                E
-                                                              </span>
-                                                              d
-                                                              <span
-                                                                style={{
-                                                                  display:
-                                                                    "none"
-                                                                }}
-                                                              >
-                                                                m
-                                                              </span>
-                                                            </div>
-                                                          </div>
-                                                        </div>
-                                                      </div>
-                                                    </div>
-                                                    <div className="u-flex">
-                                                      <div className="u-flex-2">
-                                                        <a
-                                                          className="outpfeqgsskhjaexxyez"
-                                                          href="https://wikibuy.com/blog/how-i-afford-to-travel-on-a-budget-aa9bd1f0871a?title=Here%27s+the+best+way+to+book+travel+on+a+budget"
-                                                          target="_blank"
-                                                          rel="noopener nofollow"
-                                                          id="__w2_w281EJmN18_pwdczifwpjhlikvgpyhu"
-                                                        >
-                                                          <div id="__w2_w281EJmN19_dddfghwrvgmqfaxabdgm">
-                                                            <div className="wviirzktyglsssfquffi">
-                                                              You should use
-                                                              Wikibuy. It
-                                                              automatically
-                                                              applies discounts
-                                                              when you book
-                                                              plane tickets and
-                                                              hotels.
-                                                            </div>
-                                                          </div>
-                                                        </a>
-                                                      </div>
-                                                    </div>
-                                                  </div>
-                                                  <div className="ieudvqyilfivrtnscwmr">
-                                                    <div className="u-flex">
-                                                      <div className="u-flex-2">
-                                                        <a
-                                                          className="outpfeqgsskhjaexxyez"
-                                                          href="https://wikibuy.com/blog/how-i-afford-to-travel-on-a-budget-aa9bd1f0871a?title=Here%27s+the+best+way+to+book+travel+on+a+budget"
-                                                          target="_blank"
-                                                          rel="noopener nofollow"
-                                                          id="__w2_w281EJmN20_dobemvtnckscefctnsvz"
-                                                        >
-                                                          <div id="__w2_w281EJmN21_hbqqnkzkcsofuekgtvpn">
-                                                            <div className="u-flex-auto">
-                                                              <div
-                                                                className="xctgldfnrditxvdfwkyr"
-                                                                style={{
-                                                                  backgroundImage:
-                                                                    'url("https://qph2.c7.quoracdn.net/main-qimg-8313b8c5eb1ae0fb50f5e184da645ef0")'
-                                                                }}
-                                                              />
-                                                            </div>
-                                                          </div>
-                                                        </a>
-                                                      </div>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                                <div id="__w2_w281EJmN22_jxzxqzarsjucsyuckkmw">
-                                                  <div className="czekpqkahlexgvrjrqkk">
-                                                    <a
-                                                      className="fzitnuyvntskzwiutwbx"
-                                                      href="https://wikibuy.com/blog/how-i-afford-to-travel-on-a-budget-aa9bd1f0871a?title=Here%27s+the+best+way+to+book+travel+on+a+budget"
-                                                      target="_blank"
-                                                      rel="noopener nofollow"
-                                                      id="__w2_w281EJmN29_ftpvvoxlmzstbmrqmvaz"
-                                                    >
-                                                      L
-                                                      <span
-                                                        style={{
-                                                          display: "none"
-                                                        }}
-                                                      >
-                                                        K
-                                                      </span>
-                                                      e
-                                                      <span
-                                                        style={{
-                                                          display: "none"
-                                                        }}
-                                                      >
-                                                        nEr
-                                                      </span>
-                                                      a
-                                                      <span
-                                                        style={{
-                                                          display: "none"
-                                                        }}
-                                                      >
-                                                        iKciW
-                                                      </span>
-                                                      r
-                                                      <span
-                                                        style={{
-                                                          display: "none"
-                                                        }}
-                                                      >
-                                                        f
-                                                      </span>
-                                                      n
-                                                      <span
-                                                        style={{
-                                                          display: "none"
-                                                        }}
-                                                      >
-                                                        sxRsR
-                                                      </span>{" "}
-                                                      <span
-                                                        style={{
-                                                          display: "none"
-                                                        }}
-                                                      >
-                                                        gm
-                                                      </span>
-                                                      M
-                                                      <span
-                                                        style={{
-                                                          display: "none"
-                                                        }}
-                                                      >
-                                                        tsIWZ
-                                                      </span>
-                                                      o
-                                                      <span
-                                                        style={{
-                                                          display: "none"
-                                                        }}
-                                                      >
-                                                        rE
-                                                      </span>
-                                                      r
-                                                      <span
-                                                        style={{
-                                                          display: "none"
-                                                        }}
-                                                      >
-                                                        ze
-                                                      </span>
-                                                      e
-                                                      <span
-                                                        style={{
-                                                          display: "none"
-                                                        }}
-                                                      >
-                                                        Ith
-                                                      </span>{" "}
-                                                      <span
-                                                        style={{
-                                                          display: "none"
-                                                        }}
-                                                      >
-                                                        yL
-                                                      </span>
-                                                      a
-                                                      <span
-                                                        style={{
-                                                          display: "none"
-                                                        }}
-                                                      >
-                                                        MxoMO
-                                                      </span>
-                                                      t
-                                                      <span
-                                                        style={{
-                                                          display: "none"
-                                                        }}
-                                                      >
-                                                        oWFwV
-                                                      </span>{" "}
-                                                      <span
-                                                        style={{
-                                                          display: "none"
-                                                        }}
-                                                      >
-                                                        u
-                                                      </span>
-                                                      w
-                                                      <span
-                                                        style={{
-                                                          display: "none"
-                                                        }}
-                                                      >
-                                                        FKXTh
-                                                      </span>
-                                                      i
-                                                      <span
-                                                        style={{
-                                                          display: "none"
-                                                        }}
-                                                      >
-                                                        Wpn
-                                                      </span>
-                                                      k
-                                                      <span
-                                                        style={{
-                                                          display: "none"
-                                                        }}
-                                                      >
-                                                        G
-                                                      </span>
-                                                      i
-                                                      <span
-                                                        style={{
-                                                          display: "none"
-                                                        }}
-                                                      >
-                                                        jl
-                                                      </span>
-                                                      b
-                                                      <span
-                                                        style={{
-                                                          display: "none"
-                                                        }}
-                                                      >
-                                                        S
-                                                      </span>
-                                                      u
-                                                      <span
-                                                        style={{
-                                                          display: "none"
-                                                        }}
-                                                      >
-                                                        mR
-                                                      </span>
-                                                      y
-                                                      <span
-                                                        style={{
-                                                          display: "none"
-                                                        }}
-                                                      >
-                                                        DPN
-                                                      </span>
-                                                      .
-                                                      <span
-                                                        style={{
-                                                          display: "none"
-                                                        }}
-                                                      >
-                                                        FUd
-                                                      </span>
-                                                      c
-                                                      <span
-                                                        style={{
-                                                          display: "none"
-                                                        }}
-                                                      >
-                                                        cWAAi
-                                                      </span>
-                                                      o
-                                                      <span
-                                                        style={{
-                                                          display: "none"
-                                                        }}
-                                                      >
-                                                        Ar
-                                                      </span>
-                                                      m
-                                                      <span
-                                                        style={{
-                                                          display: "none"
-                                                        }}
-                                                      >
-                                                        pG
-                                                      </span>
-                                                    </a>
-                                                  </div>
-                                                </div>
-                                                <div className="aahfxnsufnalcvfkntfj">
-                                                  <div id="w281EJmN23">
-                                                    <div
-                                                      className="icon_action_bar"
-                                                      id="__w2_w281EJmN24_action_bar"
-                                                    >
-                                                      <div className="action_bar_inner u-flex">
-                                                        <div className="action_bar_inner_spacer u-margin-left--auto">
-                                                          &nbsp;
-                                                        </div>
-                                                        <div className="overflow action_item overflow_link u-relative u-pointer-events--auto">
-                                                          <div
-                                                            className="overflow_link"
-                                                            id="__w2_w281EJmN24_overflow_link"
-                                                          >
-                                                            <a
-                                                              className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only"
-                                                              href="#"
-                                                              role="button"
-                                                              aria-label="More options"
-                                                              id="__w2_w281EJmN28_button"
-                                                            >
-                                                              <div
-                                                                className="ui_button_inner"
-                                                                id="__w2_w281EJmN28_inner"
-                                                              >
-                                                                <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                                                                  <div id="__w2_w281EJmN28_icon">
-                                                                    <span
-                                                                      className="ui_button_icon"
-                                                                      aria-hidden="true"
-                                                                    >
-                                                                      <svg
-                                                                        width="24px"
-                                                                        height="24px"
-                                                                        viewBox="0 0 24 24"
-                                                                        version="1.1"
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                                      >
-                                                                        <g
-                                                                          id="overflow"
-                                                                          className="icon_svg-stroke"
-                                                                          strokeWidth="1.5"
-                                                                          stroke="#666"
-                                                                          fill="none"
-                                                                          fillRule="evenodd"
-                                                                        >
-                                                                          <path d="M5,14 C3.8954305,14 3,13.1045695 3,12 C3,10.8954305 3.8954305,10 5,10 C6.1045695,10 7,10.8954305 7,12 C7,13.1045695 6.1045695,14 5,14 Z M12,14 C10.8954305,14 10,13.1045695 10,12 C10,10.8954305 10.8954305,10 12,10 C13.1045695,10 14,10.8954305 14,12 C14,13.1045695 13.1045695,14 12,14 Z M19,14 C17.8954305,14 17,13.1045695 17,12 C17,10.8954305 17.8954305,10 19,10 C20.1045695,10 21,10.8954305 21,12 C21,13.1045695 20.1045695,14 19,14 Z" />
-                                                                        </g>
-                                                                      </svg>
-                                                                    </span>
-                                                                  </div>
-                                                                </div>
-                                                              </div>
-                                                            </a>
-                                                          </div>
-                                                        </div>
-                                                        <div
-                                                          className="hover_menu hidden show_nub right_align fixed_menu_width no_body_attach"
-                                                          id="__w2_w281EJmN24_overflow_menu"
-                                                        >
-                                                          <div
-                                                            className="hover_menu_contents lazy"
-                                                            id="__w2_w281EJmN24_overflow_menu_contents"
-                                                          />
-                                                        </div>
-                                                      </div>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div
-                                              className="ovppzrzxcbazfobxuggz hidden"
-                                              id="__w2_w281EJmN11_yfsijadbxgrasmgopujm"
-                                            >
-                                              <div className="content_dismiss_title">
-                                                You dismissed this ad.
-                                              </div>
-                                              <div className="content_dismiss_body">
-                                                The feedback you provide will
-                                                help us show you more relevant
-                                                content in the future.
-                                              </div>
-                                              <a
-                                                className="undo"
-                                                id="__w2_w281EJmN11_zekqdfcprffhvpefgemo"
-                                              >
-                                                Undo
-                                              </a>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </span>
-                                    </div>
+                                    
                                   </div>
                                 </div>
                               </div>
@@ -2740,11 +2011,7 @@ class Dashboard extends Component {
                         className="spinner_display_area"
                         id="__w2_w2OzgLAU9_spinner"
                       >
-                        <div className="LoadingDots regular">
-                          <div className="dot first" />
-                          <div className="dot second" />
-                          <div className="dot third" />
-                        </div>
+                       
                       </div>
                     </div>
                     <div id="wnuFD7sM21" />

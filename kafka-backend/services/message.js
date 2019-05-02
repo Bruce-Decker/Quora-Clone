@@ -5,10 +5,10 @@ exports.messageService = function messageService(info, callback) {
     switch(info.method) {
         case "sendMessage":
             createMessage(info, callback)
-            break   
-        case "inbox":
+            break;  
+        case "viewMessage":
             viewMessage(info, callback)  
-            break  
+            break;
     }
 }
 
@@ -29,32 +29,43 @@ function createMessage(info, callback) {
         time,
         isDeleted
     }
-    Profile.findOne({sender_email: sender_email}, function(err, docs) {
-        if (docs) {
-            Profile.findOneAndUpdate({email: sender_email}, {sentMessages:data}, function(err, result) {
-                 if (err) {
-                     //res.send("Fail")
-                     callback(err,"error");
-                 } else {
-                     console.log(result);
-                    Profile.findOneAndUpdate({email: receiver_email}, {revievedMessage:data}, function(error, resultdata) {
-                        if (error) {
-                            //res.send("Fail")
-                            callback(error,"error");
-                        } else {
-                            console.log(resultdata)
-                            callback(null, data);
-                         }
-                    })
-                  }
-            })
+    Profile.findOneAndUpdate({email: sender_email}, { $push: { message: data } }, function(err, result) {
+        if (err) {
+            callback(err,"error");
+        } else {
+            console.log(result);
+        Profile.findOneAndUpdate({email: receiver_email}, { $push: { message: data } }, function(error, resultdata) {
+            if (error) {
+                callback(error,"error");
+            } else {
+                callback(null, data);
+            }
+        })
         }
     })
-    callback(null, data);
 }
 
 function viewMessage(info, callback) {
-    console.log(info);
-    let data = [];
-    callback(null, data);
+    console.log(`info.body`);
+    console.log(info.body);
+    Profile.findOne({email: sender_email}, (err,res) => {
+        if(err){
+            callback(err,"error");
+        } else {
+            chatHistory(res.message, 
+                (result)=> {
+                    callback(null, result);                
+                }
+            )
+        }
+    })
+    // let data = [];
+    // callback(null, data);
+}
+
+chatHistory = (useremail, message, callback) => {
+    message.forEach(function(element) {
+            
+    })
+    callback(message);
 }

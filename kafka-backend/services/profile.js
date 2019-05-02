@@ -41,7 +41,6 @@ function createProfile(info, callback) {
     description,
     profile_credential
   };
-  console.log("A32fds");
   console.log(data);
 
   Profile.findOne({ email: email }, function(err, docs) {

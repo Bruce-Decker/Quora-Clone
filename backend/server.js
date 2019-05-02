@@ -12,6 +12,7 @@ const topicRouter = require("./routes/topic");
 const messageRouter = require("./routes/message");
 const questionRouter = require("./routes/question");
 const answerRouter = require("./routes/answer");
+const contentRouter = require("./routes/content");
 const Auth = require("./schema/AuthModel");
 var validateRegister = require("./validation/validateRegister");
 var validateLogin = require("./validation/validateLogin");
