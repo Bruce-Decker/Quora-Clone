@@ -20,7 +20,6 @@ const customStyles = {
   }
 };
 
-Modal.setAppElement('#root')
 
 class Navbar extends Component {
   constructor() {
@@ -29,12 +28,35 @@ class Navbar extends Component {
       isHidden: true,
       searchCriteria: "topic",
       searchValue: "",
-      searchResults: []
+      searchResults: [],
+      modalIsOpen: false
     };
     this.filterHandler = this.filterHandler.bind(this);
     this.valueChangeHandler = this.valueChangeHandler.bind(this);
     this.search = this.search.bind(this);
+
+    this.openModal = this.openModal.bind(this);
+    this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
+
+  openModal() {
+    this.setState({modalIsOpen: true});
+  }
+
+  afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    this.subtitle.style.color = '#f00';
+  }
+
+  closeModal() {
+    this.setState({modalIsOpen: false});
+  }
+
+
+
+
+
   filterHandler = e => {
     this.setState({
       searchCriteria: e.target.value
@@ -100,6 +122,7 @@ class Navbar extends Component {
   };
   render() {
     return (
+      <div>
       <div ref={this.setWrapperRef}>
         <div
           style={{
@@ -1249,7 +1272,7 @@ class Navbar extends Component {
                       className="AskQuestionButton LookupBarAskQuestionModalButton"
 
                       id="__w2_wGp3JsZF15_button"
-                      onClick = {this.props.openModal}
+                      onClick = {this.openModal}
                     >
                       Add Question or Link
                     </Link>
@@ -1259,6 +1282,27 @@ class Navbar extends Component {
             </div>
           </div>
         </div>
+      </div>
+      <button onClick={this.openModal}>Open Modal</button>
+      <Modal
+        isOpen={this.state.modalIsOpen}
+        onAfterOpen={this.afterOpenModal}
+        onRequestClose={this.closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+
+        <h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>
+        <button onClick={this.closeModal}>close</button>
+        <div>I am a modal</div>
+        <form>
+          <input />
+          <button>tab navigation</button>
+          <button>stays</button>
+          <button>inside</button>
+          <button>the modal</button>
+        </form>
+      </Modal>
       </div>
     );
   }

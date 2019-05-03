@@ -4,21 +4,46 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import rooturl from "../../utility/url";
+import queryString from 'query-string'
 
 class Content extends Component {
     constructor() {
         super();
         this.state = {
-           questionFollowed: []
+           questionsAsked: [],
+           showAskedList: false
         }
         
          
     }
 
     async componentDidMount() {
-      var response = await axios.get(
-         rooturl + "/content?email=" + this.props.auth.user.email
-       );
+      var response 
+       var values = queryString.parse(this.props.location.search)
+      //  console.log(values.activityType)
+      //  console.log(values)
+       for (var key in values) {
+          console.log(key)
+          console.log(values[key])
+         // if (values.hasOwnProperty(key)) {
+         //     console.log(key + " -> " + values[key]);
+         // }
+     }
+       if (!values.activityType) {
+         response = await axios.get(
+            rooturl + "/content?email=" + this.props.auth.user.email
+          );
+       } else {
+         response = await axios.get(
+            rooturl + "/content?email=" + this.props.auth.user.email + "&activityType=" + values.activityType
+          );
+       }
+       if (response.data) {
+         this.setState({
+            questionsAsked: response.data.QuestionsAsked,
+            showAskedList: true
+         })
+       }
        console.log(response.data)
     }
 
@@ -94,14 +119,21 @@ class Content extends Component {
                                 <div className="user_content_list_section">
                                    <div id="__w2_wsawratU18_list_wrapper">
                                       <div className="PagedList UserContentList" id="wsawratU23">
+                 {this.state.showAskedList ?
+                           <div>
+                              {this.state.questionsAsked.map(question => (
                                          <div className="pagedlist_item" id="wzr1YmKw2">
                                             <div className="PagedListItem UserContentListItem">
                                             <span className="title">
                                             <span id="wzr1YmKw6">
                                             <a className="question_link" href="/unanswered/Trends-in-Silicon-Valley" target="_top" action_mousedown="QuestionLinkClickthrough" id="__w2_wzr1YmKw7_link">
                                             <span className="ui_content_title unstyled_ui_title">
-                                            <span className="ui_qtext_rendered_qtext">Trends in Silicon Valley?</span></span></a></span></span>
-                                            <div className="metadata">Asked just now</div></div></div>
+                                            <span className="ui_qtext_rendered_qtext">{question.question}</span></span></a></span></span>
+                                            <div className="metadata">{question.postedDate}</div></div>  
+                           </div>
+                              )
+                                        )}
+                                        </div> : null}
                                             <div id="wzr1YmKw4">
                                             <div className="PagedListMoreButton" id="__w2_wzr1YmKw5_paged_list_more_button">
                                             <div className="pager_next" id="__w2_wzr1YmKw5_loading">
