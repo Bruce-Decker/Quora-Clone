@@ -19,7 +19,7 @@ function content(info, callback) {
   var ans = [];
   var response = {};
   var email = info.message.email;
-  var order = info.message.order ? info.message.order : -1;
+  var order = Number(info.message.order ? info.message.order : -1);
   var start, end;
   var year = info.message.year;
 
@@ -190,7 +190,7 @@ function filteredContent(info, callback) {
   var activityType = info.message.activityType;
   var year = info.message.year;
   console.log("year", year);
-  var order = info.message.order ? info.message.order : -1;
+  var order = Number(info.message.order ? info.message.order : -1);
   var start, end;
   if (year) {
     start = new Date(`${year}-01-01`);
