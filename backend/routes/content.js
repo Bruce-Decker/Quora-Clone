@@ -23,7 +23,7 @@ router.get("/", function(req, res) {
   );
 });
 
-router.get("/filteredContent", function(req, res) {
+/* router.get("/filteredContent", function(req, res) {
   console.log("in filteresContent backend", req.query);
 
   kafka.make_request(
@@ -43,6 +43,6 @@ router.get("/filteredContent", function(req, res) {
       }
     }
   );
-});
+}); */
 
 module.exports = router;

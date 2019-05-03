@@ -16,7 +16,7 @@ exports.contentService = function contentService(info, callback) {
   }
 };
 
-function content(info, callback) {
+function contentAll(info, callback) {
   var response = {};
   var answerAns = [];
 
@@ -210,7 +210,8 @@ function content(info, callback) {
   );
 }
 
-function filteredContent(info, callback) {
+function content(info, callback) {
+  var answerAns = [];
   console.log("filteredContent in Kafka");
   var email = info.message.email;
   var activityType = info.message.activityType;
@@ -250,8 +251,16 @@ function filteredContent(info, callback) {
         { sort: { postedDate: order } },
         function(err, docs) {
           if (docs) {
+            docs.map(element => {
+              let temp = {};
+              temp.time = element.postedDate;
+              temp.question_id = element.question_id;
+              temp.type = "QuestionAsked";
+              temp.question = element.question;
+              answerAns.push(temp);
+            });
             console.log(docs);
-            callback(null, docs);
+            callback(null, answerAns);
           } else {
             console.log(err);
             callback(err, " Question Asked error");
@@ -299,7 +308,15 @@ function filteredContent(info, callback) {
         function(err, docs) {
           if (docs) {
             console.log(docs);
-            callback(null, docs);
+            docs.map(element => {
+              let temp = {};
+              temp.time = element.followers.time;
+              temp.question_id = element.question_id;
+              temp.type = "QuestionFollowed";
+              temp.question = element.question;
+              answerAns.push(temp);
+            });
+            callback(null, answerAns);
           } else {
             console.log(err);
             callback(err, " Question Followed error");
@@ -364,8 +381,16 @@ function filteredContent(info, callback) {
         ],
         function(err, docs) {
           if (docs) {
+            docs.map(element => {
+              let temp = {};
+              temp.time = element.answers.answered_time;
+              temp.question_id = element.question_id;
+              temp.type = "Answer";
+              temp.question = element.question;
+              answerAns.push(temp);
+            });
             console.log(docs);
-            callback(null, docs);
+            callback(null, answerAns);
           } else {
             console.log(err);
             callback(err, " Answers error");
@@ -373,7 +398,10 @@ function filteredContent(info, callback) {
         }
       );
       break;
+    case "All":
+      contentAll(info, callback);
+      break;
     default:
-      content(info, callback);
+      contentAll(info, callback);
   }
 }
