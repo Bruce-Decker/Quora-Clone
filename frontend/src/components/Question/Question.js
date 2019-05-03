@@ -34,6 +34,13 @@ class Question extends Component {
         follower_count: response.data.followers.length
       });
     }
+
+   //  if (response.data.followers) {
+   //    this.setState({
+       
+   //       follower_count: response.data.followers.length
+   //     });
+   //  }
     console.log(response.data);
   }
 
@@ -42,9 +49,7 @@ class Question extends Component {
         this.setState({[e.target.name]: e.target.value})
     }
 
-    onClick = (email) => {
-        console.log(email)
-        var answer_id = uuid.v4();
+    onClick = (email, answer_id) => {
         var comment = this.state.comment
         var data = {
             email,
@@ -1177,7 +1182,7 @@ class Question extends Component {
                         </div>
                     </div></div>
 
-             <button className="submit_button" action_mousedown="InlineEditorAnswerAdd" id="__w2_w1SM6R3W26_inline_editor_submit" onClick = {() => this.onClick(this.props.auth.user.email)}>Comment</button>
+             <button className="submit_button" action_mousedown="InlineEditorAnswerAdd" id="__w2_w1SM6R3W26_inline_editor_submit" onClick = {() => this.onClick(this.props.auth.user.email, answer.answer_id)}>Comment</button>
 
              <div className="TCommentUnit expanded_comments" id="__w2_wR5L77UZ2_expanded_comments">
              <div className="comment_list" id="__w2_wR5L77UZ5_container">

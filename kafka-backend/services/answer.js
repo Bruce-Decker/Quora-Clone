@@ -126,8 +126,9 @@ function downvoteAnswer(info, callback) {
 }
 
 function addComment(info, callback){
+  console.log(info)
   var email = info.message.email;
-  var answerid = info.message.answerid;
+  var answerid = info.message.answer_id;
   var comment = info.message.comment;
   var time = new Date().toLocaleString();;
   var data = {
@@ -135,7 +136,7 @@ function addComment(info, callback){
     comment,
     time
   };
-  Question.find({ "answers.answer_id": answerid }, function(err, question) {
+  Question.findOne({ "answers.answer_id": answerid }, function(err, question) {
     console.log(question);
     console.log(err);
     if (question) {

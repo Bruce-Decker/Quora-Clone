@@ -4,6 +4,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import Modal from 'react-modal';
+import default_image from "./default.png";
 
 const customStyles = {
   content : {
@@ -78,7 +79,7 @@ class Profile extends Component {
    <div className="ProfilePhoto">
       <div id="wYSVVNEt49">
          <div className="profile_photo" id="__w2_wYSVVNEt50_photo">
-            <div id="wYSVVNEt58"><span className="photo_tooltip Photo IdentityPhoto HoverMenu" id="__w2_wYSVVNEt59_link"><img className="profile_photo_img" src="https://qph.fs.quoracdn.net/main-thumb-782622776-200-izcdaymwbtomzguzorfwyoknxfqoqixc.jpeg" alt="Bruce Decker" height={200} width={200} /><span id="wYSVVNEt154" /></span></div>
+            <div id="wYSVVNEt58"><span className="photo_tooltip Photo IdentityPhoto HoverMenu" id="__w2_wYSVVNEt59_link"><img className="profile_photo_img" src={default_image} alt="Bruce Decker" height={200} width={200} /><span id="wYSVVNEt154" /></span></div>
             <div className="x_photo hidden" id="__w2_wYSVVNEt50_x_photo">
                <a className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_small u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only" href="#" role="button" aria-label="Remove this photo" id="__w2_wYSVVNEt61_button">
                   <div className="ui_button_inner" id="__w2_wYSVVNEt61_inner">
