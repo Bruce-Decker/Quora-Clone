@@ -40,7 +40,7 @@ class Content extends Component {
        }
        if (response.data) {
          this.setState({
-            questionsAsked: response.data.QuestionsAsked,
+            questionsAsked: response.data,
             showAskedList: true
          })
        }
@@ -68,8 +68,10 @@ class Content extends Component {
 <div className="UserContentFilter UserContentFilterContentType">
    <h3>By Content Type</h3>
    <ul id="__w2_wsawratU25_filter_links">
-      <li className="filter_option"><a className="selected filter_option_link" href="#" data-value="all_types">All Types</a></li>
-      <li className="filter_option"><a className=" filter_option_link" href="#" data-value="questions_asked">Questions Asked</a></li>
+      <li className="filter_option">
+      <Link className="selected filter_option_link" to = {{ pathname: "/content", search: "?activityType=all_types" }}>All Types</Link></li>
+      <li className="filter_option">
+      <Link className=" filter_option_link" to = {{ pathname: "/content", search: "?activityType=QuestionAsked" }} >Questions Asked</Link></li>
       <li className="filter_option"><a className=" filter_option_link" href="#" data-value="questions_followed">Questions Followed</a></li>
       <li className="filter_option"><a className=" filter_option_link" href="#" data-value="answers">Answers</a></li>
       <li className="filter_option"><a className=" filter_option_link" href="#" data-value="posts">Posts</a></li>
@@ -129,7 +131,7 @@ class Content extends Component {
                                             <a className="question_link" href="/unanswered/Trends-in-Silicon-Valley" target="_top" action_mousedown="QuestionLinkClickthrough" id="__w2_wzr1YmKw7_link">
                                             <span className="ui_content_title unstyled_ui_title">
                                             <span className="ui_qtext_rendered_qtext">{question.question}</span></span></a></span></span>
-                                            <div className="metadata">{question.postedDate}</div></div>  
+                                            <div className="metadata">{question.time}</div></div>  
                            </div>
                               )
                                         )}
