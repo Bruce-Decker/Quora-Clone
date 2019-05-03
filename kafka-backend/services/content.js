@@ -16,37 +16,153 @@ exports.contentService = function contentService(info, callback) {
 };
 
 function content(info, callback) {
+  var ans = [];
   var response = {};
   var email = info.message.email;
+  var order = info.message.order ? info.message.order : -1;
+  var start, end;
+  var year = info.message.year;
+
+  if (year) {
+    start = new Date(`${year}-01-01`);
+    end = new Date(`${Number(year) + 1}-01-01`);
+  } else {
+    start = new Date(`2000-01-01`);
+    end = new Date(`2030-01-01`);
+  }
+  console.log("start=", start, "end=", end);
 
   console.log("info", info);
 
+  /*   QuestionModel.aggregate(
+    [
+      { $unwind: "$followers" },
+      { $unwind: "$answers" },
+
+      {
+        $match: {
+          $or: [
+            {
+              "followers.email": email
+            },
+            {
+              owner: email
+            },
+            {
+              "answers.owner": email
+            }
+          ]
+        }
+      },
+
+      { $sort: { "followers.time": order } }
+      //{ $project: { question: 1, "followers.time": 1, question_id: 1 } }
+    ],
+    //{ sort: { "followers.time": order } },
+    function(err, docs) {
+      if (docs) {
+        console.log(docs);
+        callback(null, docs);
+      } else {
+        console.log(err);
+        callback(err, " Question Followed error");
+      }
+    }
+  ); */
   QuestionModel.find(
-    { owner: email },
-    {},
-    { sort: { posted_date: -1 } },
+    {
+      $and: [
+        {
+          owner: email
+        },
+
+        {
+          postedDate: { $gte: start }
+        },
+        {
+          postedDate: { $lt: end }
+        }
+      ]
+    },
+    { question_id: 1, question: 1, postedDate: 1 },
+    { sort: { postedDate: order } },
+
     function(err, docs) {
       if (docs) {
         console.log("docs", docs);
         response.QuestionsAsked = docs;
+        ans.push(docs);
         console.log("response", response);
-        AnswerModel.find(
-          { owner: email },
-          {},
-          { sort: { answered_time: "desc" } },
+        QuestionModel.aggregate(
+          [
+            { $unwind: "$answers" },
+            {
+              $match: {
+                $and: [
+                  {
+                    "answers.owner": email
+                  },
+
+                  {
+                    "answers.answered_time": { $gte: start }
+                  },
+                  {
+                    "answers.answered_time": { $lt: end }
+                  }
+                ]
+              }
+            },
+
+            { $sort: { "answers.answered_time": order } },
+            {
+              $project: {
+                question: 1,
+                "answers.answered_time": 1,
+                question_id: 1
+              }
+            }
+          ],
           function(err, docs) {
             if (docs) {
               console.log(docs);
               response.Answers = docs;
-              QuestionModel.find(
-                { "followers.email": email },
-                {},
-                { sort: { "followers.time": -1 } },
+              ans.push(docs);
+
+              QuestionModel.aggregate(
+                [
+                  { $unwind: "$followers" },
+                  {
+                    $match: {
+                      $and: [
+                        {
+                          "followers.email": email
+                        },
+                        {
+                          "followers.time": { $gte: start }
+                        },
+                        {
+                          "followers.time": { $lt: end }
+                        }
+                      ]
+                    }
+                  },
+
+                  { $sort: { "followers.time": order } },
+                  {
+                    $project: {
+                      question: 1,
+                      "followers.time": 1,
+                      question_id: 1
+                    }
+                  }
+                ],
                 function(err, docs) {
                   if (docs) {
                     console.log(docs);
                     response.QuestionsFollowed = docs;
+                    ans.push(docs);
                     console.log("resonse in kafka", response);
+                    console.log("resonse in kafka2", ans);
                     callback(null, response);
                   } else {
                     console.log(err);
@@ -116,7 +232,7 @@ function filteredContent(info, callback) {
       );
       break;
     case "QuestionFollowed":
-      QuestionModel.find(
+      /* QuestionModel.find(
         {
           followers: {
             $elemMatch: { email: email, time: { $gte: start, $lte: end } }
@@ -128,8 +244,30 @@ function filteredContent(info, callback) {
           followers: {
             $elemMatch: { email: email, time: { $gte: start, $lte: end } }
           }
-        },
-        { sort: { "followers.time": order } },
+        }, */
+      QuestionModel.aggregate(
+        [
+          { $unwind: "$followers" },
+          {
+            $match: {
+              $and: [
+                {
+                  "followers.email": email
+                },
+                {
+                  "followers.time": { $gte: start }
+                },
+                {
+                  "followers.time": { $lt: end }
+                }
+              ]
+            }
+          },
+
+          { $sort: { "followers.time": order } },
+          { $project: { question: 1, "followers.time": 1, question_id: 1 } }
+        ],
+        //{ sort: { "followers.time": order } },
         function(err, docs) {
           if (docs) {
             console.log(docs);
@@ -142,7 +280,7 @@ function filteredContent(info, callback) {
       );
       break;
     case "Answers":
-      QuestionModel.find(
+      /*       QuestionModel.find(
         {
           answers: {
             $elemMatch: {
@@ -159,9 +297,43 @@ function filteredContent(info, callback) {
               owner: email,
               answered_time: { $gte: start, $lte: end }
             }
-          }
+          },
+          "answers.answered_time": 1,
+          "answers.answer_id": 1,
+          "answers.answerContent": 1,
+          "answers.owner": 1,
+          "answers._id": 1
         },
-        { sort: { "answers.answered_time": order } },
+        { sort: { "answers.answered_time": order } }, */
+      QuestionModel.aggregate(
+        [
+          { $unwind: "$answers" },
+          {
+            $match: {
+              $and: [
+                {
+                  "answers.owner": email
+                },
+
+                {
+                  "answers.answered_time": { $gte: start }
+                },
+                {
+                  "answers.answered_time": { $lt: end }
+                }
+              ]
+            }
+          },
+
+          { $sort: { "answers.answered_time": order } },
+          {
+            $project: {
+              question: 1,
+              "answers.answered_time": 1,
+              question_id: 1
+            }
+          }
+        ],
         function(err, docs) {
           if (docs) {
             console.log(docs);

@@ -18,7 +18,6 @@ var validateRegister = require("./validation/validateRegister");
 var validateLogin = require("./validation/validateLogin");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-var contentRouter = require("./routes/content");
 var followRouter = require("./routes/follow");
 
 const db_url = require("./config/keys").mongo_atlas;
