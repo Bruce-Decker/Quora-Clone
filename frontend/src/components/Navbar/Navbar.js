@@ -5,7 +5,23 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../../actions/authActions";
 import default_image from "./default.png";
+import Modal from 'react-modal';
 import rooturl from "../../utility/url";
+
+
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
+
+Modal.setAppElement('#root')
+
 class Navbar extends Component {
   constructor() {
     super();
@@ -1138,13 +1154,13 @@ class Navbar extends Component {
                                     </li>
                                    
                                     <li>
-                                      <a
+                                      <Link
                                         className="hover_menu_item"
-                                        href="#"
+                                        onClick = {this.props.openMessageModal}
                                         id="__w2_wsnWwGwm2_messages_modal"
                                       >
                                         Messages
-                                      </a>
+                                      </Link>
                                     </li>
                                     <li>
                                       <Link
@@ -1229,13 +1245,14 @@ class Navbar extends Component {
                     </span>
                   </div>
                   <div className="ask_wrapper">
-                    <a
+                    <Link
                       className="AskQuestionButton LookupBarAskQuestionModalButton"
-                      href="https://www.quora.com/#"
+
                       id="__w2_wGp3JsZF15_button"
+                      onClick = {this.props.openModal}
                     >
                       Add Question or Link
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

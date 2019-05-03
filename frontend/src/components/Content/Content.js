@@ -3,15 +3,23 @@ import Navbar from "../Navbar/Navbar";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import rooturl from "../../utility/url";
 
 class Content extends Component {
     constructor() {
         super();
         this.state = {
-           
+           questionFollowed: []
         }
         
          
+    }
+
+    async componentDidMount() {
+      var response = await axios.get(
+         rooturl + "/content?email=" + this.props.auth.user.email
+       );
+       console.log(response.data)
     }
 
     render() {
