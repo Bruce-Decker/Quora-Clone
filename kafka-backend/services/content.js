@@ -3,6 +3,7 @@ var AnswerModel = require("../models/Answer");
 //var ProfileModel = require("../models/Profile");
 var QuestionModel = require("../models/Question");
 var followersModel = require("../models/UserFollowers");
+var sortBy = require("lodash.sortby");
 
 exports.contentService = function contentService(info, callback) {
   switch (info.method) {
@@ -16,10 +17,11 @@ exports.contentService = function contentService(info, callback) {
 };
 
 function content(info, callback) {
-  var ans = [];
   var response = {};
+  var answerAns = [];
+
   var email = info.message.email;
-  var order = info.message.order ? info.message.order : -1;
+  var order = Number(info.message.order ? info.message.order : -1);
   var start, end;
   var year = info.message.year;
 
@@ -90,9 +92,17 @@ function content(info, callback) {
     function(err, docs) {
       if (docs) {
         console.log("docs", docs);
+        docs.map(element => {
+          let temp = {};
+          temp.time = element.postedDate;
+          temp.question_id = element.question_id;
+          temp.type = "QuestionAsked";
+          temp.question = element.question;
+          answerAns.push(temp);
+        });
+        console.log("answersAns", answerAns);
+
         response.QuestionsAsked = docs;
-        ans.push(docs);
-        console.log("response", response);
         QuestionModel.aggregate(
           [
             { $unwind: "$answers" },
@@ -124,9 +134,15 @@ function content(info, callback) {
           ],
           function(err, docs) {
             if (docs) {
-              console.log(docs);
+              docs.map(element => {
+                let temp = {};
+                temp.time = element.answers.answered_time;
+                temp.question_id = element.question_id;
+                temp.type = "Answer";
+                temp.question = element.question;
+                answerAns.push(temp);
+              });
               response.Answers = docs;
-              ans.push(docs);
 
               QuestionModel.aggregate(
                 [
@@ -160,10 +176,20 @@ function content(info, callback) {
                   if (docs) {
                     console.log(docs);
                     response.QuestionsFollowed = docs;
-                    ans.push(docs);
-                    console.log("resonse in kafka", response);
-                    console.log("resonse in kafka2", ans);
-                    callback(null, response);
+                    docs.map(element => {
+                      let temp = {};
+                      temp.time = element.followers.time;
+                      temp.question_id = element.question_id;
+                      temp.type = "QuestionFollowed";
+                      temp.question = element.question;
+                      answerAns.push(temp);
+                    });
+                    console.log("answersAns", answerAns);
+                    if (order == 1) {
+                      callback(null, sortBy(answerAns, ["time"]));
+                    } else {
+                      callback(null, sortBy(answerAns, ["time"]).reverse());
+                    }
                   } else {
                     console.log(err);
                     callback(err, " Question followed error");
@@ -190,7 +216,9 @@ function filteredContent(info, callback) {
   var activityType = info.message.activityType;
   var year = info.message.year;
   console.log("year", year);
-  var order = info.message.order ? info.message.order : -1;
+  var order = Number(info.message.order ? info.message.order : -1);
+  console.log("order", order);
+
   var start, end;
   if (year) {
     start = new Date(`${year}-01-01`);
@@ -264,7 +292,7 @@ function filteredContent(info, callback) {
             }
           },
 
-          { $sort: { "followers.time": order } },
+          // { $sort: { "followers.time": order } },
           { $project: { question: 1, "followers.time": 1, question_id: 1 } }
         ],
         //{ sort: { "followers.time": order } },

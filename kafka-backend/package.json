@@ -26,6 +26,7 @@
     "jsonwebtoken": "^8.4.0",
     "kafka-node": "3.0.1",
     "localStorage": "^1.0.4",
+    "lodash.sortby": "^4.7.0",
     "mongoose": "^5.4.20",
     "mongoose-paginate": "^5.0.3",
     "morgan": "^1.9.1",
@@ -41,6 +42,7 @@
     "redis": "^2.8.0",
     "short-uuid": "^3.1.0",
     "shortid": "^2.2.14",
+    "underscore": "^1.9.1",
     "unique-random": "^2.1.0",
     "uuid": "^3.3.2",
     "validator": "^10.11.0"
