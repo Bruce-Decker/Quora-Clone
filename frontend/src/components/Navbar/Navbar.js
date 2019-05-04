@@ -816,9 +816,9 @@ class Navbar extends Component {
           >
             <div className="header_inner u-flex u-flex-row">
               <div className="header_logo u-flex-none">
-                <a href="https://www.quora.com/">
+                <Link to="/dashboard">
                   <span>Quora</span>
-                </a>
+                </Link>
               </div>
               <div className="header_contents u-flex u-flex-auto u-margin-left--sm">
                 <div

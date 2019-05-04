@@ -16,34 +16,60 @@ class Content extends Component {
            showAskedList: false,
            activityType: '',
            order_direction: ''
-
         }
         
          
     }
 
+    async componentWillReceiveProps(nextProps) {
+       console.log(nextProps.location.search)
+       console.log(this.props.location.search)
+       console.log(nextProps.location.search !== this.props.location.search)
+
+      var query
+      var values = queryString.parse(nextProps.location.search)
+       for (var key in values) {
+         console.log(key)
+         console.log(nextProps.location.search[key])
+         if (key == "activityType") {
+            query = "&" + key + "=" + values[key]
+         }
+      }   
+      console.log("sdfsdfdsf " + query)
+
+       localStorage.setItem("activityType", query);
+       if (nextProps.location.search !== this.props.location.search) {
+             window.location.reload()
+       }
+
+    }
+
+   
+
 
     async componentDidMount() {
+       if (localStorage.getItem("activityType") === undefined) {
+         localStorage.setItem("activityType", "?activityType=all_types");
+       }
       var response 
        var values = queryString.parse(this.props.location.search)
       //  console.log(values.activityType)
       //  console.log(values)
+      var query
        for (var key in values) {
           console.log(key)
           console.log(values[key])
+          query = "&" + key + "=" + values[key]
          // if (values.hasOwnProperty(key)) {
          //     console.log(key + " -> " + values[key]);
          // }
-     }
-       if (!values.activityType) {
+     }   
+     console.log(query)
+      
          response = await axios.get(
-            rooturl + "/content?email=" + this.props.auth.user.email
-          );
-       } else {
-         response = await axios.get(
-            rooturl + "/content?email=" + this.props.auth.user.email + "&activityType=" + values.activityType
-          );
-       }
+            rooturl + "/content?email=" + this.props.auth.user.email + query
+         )
+       
        if (response.data) {
          this.setState({
             questionsAsked: response.data,
@@ -53,17 +79,7 @@ class Content extends Component {
        console.log(response.data)
     }
 
-    onClickLink = () => {
     
-      this.props.history.push("/dashboard");
-    }
-
-    setActivity = (option) => {
-    
-      this.props.history.push('/content2?activityType=all');
-    }
-
-
 
     
    
@@ -105,9 +121,9 @@ class Content extends Component {
       
       </li>
      
-      <li className="filter_option"><Link to =  {{ pathname: "/content", search: "?activityType=QuestionFollowed" }}>Questions Followed</Link></li>
-      <li className="filter_option"><Link className=" filter_option_link" onClick = {() => this.setActivity("QuestionFollowed")} data-value="answers">Answers</Link></li>
-      <li className="filter_option"><a className=" filter_option_link" href="#" data-value="posts">Posts</a></li>
+      <li className="filter_option"><Link className=" filter_option_link" to =  {{ pathname: "/content", search: "?activityType=QuestionFollowed" }}>Questions Followed</Link></li>
+      <li className="filter_option"><Link className=" filter_option_link" to =  {{ pathname: "/content", search: "?activityType=Answers" }}>Answers</Link></li>
+      
    </ul>
 </div>
 <div className="UserContentFilterTopics UserContentFilter">
@@ -144,18 +160,25 @@ class Content extends Component {
             <div className="UserContentFilterSortOrder UserContentFilter"><h3>Sort Order</h3>
             <ul id="__w2_wsawratU31_filter_links">
                 <li className="filter_option2">
-                   <Link className="asfasdf" to = {{ pathname: "/content", 
+                   <Link className="filter_option_link" to = {{ pathname: "/content", 
                    
                    
-                   search: "?order_direction=newest_first" 
+                   search: localStorage.getItem("activityType") + "&order=-1" 
                   
                   
                   
                   }} 
                    
-                   >Newest First</Link></li>
+                   >Newest First</Link>
+                   </li>
                       <li className="filter_option">
-                         <a className=" filter_option_link" href="#" data-value="oldest_first">Oldest First</a></li></ul></div>
+                         <Link className=" filter_option_link" to = {{ pathname: "/content",
+
+                        search: localStorage.getItem("activityType") + "&order=1" 
+                        }}>Oldest First</Link>
+                        </li>
+                        
+                        </ul></div>
                          
                          </div></div>
                         <div className="layout_3col_center">
