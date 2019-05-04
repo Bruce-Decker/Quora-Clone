@@ -760,7 +760,12 @@ class Profile extends Component {
 <span id="__w2_wpZ4kBSr11_answer_story"><span id="__w2_wpZ4kBSr13_answer_story">
 <div className="story_title_container">
 <div className="pass_color_to_child_links">
-   <div id="wpZ4kBSr65"><a className="question_link" href="/What-are-some-fairly-old-inventions-that-are-still-very-relevant-today" target="_top" action_mousedown="QuestionLinkClickthrough" id="__w2_wpZ4kBSr66_link"><span className="ui_content_title ui_content_title--default ui_content_title--medium"><span className="ui_qtext_rendered_qtext">{question.question}</span></span></a></div>
+   <div id="wpZ4kBSr65">
+   <Link to = {`/question/${question.question_id}`}  className="question_link" target="_top" action_mousedown="QuestionLinkClickthrough" id="__w2_wpZ4kBSr66_link">
+   <span className="ui_content_title ui_content_title--default ui_content_title--medium">
+   <span className="ui_qtext_rendered_qtext">{question.question}</span></span>
+   </Link>
+   </div>
 </div>
 <div id="wpZ4kBSr48" /></div>
 <div className="Answer" id="__w2_wpZ4kBSr26_answer">
