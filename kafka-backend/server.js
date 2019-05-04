@@ -18,8 +18,9 @@ var follow = require("./services/follow");
 var question = require("./services/question");
 var inbox = require("./services/inbox");
 var content = require("./services/content");
-var messages = require("./services/message");
+var message = require("./services/message");
 var answer = require("./services/answer");
+var messages = require("./services/messages");
 
 function handleTopicRequest(topic_name, fname) {
   //var topic_name = 'root_topic';
@@ -75,7 +76,13 @@ function handleTopicRequest(topic_name, fname) {
         });
         break;
       case "message":
-        messages.messageService(data.data, function(err, res) {
+        message.messageService(data.data, function(err, res) {
+          response(data, res, producer);
+          return;
+        });
+        break;
+      case "messages":
+        messages.messagesService(data.data, function(err, res) {
           response(data, res, producer);
           return;
         });
@@ -116,4 +123,5 @@ handleTopicRequest("question", question);
 handleTopicRequest("answer", answer);
 handleTopicRequest("inbox", inbox);
 handleTopicRequest("content", content);
-handleTopicRequest("message", messages);
+handleTopicRequest("message", message);
+handleTopicRequest("messages", messages);

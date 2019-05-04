@@ -8,11 +8,11 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import Answer from "./components/Answer/Answer";
 import Answer2 from "./components/Answer/Answer2";
 import Content from "./components/Content/Content";
-import Question from './components/Question/Question'
-import Profile from './components/Profile/Profile'
+import Question from "./components/Question/Question";
+import Profile from "./components/Profile/Profile";
 import { activeUser } from "./actions/authActions";
 import jwt_decode from "jwt-decode";
-
+import Messages from "./components/Messages/Messages";
 
 if (localStorage.token) {
   if (localStorage.getItem("token") === "undefined") {
@@ -47,6 +47,7 @@ class App extends Component {
             <Route exact path="/content" component={Content} />
             <Route exact path="/question/:question_id" component={Question} />
             <Route exact path="/profile" component={Profile} />
+            <Route exact path="/messages/:email" exact component={Messages} />
           </div>
         </BrowserRouter>
       </Provider>
