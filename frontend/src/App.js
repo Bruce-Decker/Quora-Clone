@@ -13,6 +13,7 @@ import Profile from './components/Profile/Profile'
 import { activeUser } from "./actions/authActions";
 import jwt_decode from "jwt-decode";
 
+
 if (localStorage.token) {
   if (localStorage.getItem("token") === "undefined") {
     localStorage.removeItem("token");
