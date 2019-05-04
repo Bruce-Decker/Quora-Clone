@@ -5,17 +5,23 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import rooturl from "../../utility/url";
 import queryString from 'query-string'
+import { createHashHistory } from 'history'
+
 
 class Content extends Component {
     constructor() {
         super();
         this.state = {
            questionsAsked: [],
-           showAskedList: false
+           showAskedList: false,
+           activityType: '',
+           order_direction: ''
+
         }
         
          
     }
+
 
     async componentDidMount() {
       var response 
@@ -47,7 +53,24 @@ class Content extends Component {
        console.log(response.data)
     }
 
+    onClickLink = () => {
+    
+      this.props.history.push("/dashboard");
+    }
+
+    setActivity = (option) => {
+    
+      this.props.history.push('/content2?activityType=all');
+    }
+
+
+
+    
+   
+    
+
     render() {
+      
         return (
           <div>
             <Navbar
@@ -69,11 +92,21 @@ class Content extends Component {
    <h3>By Content Type</h3>
    <ul id="__w2_wsawratU25_filter_links">
       <li className="filter_option">
+     
       <Link className="selected filter_option_link" to = {{ pathname: "/content", search: "?activityType=all_types" }}>All Types</Link></li>
+
+      
+   
+   
       <li className="filter_option">
-      <Link className=" filter_option_link" to = {{ pathname: "/content", search: "?activityType=QuestionAsked" }} >Questions Asked</Link></li>
-      <li className="filter_option"><a className=" filter_option_link" href="#" data-value="questions_followed">Questions Followed</a></li>
-      <li className="filter_option"><a className=" filter_option_link" href="#" data-value="answers">Answers</a></li>
+
+      <Link className=" filter_option_link" to =  {{ pathname: "/content", search: "?activityType=QuestionAsked" }} >Questions Asked</Link>
+      
+      
+      </li>
+     
+      <li className="filter_option"><Link to =  {{ pathname: "/content", search: "?activityType=QuestionFollowed" }}>Questions Followed</Link></li>
+      <li className="filter_option"><Link className=" filter_option_link" onClick = {() => this.setActivity("QuestionFollowed")} data-value="answers">Answers</Link></li>
       <li className="filter_option"><a className=" filter_option_link" href="#" data-value="posts">Posts</a></li>
    </ul>
 </div>
@@ -104,14 +137,23 @@ class Content extends Component {
    <div className="UserContentFilterTime UserContentFilter">
        <h3>By Year</h3>
        <ul id="__w2_wsawratU29_filter_links">
-       <li className="filter_option">
+       <li className="filter_option2">
            <a className="selected filter_option_link" href="#" data-value="all_time">All Time</a></li>
-           <li className="filter_option">
+           <li className="filter_option2">
             <a className=" filter_option_link" href="#" data-value={2019}>2019</a></li></ul></div>
             <div className="UserContentFilterSortOrder UserContentFilter"><h3>Sort Order</h3>
             <ul id="__w2_wsawratU31_filter_links">
-                <li className="filter_option">
-                   <a className="selected filter_option_link" href="#" data-value="newest_first">Newest First</a></li>
+                <li className="filter_option2">
+                   <Link className="asfasdf" to = {{ pathname: "/content", 
+                   
+                   
+                   search: "?order_direction=newest_first" 
+                  
+                  
+                  
+                  }} 
+                   
+                   >Newest First</Link></li>
                       <li className="filter_option">
                          <a className=" filter_option_link" href="#" data-value="oldest_first">Oldest First</a></li></ul></div>
                          
