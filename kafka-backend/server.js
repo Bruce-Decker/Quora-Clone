@@ -75,7 +75,7 @@ function handleTopicRequest(topic_name, fname) {
         });
         break;
       case "message":
-        message.messageService(data.data, function(err, res) {
+        messages.messagesService(data.data, function(err, res) {
           response(data, res, producer);
           return;
         });
