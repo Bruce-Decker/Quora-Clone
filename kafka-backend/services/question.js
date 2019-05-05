@@ -48,7 +48,7 @@ function postQuestion(info, callback) {
   var owner = info.message.owner;
   var followers = info.message.followers;
   var answers = info.message.answers;
-  var postedDate = info.message.postedDate;
+  var postedDate = new Date()
   var data = {
     question_id,
     question,
