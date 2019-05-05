@@ -74,12 +74,6 @@ function handleTopicRequest(topic_name, fname) {
           return;
         });
         break;
-      case "message":
-        message.messageService(data.data, function(err, res) {
-          response(data, res, producer);
-          return;
-        });
-        break;
       case "messages":
         messages.messagesService(data.data, function(err, res) {
           response(data, res, producer);
