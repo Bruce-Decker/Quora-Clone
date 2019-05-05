@@ -1316,7 +1316,11 @@ class Profile extends Component {
    <div className="FormField FormFieldInput with_label with_character_counter">
       <div className="error_tooltip hidden" id="__w2_wS3v0b3P32_error_tooltip">Please fill out this field.</div>
       <label className="input_label" htmlFor="__w2_wS3v0b3P32_position" id="__w2_wS3v0b3P32_label">Zip Code</label>
-      <input className="text input_field" type="text"  required="False" maxLength={50} data-group="js-editable" w2cid="wS3v0b3P32" id="__w2_wS3v0b3P32_position" />
+
+      <input className="text input_field" pattern = "[0-9]{5}-[0-9]{4}|[0-9]{5}" type="text"  required="False" maxLength={50} data-group="js-editable" w2cid="wS3v0b3P32" id="__w2_wS3v0b3P32_position" title = "Please enter a five-digit or a nine-digit zip code. ex. 95192 or 95192-1929"/>
+
+
+
       <div className="CharacterCounter fade_out" id="__w2_wS3v0b3P37_counter_wrapper">
          <div className="counter" id="__w2_wS3v0b3P37_counter">50</div>
       </div>
