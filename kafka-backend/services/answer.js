@@ -39,90 +39,174 @@ exports.answerService = function answerService(info, callback) {
 
 function bookmarkAnswer(info, callback) {
   var answerid = info.message.answerid;
-  Question.findOne({ "answers.answer_id": answerid }, function(err, question) {
-    console.log(question);
-    console.log(err);
-    if (question) {
-      let currentAnswer = question.answers.find(
-        answer => answer.answer_id === answerid
-      );
-      let bookmarks = currentAnswer.bookmark || [];
-      let bookmark;
-      bookmarks.push(info.message.email);
-      console.log(question);
-      question.save().then(
-        doc => {
-          console.log("bookmark added.", doc);
-          callback(null, doc);
-        },
-        err => {
-          console.log("Unable to add bookmark.", err);
-          callback(err, null);
+  var bookmark = info.message.bookmark;
+  if (bookmark) {
+    Question.findOneAndUpdate(
+      { "answers.answer_id": answerid },
+      {
+        $push: {
+          "answers.$[element].bookmark": info.message.email
         }
-      );
-    } else {
-      console.log(err);
-      callback(err, "error");
-    }
-  });
+      },
+      {
+        arrayFilters: [{ "element.answer_id": answerid }]
+      },
+      function(err, result) {
+        if (result) {
+          console.log(result);
+          callback(null, result);
+        } else {
+          console.log(err);
+          callback(err, " add comment error");
+        }
+      }
+    );
+  } else {
+    Question.findOneAndUpdate(
+      { "answers.answer_id": answerid },
+      {
+        $pull: {
+          "answers.$[element].bookmark": info.message.email
+        }
+      },
+      {
+        arrayFilters: [{ "element.answer_id": answerid }]
+      },
+      function(err, result) {
+        if (result) {
+          //   console.log(result);
+          callback(null, result);
+        } else {
+          console.log(err);
+          callback(err, " add comment error");
+        }
+      }
+    );
+  }
 }
 
 function upvoteAnswer(info, callback) {
+  console.log("............", info.message);
   var answerid = info.message.answerid;
-  Question.find({ "answers.answer_id": answerid }, function(err, question) {
-    console.log(question);
-    console.log(err);
-    if (question) {
-      let currentAnswer = question.answers.find(
-        answer => answer.answer_id === answerid
-      );
-      let upvotes = currentAnswer.upvote || [];
-      upvotes.push(info.message.email);
-      console.log(question);
-      question.save().then(
-        doc => {
-          console.log("upvote added.", doc);
-          callback(null, doc);
-        },
-        err => {
-          console.log("Unable to add upvote.", err);
-          callback(err, null);
+  var upvote = info.message.upvote;
+  if (upvote) {
+    Question.findOneAndUpdate(
+      { "answers.answer_id": answerid },
+      {
+        $push: {
+          "answers.$[element].upvote": info.message.email
         }
-      );
-    } else {
-      console.log(err);
-      callback(err, "error");
-    }
-  });
+      },
+      {
+        arrayFilters: [{ "element.answer_id": answerid }]
+      },
+      function(err, result) {
+        if (result) {
+          console.log(result);
+          callback(null, result);
+        } else {
+          console.log(err);
+          callback(err, " add comment error");
+        }
+      }
+    );
+  } else {
+    Question.findOneAndUpdate(
+      { "answers.answer_id": answerid },
+      {
+        $pull: {
+          "answers.$[element].upvote": info.message.email
+        }
+      },
+      {
+        arrayFilters: [{ "element.answer_id": answerid }]
+      },
+      function(err, result) {
+        if (result) {
+          //   console.log(result);
+          callback(null, result);
+        } else {
+          console.log(err);
+          callback(err, " add comment error");
+        }
+      }
+    );
+  }
+  // Question.find({ "answers.answer_id": answerid }, function(err, question) {
+  //   console.log(question);
+  //   console.log(err);
+  //   if (question) {
+  //     question = question[0];
+  //     console.log("xxxxxxxxxx", question);
+  //     let currentAnswer = question.answers.find(
+  //       answer => answer.answer_id === answerid
+  //     );
+  //     let upvotes = currentAnswer.upvote || [];
+  //     upvotes.push(info.message.email);
+  //     console.log(question);
+  //     question.save().then(
+  //       doc => {
+  //         console.log("upvote added.", doc);
+  //         return callback();
+  //       },
+  //       err => {
+  //         console.log("Unable to add upvote.", err);
+  //         return callback();
+  //       }
+  //     );
+  //   } else {
+  //     console.log(err);
+  //     callback(err, "error");
+  //   }
+  // });
 }
 
 function downvoteAnswer(info, callback) {
   var answerid = info.message.answerid;
-  Question.find({ "answers.answer_id": answerid }, function(err, question) {
-    console.log(question);
-    console.log(err);
-    if (question) {
-      let currentAnswer = question.answers.find(
-        answer => answer.answer_id === answerid
-      );
-      let downvotes = currentAnswer.downvote || [];
-      downvotes.push(info.message.email);
-      console.log(question);
-      question.save().then(
-        doc => {
-          console.log("downvote added.", doc);
-          callback(null, doc);
-        },
-        err => {
-          console.log("Unable to add downvote.", err);
-          callback(err, null);
+  var downvote = info.message.downvote;
+  if (downvote) {
+    Question.findOneAndUpdate(
+      { "answers.answer_id": answerid },
+      {
+        $push: {
+          "answers.$[element].downvote": info.message.email
         }
-      );
-    } else {
-      console.log(err);
-      callback(err, "error");
-    }
-  });
+      },
+      {
+        arrayFilters: [{ "element.answer_id": answerid }]
+      },
+      function(err, result) {
+        if (result) {
+          console.log(result);
+          callback(null, result);
+        } else {
+          console.log(err);
+          callback(err, " add comment error");
+        }
+      }
+    );
+  } else {
+    Question.findOneAndUpdate(
+      { "answers.answer_id": answerid },
+      {
+        $pull: {
+          "answers.$[element].downvote": info.message.email
+        }
+      },
+      {
+        arrayFilters: [{ "element.answer_id": answerid }]
+      },
+      function(err, result) {
+        if (result) {
+          //   console.log(result);
+          callback(null, result);
+        } else {
+          console.log(err);
+          callback(err, " add comment error");
+        }
+      }
+    );
+  }
 }
 
 function addComment(info, callback) {
@@ -131,7 +215,7 @@ function addComment(info, callback) {
   data.email = info.message.email;
   var answerid = info.message.answer_id;
   data.comment = info.message.comment;
-  data.name = info.message.name
+  data.name = info.message.name;
   data.time = new Date();
   console.log("data", data, "answerid", answerid);
 
