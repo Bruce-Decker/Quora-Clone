@@ -33,7 +33,20 @@ router.get('/getQuestion/:question_id', function(req, res) {
   })
 })
 
-
+router.get('/getTopicQuestions', function(req, res) {
+  kafka.make_request('question', {"method": "getTopicQuestions", "topic": req.params.topic}, function(error, result) {
+      if (error) {
+          console.log(error)
+          res.status(400).json({msg: 'cannot get question'});
+      } else {
+             if (result.errors) {
+                return res.status(400).json(result.errors);
+             } else {
+                res.send(result)
+             }
+      }
+  })
+})
 
 router.get("/keyword", function(req, res) {
   kafka.make_request(

@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs')
 const Auth = require('../models/AuthModel')
 var validateRegister = require('../validation/validateRegister')
 var validateLogin = require('../validation/validateLogin')
-
+const Profile=require('../models/Profile')
 
 exports.authService = function authService(info, callback) {
     console.log("Path is ")
@@ -15,11 +15,28 @@ exports.authService = function authService(info, callback) {
         case 'login':
             login(info, callback)
             break
+        case 'search':
+            search(info, callback)
+            break
       
              
     }
 }
 
+function search(info, callback) {
+    var name = info.message.name;
+    console.log("search user", info);
+    Auth.find({ name: new RegExp(name, "i") }, function(err, docs) {
+      if (docs) {
+        console.log("search user", docs);
+        
+        callback(null, docs);
+      } else {
+        console.log(err);
+        callback(err, "error");
+      }
+    });
+  }
 
 function login(info, callback) {
     const { errors, isValid } = validateLogin(info.body);
@@ -84,7 +101,10 @@ function post_createBasic(info, callback){
                 email: info.body.email,
                 password: info.body.password
             })
-
+            const user_profile = new Profile({
+                name: info.body.name,
+                email: info.body.email
+            })
             bcrypt.genSalt(10, (err, salt) => {
                 console.log(new_user.password)
                 bcrypt.hash(new_user.password, salt, (err, hash) => {
@@ -106,6 +126,11 @@ function post_createBasic(info, callback){
                            });
                          })
                          .catch(err => console.log(err))
+                         user_profile.save()
+                         .then(user => {
+                           console.log("Profile created"+user)
+                           });
+                         
                 })
             })
         }

@@ -316,17 +316,35 @@ function getanswer(msg, callback) {
 }
 
 function fetchanswers(msg, callback) {
-  console.log("in get answers");
-  let question_id = msg.question_id;
-  Question.find({ question_id: question_id })
-    .then(data => {
-      if (!data.length) return callback({ msg: "No question found" });
-      let answers = data[0].answers;
-      return callback(null, answers);
-    })
-    .catch(err => {
-      return callback(err);
-    });
+  console.log("in get answers", msg);
+  let question_id = msg.message.question_id;
+  console.log("in get answers", msg, question_id);
+
+  /*   Question.find(
+    { question_id: question_id },
+    { answers: 1 },
+    { sort: { "answers.answered_time": 1 } } 
+  )*/
+  Question.aggregate(
+    [
+      { $match: { question_id: question_id } },
+      //{ $project: { answers: 1 } },
+      { $unwind: "$answers" },
+      { $sort: { "answers.answered_time": -1 } }
+    ],
+    function(err, docs) {
+      console.log(docs);
+      console.log(err);
+      if (docs) {
+        console.log(docs);
+        callback(null, docs);
+        console.log("in here........");
+      } else {
+        console.log(err);
+        callback(err, "error");
+      }
+    }
+  );
 }
 
 function createanswer(msg, callback) {
