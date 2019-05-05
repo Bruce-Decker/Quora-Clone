@@ -422,7 +422,10 @@ class Dashboard extends Component {
                                                           <div className="story_title_container">
                                                             <div className="pass_color_to_child_links">
                                                               <div id="whIqsbBW40">
-                                                                <Link to = {`/question/${question.question_id}`}
+                                                                <Link
+                                                                  to={`/question/${
+                                                                    question.question_id
+                                                                  }`}
                                                                   className="question_link"
                                                                   target="_top"
                                                                   action_mousedown="QuestionLinkClickthrough"
