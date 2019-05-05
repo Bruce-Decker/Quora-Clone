@@ -1277,7 +1277,8 @@ class Navbar extends Component {
                                     <li>
                                       <Link
                                         className="hover_menu_item"
-                                        to = "/profile"
+                                        // to = `{/profile/" + {this.props.user.auth.email}``
+                                        to = {`/profile/` + this.props.auth.user.email}
                                       >
                                         Profile
                                       </Link>
