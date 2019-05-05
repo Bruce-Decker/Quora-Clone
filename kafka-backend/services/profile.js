@@ -24,6 +24,10 @@ exports.profileService = function profileService(info, callback) {
     case "getImage":
       getImage(info, callback);
       break;
+    case "getProfileViews":
+    getProfileViews(info, callback);
+      break;
+      
   }
 };
 
@@ -53,7 +57,7 @@ function createProfile(info, callback) {
     description,
     profile_credential
   };
-  console.log(data);
+  console.log("aaaaa.........", info.message);
 
   Profile.findOne({ email: email }, function(err, docs) {
     if (docs) {
@@ -62,7 +66,7 @@ function createProfile(info, callback) {
           //res.send("Fail")
           callback(err, "error");
         } else {
-          console.log(result);
+          console.log("in result///////" + result);
           callback(null, data);
         }
       });
@@ -190,4 +194,22 @@ function getImage(info, callback) {
       callback(err, "error");
     }
   });
+}
+
+function getProfileViews(info, callback) {
+  var email = info.message.email
+  Profile.findOne({email: email}, function(err, docs) {
+      
+      if (docs) {
+          console.log(docs.views);
+          let data = {
+            email:email,
+            count: docs.views.length
+          }   
+          callback(null, data);
+      } else {
+          console.log(err);
+          callback(err,"error");
+      }
+  })
 }
