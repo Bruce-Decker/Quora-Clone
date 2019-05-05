@@ -45,11 +45,16 @@ export const loginUser = userData => dispatch => {
       console.log("data is 1" + JSON.stringify(decrypt_data));
       dispatch(activeUser(decrypt_data));
     })
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
+    .catch(err => {
+      
+      if (err.response) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      } 
+     
+    }
     );
 };
 
