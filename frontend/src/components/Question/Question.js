@@ -50,12 +50,13 @@ class Question extends Component {
     }
 
     onClick = (email, answer_id) => {
-       alert(answer_id)
+     
         var comment = this.state.comment
         var data = {
             email,
             answer_id,
-            comment
+            comment,
+            question_id: this.props.match.params.question_id
         }
        
 
