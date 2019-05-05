@@ -131,6 +131,7 @@ function addComment(info, callback) {
   data.email = info.message.email;
   var answerid = info.message.answer_id;
   data.comment = info.message.comment;
+  data.name = info.message.name
   data.time = new Date();
   console.log("data", data, "answerid", answerid);
 
@@ -165,6 +166,7 @@ function addComment(info, callback) {
       $push: {
         "answers.$[element].comments": {
           email: data.email,
+          name: data.name,
           comment: data.comment,
           time: data.time
         }

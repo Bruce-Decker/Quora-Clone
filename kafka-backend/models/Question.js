@@ -61,6 +61,9 @@ const QuestionSchema = new Schema({
           email: {
             type: String
           },
+          name: {
+            type: String
+          },
           comment: {
             type: String
           },
