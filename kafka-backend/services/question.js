@@ -33,8 +33,10 @@ exports.questionService = function questionService(info, callback) {
 
 function getTopicQuestions(info,callback)
 {
+  console.log("jaksgdkag")
+  console.log(info.message)
   Question.find(
-    { topics: { $in: info.topic } },
+    { topics: {$in:info.message.topic } },
 
     (err, questions) => {
       if (err) {
