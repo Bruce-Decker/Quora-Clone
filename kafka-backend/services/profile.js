@@ -53,7 +53,7 @@ function createProfile(info, callback) {
     description,
     profile_credential
   };
-  console.log(data);
+  console.log("aaaaa.........", info.message);
 
   Profile.findOne({ email: email }, function(err, docs) {
     if (docs) {
@@ -62,7 +62,7 @@ function createProfile(info, callback) {
           //res.send("Fail")
           callback(err, "error");
         } else {
-          console.log(result);
+          console.log("in result///////" + result);
           callback(null, data);
         }
       });
