@@ -24,12 +24,12 @@ function post_sendMessage(info, callback) {
   var message = info.message.message;
   var sender_email = info.message.sender_email;
   var receiver_email = info.message.receiver_email;
-  var present_time = new Date();
-  var time = present_time.getMonth() + "/" + present_time.getDate() + "/";
+  var time = new Date();
+  /*   var time = present_time.getMonth() + "/" + present_time.getDate() + "/";
   time = time + present_time.getFullYear() + " " + present_time.getHours();
   var now_seconds = seconds_with_leading_zeros(present_time.getSeconds());
   time = time + ":" + present_time.getMinutes() + ":" + now_seconds;
-  time = time + ":" + present_time.getMilliseconds();
+  time = time + ":" + present_time.getMilliseconds(); */
   var data = {
     sender_email,
     receiver_email,
@@ -37,6 +37,7 @@ function post_sendMessage(info, callback) {
     message,
     time
   };
+  console.log("send message", data);
 
   Message.create(data, function(err, newlyCreated) {
     if (err) {

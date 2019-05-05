@@ -21,6 +21,8 @@ const customStyles = {
 
 Modal.setAppElement('#root')
 
+
+var response_follower
 class Profile extends Component {
     constructor() {
         super();
@@ -30,7 +32,9 @@ class Profile extends Component {
           questions: [],
           showList: false,
           activityType: '',
-          order: ''
+          order: '',
+          followers_num: 0,
+          showFollow: false
         }   
 
         this.openModal = this.openModal.bind(this);
@@ -84,8 +88,19 @@ class Profile extends Component {
       console.log(query)
 
         var response = await axios.get(
-           rooturl + "/content?email=" + this.props.auth.user.email + query
+           rooturl + "/content?email=" + this.props.match.params.email + query
         )
+
+        response_follower = await axios.get(
+           rooturl + "/follow/userFollowers?email=" + this.props.match.params.email
+        )
+        if (response_follower) {
+           this.setState({
+             showFollow: true
+           })
+        }
+        console.log("q3wsffse")
+        console.log(response_follower.data[0].followers.length)
       
       if (response.data) {
         this.setState({
@@ -172,7 +187,7 @@ class Profile extends Component {
             <div id="__w2_wYSVVNEt52_initial">
                <h1><span id="wYSVVNEt55">
                   <span id="__w2_wYSVVNEt56_link">
-                     <span className="user">{this.props.auth.user.name}</span>
+                     <span className="user">{this.props.match.params.CourseId}</span>
                   </span>
                   </span>
                </h1>
@@ -182,9 +197,11 @@ class Profile extends Component {
          </div>
       </div>
       <div id="wYSVVNEt53">
-         <div className="FreeformCredentialEditor"><span id="wYSVVNEt65" /><span id="wYSVVNEt67"><a className="CredentialModalLink EditCredentialModalLink" href="#" id="__w2_wYSVVNEt68_modal_link">Add profile credential</a></span></div>
+         <div className="FreeformCredentialEditor"><span id="wYSVVNEt65" /><span id="wYSVVNEt67">
+        </span></div>
       </div>
    </div>
+   <button> Follow </button>
 </div>
 <div id="wYSVVNEt26">
 <div className="ProfileDescriptionPreviewSection">
@@ -195,7 +212,8 @@ class Profile extends Component {
    <div id="__w2_wYSVVNEt111_expanded">
       <div className="ui_qtext_expanded"><span className="ui_qtext_rendered_qtext" /></div>
    </div>
-   </span><a className="inline_editor_create" href="#" id="__w2_wYSVVNEt110_inline_editor_create_link">Write a description about yourself</a>
+   </span>
+  
 </div>
 <div className="rteditor inline_editor_content hidden" id="__w2_wYSVVNEt110_inline_editor_form">
 <div className="inline_editor_form">
@@ -660,7 +678,13 @@ class Profile extends Component {
             <span id="wYSVVNEt157">
                <a className="ui_button disabled u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--blue ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon" href="#" role="button" action_target="{&quot;type&quot;: &quot;user&quot;, &quot;uid&quot;: 782622776}" id="__w2_wYSVVNEt159_button">
                   <div className="ui_button_inner" id="__w2_wYSVVNEt159_inner">
-                     <div className="ui_button_label_count_wrapper"><span className="ui_button_label" id="__w2_wYSVVNEt159_label">0 Followers</span></div>
+                     <div className="ui_button_label_count_wrapper">
+                     {this.state.showFollow ? 
+                     <span className="ui_button_label" id="__w2_wYSVVNEt159_label">{response_follower.data[0].followers.length} Followers</span>
+                     
+                     : null}
+
+                     </div>
                   </div>
                </a>
             </span>
@@ -685,20 +709,20 @@ class Profile extends Component {
          <div className="nav_item_selected">
             <div id="wIYwSz7m71">
                <li className="NavItem CombinedNavItem EditableListItem NavListItem not_removable">
-               <Link to = {{ pathname: "/profile", search: "?activityType=all_types" }}>Profile</Link></li>
+               <Link to = {{ pathname: `/profile/` + this.props.match.params.email, search: "?activityType=all_types" }}>Profile</Link></li>
             </div>
          </div>
          <div>
             <div id="wIYwSz7m73">
                <li className="AnswersNavItem NavItem EditableListItem NavListItem not_removable">
-                  <Link to = {{ pathname: "/profile", search: "?activityType=QuestionAnswered" }}>Answers<span className="list_count">2</span></Link>
+                  <Link to = {{ pathname: `/profile/` + this.props.match.params.email, search: "?activityType=QuestionAnswered" }}>Answers<span className="list_count">2</span></Link>
                </li>
             </div>
          </div>
          <div>
             <div id="wIYwSz7m75">
                <li className="NavItem QuestionsNavItem EditableListItem NavListItem not_removable">
-               <Link to = {{ pathname: "/profile", search: "?activityType=QuestionFollowed" }}>Questions<span className="list_count">1</span></Link></li>
+               <Link to = {{ pathname: `/profile/` + this.props.match.params.email, search: "?activityType=QuestionFollowed" }}>Questions<span className="list_count">1</span></Link></li>
             </div>
          </div>
          
@@ -786,62 +810,54 @@ class Profile extends Component {
    </div>
 </div>
 <div id="wpZ4kBSr48" /></div>
-<div className="Answer" id="__w2_wpZ4kBSr26_answer">
-<div id="wpZ4kBSr50">
-<div className="ContentHeader AnswerHeader">
-<div className="ui_layout_photo_text u-flex ui_layout_size--small">
-   <div className="ui_layout_photo_wrapper u-flex-none">
-      <div className="ui_layout_photo u-relative">
-         <div className="u-flex-inline" id="wpZ4kBSr67">
-            <div className="hover_menu hidden show_nub" id="__w2_wpZ4kBSr128_menu">
-               <div className="hover_menu_contents" id="__w2_wpZ4kBSr128_menu_contents"> </div>
-            </div>
-            <span className="photo_tooltip u-inline" id="__w2_wpZ4kBSr128_link"><a className="u-flex-inline" href="/profile/Bruce-Decker-12"><span className="ui_avatar u-flex-inline ui_avatar--large u-flex-none"><img className="ui_avatar_photo ui_avatar--border-circular" src="https://qph.fs.quoracdn.net/main-thumb-782622776-100-izcdaymwbtomzguzorfwyoknxfqoqixc.jpeg" alt="Bruce Decker" /></span></a></span>
-         </div>
-      </div>
-   </div>
-   <div className="ui_layout_text u-flex-auto u-width--100 u-flex-align-self--center">
-      <div className="u-flex u-flex-justify--between">
-         <div className="u-margin-right--sm u-width--100">
-            <div className="feed_item_answer_user"><span id="wpZ4kBSr69"><span id="wpZ4kBSr90"><span id="__w2_wpZ4kBSr91_link"><a className="user" href="/profile/Bruce-Decker-12" action_mousedown="UserLinkClickthrough" id="__w2_wpZ4kBSr91_name_link">Bruce Decker</a></span></span></span><span className="bullet"> · </span><span id="wpZ4kBSr87"><a className="CredentialModalLink ChooseCredentialModalLink" href="#" id="__w2_wpZ4kBSr88_modal_link">Add Credential</a></span></div>
-            <span className="credibility_wrapper">
-               <div className="CredibilityFacts AnswerCredibilityFacts pass_color_to_child_links"><span id="wpZ4kBSr92"><a className="answer_permalink" action_mousedown="AnswerPermalinkClickthrough" href="/What-are-some-fairly-old-inventions-that-are-still-very-relevant-today/answer/Bruce-Decker-12" id="__w2_wpZ4kBSr93_link">Answered Thu</a></span></div>
-            </span>
-         </div>
-         <div className="hidden" id="__w2_wpZ4kBSr52_follow_button_section" /></div>
-      </div>
-   </div>
-   <div id="__w2_wpZ4kBSr89_suggested_section" /></div>
-</div>
-<div className="inline_editor_content suggestions_editor_content" id="__w2_wpZ4kBSr60_content">
-<div id="wpZ4kBSr71">
-<div className="feed_item_answer answer_text" id="__w2_wpZ4kBSr81_content">
-<div className="feed_item_answer_content answer_content">
-   <div className="answer_body_preview">
-      <div className="Expandable Toggle AnswerInFeedExpandable SimpleToggle AnswerExpandable" id="__w2_wpZ4kBSr106__truncated">
-         <div className="ExpandedAnswer ExpandedContent" id="__w2_wpZ4kBSr107_expanded_content">
-            <div id="wpZ4kBSr108" />
-               <div className="u-serif-font-main--regular">
-                  <div className="ui_qtext_expanded">
-                     <span className="ui_qtext_rendered_qtext">
-                        <p className="ui_qtext_para u-ltr u-text-align--start">N/A</p>
-                     </span>
-                  </div>
-               </div>
-               <div id="wpZ4kBSr120">
-                  <div className="ReadingContentFooter ContentFooter AnswerFooter" id="__w2_wpZ4kBSr121_content_footer">
-                     <span>23 views</span><span id="wpZ4kBSr169" />
-                     <span id="wpZ4kBSr171" />
-                  </div>
-               </div>
-               <div id="__w2_wpZ4kBSr107_survey_wrapper" /><div className="hidden" id="__w2_wpZ4kBSr164_highlight_menu" /></div></div>
-            </div>
-         </div>
-      </div>
-   </div>
-   <div className="hidden" id="__w2_wpZ4kBSr60_loading"><span className="loading">Loading…</span></div>
-</div>
-<div className="hidden" id="__w2_wpZ4kBSr60_editor" /></div></span><span className="hidden" id="__w2_wpZ4kBSr13_question_answer_story_editable" /></span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</span><span className="hidden" id="__w2_wpZ4kBSr13_question_answer_story_editable" /></span>
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div id="__w2_wpZ4kBSr11_action_bar_truncated">
 <div id="wpZ4kBSr20">
 <div style={{height: '0px', margin: '0px', padding: '0px', clear: 'both', display: 'block'}} />
@@ -853,87 +869,47 @@ class Profile extends Component {
          <span className="meta_bar_pre_upvote_wrapper" id="__w2_woEJoWe02_pre_upvote_text">
             <div id="w2dPWtzQ1" />
          </span>
-         <span className="meta_bar_post_upvote_wrapper hidden" id="__w2_woEJoWe02_post_upvote_text"><div id="w2dPWtzQ3"><div className="unstyled_social_bar"><div className="photos"><div className="ui_badge_group_wrapper"><span className="ui_avatar u-flex-inline ui_avatar--small u-flex-none"><img className="ui_avatar_photo ui_avatar--border-circular" src="https://qph.fs.quoracdn.net/main-thumb-782622776-50-izcdaymwbtomzguzorfwyoknxfqoqixc.jpeg" /></span></div></div><span className="reason_line">You upvoted this</span></div></div></span></div>
+         <span className="meta_bar_post_upvote_wrapper hidden" id="__w2_woEJoWe02_post_upvote_text"><div id="w2dPWtzQ3"><div className="unstyled_social_bar"><div className="photos"><div className="ui_badge_group_wrapper"><span className="ui_avatar u-flex-inline ui_avatar--small u-flex-none">
+         
+         <img className="ui_avatar_photo ui_avatar--border-circular" src="https://qph.fs.quoracdn.net/main-thumb-782622776-50-izcdaymwbtomzguzorfwyoknxfqoqixc.jpeg" />
+         </span></div></div><span className="reason_line">You upvoted this</span></div></div></span></div>
       </div>
    </div>
 </div>
-<div className="action_bar_inner u-flex">
-   <span id="woEJoWe03">
-      <a className="ui_button disabled u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--blue ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon u-tap-highlight--none" href="#" role="button" action_target="{&quot;aid&quot;: 136667387, &quot;type&quot;: &quot;answer&quot;}" id="__w2_wmbPrPAG1_button">
-         <div className="ui_button_inner" id="__w2_wmbPrPAG1_inner">
-            <div className="ui_button_label_count_wrapper"><span className="ui_button_label" id="__w2_wmbPrPAG1_label">0 Upvotes</span></div>
-         </div>
-      </a>
-   </span>
-   <div className="QuoraShareActionItem ActionItemComponent ItemComponent action_item u-relative">
-      <div id="woEJoWe09">
-         <a className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon" href="#" role="button" id="__w2_woEJoWe016_button">
-            <div className="ui_button_inner" id="__w2_woEJoWe016_inner">
-               <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                  <div id="__w2_woEJoWe016_icon">
-                     <span className="ui_button_icon" aria-hidden="true">
-                        <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-                           <g id="sync" className="icon_svg-stroke" stroke="#666" strokeWidth="1.5" fill="none" fillRule="evenodd" strokeLinecap="round">
-                              <path d="M19.7477789,9.99927692 C18.8594418,6.54918939 15.7274185,4 12,4 C8.27166139,4 5.13901185,6.55044813 4.25156364,10.0018321 M4.25328626,14.0048552 C5.14305933,17.4528459 8.2740698,20 12,20 C15.7261126,20 18.8572473,17.4525964 19.7468444,14.0043488" id="circle" />
-                              <polyline id="arrow" transform="translate(4.742997, 8.742997) rotate(-20.000000) translate(-4.742997, -8.742997) " points="2.99299734 6.99299734 2.99299734 10.4929973 6.49299734 10.4929973" />
-                              <polyline id="arrow" transform="translate(19.242997, 15.242997) scale(-1, -1) rotate(-20.000000) translate(-19.242997, -15.242997) " points="17.4929973 13.4929973 17.4929973 16.9929973 20.9929973 16.9929973" />
-                           </g>
-                        </svg>
-                     </span>
-                  </div>
-               </div>
-               <div className="ui_button_label_count_wrapper"><span className="ui_button_label" id="__w2_woEJoWe016_label">Share</span><span className="ui_button_count hidden" aria-hidden="true" id="__w2_woEJoWe016_count_wrapper"><span className="bullet"> · </span><span className="ui_button_count_inner" id="__w2_woEJoWe016_count">0</span></span></div>
-            </div>
-         </a>
-         <div id="__w2_woEJoWe010_quora_share_tooltip" /></div>
-      </div>
-      <div className="OverflowShareActionItem ActionItemComponent ItemComponent action_item secondary_item u-relative">
-         <div id="woEJoWe011">
-            <div className="hover_menu hidden u-right--0 show_nub right_align" id="__w2_woEJoWe012_menu">
-               <div className="hover_menu_contents" id="__w2_woEJoWe012_menu_contents"> </div>
-            </div>
-            <div className="_QuickShare HoverMenu AnswerQuickShare" role="button" id="__w2_woEJoWe012_link">
-               <a className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only" href="#" role="button" aria-label="More sharing options" id="__w2_woEJoWe015_button">
-                  <div className="ui_button_inner" id="__w2_woEJoWe015_inner">
-                     <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                        <div id="__w2_woEJoWe015_icon">
-                           <span className="ui_button_icon" aria-hidden="true">
-                              <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-                                 <g id="share" className="icon_svg-stroke" stroke="#666" fill="none" strokeWidth="1.5" fillRule="evenodd" strokeLinejoin="round">
-                                    <path d="M12.0001053,2.99989467 L4.00010533,12.7776724 L9.33343867,12.7776724 C9.78266695,14.7041066 10.5048892,16.2782509 11.5001053,17.5001053 C12.4953215,18.7219597 13.9953215,19.8886264 16.0001053,21.0001053 C15.3415908,19.6668553 14.8428108,18.1668553 14.5037654,16.5001053 C14.16472,14.8333553 14.2190556,13.5925444 14.666772,12.7776724 L20.0001053,12.7776724 L12.0001053,2.99989467 Z" transform="translate(12.000105, 12.000000) rotate(90.000000) translate(-12.000105, -12.000000) " />
-                                 </g>
-                              </svg>
-                           </span>
-                        </div>
-                     </div>
-                  </div>
-               </a>
-            </div>
-         </div>
-      </div>
-      <div className="action_bar_inner_spacer u-margin-left--auto" />
-         <div className="overflow action_item overflow_link u-relative u-pointer-events--auto">
-            <div className="overflow_link" id="__w2_wpZ4kBSr21_overflow_link">
-               <a className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only" href="#" role="button" aria-label="More options" id="__w2_woEJoWe08_button">
-                  <div className="ui_button_inner" id="__w2_woEJoWe08_inner">
-                     <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                        <div id="__w2_woEJoWe08_icon">
-                           <span className="ui_button_icon" aria-hidden="true">
-                              <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-                                 <g id="overflow" className="icon_svg-stroke" strokeWidth="1.5" stroke="#666" fill="none" fillRule="evenodd">
-                                    <path d="M5,14 C3.8954305,14 3,13.1045695 3,12 C3,10.8954305 3.8954305,10 5,10 C6.1045695,10 7,10.8954305 7,12 C7,13.1045695 6.1045695,14 5,14 Z M12,14 C10.8954305,14 10,13.1045695 10,12 C10,10.8954305 10.8954305,10 12,10 C13.1045695,10 14,10.8954305 14,12 C14,13.1045695 13.1045695,14 12,14 Z M19,14 C17.8954305,14 17,13.1045695 17,12 C17,10.8954305 17.8954305,10 19,10 C20.1045695,10 21,10.8954305 21,12 C21,13.1045695 20.1045695,14 19,14 Z" />
-                                 </g>
-                              </svg>
-                           </span>
-                        </div>
-                     </div>
-                  </div>
-               </a>
-            </div>
-         </div>
-         <div className="hover_menu hidden show_nub fixed_menu_width no_body_attach right_align" id="__w2_wpZ4kBSr21_overflow_menu">
-            <div className="hover_menu_contents lazy" id="__w2_wpZ4kBSr21_overflow_menu_contents" /></div>
-         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       </div>
    </div>
 </div>
@@ -948,7 +924,9 @@ class Profile extends Component {
          <span className="meta_bar_pre_upvote_wrapper" id="__w2_wbcNzjHA2_pre_upvote_text">
             <div id="wET07O1N1" />
          </span>
-         <span className="meta_bar_post_upvote_wrapper hidden" id="__w2_wbcNzjHA2_post_upvote_text"><div id="wET07O1N3"><div className="unstyled_social_bar"><div className="photos"><div className="ui_badge_group_wrapper"><span className="ui_avatar u-flex-inline ui_avatar--small u-flex-none"><img className="ui_avatar_photo ui_avatar--border-circular" src="https://qph.fs.quoracdn.net/main-thumb-782622776-50-izcdaymwbtomzguzorfwyoknxfqoqixc.jpeg" /></span></div></div><span className="reason_line">You upvoted this</span></div></div></span></div>
+         <span className="meta_bar_post_upvote_wrapper hidden" id="__w2_wbcNzjHA2_post_upvote_text"><div id="wET07O1N3"><div className="unstyled_social_bar"><div className="photos"><div className="ui_badge_group_wrapper"><span className="ui_avatar u-flex-inline ui_avatar--small u-flex-none">
+         <img className="ui_avatar_photo ui_avatar--border-circular" src="https://qph.fs.quoracdn.net/main-thumb-782622776-50-izcdaymwbtomzguzorfwyoknxfqoqixc.jpeg" /></span></div></div>
+         <span className="reason_line">You upvoted this</span></div></div></span></div>
       </div>
    </div>
 </div>
@@ -1034,83 +1012,21 @@ class Profile extends Component {
 </div>
 <div id="wpZ4kBSr31">
 <div /></div>
-<div className="answer_auto_expanded_comments threaded_comments u-margin-top--md">
-<div id="wpZ4kBSr111">
-<div className="u-flex">
-<div id="wpZ4kBSr113">
-<div className="add_root_comment">
-<div className="ui_layout_photo_text u-flex ui_layout_size--tiny">
-<div className="ui_layout_photo_wrapper u-flex-none">
-   <div className="ui_layout_photo u-relative">
-      <div className="u-flex-inline" id="wpZ4kBSr149"><a className="u-flex-inline" href="/profile/Bruce-Decker-12"><span className="ui_avatar u-flex-inline ui_avatar--medium u-flex-none"><img className="ui_avatar_photo ui_avatar--border-circular" src="https://qph.fs.quoracdn.net/main-thumb-782622776-100-izcdaymwbtomzguzorfwyoknxfqoqixc.jpeg" alt="Bruce Decker" /></span></a></div>
-   </div>
-</div>
-<div className="ui_layout_text u-flex-auto u-width--100 u-flex-align-self--baseline">
-<div className="u-flex">
-<div className="editor_wrapper" id="__w2_wpZ4kBSr147_editor_outer">
-   <div className="Editor Comment edit_latex web" id="__w2_wpZ4kBSr147_editor">
-      <div data-group="js-editable" w2cid="wpZ4kBSr147" id="__w2_wpZ4kBSr147_doc">
-         <div className="doc empty" contentEditable="true" data-kind="doc" placeholder="Add a comment...">
-            <div className="section" data-type="plain" data-dir="LTR" data-indent={0} data-kind="section">
-               <div className="span" data-kind="span">
-                  <div className="content"><br /></div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <input type="file" accept=".jpg, .png, .jpeg, .gif, .bmp|images/*" multiple style={{display: 'none'}} data-group="js-editable" w2cid="wpZ4kBSr147" id="__w2_wpZ4kBSr147_file" />
-      <div className="drop_zone hidden" id="__w2_wpZ4kBSr147_drop_zone" />
-         <div className="hidden" id="__w2_wpZ4kBSr147_link_selector_wrapper">
-            <div className="Selector LinkSelector" tabIndex={-1} id="__w2_wpZ4kBSr151_wrapper">
-               <div className="link_selector_input">
-                  <div className="selector_input_interaction">
-                     <div className="CharacterCounter fade_out" id="__w2_wpZ4kBSr152_counter_wrapper">
-                        <div className="counter" id="__w2_wpZ4kBSr152_counter">250</div>
-                     </div>
-                     <input className="selector_input text" type="text" defaultValue data-group="js-editable" placeholder="Search" w2cid="wpZ4kBSr151" id="__w2_wpZ4kBSr151_input" />
-                     <div className="selector_spinner hidden" id="__w2_wpZ4kBSr151_spinner">
-                        <div className="LoadingDots tiny">
-                           <div className="dot first" />
-                              <div className="dot second" />
-                                 <div className="dot third" /></div>
-                              </div>
-                           </div>
-                        </div>
-                        <div className="selector_results_container hidden" id="__w2_wpZ4kBSr151_results_container">
-                           <div className="selector_results_container_inner hidden" id="__w2_wpZ4kBSr151_results" />
-                              <div id="__w2_wpZ4kBSr151_empty_input_prompt" /></div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <div className="hidden u-margin-left--sm add_commment_button" id="__w2_wpZ4kBSr114_add_root_link">
-                     <a className="ui_button disabled u-nowrap ui_button--styled ui_button--PillStyle ui_button--PillStyle--bright_blue ui_button--size_small u-inline-block ui_button--non_link ui_button--supports_icon" href="#" role="button" id="__w2_wpZ4kBSr148_button">
-                        <div className="ui_button_inner" id="__w2_wpZ4kBSr148_inner">
-                           <div className="ui_button_label_count_wrapper"><span className="ui_button_label" id="__w2_wpZ4kBSr148_label">Add Comment</span></div>
-                        </div>
-                     </a>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-   <div className="featured_comments_header u-margin-left--sm u-flex" id="__w2_wpZ4kBSr112_toggle_links"><a className="toggle_link toggle_featured is_disabled" href="#" id="__w2_wpZ4kBSr112_toggle_featured">Recommended</a><a className="toggle_link toggle_all is_disabled" href="#" id="__w2_wpZ4kBSr112_toggle_all">All</a></div>
-</div>
-<div className="TCommentUnit expanded_comments" id="__w2_wpZ4kBSr112_expanded_comments">
-   <div className="comment_list" id="__w2_wpZ4kBSr135_container">
-      <div id="__w2_wpZ4kBSr135_new_comment" />
-         <div id="__w2_wpZ4kBSr135_added_comments" /></div>
-         <div id="__w2_wpZ4kBSr112_container_featured">
-            <div className="TCommentListWrapper FeaturedTCommentListWrapper" id="__w2_wpZ4kBSr137_comment_list_wrapper">
-               <div className="comment_list comment_list_level_0" id="__w2_wpZ4kBSr137_comment_list">
-                  <div id="__w2_wpZ4kBSr137_comment_list_first_level_placeholder_2" />
-                     <div id="__w2_wpZ4kBSr137_collapsed_link" /></div>
-                  </div>
-               </div>
-               <div className="hidden" id="__w2_wpZ4kBSr112_container_all" /></div>
-            </div>
-         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       </div>
    </div>
 ))}
@@ -1337,7 +1253,7 @@ class Profile extends Component {
       </svg>
    </span>
 </div>
-<div className="title">Add profile credential</div>
+
 <div id="wS3v0b3P17">
 
 
@@ -1753,7 +1669,8 @@ class Profile extends Component {
       </g>
       </svg></span></div></div><div className="join_explanation">Adding a language credential will add you to Quora in that language, when supported. </div><div className="form_action_bar clearfix"><input className="submit_button form_submit_button" type="submit" defaultValue="Save" data-group="js-editable" w2cid="wS3v0b3P31" id="__w2_wS3v0b3P31_submit" /><a className="toggle_link" href="#">Cancel</a></div>
 </form>
-</div></div></div></div></div><div className="list_wrapper hidden" id="__w2_wS3v0b3P3_wrapper"><div className="PagedListFoo CredentialsList EditCredentialsList unified" id="__w2_wS3v0b3P6_paged_list"><div className="paged_list_wrapper" id="__w2_wS3v0b3P6_paged_list_wrapper"><div className="u-height--100 u-width--100" id="wS3v0b3P84"><div className="ui_empty--wrapper-stretch u-bg--gray"><div className="ui_empty u-text-align--center u-text--gray u-padding-all--lg ui_empty--fit-stretch"><img className="ui_empty--svg-illustration u-margin-top--lg u-margin-bottom--sm" src="/static/images/ui/illustrations/empty_states/dormant.png" /><div className="u-sans-font-main--large u-font-weight--bold u-margin-bottom--sm">No Credentials</div><div className="u-sans-font-main--regular u-margin-bottom--lg">Add credentials to let others know what topics you know about.</div></div></div></div></div><div className="hidden" id="__w2_wS3v0b3P6_more"><div className="ui_section_footer u-hover-bg--black-transparent">View more<div className="u-margin-left--xs u-inline-block"><span className="ui_icon ui_icon_color--gray ui_icon_size--small ui_icon_outline--default" aria-hidden="true"><svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+</div></div></div></div></div><div className="list_wrapper hidden" id="__w2_wS3v0b3P3_wrapper"><div className="PagedListFoo CredentialsList EditCredentialsList unified" id="__w2_wS3v0b3P6_paged_list"><div className="paged_list_wrapper" id="__w2_wS3v0b3P6_paged_list_wrapper"><div className="u-height--100 u-width--100" id="wS3v0b3P84"><div className="ui_empty--wrapper-stretch u-bg--gray"><div className="ui_empty u-text-align--center u-text--gray u-padding-all--lg ui_empty--fit-stretch"><img className="ui_empty--svg-illustration u-margin-top--lg u-margin-bottom--sm" src="/static/images/ui/illustrations/empty_states/dormant.png" /><div className="u-sans-font-main--large u-font-weight--bold u-margin-bottom--sm">No Credentials</div>
+<div className="u-sans-font-main--regular u-margin-bottom--lg">Add credentials to let others know what topics you know about.</div></div></div></div></div><div className="hidden" id="__w2_wS3v0b3P6_more"><div className="ui_section_footer u-hover-bg--black-transparent">View more<div className="u-margin-left--xs u-inline-block"><span className="ui_icon ui_icon_color--gray ui_icon_size--small ui_icon_outline--default" aria-hidden="true"><svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
 <g className="icon_svg-stroke" stroke="#666" strokeWidth="1.5" fill="none" fillRule="evenodd" strokeLinecap="round">
 <polyline points="5 8.5 12 15.5 19.0048307 8.5" />
 </g>

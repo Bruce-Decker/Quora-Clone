@@ -49,25 +49,52 @@ class Question extends Component {
     console.log(response.data);
   }
 
-  upvoteHandler = opts => {
-    console.log("aaaaa........", opts);
-    var upvote = this.state.upvote;
-    upvote = !upvote;
-    axios
-      .post(rooturl + "/answer/upvote", {
-        answerid: opts.answer_id,
-        email: opts.email,
-        upvote: upvote
-      })
-      .then(response => {
-        console.log("Status Code : ", response.status);
-        if (response.status === 200) {
-          this.setState({
+
+    onChange = (e) => {
+       
+        this.setState({[e.target.name]: e.target.value})
+    }
+
+    onClick = (email, answer_id) => {
+     
+      var comment = this.state.comment
+      var data = {
+          email,
+          answer_id,
+          comment,
+          question_id: this.props.match.params.question_id
+      }
+     
+
+      axios.post(rooturl + '/answer/comment', data)
+         .then(res => {
+            
+             window.location.reload()
+         })
+         .catch(err => console.log(err))
+   
+       
+    }
+       
+   upvoteHandler = opts => {
+      console.log("aaaaa........",opts);
+      var upvote = this.state.upvote;
+      upvote = !upvote;
+      axios
+         .post(rooturl + "/answer/upvote",{
+            answerid: opts.answer_id,
+            email: opts.email,
             upvote: upvote
-          });
-        }
-      });
-  };
+         })
+         .then(response => {
+            console.log("Status Code : ",response.status);
+            if (response.status === 200) {
+               this.setState({
+                  upvote: upvote
+               });
+            }
+         })
+        };
 
   downvoteHandler = opts => {
     var downvote = this.state.downvote;

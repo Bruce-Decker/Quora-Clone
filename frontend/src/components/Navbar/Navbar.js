@@ -9,6 +9,23 @@ import Modal from 'react-modal';
 import rooturl from "../../utility/url";
 import uuid from "uuid";
 
+const topics = [
+   {
+      name: "General"
+   },
+   {
+     name: "Science and Technology"
+   },
+   {
+     name: "Politics"
+   },
+   {
+     name: "Psychology"
+   },
+   {
+     name: "History"
+   }
+]
 
 const customStyles = {
   content : {
@@ -38,7 +55,11 @@ const modelCustomStyles = {
 
 Modal.setAppElement('#root')
 
-
+function searchingTopics(term) {
+  return function(x) {
+    return x.name.toLowerCase().includes(term.toLowerCase()) || !term
+  }
+} 
 
 class Navbar extends Component {
   constructor() {
@@ -56,7 +77,10 @@ class Navbar extends Component {
       Technology_Topic: false,
       Psychology_Topic: false,
       Politics_Topic: false,
-      History_Topic: false
+      History_Topic: false,
+      showSearchModal: false,
+      topics: topics,
+      searchTopicOption: false
     };
     this.filterHandler = this.filterHandler.bind(this);
     this.valueChangeHandler = this.valueChangeHandler.bind(this);
@@ -71,6 +95,18 @@ class Navbar extends Component {
 //  add_leading_zeros = (dt) => { 
 //     return (dt < 10 ? '0' : '') + dt;
 //  }
+
+  onFocus = () => {
+     this.setState({
+       showSearchModal: true
+     })
+  }
+
+  onBlur = () => {
+    this.setState({
+      //showSearchModal: false
+    })
+ }
 
   onSubmit = () => {
     var topics = []
@@ -211,7 +247,8 @@ class Navbar extends Component {
   handleClickOutside = event => {
     if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
       this.setState({
-        isHidden: true
+        isHidden: true,
+        showSearchModal: false
       });
     }
   };
@@ -1041,6 +1078,10 @@ class Navbar extends Component {
                       id="__w2_wGp3JsZF12_wrapper"
                     >
                       <div className="selector_input_interaction">
+
+
+                      {/* input */}
+
                         <input
                           className="selector_input text"
                           type="text"
@@ -1051,6 +1092,8 @@ class Navbar extends Component {
                           w2cid="wGp3JsZF12"
                           id="__w2_wGp3JsZF12_input"
                           onChange={this.valueChangeHandler}
+                          onFocus = {this.onFocus}
+                          onBlur = {this.onBlur}
                         />
                         <div
                           className="selector_spinner hidden"
@@ -1067,44 +1110,97 @@ class Navbar extends Component {
                         className="selector_results_container"
                         id="__w2_wGp3JsZF12_results_container"
                       >
-                        <div
-                          className="lookup_bar_results_wrapper fade_out"
-                          id="__w2_wGp3JsZF12_results_wrapper"
-                        >
-                          <div className="results_wrapper">
-                            <div
-                              className="hidden resistance_wrapper server_message"
-                              id="__w2_wGp3JsZF12_server_message"
-                            >
-                              <div
-                                className="fixit_title"
-                                id="__w2_wGp3JsZF12_server_message_title"
-                              />
-                              <span
-                                className="fixit_note"
-                                id="__w2_wGp3JsZF12_server_message_note"
-                              />
-                            </div>
-                            <div className="interstitials_and_results">
-                              <div
-                                className="hidden ask_interstitial"
-                                id="__w2_wGp3JsZF12_ask_mode_interstitial"
-                              >
-                                <p className="ask_interstitial_content">
-                                  <strong
-                                    className="ask_interstitial_title"
-                                    id="__w2_wGp3JsZF12_interstitial_title"
-                                  />
-                                  <span id="__w2_wGp3JsZF12_interstitial_text" />
-                                </p>
-                              </div>
-                              <div
-                                className="results"
-                                id="__w2_wGp3JsZF12_results"
-                              />
-                            </div>
-                          </div>
+
+
+
+
+                      
+
+
+
+{this.state.showSearchModal && this.state.searchCriteria == "topic" ? 
+<div className="lookup_bar_results_wrapper" id="__w2_wTZ9qVEp12_results_wrapper" style={{width: '246.578px'}}>
+<div className="results_wrapper">
+   <div className="hidden resistance_wrapper server_message" id="__w2_wTZ9qVEp12_server_message">
+      <div className="fixit_title" id="__w2_wTZ9qVEp12_server_message_title" /><span className="fixit_note" id="__w2_wTZ9qVEp12_server_message_note" /></div>
+      <div className="interstitials_and_results">
+         <div className="hidden ask_interstitial" id="__w2_wTZ9qVEp12_ask_mode_interstitial">
+            <p className="ask_interstitial_content"><strong className="ask_interstitial_title" id="__w2_wTZ9qVEp12_interstitial_title" /><span id="__w2_wTZ9qVEp12_interstitial_text" /></p>
+         </div>
+         <div className="results" id="__w2_wTZ9qVEp12_results">
+            <ul className="SelectorResults LookupBarResults" id="__w2_w4N3kpSm1_wrapper">
+               <li className="selector_result search selector_highlighted" id="__w2_w4N3kpSm1_result_0">
+                  <div data-clog-trigger="impression" data-clog-metadata="{&quot;action_log_target&quot;: {&quot;type&quot;: 39, &quot;hash&quot;: &quot;1140612010|search|0|-1718384057|0&quot;}}" data-clog-event-type="ActionLogImpression" id="__w2_w4N3kpSm2_actionable" data-clog-processed={1}>
+                  <span className="search_icon_wrapper">
+                  <img src="https://qsf.fs.quoracdn.net/-3-images.new_grid.QuoraSearch_2x.png-26-c1b5774d1aad0f68.png" width={20} height={20} /></span>
+                  <span className="selector_result_type">Search: </span>
+                  <span className="matched_term">{this.state.searchValue}</span></div>
+               </li>
+              
+            
+             
+            {this.state.topics.filter(searchingTopics(this.state.searchValue)).map(topic =>
+             <Link to = {`/topic/${topic.name}`}>
+               <li className="selector_result tribe" id="__w2_w4N3kpSm1_result_5">
+                
+                  <div data-clog-trigger="impression" data-clog-metadata="{&quot;action_log_target&quot;: {&quot;type&quot;: 39, &quot;hash&quot;: &quot;1140612010|tribe|194|-1718384057|0&quot;}}" data-clog-event-type="ActionLogImpression" id="__w2_w4N3kpSm7_actionable" data-clog-processed={1}>
+
+                
+                     <span className="image_wrapper">
+                        <div className="hover_menu hidden show_nub" id="__w2_w4N3kpSm29_menu">
+                           <div className="hover_menu_contents" id="__w2_w4N3kpSm29_menu_contents"> </div>
                         </div>
+                       
+                        <span className="photo_tooltip u-inline" id="__w2_w4N3kpSm29_link">
+                        <img className="u-inline-block u-border-radius--ellipse tribe-blue TribeIconMedium TribeIcon" src="https://qph.fs.quoracdn.net/main-thumb-ti-194-100-whjmgyflzmfmeqmrdtiieuqjcbkifbps.jpeg" />
+                        </span>
+                     </span>
+                    
+
+                     <span className="rendered_qtext"> {topic.name} </span> 
+                     <div className="u-inline-block u-margin-left--xs">
+                     
+                     </div>
+                  </div>
+               </li>
+               </Link>
+               )}
+
+
+               <li className="selector_result ask_new_question" id="__w2_w4N3kpSm1_result_6">
+                  <div data-clog-trigger="impression" data-clog-metadata="{&quot;action_log_target&quot;: {&quot;type&quot;: 39, &quot;hash&quot;: null}}" data-clog-event-type="ActionLogImpression" id="__w2_w4N3kpSm8_actionable" data-clog-processed={1}><a className="LookupBarAskQuestionModalButton AskQuestionButton" href="#" id="__w2_w4N3kpSm24_button">Add New Question</a></div>
+               </li>
+            </ul>
+         </div>
+      </div>
+   </div>
+</div>
+
+: null }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         <div id="__w2_wGp3JsZF12_empty_input_prompt" />
                       </div>
                     </div>
@@ -1277,7 +1373,8 @@ class Navbar extends Component {
                                     <li>
                                       <Link
                                         className="hover_menu_item"
-                                        to = "/profile"
+                                        // to = `{/profile/" + {this.props.user.auth.email}``
+                                        to = {`/profile/` + this.props.auth.user.email}
                                       >
                                         Profile
                                       </Link>
