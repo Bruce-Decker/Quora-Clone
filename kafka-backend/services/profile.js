@@ -24,6 +24,10 @@ exports.profileService = function profileService(info, callback) {
     case "getImage":
       getImage(info, callback);
       break;
+    case "getProfileViews":
+    getProfileViews(info, callback);
+      break;
+      
   }
 };
 
@@ -190,4 +194,22 @@ function getImage(info, callback) {
       callback(err, "error");
     }
   });
+}
+
+function getProfileViews(info, callback) {
+  var email = info.message.email
+  Profile.findOne({email: email}, function(err, docs) {
+      
+      if (docs) {
+          console.log(docs.views);
+          let data = {
+            email:email,
+            count: docs.views.length
+          }   
+          callback(null, data);
+      } else {
+          console.log(err);
+          callback(err,"error");
+      }
+  })
 }

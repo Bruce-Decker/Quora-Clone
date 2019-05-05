@@ -51,6 +51,7 @@ const QuestionSchema = new Schema({
           type: String
         }
       ],
+      views: [{type: String}],
       bookmark: [{ type: String }],
       image: {
         type: String
