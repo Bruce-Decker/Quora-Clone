@@ -45,7 +45,7 @@ router.get("/viewProfile", function(req, res) {
   );
 });
 
-router.get("/getProfileViews", function(req, res) {
+router.get("/views", function(req, res) {
   kafka.make_request(
     "profile",
     { method: "getProfileViews", message: req.query },
