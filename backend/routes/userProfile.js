@@ -97,4 +97,25 @@ router.post("/upload", function(req, res) {
   });
 });
 
+router.get("/image", function(req, res) {
+  console.log("get image");
+  kafka.make_request(
+    "profile",
+    { method: "getImage", message: req.query },
+    function(error, result) {
+      if (error) {
+        console.log(error);
+        res.status(400).json({ msg: "cannot get image url" });
+      } else {
+        if (result.errors) {
+          return res.status(400).json(result.errors);
+        } else {
+          console.log(result);
+          res.send(result);
+        }
+      }
+    }
+  );
+});
+
 module.exports = router;
