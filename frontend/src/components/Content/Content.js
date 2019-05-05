@@ -193,9 +193,11 @@ class Content extends Component {
                                             <div className="PagedListItem UserContentListItem">
                                             <span className="title">
                                             <span id="wzr1YmKw6">
-                                            <a className="question_link" href="/unanswered/Trends-in-Silicon-Valley" target="_top" action_mousedown="QuestionLinkClickthrough" id="__w2_wzr1YmKw7_link">
+                                            <Link className="question_link" to = {`/question/${question.question_id}`} target="_top" action_mousedown="QuestionLinkClickthrough" id="__w2_wzr1YmKw7_link">
                                             <span className="ui_content_title unstyled_ui_title">
-                                            <span className="ui_qtext_rendered_qtext">{question.question}</span></span></a></span></span>
+                                            <span className="ui_qtext_rendered_qtext">{question.question}</span></span>
+                                            </Link>
+                                            </span></span>
                                             <div className="metadata">{question.time}</div></div>  
                            </div>
                               )
