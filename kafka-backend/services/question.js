@@ -29,16 +29,16 @@ exports.questionService = function questionService(info, callback) {
 };
 
 function getQuestion(info, callback) {
-   var question_id = info.question_id
-   Question.findOne({question_id, question_id}, function(err, docs) {
+  var question_id = info.question_id;
+  Question.findOne({ question_id: question_id }, function(err, docs) {
     if (docs) {
-      console.log(docs)
+      console.log(docs);
       callback(null, docs);
-  } else {
-      console.log(err)
-      callback(err,"error");
-  }
-   })
+    } else {
+      console.log(err);
+      callback(err, "error");
+    }
+  });
 }
 
 function postQuestion(info, callback) {
@@ -124,7 +124,7 @@ function userQuestion(info, callback) {
 }
 
 function dashboardQuestion(info, callback) {
-  console.log(info);  
+  console.log(info);
   var email = info.message.email;
   let projection = {
     answers: 0,
@@ -149,19 +149,19 @@ function dashboardQuestion(info, callback) {
       //     return callback(null, res);
 
       //   }
-        Question.paginate(
-           { topics: { $in: userTopics.topics } },
-          options,
-          (err, questions) => {
-            if (err) {
-              callback(err, null);
-            } else {
-              callback(null, questions);
-             // cache.set({ keyObj: searchObj, value: questions });
-            }
+      Question.paginate(
+        { topics: { $in: userTopics.topics } },
+        options,
+        (err, questions) => {
+          if (err) {
+            callback(err, null);
+          } else {
+            callback(null, questions);
+            // cache.set({ keyObj: searchObj, value: questions });
           }
-        );
-     // });
+        }
+      );
+      // });
     } else {
       Question.paginate({}, options, (err, questions) => {
         if (err) {

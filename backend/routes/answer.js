@@ -115,13 +115,9 @@ router.post("/comment", function(req, res) {
     function(error, result) {
       if (error) {
         console.log(error);
-        res.status(400).json({ msg: "cannot question" });
+        res.status(400).json({ msg: "cannot comment backend" });
       } else {
-        if (result.errors) {
-          return res.status(400).json(result.errors);
-        } else {
-          res.send(result);
-        }
+        res.send(result);
       }
     }
   );
@@ -149,7 +145,7 @@ router.put("/", function(req, res) {
     function(error, result) {
       if (error) {
         console.log(error);
-        res.status(400).json({ msg: "cannot login user" });
+        res.status(400).json({ msg: "cannot kafka update Answer" });
       } else {
         res.send(result);
       }
