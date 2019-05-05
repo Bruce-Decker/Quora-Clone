@@ -1710,12 +1710,20 @@ class Profile extends Component {
                            </div>
                         </div>
                   </h3>
-                  <a className="add_experience_cta" href="#" id="__w2_wYSVVNEt48_modal_link"><div className="add_icon_wrapper"><div className="ui_icon_badge u-relative u-flex-none u-flex u-flex-align--center u-flex-justify--center ui_icon_badge_size--fluid u-border-radius--ellipse ui_icon_badge_color--blue"><span className="ui_icon ui_icon_color--white ui_icon_outline--filled ui_icon_type--shape u-flex-align-self--center" aria-hidden="true"><svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+                  
+
+                  <Link className="add_experience_cta" id="__w2_wYSVVNEt48_modal_link" onClick = {this.addTopicModal}><div className="add_icon_wrapper"><div className="ui_icon_badge u-relative u-flex-none u-flex u-flex-align--center u-flex-justify--center ui_icon_badge_size--fluid u-border-radius--ellipse ui_icon_badge_color--blue"><span className="ui_icon ui_icon_color--white ui_icon_outline--filled ui_icon_type--shape u-flex-align-self--center" aria-hidden="true"><svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
                   <g className="icon_svg-stroke" stroke="#666" strokeWidth="1.5" fill="none" fillRule="evenodd" strokeLinecap="round">
                   <path d="M4.5,12 L19.5,12" />
                   <path d="M12,4.5 L12,19.5" />
                   </g>
-                  </svg></span></div></div>What topics do you know about?</a></div>
+                  </svg></span></div></div>What topics do you know about?
+                  </Link>
+
+                  
+                  
+                  
+                  </div>
                </div>
             </div>
          </div>
