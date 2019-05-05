@@ -51,7 +51,7 @@ app.use("/", authRouter);
 app.use("/profile", profileRouter);
 app.use("/topic", topicRouter);
 app.use("/message", messageRouter);
-app.use("/messages", messagesRouter);
+
 
 app.use("/question", questionRouter);
 app.use("/answer", answerRouter);
