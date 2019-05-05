@@ -37,11 +37,21 @@ var ProfileSchema = new Schema({
   },
   topics: [{ type: String }],
   time: {
-    type: String
+    type: Date
   },
   views: [
     {
       time: { type: String }
+    }
+  ],
+  followers: [
+    {
+      email: {
+        type: String
+      },
+      time: {
+        type: Date
+      }
     }
   ],
   message: [
@@ -63,7 +73,7 @@ var ProfileSchema = new Schema({
         required: true
       },
       time: {
-        type: String,
+        type: Date,
         required: true
       },
       isDeleted: {

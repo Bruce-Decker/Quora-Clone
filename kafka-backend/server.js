@@ -4,6 +4,7 @@ var mongoose = require("mongoose");
 const db_url = require("./config/keys").mlab_url;
 const url = process.env.MONGODB_URI || db_url;
 const url2 = "mongodb+srv://admin:admin@quoracluster-v64on.mongodb.net/quoradb";
+//const url2 = "mongodb+srv://admin:admin@quora-aj5tb.mongodb.net/quoradb";
 mongoose
   .connect(url2, { useNewUrlParser: true })
   .then(() => console.log("Mongo Database is alive"))
@@ -15,10 +16,10 @@ var profile = require("./services/profile");
 var topic = require("./services/topic");
 var follow = require("./services/follow");
 var question = require("./services/question");
-var inbox = require("./services/inbox");
 var content = require("./services/content");
-var messages = require("./services/message");
+var message = require("./services/message");
 var answer = require("./services/answer");
+var messages = require("./services/messages");
 
 function handleTopicRequest(topic_name, fname) {
   //var topic_name = 'root_topic';
@@ -33,6 +34,24 @@ function handleTopicRequest(topic_name, fname) {
     switch (topic_name) {
       case "auth":
         auth.authService(data.data, function(err, res) {
+          response(data, res, producer);
+          return;
+        });
+        break;
+      case "content":
+        content.contentService(data.data, function(err, res) {
+          response(data, res, producer);
+          return;
+        });
+        break;
+      case "filteredContent":
+        content.contentService(data.data, function(err, res) {
+          response(data, res, producer);
+          return;
+        });
+        break;
+      case "follow":
+        follow.followService(data.data, function(err, res) {
           response(data, res, producer);
           return;
         });
@@ -56,7 +75,13 @@ function handleTopicRequest(topic_name, fname) {
         });
         break;
       case "message":
-        messages.messageService(data.data, function(err, res) {
+        message.messageService(data.data, function(err, res) {
+          response(data, res, producer);
+          return;
+        });
+        break;
+      case "messages":
+        messages.messagesService(data.data, function(err, res) {
           response(data, res, producer);
           return;
         });
@@ -95,6 +120,6 @@ handleTopicRequest("topic", topic);
 handleTopicRequest("follow", follow);
 handleTopicRequest("question", question);
 handleTopicRequest("answer", answer);
-handleTopicRequest("inbox", inbox);
 handleTopicRequest("content", content);
-handleTopicRequest("message", messages);
+handleTopicRequest("message", message);
+handleTopicRequest("messages", messages);

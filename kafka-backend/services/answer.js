@@ -125,27 +125,42 @@ function downvoteAnswer(info, callback) {
   });
 }
 
-function addComment(info, callback) {
+function addComment(info, callback){
+  console.log(info)
   var email = info.message.email;
-  var answer_id = info.message.answer_id;
+  var answerid = info.message.answer_id;
   var comment = info.message.comment;
+  var time = new Date().toLocaleString();;
   var data = {
     email,
-    answer_id,
-    comment
+    comment,
+    time
   };
-
-  Answer.findOneAndUpdate(
-    { answer_id: answer_id },
-    { $push: { comments: data } },
-    (error, result) => {
-      if (error) {
-        callback(error, "error");
-      } else {
-        callback(null, data);
-      }
+  Question.findOne({ "answers.answer_id": answerid }, function(err, question) {
+    console.log(question);
+    console.log(err);
+    if (question) {
+      let currentAnswer = question.answers.find(
+        answer => answer.answer_id === answerid
+      );
+      let comments = currentAnswer.comments || [];
+      comments.push(data);
+      console.log(question);
+      question.save().then(
+        doc => {
+          console.log("comment added.", doc);
+          callback(null, doc);
+        },
+        err => {
+          console.log("Unable to add comment.", err);
+          callback(err, null);
+        }
+      );
+    } else {
+      console.log(err);
+      callback(err, "error");
     }
-  );
+  });
 }
 
 function deleteComment(info, callback) {

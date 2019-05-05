@@ -1,4 +1,4 @@
-var Model = require("../models/UserFollowers");
+var Model = require("../models/Profile");
 
 exports.followService = function followService(info, callback) {
   switch (info.method) {
@@ -8,16 +8,22 @@ exports.followService = function followService(info, callback) {
     case "followee":
       userFollowing(info, callback);
       break;
+    case "follow":
+      followUser(info, callback);
+      break;
+    case "unfollow":
+      unfollowUser(info, callback);
+      break;
   }
 };
 
 function userFollowers(info, callback) {
   console.log("Inside Kafka Backend userFollowers");
-  console.log("Message body: ", message.body);
 
   var email = info.message.email;
+  console.log("email:", email);
 
-  Model.find({ leader_email: email }, (err, result) => {
+  Model.find({ email: email }, { "followers.email": 1 }, (err, result) => {
     if (err) {
       console.log("Error in Retrieving user followers", err);
       callback(err, null);
@@ -33,11 +39,10 @@ function userFollowers(info, callback) {
 
 function userFollowing(info, callback) {
   console.log("Inside Kafka Backend userFollowing");
-  console.log("Message body: ", message.body);
 
   var email = info.message.email;
 
-  Model.find({ follower_email: email }, (err, result) => {
+  Model.find({ "followers.email": email }, { email: 1 }, (err, result) => {
     if (err) {
       console.log("Error in Retrieving user following", err);
       callback(err, null);
@@ -49,4 +54,43 @@ function userFollowing(info, callback) {
       callback(null, result);
     }
   });
+}
+
+function followUser(info, callback) {
+  console.log("info.message", info.message);
+  var data = {};
+  data.email = info.message.follower_email;
+  var leader_email = info.message.leader_email;
+  data.time = new Date();
+
+  Model.findOneAndUpdate(
+    { email: leader_email },
+    { $push: { followers: data } },
+    (error, result) => {
+      if (error) {
+        callback(error, "error");
+      } else {
+        callback(null, result);
+      }
+    }
+  );
+}
+
+function unfollowUser(info, callback) {
+  console.log("info.message", info.message);
+  var follower_email = info.message.follower_email;
+  var leader_email = info.message.leader_email;
+
+  Model.findOneAndUpdate(
+    { email: leader_email },
+    { $pull: { followers: { email: follower_email } } },
+    function(error, result) {
+      if (error) {
+        callback(error, "error");
+      } else {
+        console.log(result);
+        callback(null, result);
+      }
+    }
+  );
 }

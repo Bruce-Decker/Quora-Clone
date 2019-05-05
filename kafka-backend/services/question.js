@@ -11,7 +11,8 @@ exports.questionService = function questionService(info, callback) {
       userQuestion(info, callback);
       break;
     case "followQuestion":
-      folowQuestion(info, callback);
+      followQuestion(info, callback);
+      break;
     case "dashboardQuestion":
       dashboardQuestion(info, callback);
       break;
@@ -123,6 +124,7 @@ function userQuestion(info, callback) {
 }
 
 function dashboardQuestion(info, callback) {
+  console.log(info);  
   var email = info.message.email;
   let projection = {
     answers: 0,
@@ -172,7 +174,7 @@ function dashboardQuestion(info, callback) {
   });
 }
 
-function folowQuestion(info, callback) {
+function followQuestion(info, callback) {
   console.log(`info.body`);
   console.log(info.body);
   var email = info.body.email;
@@ -183,7 +185,7 @@ function folowQuestion(info, callback) {
 
   Question.findOneAndUpdate(
     { question_id: question_id },
-    { $push: { followers: data } },
+    { $push: { followers: email } },
     (error, result) => {
       if (error) {
         callback(error, "error");
@@ -205,7 +207,7 @@ function unfollowQuestion(info, callback) {
 
   Question.findOneAndUpdate(
     { question_id: question_id },
-    { $pull: { followers: data } },
+    { $pull: { followers: email } },
     function(error, result) {
       if (error) {
         callback(error, "error");

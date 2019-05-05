@@ -46,11 +46,11 @@ class Answer extends Component {
     });
   };
 
-  componentWillMount() {
-    // axios.get("/answer", { params: { answer_id: "153251" } }).then(res => {
-    //   document.getElementById("editable").outerHTML = res.data.answerContent;
-    // });
-  }
+  // componentWillMount() {
+  //   axios.get("/answer", { params: { answer_id: "985865" } }).then(res => {
+  //     document.getElementById("editable").outerHTML = res.data.answerContent;
+  //   });
+  // }
 
   answerHandler = e => {
     this.setState({

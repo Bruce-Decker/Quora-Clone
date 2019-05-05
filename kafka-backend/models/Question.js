@@ -21,6 +21,9 @@ const QuestionSchema = new Schema({
     {
       email: {
         type: String
+      },
+      time: {
+        type: Date
       }
     }
   ],
@@ -64,17 +67,17 @@ const QuestionSchema = new Schema({
             type: String
           },
           time: {
-            type: String
+            type: Date
           }
         }
       ],
       answered_time: {
-        type: String
+        type: Date
       }
     }
   ],
   postedDate: {
-    type: String
+    type: Date
   }
 });
 

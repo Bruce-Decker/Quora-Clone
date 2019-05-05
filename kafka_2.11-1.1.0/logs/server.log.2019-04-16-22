@@ -1,0 +1,4 @@
+[2019-04-16 22:14:05,287] INFO Expiring session 0x16a29733470000c, timeout of 30000ms exceeded (org.apache.zookeeper.server.ZooKeeperServer)
+[2019-04-16 22:14:05,289] INFO Expiring session 0x16a297334700011, timeout of 30000ms exceeded (org.apache.zookeeper.server.ZooKeeperServer)
+[2019-04-16 22:14:05,289] INFO Processed session termination for sessionid: 0x16a29733470000c (org.apache.zookeeper.server.PrepRequestProcessor)
+[2019-04-16 22:14:05,290] INFO Processed session termination for sessionid: 0x16a297334700011 (org.apache.zookeeper.server.PrepRequestProcessor)

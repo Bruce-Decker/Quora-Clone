@@ -1,8 +1,9 @@
 var AnswerModel = require("../models/Answer");
 //var BookmarkModel = require("../models/Bookmark");
-var ProfileModel = require("../models/Profile");
+//var ProfileModel = require("../models/Profile");
 var QuestionModel = require("../models/Question");
 var followersModel = require("../models/UserFollowers");
+var sortBy = require("lodash.sortby");
 
 exports.contentService = function contentService(info, callback) {
   switch (info.method) {
@@ -15,69 +16,251 @@ exports.contentService = function contentService(info, callback) {
   }
 };
 
-function content(info, callback) {
+function contentAll(info, callback) {
   var response = {};
-  var email = info.message.email;
+  var answerAns = [];
 
-  console.log(info);
-  AnswerModel.find(
-    { owner: email },
-    { sort: [["answered_time", "desc"]] },
+  var email = info.message.email;
+  var order = Number(info.message.order ? info.message.order : -1);
+  var start, end;
+  var year = info.message.year;
+
+  if (year) {
+    start = new Date(`${year}-01-01`);
+    end = new Date(`${Number(year) + 1}-01-01`);
+  } else {
+    start = new Date(`2000-01-01`);
+    end = new Date(`2030-01-01`);
+  }
+  console.log("start=", start, "end=", end);
+
+  console.log("info", info);
+
+  /*   QuestionModel.aggregate(
+    [
+      { $unwind: "$followers" },
+      { $unwind: "$answers" },
+
+      {
+        $match: {
+          $or: [
+            {
+              "followers.email": email
+            },
+            {
+              owner: email
+            },
+            {
+              "answers.owner": email
+            }
+          ]
+        }
+      },
+
+      { $sort: { "followers.time": order } }
+      //{ $project: { question: 1, "followers.time": 1, question_id: 1 } }
+    ],
+    //{ sort: { "followers.time": order } },
     function(err, docs) {
       if (docs) {
         console.log(docs);
-        response.Answer = docs;
+        callback(null, docs);
       } else {
         console.log(err);
-        callback(err, " Answer error");
+        callback(err, " Question Followed error");
       }
     }
-  );
-
+  ); */
   QuestionModel.find(
-    { owner: email },
-    { sort: [["posted_date", "desc"]] },
+    {
+      $and: [
+        {
+          owner: email
+        },
+
+        {
+          postedDate: { $gte: start }
+        },
+        {
+          postedDate: { $lt: end }
+        }
+      ]
+    },
+    { question_id: 1, question: 1, postedDate: 1 },
+    { sort: { postedDate: order } },
+
     function(err, docs) {
       if (docs) {
-        console.log(docs);
-        response.Email = docs;
+        console.log("docs", docs);
+        docs.map(element => {
+          let temp = {};
+          temp.time = element.postedDate;
+          temp.question_id = element.question_id;
+          temp.type = "QuestionAsked";
+          temp.question = element.question;
+          answerAns.push(temp);
+        });
+        console.log("answersAns", answerAns);
+
+        response.QuestionsAsked = docs;
+        QuestionModel.aggregate(
+          [
+            { $unwind: "$answers" },
+            {
+              $match: {
+                $and: [
+                  {
+                    "answers.owner": email
+                  },
+
+                  {
+                    "answers.answered_time": { $gte: start }
+                  },
+                  {
+                    "answers.answered_time": { $lt: end }
+                  }
+                ]
+              }
+            },
+
+            { $sort: { "answers.answered_time": order } },
+            {
+              $project: {
+                question: 1,
+                "answers.answered_time": 1,
+                question_id: 1
+              }
+            }
+          ],
+          function(err, docs) {
+            if (docs) {
+              docs.map(element => {
+                let temp = {};
+                temp.time = element.answers.answered_time;
+                temp.question_id = element.question_id;
+                temp.type = "Answer";
+                temp.question = element.question;
+                answerAns.push(temp);
+              });
+              response.Answers = docs;
+
+              QuestionModel.aggregate(
+                [
+                  { $unwind: "$followers" },
+                  {
+                    $match: {
+                      $and: [
+                        {
+                          "followers.email": email
+                        },
+                        {
+                          "followers.time": { $gte: start }
+                        },
+                        {
+                          "followers.time": { $lt: end }
+                        }
+                      ]
+                    }
+                  },
+
+                  { $sort: { "followers.time": order } },
+                  {
+                    $project: {
+                      question: 1,
+                      "followers.time": 1,
+                      question_id: 1
+                    }
+                  }
+                ],
+                function(err, docs) {
+                  if (docs) {
+                    console.log(docs);
+                    response.QuestionsFollowed = docs;
+                    docs.map(element => {
+                      let temp = {};
+                      temp.time = element.followers.time;
+                      temp.question_id = element.question_id;
+                      temp.type = "QuestionFollowed";
+                      temp.question = element.question;
+                      answerAns.push(temp);
+                    });
+                    console.log("answersAns", answerAns);
+                    if (order == 1) {
+                      callback(null, sortBy(answerAns, ["time"]));
+                    } else {
+                      callback(null, sortBy(answerAns, ["time"]).reverse());
+                    }
+                  } else {
+                    console.log(err);
+                    callback(err, " Question followed error");
+                  }
+                }
+              );
+            } else {
+              console.log(err);
+              callback(err, " Answered error");
+            }
+          }
+        );
       } else {
         console.log(err);
         callback(err, " Question error");
       }
     }
   );
-
-  followersModel.find({ follower_email: email }, function(err, docs) {
-    if (docs) {
-      console.log(docs);
-      response.Following = docs;
-    } else {
-      console.log(err);
-      callback(err, " Followers error");
-    }
-  });
-  callback(null, response);
 }
 
-//API: /content/sort?email=<email>activityType=<activityType>&year=<year>&order=<order> (Get request)
-
-function filteredContent(info, callback) {
-  var response = {};
+function content(info, callback) {
+  var answerAns = [];
+  console.log("filteredContent in Kafka");
   var email = info.message.email;
   var activityType = info.message.activityType;
   var year = info.message.year;
-  var order = info.message.order;
+  console.log("year", year);
+  var order = Number(info.message.order ? info.message.order : -1);
+  console.log("order", order);
+
+  var start, end;
+  if (year) {
+    start = new Date(`${year}-01-01`);
+    end = new Date(`${Number(year) + 1}-01-01`);
+  } else {
+    start = new Date(`2000-01-01`);
+    end = new Date(`2030-01-01`);
+  }
+  console.log("start=", start, "end=", end);
   console.log(info);
   switch (activityType) {
     case "QuestionAsked":
       QuestionModel.find(
-        { postDate: year, owner: email },
-        { sort: [["postedDate", order]] },
+        {
+          $and: [
+            {
+              owner: email
+            },
+
+            {
+              postedDate: { $gte: start }
+            },
+            {
+              postedDate: { $lt: end }
+            }
+          ]
+        },
+        { question_id: 1, question: 1, postedDate: 1 },
+        { sort: { postedDate: order } },
         function(err, docs) {
           if (docs) {
+            docs.map(element => {
+              let temp = {};
+              temp.time = element.postedDate;
+              temp.question_id = element.question_id;
+              temp.type = "QuestionAsked";
+              temp.question = element.question;
+              answerAns.push(temp);
+            });
             console.log(docs);
-            callback(null, docs);
+            callback(null, answerAns);
           } else {
             console.log(err);
             callback(err, " Question Asked error");
@@ -86,13 +269,54 @@ function filteredContent(info, callback) {
       );
       break;
     case "QuestionFollowed":
-      QuestionModel.find(
-        { postDate: year, "followers.email": email },
-        { sort: [["followers.time", order]] },
+      /* QuestionModel.find(
+        {
+          followers: {
+            $elemMatch: { email: email, time: { $gte: start, $lte: end } }
+          }
+        },
+        {
+          question_id: 1,
+          question: 1,
+          followers: {
+            $elemMatch: { email: email, time: { $gte: start, $lte: end } }
+          }
+        }, */
+      QuestionModel.aggregate(
+        [
+          { $unwind: "$followers" },
+          {
+            $match: {
+              $and: [
+                {
+                  "followers.email": email
+                },
+                {
+                  "followers.time": { $gte: start }
+                },
+                {
+                  "followers.time": { $lt: end }
+                }
+              ]
+            }
+          },
+
+          // { $sort: { "followers.time": order } },
+          { $project: { question: 1, "followers.time": 1, question_id: 1 } }
+        ],
+        //{ sort: { "followers.time": order } },
         function(err, docs) {
           if (docs) {
             console.log(docs);
-            callback(null, docs);
+            docs.map(element => {
+              let temp = {};
+              temp.time = element.followers.time;
+              temp.question_id = element.question_id;
+              temp.type = "QuestionFollowed";
+              temp.question = element.question;
+              answerAns.push(temp);
+            });
+            callback(null, answerAns);
           } else {
             console.log(err);
             callback(err, " Question Followed error");
@@ -101,13 +325,72 @@ function filteredContent(info, callback) {
       );
       break;
     case "Answers":
-      AnswerModel.find(
-        { postDate: year, owner: email },
-        { sort: [["answered_time", order]] },
+      /*       QuestionModel.find(
+        {
+          answers: {
+            $elemMatch: {
+              owner: email,
+              answered_time: { $gte: start, $lte: end }
+            }
+          }
+        },
+        {
+          question_id: 1,
+          question: 1,
+          answers: {
+            $elemMatch: {
+              owner: email,
+              answered_time: { $gte: start, $lte: end }
+            }
+          },
+          "answers.answered_time": 1,
+          "answers.answer_id": 1,
+          "answers.answerContent": 1,
+          "answers.owner": 1,
+          "answers._id": 1
+        },
+        { sort: { "answers.answered_time": order } }, */
+      QuestionModel.aggregate(
+        [
+          { $unwind: "$answers" },
+          {
+            $match: {
+              $and: [
+                {
+                  "answers.owner": email
+                },
+
+                {
+                  "answers.answered_time": { $gte: start }
+                },
+                {
+                  "answers.answered_time": { $lt: end }
+                }
+              ]
+            }
+          },
+
+          { $sort: { "answers.answered_time": order } },
+          {
+            $project: {
+              question: 1,
+              "answers.answered_time": 1,
+              question_id: 1
+            }
+          }
+        ],
         function(err, docs) {
           if (docs) {
+            docs.map(element => {
+              let temp = {};
+              temp.time = element.answers.answered_time;
+              temp.question_id = element.question_id;
+              temp.type = "Answer";
+              temp.question = element.question;
+              answerAns.push(temp);
+            });
             console.log(docs);
-            callback(null, docs);
+            callback(null, answerAns);
           } else {
             console.log(err);
             callback(err, " Answers error");
@@ -115,7 +398,10 @@ function filteredContent(info, callback) {
         }
       );
       break;
+    case "All":
+      contentAll(info, callback);
+      break;
     default:
-      content(info, callback);
+      contentAll(info, callback);
   }
 }
