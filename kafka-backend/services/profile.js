@@ -12,7 +12,6 @@ exports.profileService = function profileService(info, callback) {
     case "deleteProfile":
       deleteProfile(info, callback);
       break;
-<<<<<<< HEAD
     case "activate":
       activate(info, callback);
       break;
@@ -21,10 +20,9 @@ exports.profileService = function profileService(info, callback) {
       break;
     case "isActive":
       isActive(info, callback);
-=======
+      break;
     case "getImage":
       getImage(info, callback);
->>>>>>> 135a843d437ea81ed2129e7c6cbca65e3c7b08ee
       break;
   }
 };
@@ -175,6 +173,10 @@ function isActive(info, callback) {
     if (docs) {
       console.log("is active:", docs);
       callback(null, docs);
+    }
+  })
+}
+
 function getImage(info, callback) {
   var email = info.message.email;
   Profile.find({ email: email }, function(err, docs) {
