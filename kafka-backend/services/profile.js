@@ -12,6 +12,18 @@ exports.profileService = function profileService(info, callback) {
     case "deleteProfile":
       deleteProfile(info, callback);
       break;
+    case "activate":
+      activate(info, callback);
+      break;
+    case "deactivate":
+      deactivate(info, callback);
+      break;
+    case "isActive":
+      isActive(info, callback);
+      break;
+    case "getImage":
+      getImage(info, callback);
+      break;
   }
 };
 
@@ -70,10 +82,10 @@ function createProfile(info, callback) {
 
 function viewProfile(info, callback) {
   var email = info.message.email;
-  console.log(info);
+  console.log("view profile", info);
   Profile.find({ email: email }, function(err, docs) {
     if (docs) {
-      console.log(docs);
+      console.log("view profile", docs);
       updateProfileViews(email);
       callback(null, docs);
     } else {
@@ -118,6 +130,64 @@ function deleteProfile(info, callback) {
         }
       });
       callback(null, "success");
+    }
+  });
+}
+
+function deactivate(info, callback) {
+  var email = info.message.email;
+
+  Profile.update({ email: email }, { $set: { isActive: false } }, function(
+    err,
+    docs
+  ) {
+    if (err) {
+      //res.send("Fail")
+      callback(err, "error");
+    } else {
+      callback(null, docs);
+    }
+  });
+}
+
+function activate(info, callback) {
+  var email = info.message.email;
+
+  Profile.update({ email: email }, { $set: { isActive: true } }, function(
+    err,
+    docs
+  ) {
+    if (err) {
+      //res.send("Fail")
+      callback(err, "error");
+    } else {
+      callback(null, docs);
+    }
+  });
+}
+
+function isActive(info, callback) {
+  var email = info.message.email;
+  console.log("view profile", info);
+  Profile.find({ email: email }, { isActive: 1, _id: 0 }, function(err, docs) {
+    if (docs) {
+      console.log("is active:", docs);
+      callback(null, docs);
+    }
+  });
+}
+
+function getImage(info, callback) {
+  var email = info.message.email;
+  Profile.find({ email: email }, function(err, docs) {
+    if (docs) {
+      docs = docs[0];
+
+      console.log(docs);
+      callback(null, docs.profile_image);
+    } else {
+      console.log(err);
+      callback(err, "error");
     }
   });
 }

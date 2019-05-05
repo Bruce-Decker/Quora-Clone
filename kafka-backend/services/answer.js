@@ -129,17 +129,19 @@ function addComment(info, callback) {
   console.log(info);
   var data = {};
   data.email = info.message.email;
-  var answerid = info.message.answer_id;
+  var answer_id = info.message.answer_id;
+  var question_id = info.message.question_id;
   data.comment = info.message.comment;
+  data.name = info.message.name;
   data.time = new Date();
-  console.log("data", data, "answerid", answerid);
+  console.log("data", data, "answer_id", answer_id);
 
-  /*   Question.findOne({ "answers.answer_id": answerid }, function(err, question) {
+  /*   Question.findOne({ "answers.answer_id": answer_id }, function(err, question) {
     console.log(question);
     console.log(err);
     if (question) {
       let currentAnswer = question.answers.find(
-        answer => answer.answer_id === answerid
+        answer => answer.answer_id === answer_id
       );
       let comments = currentAnswer.comments || [];
       comments.push(data);
@@ -160,18 +162,21 @@ function addComment(info, callback) {
     }
   }); */
   Question.findOneAndUpdate(
-    { "answers.answer_id": answerid },
+    {
+      $and: [{ question_id: question_id }, { "answers.answer_id": answer_id }]
+    },
     {
       $push: {
         "answers.$[element].comments": {
           email: data.email,
+          name: data.name,
           comment: data.comment,
           time: data.time
         }
       }
     },
     {
-      arrayFilters: [{ "element.answer_id": answerid }]
+      arrayFilters: [{ "element.answer_id": answer_id }]
     },
     function(err, result) {
       if (result) {

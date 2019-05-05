@@ -74,6 +74,15 @@ function handleTopicRequest(topic_name, fname) {
           return;
         });
         break;
+<<<<<<< HEAD
+=======
+      case "message":
+        messages.messagesService(data.data, function(err, res) {
+          response(data, res, producer);
+          return;
+        });
+        break;
+>>>>>>> 4f6cec827669a2acdd0e1522bf939eb50048eee2
       case "messages":
         messages.messagesService(data.data, function(err, res) {
           response(data, res, producer);

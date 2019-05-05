@@ -6,7 +6,9 @@ const rand = uniqueRandom(1, 1000000);
 
 const QuestionSchema = new Schema({
   question_id: {
-    type: String
+    type: String,
+    required: true,
+    default: rand
   },
   question: {
     type: String
@@ -59,6 +61,9 @@ const QuestionSchema = new Schema({
       comments: [
         {
           email: {
+            type: String
+          },
+          name: {
             type: String
           },
           comment: {

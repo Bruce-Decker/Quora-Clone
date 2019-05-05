@@ -50,20 +50,25 @@ class Question extends Component {
     }
 
     onClick = (email, answer_id) => {
+     
         var comment = this.state.comment
         var data = {
             email,
             answer_id,
-            comment
+            comment,
+            question_id: this.props.match.params.question_id
         }
+       
 
         axios.post(rooturl + '/answer/comment', data)
            .then(res => {
-               console.log(res.data)
+              
                window.location.reload()
            })
            .catch(err => console.log(err))
-          }
+     
+         
+      }
          
              
     
@@ -1194,16 +1199,45 @@ class Question extends Component {
              <div className="comment_wrapper last comment_to_append" id="__w2_wR5L77UZ12_comment">
              <div id="wR5L77UZ20">
              <div className="comment threaded_comment" id="__w2_wR5L77UZ21_comment_inner">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+      {answer.comments.map(comment =>
+            
              <div className="comment_contents">
              <div>
                 <div className="ui_layout_photo_text u-flex ui_layout_size--tiny">
                    <div className="ui_layout_photo_wrapper u-flex-none">
                       <div className="ui_layout_photo u-relative">
-                         <div className="u-flex-inline" id="wR5L77UZ27"><a className="u-flex-inline" href="/profile/Bruce-Decker-12"><span className="ui_avatar u-flex-inline ui_avatar--medium u-flex-none"><img className="ui_avatar_photo ui_avatar--border-circular" src="https://qph.fs.quoracdn.net/main-thumb-782622776-100-izcdaymwbtomzguzorfwyoknxfqoqixc.jpeg" alt="Bruce Decker" /></span></a></div>
+                         <div className="u-flex-inline" id="wR5L77UZ27"><a className="u-flex-inline" href="/profile/Bruce-Decker-12"><span className="ui_avatar u-flex-inline ui_avatar--medium u-flex-none">
+{/*                          
+                         <img className="ui_avatar_photo ui_avatar--border-circular" src="https://qph.fs.quoracdn.net/main-thumb-782622776-100-izcdaymwbtomzguzorfwyoknxfqoqixc.jpeg" alt="Bruce Decker" />
+                          */}
+                     
+                         </span></a></div>
                       </div>
                    </div>
+                    
                    <div className="ui_layout_text u-flex-auto u-width--100 u-flex-align-self--center">
-                      <span className="author_name"><span id="wR5L77UZ29"><span id="__w2_wR5L77UZ30_link"><a className="user" href="/profile/Bruce-Decker-12" action_mousedown="UserLinkClickthrough" id="__w2_wR5L77UZ30_name_link">Bruce Decker</a></span></span></span>
+                      <span className="author_name"><span id="wR5L77UZ29"><span id="__w2_wR5L77UZ30_link">
+                      
+                      
+                      
+                       <p className="user" href="/profile/Bruce-Decker-12" action_mousedown="UserLinkClickthrough" id="__w2_wR5L77UZ30_name_link">{comment.name} {comment.email}</p>
+
+                      
+                      </span></span></span>
+                      
+                     
+                     
                       <span className="comment_metadata">
                          <span id="wR5L77UZ31">
                            
@@ -1218,7 +1252,7 @@ class Question extends Component {
                    <div id="__w2_wR5L77UZ36_expanded">
                       <div className="ui_qtext_expanded">
                          <span className="ui_qtext_rendered_qtext">
-                            <p className="ui_qtext_para u-ltr u-text-align--start">N/A</p>
+                            <p className="ui_qtext_para u-ltr u-text-align--start">{comment.comment}</p>
                          </span>
                       </div>
                    </div>
@@ -1290,7 +1324,40 @@ class Question extends Component {
                             </div>
                          </div>
                       </div>
+                      <div className = "content">
+                        <br />
+                     </div>
+                     <div className = "content">
+                        <br />
+                     </div>
                    </div>
+                  
+      )}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 </div>
              </div>
              <div className="comment_list" id="__w2_wR5L77UZ22_container">

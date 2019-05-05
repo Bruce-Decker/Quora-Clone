@@ -46,7 +46,7 @@ class App extends Component {
             <Route exact path="/answer2" component={Answer2} />
             <Route exact path="/content" component={Content} />
             <Route exact path="/question/:question_id" component={Question} />
-            <Route exact path="/profile" component={Profile} />
+            <Route exact path="/profile/:email" component={Profile} />
             <Route exact path="/messages/:email" exact component={Messages} />
           </div>
         </BrowserRouter>
