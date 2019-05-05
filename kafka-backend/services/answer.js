@@ -125,18 +125,16 @@ function downvoteAnswer(info, callback) {
   });
 }
 
-function addComment(info, callback){
-  console.log(info)
-  var email = info.message.email;
+function addComment(info, callback) {
+  console.log(info);
+  var data = {};
+  data.email = info.message.email;
   var answerid = info.message.answer_id;
-  var comment = info.message.comment;
-  var time = new Date().toLocaleString();;
-  var data = {
-    email,
-    comment,
-    time
-  };
-  Question.findOne({ "answers.answer_id": answerid }, function(err, question) {
+  data.comment = info.message.comment;
+  data.time = new Date();
+  console.log("data", data, "answerid", answerid);
+
+  /*   Question.findOne({ "answers.answer_id": answerid }, function(err, question) {
     console.log(question);
     console.log(err);
     if (question) {
@@ -160,7 +158,31 @@ function addComment(info, callback){
       console.log(err);
       callback(err, "error");
     }
-  });
+  }); */
+  Question.findOneAndUpdate(
+    { "answers.answer_id": answerid },
+    {
+      $push: {
+        "answers.$[element].comments": {
+          email: data.email,
+          comment: data.comment,
+          time: data.time
+        }
+      }
+    },
+    {
+      arrayFilters: [{ "element.answer_id": answerid }]
+    },
+    function(err, result) {
+      if (result) {
+        console.log(result);
+        callback(null, result);
+      } else {
+        console.log(err);
+        callback(err, " add comment error");
+      }
+    }
+  );
 }
 
 function deleteComment(info, callback) {
@@ -272,6 +294,7 @@ function updateAnswer(msg, callback) {
     }
     data = data[0];
     let answers = data.answers;
+
     let index = -1;
     for (var i = 0; i < answers.length; i++) {
       if (answers[i].answer_id == answer_id) {
@@ -281,7 +304,7 @@ function updateAnswer(msg, callback) {
 
     if (index == -1) return callback("Answer does not exist");
     answers[index].answerContent = currentElem;
-
+    answers[index].answered_time = new Date();
     Question.findOneAndUpdate(
       { question_id: question_id },
       {

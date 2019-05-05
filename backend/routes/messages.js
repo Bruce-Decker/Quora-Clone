@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 
-
 const kafka = require("../kafka/client");
 
 function seconds_with_leading_zeros(dt) {
@@ -58,3 +57,5 @@ router.get(
     );
   }
 );
+
+module.exports = router;
