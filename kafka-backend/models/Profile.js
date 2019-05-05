@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 var ProfileSchema = new Schema({
+  isActive: {
+    type: Boolean
+  },
   first_name: {
     type: String
   },
