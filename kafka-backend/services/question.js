@@ -48,7 +48,7 @@ function postQuestion(info, callback) {
   var owner = info.message.owner;
   var followers = info.message.followers;
   var answers = info.message.answers;
-  var postedDate = new Date()
+  var postedDate = new Date();
   var data = {
     question_id,
     question,
@@ -136,7 +136,8 @@ function dashboardQuestion(info, callback) {
   };
   const options = {
     page: info.message.pageno,
-    limit: 10
+    limit: 10,
+    sort: { postedDate: -1 }
   };
   var email = info.message.email;
   Profile.findOne({ email: email }, function(err, userTopics) {
@@ -152,6 +153,7 @@ function dashboardQuestion(info, callback) {
       Question.paginate(
         { topics: { $in: userTopics.topics } },
         options,
+
         (err, questions) => {
           if (err) {
             callback(err, null);
