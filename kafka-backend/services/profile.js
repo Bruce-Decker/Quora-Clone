@@ -20,6 +20,7 @@ exports.profileService = function profileService(info, callback) {
       break;
     case "isActive":
       isActive(info, callback);
+      break;
     case "getImage":
       getImage(info, callback);
       break;
