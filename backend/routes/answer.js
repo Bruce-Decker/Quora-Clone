@@ -95,7 +95,7 @@ router.get("/", function(req, res) {
 router.get("/list", function(req, res) {
   kafka.make_request(
     "answer",
-    { method: "fetchanswers", question_id: req.query.question_id },
+    { method: "fetchanswers", message: req.query },
     function(error, result) {
       if (error) {
         console.log(error);

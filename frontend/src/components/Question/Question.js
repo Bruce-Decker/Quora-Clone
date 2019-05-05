@@ -138,22 +138,23 @@ class Question extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  onClick = (email, answer_id) => {
-    alert(answer_id);
-    var comment = this.state.comment;
-    var data = {
-      email,
-      answer_id,
-      comment
-    };
+  // onClick = (email, answer_id, question_id) => {
+    
+  //   var comment = this.state.comment;
+  //   var data = {
+  //     email,
+  //     answer_id,
+  //     question_id,
+  //     comment
+  //   };
 
-    axios
-      .post(rooturl + "/answer/comment", data)
-      .then(res => {
-        window.location.reload();
-      })
-      .catch(err => console.log(err));
-  };
+  //   axios
+  //     .post(rooturl + "/answer/comment", data)
+  //     .then(res => {
+  //       window.location.reload();
+  //     })
+  //     .catch(err => console.log(err));
+  // };
 
   // async componentDidMount() {
 
@@ -3239,7 +3240,8 @@ class Question extends Component {
                                                             this.onClick(
                                                               this.props.auth
                                                                 .user.email,
-                                                              answer.answer_id
+                                                              answer.answer_id,
+                                                              answer.question_id
                                                             )
                                                           }
                                                         >
