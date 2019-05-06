@@ -3,8 +3,10 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const Auth = require("../schema/AuthModel");
-
+var mysql = require('mysql')
 const kafka = require("../kafka/client");
+
+
 
 router.post("/register", function(req, res) {
   kafka.make_request("auth", { method: "register", body: req.body }, function(
@@ -29,7 +31,7 @@ router.post("/register", function(req, res) {
 router.post("/login", function(req, res) {
   console.log("Sdfdfs");
   console.log(req.body);
-  kafka.make_request("auth", { method: "login", body: req.body }, function(
+  kafka.make_request("auth", { method: "login",  body: req.body  }, function(
     error,
     result
   ) {

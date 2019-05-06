@@ -1,5 +1,5 @@
 var connection = new require("./kafka/Connection");
-
+var mysql = require('mysql')
 var mongoose = require("mongoose");
 const db_url = require("./config/keys").mlab_url;
 const url = process.env.MONGODB_URI || db_url;

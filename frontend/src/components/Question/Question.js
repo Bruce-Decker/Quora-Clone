@@ -2511,20 +2511,6 @@ class Question extends Component {
                                       data-clog-event-type="ObjectView"
                                       data-clog-processed={1}
                                     >
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                    
                                       <div id="wzwmJKBZ8">
                                         <a name="answer_104359258" />
 
@@ -3183,26 +3169,21 @@ class Question extends Component {
                                                                     className="ui_button_icon"
                                                                     aria-hidden="true"
                                                                   />
-
-                                                                  <button
-                                                                    onClick={
-                                                                      this
-                                                                        .bookmarkHandler
-                                                                    }
-                                                                  >
-                                                                    Bookmark
-                                                                  </button>
                                                                   {flagVar ? (
-                                                                    <button
-                                                                      onClick={() => {
-                                                                        this.updateAnswer(
-                                                                          answer.answer_id
-                                                                        );
+                                                                    <Link
+                                                                      to={{
+                                                                        pathname:
+                                                                          "/editanswer",
+                                                                        state: {
+                                                                          answer_id:
+                                                                            answer.answer_id
+                                                                        }
                                                                       }}
+                                                                      class="d-block text-gray-dark"
                                                                     >
-                                                                      Submit
+                                                                      Edit
                                                                       Answer
-                                                                    </button>
+                                                                    </Link>
                                                                   ) : (
                                                                     ""
                                                                   )}
@@ -3632,35 +3613,6 @@ class Question extends Component {
                                           </div>
                                         ))}
                                       </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                                     </div>
                                   </div>
                                 </div>
