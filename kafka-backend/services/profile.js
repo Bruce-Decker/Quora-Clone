@@ -197,15 +197,34 @@ function getImage(info, callback) {
 }
 
 function getProfileViews(info, callback) {
+  console.log(info);
   var email = info.message.email
   Profile.findOne({email: email}, function(err, docs) {
       
       if (docs) {
-          console.log(docs.views);
+          //console.log(docs.views);
+          var daysMap = [];
+          var daysResultMap = [];
+          daysMap.push({"index":0,"seconds":0});
+          for (let i =1;i<30;i++) {
+            daysMap.push({"index" : i, "seconds": i * 24 * 3600});
+            daysResultMap[i] = 0;
+          }
+          let todayDate = new Date();
+          let SECONDS_ONE_DAY = 86400;
+          docs.views.forEach(function (item, key) {
+            let currentDate = new Date(item.time);
+            let diffCurrentDate = todayDate - currentDate;
+            for(let j = 0; j< 30; j++){
+              if( diffCurrentDate >= daysMap[j].seconds) {
+                daysResultMap[j] = daysResultMap[j] + 1;
+              }
+            }
+          });
           let data = {
             email:email,
-            count: docs.views.length
-          }   
+            count: daysResultMap
+          }
           callback(null, data);
       } else {
           console.log(err);
