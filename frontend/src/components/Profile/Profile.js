@@ -21,7 +21,7 @@ const customStyles = {
 
 Modal.setAppElement("#root");
 
-var response_follower;
+var response_profile;
 class Profile extends Component {
   constructor() {
     super();
@@ -43,8 +43,9 @@ class Profile extends Component {
       education: "",
       career: "",
       description: "",
-       profilecredentials: "",
-       selectedFile: null
+      profilecredentials: "",
+      selectedFile: null,
+      showProfile: false
     };
 
     this.openModal = this.openModal.bind(this);
@@ -192,16 +193,17 @@ class Profile extends Component {
       rooturl + "/content?email=" + this.props.match.params.email + query
     );
 
-    response_follower = await axios.get(
-      rooturl + "/follow/userFollowers?email=" + this.props.match.params.email
+    response_profile = await axios.get(
+      rooturl + "/profile/viewProfile?email=" + this.props.match.params.email
     );
-    if (response_follower) {
+    
+    if (response_profile.data) {
       this.setState({
-        showFollow: true
-      });
-    }
+        showProfile: true
+      }); 
+    } 
     console.log("q3wsffse");
-    console.log(response_follower.data[0].followers.length);
+    console.log(response_profile.data);
 
     if (response.data) {
       this.setState({
@@ -248,6 +250,15 @@ class Profile extends Component {
                                 className="photo_tooltip Photo IdentityPhoto HoverMenu"
                                 id="__w2_wYSVVNEt59_link"
                               >
+                              {this.state.showProfile ?
+                                  <img
+                                  className="profile_photo_img"
+                                  src= {response_profile.data[0].profile_image}
+                                  alt="Bruce Decker"
+                                  height={200}
+                                  width={200}
+                                />
+                              :
                                 <img
                                   className="profile_photo_img"
                                   src={default_image}
@@ -255,6 +266,7 @@ class Profile extends Component {
                                   height={200}
                                   width={200}
                                 />
+                              }
                                 <span id="wYSVVNEt154" />
                               </span>
                             </div>
@@ -402,7 +414,26 @@ class Profile extends Component {
                             </div>
                           </div>
                         </div>
+                        {this.state.showProfile ?
+                        <div>
+                        <h1> First Name: {response_profile.data[0].first_name} </h1>
+                        <h1> Last Name: {response_profile.data[0].last_name} </h1>
+                        <h1> Email: {response_profile.data[0].email} </h1>
+                        <h1> City: {response_profile.data[0].city} </h1>
+                        <h1> Zip Code: {response_profile.data[0].zip_code} </h1>
+                        <h1> State: {response_profile.data[0].state} </h1>
+                        <h1> Education: {response_profile.data[0].education} </h1>
+                        <h1> Career Information: {response_profile.data[0].career_information} </h1>
+                        <h1> Profile Credential: {response_profile.data[0].profile_credential} </h1>
+                        <br />
+                        <h1>Followers: {response_profile.data[0].followers.length}</h1>
+                        </div>
+                       
+                        : null }
+                       
+                       
                         <button> Follow </button>
+                      
                       </div>
                       <div id="wYSVVNEt26">
                         <div className="ProfileDescriptionPreviewSection">
@@ -1840,11 +1871,8 @@ class Profile extends Component {
                                           className="ui_button_label"
                                           id="__w2_wYSVVNEt159_label"
                                         >
-                                          {
-                                            response_follower.data[0].followers
-                                              .length
-                                          }{" "}
-                                          Followers
+                                         
+                                         default Followers
                                         </span>
                                       ) : null}
                                     </div>
@@ -2497,7 +2525,7 @@ class Profile extends Component {
                                       id="__w2_woVa9VIC11_modal_link"
                                       onClick={this.openModal}
                                     >
-                                      Add employment credential
+                                      Edit Profile
                                     </Link>
 
                                     <Modal
@@ -3025,6 +3053,8 @@ class Profile extends Component {
                                                           data-group="js-editable"
                                                           w2cid="wS3v0b3P32"
                                                           id="__w2_wS3v0b3P32_position"
+                                                          pattern = "[0-9]{5} | [0-9]{5}-[0-9]{4}"
+                                                          title="ex 95132 or 95132-1929"
                                                           onChange={this.zipcodeHandler}
                                                         />
                                                         <div
@@ -5568,97 +5598,36 @@ class Profile extends Component {
                             </span>
                           </div>
                         </div>
-                        <div id="woVa9VIC3">
-                          <div className="AddCredentialListItem AboutListItem AddSchoolCredentialListItem">
-                            <span className="u-flex u-padding-bottom--sm">
-                              <div className="u-margin-right--sm">
-                                <span
-                                  className="ui_icon ui_icon_color--blue_dark ui_icon_size--small_medium ui_icon_outline--default"
-                                  aria-hidden="true"
-                                >
-                                  <svg
-                                    width="24px"
-                                    height="24px"
-                                    viewBox="0 0 24 24"
-                                    version="1.1"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    xmlnsXlink="http://www.w3.org/1999/xlink"
-                                  >
-                                    <g
-                                      className="icon_svg-stroke"
-                                      stroke="#666"
-                                      strokeWidth="1.5"
-                                      fill="none"
-                                      fillRule="evenodd"
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                    >
-                                      <path d="M2.5,9.5 L12,5 L21.5,9.5 L12,14 L2.5,9.5 Z M20,10.5 L20,16.5 M6.5,12 C6.5,14 6.5,15 6.5,15 C6.5,16.5048582 9.00219538,18 12,18 C14.9978046,18 17.5,16.4986226 17.5,15 C17.5,15 17.5,14 17.5,12 M20,16.5 L18,20 L22,20 L20,16.5 Z" />
-                                    </g>
-                                  </svg>
-                                </span>
-                              </div>
-                              <span className="body_text">
-                                <span className="main_text">
-                                  <span id="woVa9VIC13">
-                                    <a
-                                      className="EditCredentialModalLink CredentialModalLink"
-                                      href="#"
-                                      id="__w2_woVa9VIC14_modal_link"
-                                    >
-                                      Add education credential
-                                    </a>
-                                  </span>
-                                </span>
-                              </span>
-                            </span>
-                          </div>
-                        </div>
-                        <div id="woVa9VIC5">
-                          <div className="AddCredentialListItem AddLocationCredentialListItem AboutListItem">
-                            <span className="u-flex u-padding-bottom--sm">
-                              <div className="u-margin-right--sm">
-                                <span
-                                  className="ui_icon ui_icon_color--blue_dark ui_icon_size--small_medium ui_icon_outline--default"
-                                  aria-hidden="true"
-                                >
-                                  <svg
-                                    width="24px"
-                                    height="24px"
-                                    viewBox="0 0 24 24"
-                                    version="1.1"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    xmlnsXlink="http://www.w3.org/1999/xlink"
-                                  >
-                                    <g
-                                      className="icon_svg-stroke"
-                                      stroke="#666"
-                                      strokeWidth="1.5"
-                                      fill="none"
-                                      fillRule="evenodd"
-                                      strokeLinecap="round"
-                                    >
-                                      <path d="M12,13 C13.6568542,13 15,11.6568542 15,10 C15,8.34314575 13.6568542,7 12,7 C10.3431458,7 9,8.34314575 9,10 C9,11.6568542 10.3431458,13 12,13 Z M12,20.73 C16.6375,16.5 19,12.9 19,10.2 C19,6.2235498 15.8659932,3 12,3 C8.13400675,3 5,6.2235498 5,10.2 C5,12.9 7.3625,16.41 12,20.73 L12,20.73 Z" />
-                                    </g>
-                                  </svg>
-                                </span>
-                              </div>
-                              <span className="body_text">
-                                <span className="main_text">
-                                  <span id="woVa9VIC16">
-                                    <a
-                                      className="EditCredentialModalLink CredentialModalLink"
-                                      href="#"
-                                      id="__w2_woVa9VIC17_modal_link"
-                                    >
-                                      Add a location credential
-                                    </a>
-                                  </span>
-                                </span>
-                              </span>
-                            </span>
-                          </div>
-                        </div>
+
+
+
+
+
+
+                   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                       </div>
                     </div>
                   </div>

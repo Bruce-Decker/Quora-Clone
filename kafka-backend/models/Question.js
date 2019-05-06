@@ -21,9 +21,6 @@ const QuestionSchema = new Schema({
     {
       email: {
         type: String
-      },
-      time: {
-        type: Date
       }
     }
   ],
@@ -51,8 +48,22 @@ const QuestionSchema = new Schema({
           type: String
         }
       ],
-      views: [{type: String}],
-      bookmark: [{ type: String }],
+      bookmark: [
+        {
+          email: {
+            type: String
+          },
+          time: {
+            type: Date,
+            default: new Date()
+          }
+        }
+      ],
+      views: {
+        type: Number,
+        required: true,
+        default: 0
+      },
       image: {
         type: String
       },
