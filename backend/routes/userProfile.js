@@ -45,6 +45,26 @@ router.get("/viewProfile", function(req, res) {
   );
 });
 
+router.get("/searchProfile", function(req, res) {
+  kafka.make_request(
+    "profile",
+    { method: "searchProfile", message: req.query },
+    function(error, result) {
+      if (error) {
+        console.log(error);
+        res.status(400).json({ msg: "cannot find user" });
+      } else {
+        if (result.errors) {
+          return res.status(400).json(result.errors);
+        } else {
+          console.log(result);
+          res.send(result);
+        }
+      }
+    }
+  );
+});
+
 router.get("/views", function(req, res) {
   kafka.make_request(
     "profile",

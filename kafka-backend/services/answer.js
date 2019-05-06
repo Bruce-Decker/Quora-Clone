@@ -362,7 +362,7 @@ function createanswer(msg, callback) {
   msg = msg.body;
   let currentElem = msg.currentElem;
   let question_id = msg.question_id;
-  let owner = msg.owner;
+  let owner = msg.owner ? msg.owner : "Anonymous";
   Question.findOneAndUpdate(
     { question_id: question_id },
     { $push: { answers: { answerContent: currentElem, owner: owner } } }
