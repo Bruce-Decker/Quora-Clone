@@ -2,49 +2,58 @@ const express = require("express");
 const router = express.Router();
 const kafka = require("../kafka/client");
 
-
-router.post('/createQuestion', function(req, res) {
-  kafka.make_request('question', {"method": "postQuestion", "message": req.body}, function(error, result) {
+router.post("/createQuestion", function(req, res) {
+  kafka.make_request(
+    "question",
+    { method: "postQuestion", message: req.body },
+    function(error, result) {
       if (error) {
-          console.log(error)
-          res.status(400).json({msg: 'cannot question'});
+        console.log(error);
+        res.status(400).json({ msg: "cannot question" });
       } else {
-             if (result.errors) {
-                return res.status(400).json(result.errors);
-             } else {
-                res.send(result)
-             }
+        if (result.errors) {
+          return res.status(400).json(result.errors);
+        } else {
+          res.send(result);
+        }
       }
-  })
-})
+    }
+  );
+});
 
-router.get('/getQuestion/:question_id', function(req, res) {
-  kafka.make_request('question', {"method": "getQuestion", "question_id": req.params.question_id}, function(error, result) {
+router.get("/getQuestion/:question_id", function(req, res) {
+  kafka.make_request(
+    "question",
+    { method: "getQuestion", question_id: req.params.question_id },
+    function(error, result) {
       if (error) {
-          console.log(error)
-          res.status(400).json({msg: 'cannot get question'});
+        console.log(error);
+        res.status(400).json({ msg: "cannot get question" });
       } else {
-             if (result.errors) {
-                return res.status(400).json(result.errors);
-             } else {
-                res.send(result)
-             }
+        if (result.errors) {
+          return res.status(400).json(result.errors);
+        } else {
+          res.send(result);
+        }
       }
-  })
-})
+    }
+  );
+});
 
-router.get('/getTopicQuestions', function(req, res) {
-  kafka.make_request('question', {"method": "getTopicQuestions",message: req.query}, function(error, result) {
+router.get("/getTopicQuestions", function(req, res) {
+  kafka.make_request(
+    "question",
+    { method: "getTopicQuestions", message: req.query },
+    function(error, result) {
       if (error) {
-          console.log(error)
-          res.status(400).json({msg: 'cannot get question'});
+        console.log(error);
+        res.status(400).json({ msg: "cannot get question" });
       } else {
-             
-                res.send(result)
-             }
+        res.send(result);
       }
-  )
-})
+    }
+  );
+});
 
 router.get("/keyword", function(req, res) {
   kafka.make_request(
@@ -94,13 +103,9 @@ router.get("/dashboard", function(req, res) {
       if (error) {
         console.log(error);
         res.status(400).json({ msg: "cannot find questions" });
-      }else {
-        if (result.errors) {
-          return res.status(400).json(result.errors);
-        } else {
-          console.log(result);
-          res.send(result);
-        }
+      } else {
+        console.log(result);
+        res.send(result);
       }
     }
   );
