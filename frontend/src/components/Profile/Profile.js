@@ -8,6 +8,30 @@ import default_image from "./default.png";
 import rooturl from "../../utility/url";
 import queryString from "query-string";
 
+const topics = [
+   {
+      id: "1",
+      name: "General"
+   },
+   {
+     id: "2",
+     name: "Science and Technology"
+   },
+   {
+     id: "3",
+     name: "Politics"
+   },
+   {
+     id: "4",
+     name: "Psychology"
+   },
+   {
+     id: "5",
+     name: "History"
+   }
+]
+
+
 const customStyles = {
   content: {
     top: "50%",
@@ -31,6 +55,12 @@ const customStylesTopics = {
  };
 
 Modal.setAppElement("#root");
+
+function searchingTopics(query) {
+   return function(x) {
+     return x.name.toLowerCase().includes(query.toLowerCase()) || !query
+   }
+ } 
 
 var response_profile;
 class Profile extends Component {
@@ -57,7 +87,10 @@ class Profile extends Component {
       description: "",
       profilecredentials: "",
       selectedFile: null,
-      showProfile: false
+      showProfile: false,
+      showTopicSelection: false,
+      topics: topics,
+      enteredTopicValue: ''
     };
 
     this.openModal = this.openModal.bind(this);
@@ -67,9 +100,65 @@ class Profile extends Component {
     this.handleFile = this.handleFile.bind(this);
   }
 
+  followTopic = (topic_name) => {
+     var data = {
+        topic_name: topic_name,
+        email: this.props.auth.user.email
+
+     }
+
+     
+      axios.post(rooturl + '/topic/follow', data)
+         .then(res => {
+         console.log(res.data)
+         window.location.reload()
+      })
+      .catch(err => console.log(err))
+  }
+
+  unfollowTopic = (topic_name) => {
+    
+      var data = {
+         topic_name: topic_name,
+         email: this.props.auth.user.email
+      }
+
+      axios.post(rooturl + '/topic/unfollow', data)
+      .then(res => {
+      console.log(res.data)
+      window.location.reload()
+   })
+   .catch(err => console.log(err))
+  }
+
+  valueTopicHandler = (e) => {
+   this.setState({
+      enteredTopicValue: e.target.value
+    });
+    
+ } 
+
+  onTopicFocus = () => {
+   this.setState({
+      showTopicSelection: true,
+      
+   })
+}
+
+onTopicBlur = () => {
+   this.setState({
+      showTopicSelection: false
+   })
+}
+
+
+
   openModal(e) {
     e.preventDefault();
-    this.setState({ modalIsOpen: true });
+    this.setState({ 
+       modalIsOpen: true,
+      
+      });
   }
 
   afterOpenModal() {
@@ -84,7 +173,10 @@ class Profile extends Component {
 
   topicsOpenModal = (e) => {
     e.preventDefault();
-    this.setState({ topicsModalIsOpen: true });
+    this.setState({ 
+       topicsModalIsOpen: true,
+       showTopicSelection: false
+      });
   }
 
   topicsCloseModal = () => {
@@ -198,8 +290,15 @@ class Profile extends Component {
       })
   }
 
+  
+
+  
+  
+
   async componentDidMount() {
+     
     console.log("sdfsdf3324 " + this.props.location.search);
+   
 
     var values = queryString.parse(this.props.location.search);
 
@@ -449,6 +548,7 @@ class Profile extends Component {
                         <h1> Profile Credential: {response_profile.data[0].profile_credential} </h1>
                         <br />
                         <h1>Followers: {response_profile.data[0].followers.length}</h1>
+                        <h1>Views: {response_profile.data[0].views.length}</h1>
                         </div>
                        
                         : null }
@@ -5622,18 +5722,277 @@ class Profile extends Component {
           onRequestClose={this.topicsCloseModal}
           style={customStylesTopics}
           contentLabel="Example Modal"
+          
         >
 
-          <h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>
-          <button onClick={this.topcisCloseModal}>close</button>
-          <div>I am a modal</div>
-          <form>
-            <input />
-            <button>tab navigation</button>
-            <button>stays</button>
-            <button>inside</button>
-            <button>the modal</button>
-          </form>
+<div className="modal_wrapper normal" id="__w2_modal_wrapper_">
+<div className="ViewerEditTopicsModal Modal EditTopicsModal EditKnowsAboutTopicsModal has_max_height">
+   <div className="modal_header">
+      <div className="modal_close" id="__w2_wl8oHrDR2_close">
+         <a className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only" href="#" role="button" aria-label="Close" id="__w2_wl8oHrDR5_button">
+            <div className="ui_button_inner" id="__w2_wl8oHrDR5_inner">
+               <div className="ui_button_icon_wrapper u-relative u-flex-inline">
+                  <div id="__w2_wl8oHrDR5_icon">
+                     <span className="ui_button_icon" aria-hidden="true">
+                        <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+                           <g id="small_close" className="icon_svg-stroke" fill="none" fillRule="evenodd" strokeLinecap="round" stroke="#666666" strokeWidth="1.5">
+                              <path d="M12,6 L12,18" transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) " />
+                              <path d="M18,12 L6,12" transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) " />
+                           </g>
+                        </svg>
+                     </span>
+                  </div>
+               </div>
+            </div>
+         </a>
+      </div>
+      <div className="modal_title" id="__w2_wl8oHrDR2_modal_title">Edit the topics you know about</div>
+      <div className="modal_subtitle" id="__w2_wl8oHrDR2_modal_subtitle">Topics are used to find the best experts to answer the question.</div>
+   </div>
+   <div className="modal_content modal_body" id="__w2_wl8oHrDR2_content">
+      <div className="ViewerEditTopicsModal Modal EditTopicsModal EditKnowsAboutTopicsModal" id="__w2_wl8oHrDR2_topic_list">
+         <div id="wl8oHrDR3">
+            <div className="ui_editable_list_wrapper">
+               <div className="EditableListSelector TopicSelector KnowsAboutEditableListSelector Selector AddTopicSelector" tabIndex={-1} id="__w2_wl8oHrDR6_wrapper">
+                  <div className="selector_input_interaction">
+                     
+                     
+                     <input className="selector_input text"
+                       onFocus = {this.onTopicFocus} 
+                       //onBlur = {this.onTopicBlur}
+                       onChange = {this.valueTopicHandler}
+                       type="text" 
+                       data-group="js-editable"
+                       placeholder="Search for a topic" 
+                       w2cid="wl8oHrDR6" 
+                       id="__w2_wl8oHrDR6_input" />
+                     
+                     
+                     <div className="selector_spinner hidden" id="__w2_wl8oHrDR6_spinner">
+                        <div className="LoadingDots tiny">
+                           <div className="dot first" />
+                              <div className="dot second" />
+                                 <div className="dot third" /></div>
+                              </div>
+                           </div>
+
+                           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{ this.state.showTopicSelection ?
+<div className="selector_results_container" id="__w2_wl8oHrDR6_results_container" style={{overflowY: 'scroll', height: '100px'}}>
+ <div className="selector_results_container_inner" id="__w2_wl8oHrDR6_results">
+   <ul className="SelectorResults TopicSelectorResults" id="__w2_wL2OZcTt1_wrapper">
+     
+   {this.state.topics.filter(searchingTopics(this.state.enteredTopicValue)).map(topic =>
+      <li className="selector_result topic_alias" id="__w2_wL2OZcTt1_result_8" onClick = {() => this.followTopic(topic.name)}>
+         <div className="selector_result_photo">
+            <span id="wL2OZcTt34">
+               <div className="TopicPhoto"><span id="wL2OZcTt58"><img className="topic_photo_img" src="https://qph.fs.quoracdn.net/main-thumb-t-3965-25-CeYivvirME5bMz5xwAzMsoX0JXzi8jMc.jpeg" alt="The Human Race and Condition" height={25} width={25} /></span></div>
+            </span>
+         </div>
+         <div className="selector_result_text">
+           {topic.name}
+           
+         </div>
+      </li>
+
+   )}
+     
+     
+      {/* <li className="selector_result topic_alias" id="__w2_wL2OZcTt1_result_9">
+         <div className="selector_result_photo">
+            <span id="wL2OZcTt38">
+               <div className="TopicPhoto"><span id="wL2OZcTt60"><img className="topic_photo_img" src="https://qph.fs.quoracdn.net/main-thumb-t-2153-25-3K48X2WBSptMBbzbwcNkXbOuwDICFJrs.jpeg" alt="The High School Experience" height={25} width={25} /></span></div>
+            </span>
+         </div>
+         <div className="selector_result_text">
+            The High School Experience
+            <div className="selector_result_description"><span id="wL2OZcTt40">1,428,598 Followers</span><span className="bullet"> · </span>Matched: <span className="matched_term">I</span> Wanna be <span className="matched_term">i</span>n High School</div>
+         </div>
+      </li> */}
+   </ul>
+</div>
+<div id="__w2_wl8oHrDR6_empty_input_prompt" className="hidden" /></div>
+: null }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                           <div className="selector_results_container hidden" id="__w2_wl8oHrDR6_results_container" style={{overflowY: 'auto', height: 'auto'}}>
+                           <div className="selector_results_container_inner hidden" id="__w2_wl8oHrDR6_results">
+                              <ul className="TopicSelectorResults SelectorResults" id="__w2_wFSa7xaf1_wrapper">
+                                 <li className="selector_result topic_alias" id="__w2_wFSa7xaf1_result_0">
+                                    <div className="selector_result_photo">
+                                       <div id="wFSa7xaf2">
+                                          <div className="TopicPhoto">
+                                             <div id="wFSa7xaf40"><img className="topic_photo_img" src="https://qph.fs.quoracdn.net/main-thumb-t-3446-25-nbpxgtggealqmilwavlgwxuhuxgklkat.jpeg" alt="South Carolina (state)" height={25} width={25} /></div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                   
+                                 </li>
+                               
+                                 <li className="selector_result topic" id="__w2_wFSa7xaf1_result_2">
+                                    <div className="selector_result_photo">
+                                       <div id="wFSa7xaf8">
+                                          <div className="TopicPhoto">
+                                             <div id="wFSa7xaf42">
+                                                <div className="topic_photo_img topic_header_img"><div className="ui_icon_badge u-relative u-flex-none u-flex u-flex-align--center u-flex-justify--center ui_icon_badge_size--fluid u-border-radius--3 u-bg--cover u-bg--center" style={{backgroundImage: 'url(https://qph.fs.quoracdn.net/main-answer_header_background_1393740_459.svg)'}}><div className="ui_icon ui_icon_color--white u-bg--center u-bg--square u-width--70" style={{backgroundImage: 'url(https://qph.fs.quoracdn.net/main-answer_header_icon_931.svg)'}} /></div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                           </div>
+               </li><li className="selector_result topic_alias" id="__w2_wFSa7xaf1_result_3"><div className="selector_result_photo"><div id="wFSa7xaf12"><div className="TopicPhoto"><div id="wFSa7xaf44"><img className="topic_photo_img" src="https://qph.fs.quoracdn.net/main-thumb-t-53177-25-mvN7YbcPOnXuJKdxUybR0qUzLif6EhIX.jpeg" alt="Science of Everyday Life" height={25} width={25} /></div></div></div></div><div className="selector_result_text"><span className="matched_term">Sc</span>ience of Everyday Life<div className="selector_result_description"><span id="wFSa7xaf14">8,372,314 Followers</span></div></div></li><li className="selector_result topic_alias" id="__w2_wFSa7xaf1_result_4"><div className="selector_result_photo"><div id="wFSa7xaf16"><div className="TopicPhoto"><div id="wFSa7xaf46"><img className="topic_photo_img" src="https://qph.fs.quoracdn.net/main-thumb-t-980-25-H0buhDed9OV3rFiJlV9gj5ZOHtCovmDU.jpeg" alt="Computer Science" height={25} width={25} /></div></div></div></div><div className="selector_result_text">Computer <span className="matched_term">Sc</span>ience<div className="selector_result_description"><span id="wFSa7xaf18">6,711,330 Followers</span></div></div></li><li className="selector_result topic_alias" id="__w2_wFSa7xaf1_result_5"><div className="selector_result_photo"><div id="wFSa7xaf20"><div className="TopicPhoto"><div id="wFSa7xaf48"><img className="topic_photo_img" src="https://qph.fs.quoracdn.net/main-thumb-t-1945-25-q6exdfnDMmUqAs1AhkivmzHVE8IyLURc.jpeg" alt="Science Fiction (genre)" height={25} width={25} /></div></div></div></div><div className="selector_result_text"><span className="matched_term">Sc</span>ience Fiction (genre)<div className="selector_result_description"><span id="wFSa7xaf22">2,198,533 Followers</span></div></div></li><li className="selector_result topic_alias" id="__w2_wFSa7xaf1_result_6"><div className="selector_result_photo"><div id="wFSa7xaf24"><div className="TopicPhoto"><div id="wFSa7xaf50"><div className="topic_photo_img topic_header_img"><div className="ui_icon_badge u-relative u-flex-none u-flex u-flex-align--center u-flex-justify--center ui_icon_badge_size--fluid u-border-radius--3 u-bg--cover u-bg--center" style={{backgroundImage: 'url(https://qph.fs.quoracdn.net/main-answer_header_background_1394227_614.svg)'}}><div className="ui_icon ui_icon_color--white u-bg--center u-bg--square u-width--70" style={{backgroundImage: 'url(https://qph.fs.quoracdn.net/main-answer_header_icon_1402.svg)'}} /></div></div></div></div></div>
+                        </div>
+                        <div className="selector_result_text"><span className="matched_term">Sc</span>hools<div className="selector_result_description"><span id="wFSa7xaf26">2,808,073 Followers</span></div></div></li><li className="selector_result topic" id="__w2_wFSa7xaf1_result_7"><div className="selector_result_photo"><div id="wFSa7xaf28"><div className="TopicPhoto"><div id="wFSa7xaf52"><img className="topic_photo_img" src="https://qph.fs.quoracdn.net/main-thumb-t-13779-25-igbkswdoytakrkooximjglmgzvpukcfg.jpeg" alt="Scars and Scarring" height={25} width={25} /></div></div></div></div><div className="selector_result_text"><span className="matched_term">Sc</span>ars and <span className="matched_term">Sc</span>arring<div className="selector_result_description"><span id="wFSa7xaf30">131,153 Followers</span></div></div></li><li className="selector_result topic_alias" id="__w2_wFSa7xaf1_result_8"><div className="selector_result_photo"><div id="wFSa7xaf32"><div className="TopicPhoto"><div id="wFSa7xaf54"><img className="topic_photo_img" src="https://qph.fs.quoracdn.net/main-thumb-t-3402-25-UnngmKe9LGJyVxM4Hd8Tf5VBCKOPhkAM.jpeg" alt="Political Science" height={25} width={25} /></div></div></div></div><div className="selector_result_text">Political <span className="matched_term">Sc</span>ience<div className="selector_result_description"><span id="wFSa7xaf34">1,432,316 Followers</span></div></div></li><li className="selector_result topic_alias" id="__w2_wFSa7xaf1_result_9"><div className="selector_result_photo"><div id="wFSa7xaf36"><div className="TopicPhoto"><div id="wFSa7xaf56"><img className="topic_photo_img" src="https://qph.fs.quoracdn.net/main-thumb-t-945-25-zIEolGDmr0rHy6qtfJMl1Z7HZJcJdRI6.jpeg" alt="JavaScript (programming language)" height={25} width={25} /></div></div></div></div><div className="selector_result_text">JavaScript (programming language)<div className="selector_result_description"><span id="wFSa7xaf38">848,035 Followers</span><span className="bullet"> · </span>Matched: Why Java <span className="matched_term">Sc</span>ript Is Fast <span className="matched_term">Sc</span>ripting Language</div></div></li><li className="selector_result create_topic" id="__w2_wFSa7xaf1_result_10"><span className="matched_term">sc</span><div><span className="submit_button">Create Topic</span></div></li></ul>
+                     </div>
+                     <div id="__w2_wl8oHrDR6_empty_input_prompt" className /></div>
+                  </div>
+
+
+
+
+
+                  <div className="ui_editable_list" id="__w2_wl8oHrDR4_ui_editable_list">
+                    
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+
+                 {this.state.showProfile ?  
+                 <div>
+                   { response_profile.data[0].topics.map(topic => 
+                  <div className="ui_editable_list_item u-margin-top--sm" id="__w2_wl8oHrDR8_editable_list_item">
+                     <div className="ui_editable_list_item u-bg--gray-ultralight u-padding-all--xs u-text--gray u-border-radius--4 u-inline-block u-sans-font-main--regular" id="__w2_wl8oHrDR8_editable_list_item_contents">
+                        <div id="wl8oHrDR14">
+                           <span className="TopicName" id="__w2_wl8oHrDR15_card">{topic}</span>
+                        </div>
+                     </div>
+                     <div className="u-inline-block u-margin-left--sm u-cursor--pointer" id="__w2_wl8oHrDR8_remove" onClick = {() => this.unfollowTopic(topic)}>
+                        <span className="ui_icon ui_icon_color--gray_light ui_icon_size--small ui_icon_outline--default" aria-hidden="true">
+                           <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+                              <g id="small_close" className="icon_svg-stroke" fill="none" fillRule="evenodd" strokeLinecap="round" stroke="#666666" strokeWidth="1.5">
+                                 <path d="M12,6 L12,18" transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) " />
+                                 <path d="M18,12 L6,12" transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) " />
+                              </g>
+                           </svg>
+                        </span>
+                     </div>
+                  </div>
+
+                   )}
+                  
+                  </div>
+                  : null }
+
+                  
+
+
+
+
+
+
+
+
+
+
+
+                  </div>
+
+
+
+
+
+
+
+
+
+
+
+                  
+               </div>
+            </div>
+         </div>
+      </div>
+      <div className="modal_footer" id="__w2_wl8oHrDR2_modal_footer">
+         <div className="modal_actions" id="__w2_wl8oHrDR2_modal_actions"><span className="text_links" /><a className="submit_button modal_action" href="#" id="__w2_wl8oHrDR2_submit">Done</a></div>
+      </div>
+   </div>
+</div>
         </Modal>
 
 
@@ -5701,6 +6060,7 @@ class Profile extends Component {
                         href="#"
                         id="__w2_wYSVVNEt48_modal_link"
                         onClick={this.topicsOpenModal}
+
                       >
                         <div className="add_icon_wrapper">
                           <div className="ui_icon_badge u-relative u-flex-none u-flex u-flex-align--center u-flex-justify--center ui_icon_badge_size--fluid u-border-radius--ellipse ui_icon_badge_color--blue">
