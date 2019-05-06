@@ -31,12 +31,11 @@ exports.questionService = function questionService(info, callback) {
   }
 };
 
-function getTopicQuestions(info,callback)
-{
-  console.log("jaksgdkag")
-  console.log(info.message)
+function getTopicQuestions(info, callback) {
+  console.log("jaksgdkag");
+  console.log(info.message);
   Question.find(
-    { topics: {$in:info.message.topic } },
+    { topics: { $in: info.message.topic } },
 
     (err, questions) => {
       if (err) {
@@ -155,50 +154,47 @@ function dashboardQuestion(info, callback) {
     posted_date: 0
   };
   const options = {
-    page: info.message.pageno,
-    limit: 10,
+    page: info.message.pageNo,
+    limit: 4,
     sort: { postedDate: -1 }
   };
   var email = info.message.email;
-  if(email){
-  Profile.findOne({ email: email }, function(err, userTopics) {
-    console.log(userTopics);
-    if (userTopics) {
-      console.log("User topics");
-      let searchObj = { email: email, userTopics: userTopics.topics };
-      // cache.get(searchObj, function(err, res) {
-      //   if (!err && res) {
-      //     return callback(null, res);
+  if (email) {
+    Profile.findOne({ email: email }, function(err, userTopics) {
+      console.log(userTopics);
+      if (userTopics) {
+        console.log("User topics");
+        let searchObj = { email: email, userTopics: userTopics.topics };
+        // cache.get(searchObj, function(err, res) {
+        //   if (!err && res) {
+        //     return callback(null, res);
 
-      //   }
-      Question.paginate(
-        { topics: { $in: userTopics.topics } },
-        options,
+        //   }
+        Question.paginate(
+          { topics: { $in: userTopics.topics } },
+          options,
 
-        (err, questions) => {
-          if (err) {
-            callback(err, null);
-          } else {
-            callback(null, questions);
-            // cache.set({ keyObj: searchObj, value: questions });
+          (err, questions) => {
+            if (err) {
+              callback(err, null);
+            } else {
+              callback(null, questions);
+              // cache.set({ keyObj: searchObj, value: questions });
+            }
           }
-        }
-      );
-      // });
-    }
+        );
+        // });
+      }
+    });
+  } else {
+    Question.paginate({}, options, (err, questions) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, questions);
+      }
+    });
   }
-  );
-  }
-    else {
-      Question.paginate({}, options, (err, questions) => {
-        if (err) {
-          callback(err, null);
-        } else {
-          callback(null, questions);
-        }
-      });
-    }
-  
 }
 
 function followQuestion(info, callback) {
