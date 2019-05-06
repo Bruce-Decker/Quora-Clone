@@ -220,7 +220,7 @@ class Dashboard extends Component {
         showQuestions: true
       });
 
-      console.log(dashboard_questions.data.docs[0].question);
+      
     }
   }
 

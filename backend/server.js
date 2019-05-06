@@ -21,6 +21,7 @@ var validateLogin = require("./validation/validateLogin");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 var followRouter = require("./routes/follow");
+var mysql = require('mysql')
 
 const db_url = require("./config/keys").mongo_atlas;
 const url = process.env.MONGODB_URI || "mongodb://localhost:27017/Quora_Clone";
@@ -28,6 +29,58 @@ const url = process.env.MONGODB_URI || "mongodb://localhost:27017/Quora_Clone";
 app.use(cors());
 app.use(morgan("dev"));
 app.use(passport.initialize());
+
+
+var pool = mysql.createPool({
+  connectionLimit: 500,
+  host     : 'localhost',
+  user     : 'root',
+  password : 'root',
+  database : 'Quora_Clone',
+  multipleStatements: true
+});
+
+var db = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : 'root',
+  // Uncomment below if createing Quora_Clone for the first time
+  database : 'Quora_Clone',
+  multipleStatements: true
+});
+
+var db_config = {
+    host: 'localhost',
+    user: 'root',
+    password: 'root',
+    database: 'Quora_Clone',
+    multipleStatements: true
+};
+
+var connection;
+
+
+app.get('/createUserDB', (req, res) => {
+  var sql = 'CREATE DATABASE Quora_Clone';
+  db.query(sql, (error, result) => {
+      if (error) {
+          throw error
+      }
+      console.log(result)
+      res.send("Created Database Successfully")
+  })
+})
+
+app.get('/createAuthTable', (req, res) => {
+  var sql = 'CREATE TABLE Auth(name VARCHAR(255), email VARCHAR(255), password VARCHAR(255), PRIMARY KEY(email))'
+  db.query(sql, (err, result) => {
+       if (err) throw err;
+       console.log(result);
+       res.send("Created Table Successfully")
+
+  })
+})
+
 require("./config/passport")(passport);
 
 mongoose
