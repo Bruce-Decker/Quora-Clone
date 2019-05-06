@@ -219,8 +219,6 @@ class Dashboard extends Component {
         //questions: dashboard_questions.data.docs,
         showQuestions: true
       });
-
-      console.log(dashboard_questions.data.docs[0].question);
     }
   }
 

@@ -87,7 +87,9 @@ const QuestionSchema = new Schema({
         }
       ],
       answered_time: {
-        type: Date
+        type: Date,
+        required: true,
+        default: new Date()
       }
     }
   ],

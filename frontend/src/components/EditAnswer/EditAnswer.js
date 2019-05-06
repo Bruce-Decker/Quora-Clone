@@ -2,18 +2,33 @@ import React, { Component } from "react";
 import Navbar from "../Navbar/Navbar";
 import "./EditAnswer.css";
 import axios from "axios";
+var moment = require("moment");
 
 class EditAnswer extends Component {
   state = {
     question: "hello",
-    answer: { answer_id: 999 }
+    answer: { answer_id: 999 },
+    resData: "",
+    isAnonymous: false
   };
+
+  constructor(props) {
+    super(props);
+    this.anonymousHandler = this.anonymousHandler.bind(this);
+    this.answerHandler = this.answerHandler.bind(this);
+  }
 
   componentWillMount() {
     let answer_id = this.props.location.state.answer_id;
     axios.get("/answer", { params: { answer_id: answer_id } }).then(res => {
       this.setState({
-        answer: res.data
+        answer: res.data.answer
+      });
+      this.setState({
+        question: res.data.question
+      });
+      this.setState({
+        resData: res.data
       });
     });
   }
@@ -21,14 +36,25 @@ class EditAnswer extends Component {
   answerHandler() {
     axios
       .put("/answer", {
-        currentElem: document.getElementById("editable").outerHTML,
-        question_id: this.state.question,
-        answer_id: this.props.location.state.answer_id
+        currentElem: document.getElementById("editableProp").outerHTML,
+        question_id: this.state.resData.question_id,
+        answer_id: this.props.location.state.answer_id,
+        isAnonymous: this.state.isAnonymous
       })
       .then(res => {
-        console.log("res....", res.data);
-        window.location.reload();
+        console.log("res....", res.data.answer);
+        this.props.history.push("/dashboard");
+        //window.location.reload();
       });
+  }
+
+  anonymousHandler() {
+    let isAnonymous = this.state.isAnonymous;
+    isAnonymous = !isAnonymous;
+    this.setState({
+      isAnonymous: isAnonymous
+    });
+    console.log("annnnnnnn", isAnonymous);
   }
 
   render() {
@@ -69,55 +95,7 @@ class EditAnswer extends Component {
                                   <div
                                     className="TopicListItems2 QuestionTopicHorizontalListItems Toggle QuestionTopicListItems SimpleToggle"
                                     id="__w2_w2cECm6L13__truncated"
-                                  >
-                                    <span id="w0Ia0Toj3">
-                                      <div
-                                        className="TopicListItem QuestionTopicListItem topic_pill"
-                                        id="__w2_w0Ia0Toj4_topic_list_item"
-                                      >
-                                        <div className="u-inline-block u-nowrap">
-                                          <div id="w0Ia0Toj9">
-                                            <div
-                                              className="hover_menu hidden white_bg show_nub"
-                                              id="__w2_w0Ia0Toj10_menu"
-                                            >
-                                              <div
-                                                className="hover_menu_contents"
-                                                id="__w2_w0Ia0Toj10_menu_contents"
-                                              >
-                                                {" "}
-                                              </div>
-                                            </div>
-                                            <a
-                                              className="TopicNameLink HoverMenu topic_name"
-                                              href="/topic/History-of-Inventions"
-                                              action_mousedown="TopicLinkClickthrough"
-                                              id="__w2_w0Ia0Toj10_link"
-                                            >
-                                              <span className="name_text">
-                                                <span id="w0Ia0Toj16">
-                                                  <span
-                                                    className="TopicName TopicNameSpan"
-                                                    id="__w2_w0Ia0Toj17_card"
-                                                  >
-                                                    {this.state.answer.owner}
-                                                  </span>
-                                                </span>
-                                              </span>
-                                            </a>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </span>
-
-                                    <span id="w0Ia0Toj1">
-                                      <div
-                                        className="QuestionTopicEditButton edit_topics_link u-inline"
-                                        alt="Edit Topics"
-                                        id="__w2_w0Ia0Toj2_edit_link"
-                                      />
-                                    </span>
-                                  </div>
+                                  />
                                 </div>
                               </div>
                             </div>
@@ -2059,8 +2037,14 @@ class EditAnswer extends Component {
                                                               href="/Who-first-invented-the-money-Who-was-the-person-who-invented-or-made-it-How-much-was-he-paid/answer/Brian-Lee-2"
                                                               id="__w2_wzwmJKBZ32_link"
                                                             >
-                                                              Answered Oct 17,
-                                                              2018
+                                                              Answered{" "}
+                                                              {moment(
+                                                                this.state
+                                                                  .answer
+                                                                  .answered_time
+                                                              ).format(
+                                                                "MMM D, YYYY"
+                                                              )}
                                                             </a>
                                                           </span>
                                                         </div>
@@ -2183,7 +2167,7 @@ class EditAnswer extends Component {
                                                         className="ExpandedContent ExpandedAnswer"
                                                         id="__w2_wBch4VPF7_expanded_content"
                                                       >
-                                                        <div id="editable" />
+                                                        <div />
                                                         <div className="u-serif-font-main--large">
                                                           <div className="ui_qtext_expanded">
                                                             <span className="ui_qtext_rendered_qtext">
@@ -2191,13 +2175,14 @@ class EditAnswer extends Component {
                                                               {/* <p className="ui_qtext_para u-ltr u-text-align--start">{answer.answerContent}</p> */}
 
                                                               <div
+                                                                id="editableProp"
+                                                                contentEditable="true"
                                                                 dangerouslySetInnerHTML={{
                                                                   __html: this
                                                                     .state
                                                                     .answer
                                                                     .answerContent
                                                                 }}
-                                                                contentEditable="true"
                                                               />
                                                             </span>
                                                           </div>
@@ -2208,7 +2193,11 @@ class EditAnswer extends Component {
                                                             id="__w2_wBch4VPF14_content_footer"
                                                           >
                                                             <span>
-                                                              664 views
+                                                              {
+                                                                this.state
+                                                                  .answer.views
+                                                              }{" "}
+                                                              views
                                                             </span>
                                                             <span id="wBch4VPF17" />
                                                             <span id="wBch4VPF19" />
@@ -2327,37 +2316,10 @@ class EditAnswer extends Component {
                                                             <span
                                                               className="ui_button_icon"
                                                               aria-hidden="true"
-                                                            >
-                                                              <svg
-                                                                width="24px"
-                                                                height="24px"
-                                                                viewBox="0 0 24 24"
-                                                                version="1.1"
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                              >
-                                                                <g
-                                                                  id="upvote"
-                                                                  className="icon_svg-stroke icon_svg-fill"
-                                                                  strokeWidth="1.5"
-                                                                  stroke="#666"
-                                                                  fill="none"
-                                                                  fillRule="evenodd"
-                                                                  strokeLinejoin="round"
-                                                                >
-                                                                  <polygon points="12 4 3 15 9 15 9 20 15 20 15 15 21 15" />
-                                                                </g>
-                                                              </svg>
-                                                            </span>
+                                                            />
                                                           </div>
                                                         </div>
                                                         <div className="ui_button_label_count_wrapper">
-                                                          <span
-                                                            className="ui_button_label"
-                                                            id="__w2_wFDFurfC8_label"
-                                                          >
-                                                            Upvote
-                                                          </span>
                                                           <span
                                                             className="ui_button_count hidden ui_button_count--animated"
                                                             aria-hidden="true"
@@ -2400,50 +2362,10 @@ class EditAnswer extends Component {
                                                               <span
                                                                 className="ui_button_icon"
                                                                 aria-hidden="true"
-                                                              >
-                                                                <svg
-                                                                  width="24px"
-                                                                  height="24px"
-                                                                  viewBox="0 0 24 24"
-                                                                  version="1.1"
-                                                                  xmlns="http://www.w3.org/2000/svg"
-                                                                  xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                                >
-                                                                  <g
-                                                                    id="sync"
-                                                                    className="icon_svg-stroke"
-                                                                    stroke="#666"
-                                                                    strokeWidth="1.5"
-                                                                    fill="none"
-                                                                    fillRule="evenodd"
-                                                                    strokeLinecap="round"
-                                                                  >
-                                                                    <path
-                                                                      d="M19.7477789,9.99927692 C18.8594418,6.54918939 15.7274185,4 12,4 C8.27166139,4 5.13901185,6.55044813 4.25156364,10.0018321 M4.25328626,14.0048552 C5.14305933,17.4528459 8.2740698,20 12,20 C15.7261126,20 18.8572473,17.4525964 19.7468444,14.0043488"
-                                                                      id="circle"
-                                                                    />
-                                                                    <polyline
-                                                                      id="arrow"
-                                                                      transform="translate(4.742997, 8.742997) rotate(-20.000000) translate(-4.742997, -8.742997) "
-                                                                      points="2.99299734 6.99299734 2.99299734 10.4929973 6.49299734 10.4929973"
-                                                                    />
-                                                                    <polyline
-                                                                      id="arrow"
-                                                                      transform="translate(19.242997, 15.242997) scale(-1, -1) rotate(-20.000000) translate(-19.242997, -15.242997) "
-                                                                      points="17.4929973 13.4929973 17.4929973 16.9929973 20.9929973 16.9929973"
-                                                                    />
-                                                                  </g>
-                                                                </svg>
-                                                              </span>
+                                                              />
                                                             </div>
                                                           </div>
                                                           <div className="ui_button_label_count_wrapper">
-                                                            <span
-                                                              className="ui_button_label"
-                                                              id="__w2_wTzJejgH41_label"
-                                                            >
-                                                              Share
-                                                            </span>
                                                             <span
                                                               className="ui_button_count hidden"
                                                               aria-hidden="true"
@@ -2487,41 +2409,18 @@ class EditAnswer extends Component {
                                                                 className="ui_button_icon"
                                                                 aria-hidden="true"
                                                               >
-                                                                <svg
-                                                                  width="24px"
-                                                                  height="24px"
-                                                                  viewBox="0 0 24 24"
-                                                                  version="1.1"
-                                                                  xmlns="http://www.w3.org/2000/svg"
-                                                                  xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                                >
-                                                                  <g
-                                                                    id="downvote"
-                                                                    className="icon_svg-stroke icon_svg-fill"
-                                                                    stroke="#666"
-                                                                    fill="none"
-                                                                    strokeWidth="1.5"
-                                                                    fillRule="evenodd"
-                                                                    strokeLinejoin="round"
-                                                                    onClick={() => {
-                                                                      this.downvoteHandler(
-                                                                        {
-                                                                          email: this
-                                                                            .answer
-                                                                            .owner,
-                                                                          answer_id: this
-                                                                            .answer
-                                                                            .answer_id
-                                                                        }
-                                                                      );
-                                                                    }}
-                                                                  >
-                                                                    <polygon
-                                                                      transform="translate(12.000000, 12.000000) rotate(-180.000000) translate(-12.000000, -12.000000) "
-                                                                      points="12 4 3 15 9 15 9 20 15 20 15 15 21 15"
-                                                                    />
-                                                                  </g>
-                                                                </svg>
+                                                                <label>
+                                                                  Anonymous
+                                                                </label>
+                                                                <input
+                                                                  type="checkbox"
+                                                                  class="custom-control-input"
+                                                                  id="same-address"
+                                                                  onClick={
+                                                                    this
+                                                                      .anonymousHandler
+                                                                  }
+                                                                />
                                                               </span>
                                                             </div>
                                                           </div>
@@ -2563,31 +2462,7 @@ class EditAnswer extends Component {
                                                                 <span
                                                                   className="ui_button_icon"
                                                                   aria-hidden="true"
-                                                                >
-                                                                  <svg
-                                                                    width="24px"
-                                                                    height="24px"
-                                                                    viewBox="0 0 24 24"
-                                                                    version="1.1"
-                                                                    xmlns="http://www.w3.org/2000/svg"
-                                                                    xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                                  >
-                                                                    <g
-                                                                      id="share"
-                                                                      className="icon_svg-stroke"
-                                                                      stroke="#666"
-                                                                      fill="none"
-                                                                      strokeWidth="1.5"
-                                                                      fillRule="evenodd"
-                                                                      strokeLinejoin="round"
-                                                                    >
-                                                                      <path
-                                                                        d="M12.0001053,2.99989467 L4.00010533,12.7776724 L9.33343867,12.7776724 C9.78266695,14.7041066 10.5048892,16.2782509 11.5001053,17.5001053 C12.4953215,18.7219597 13.9953215,19.8886264 16.0001053,21.0001053 C15.3415908,19.6668553 14.8428108,18.1668553 14.5037654,16.5001053 C14.16472,14.8333553 14.2190556,13.5925444 14.666772,12.7776724 L20.0001053,12.7776724 L12.0001053,2.99989467 Z"
-                                                                        transform="translate(12.000105, 12.000000) rotate(90.000000) translate(-12.000105, -12.000000) "
-                                                                      />
-                                                                    </g>
-                                                                  </svg>
-                                                                </span>
+                                                                />
                                                               </div>
                                                             </div>
                                                           </div>
