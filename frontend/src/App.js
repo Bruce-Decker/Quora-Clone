@@ -15,7 +15,7 @@ import { activeUser } from "./actions/authActions";
 import jwt_decode from "jwt-decode";
 import Messages from "./components/Messages/Messages";
 import EditAnswer from "./components/EditAnswer/EditAnswer";
-
+import Graph from "./components/Graphs/graphs";
 if (localStorage.token) {
   if (localStorage.getItem("token") === "undefined") {
     localStorage.removeItem("token");
@@ -52,6 +52,7 @@ class App extends Component {
             <Route exact path="/messages/:email" exact component={Messages} />
             <Route exact path="/editanswer" exact component={EditAnswer} />
             <Route exact path="/topic/:topic_name" exact component={Topic} />
+            <Route exact path="/graph" exact component={Graph} />
           </div>
         </BrowserRouter>
       </Provider>

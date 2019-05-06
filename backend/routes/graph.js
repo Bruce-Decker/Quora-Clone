@@ -50,4 +50,38 @@ router.get("/upvote", function(req, res) {
     );
   });
 
+  router.get("/profileViews", function(req, res) {
+    console.log(`req.query`);
+    console.log(req.query);
+    kafka.make_request(
+      "graph",
+      { method: "profileView", message: req.query },
+      function(error, result) {
+        if (error) {
+          console.log(error);
+          res.status(400).json({ msg: "cannot find answers" });
+        }else {
+            console.log(result);
+            res.send(result);
+          }
+      }
+    );
+  });
+
+  router.get("/answerViews", function(req, res) {
+    kafka.make_request(
+      "graph",
+      { method: "answerViews" },
+      function(error, result) {
+        if (error) {
+          console.log(error);
+          res.status(400).json({ msg: "cannot find answers" });
+        }else {
+            console.log(result);
+            res.send(result);
+          }
+      }
+    );
+  });
+
   module.exports = router;
