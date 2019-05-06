@@ -11,7 +11,7 @@ const profileRouter = require("./routes/userProfile");
 const topicRouter = require("./routes/topic");
 const messageRouter = require("./routes/message");
 const messagesRouter = require("./routes/messages");
-
+const graphRouter=require("./routes/graph")
 const questionRouter = require("./routes/question");
 const answerRouter = require("./routes/answer");
 const contentRouter = require("./routes/content");
@@ -52,7 +52,7 @@ app.use("/profile", profileRouter);
 app.use("/topic", topicRouter);
 app.use("/message", messageRouter);
 app.use("/messages", messagesRouter);
-
+app.use("/graph", graphRouter);
 app.use("/question", questionRouter);
 app.use("/answer", answerRouter);
 app.use("/content", contentRouter);
