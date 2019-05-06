@@ -1,7 +1,6 @@
 var redis = require("redis");
 var client = redis.createClient({
-  // host: "ec2-18-188-172-229.us-east-2.compute.amazonaws.com",
-  host: "localhost",
+  host: "localhost", //"ec2-18-188-172-229.us-east-2.compute.amazonaws.com",
   port: 6379
 });
 

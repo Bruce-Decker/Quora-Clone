@@ -10,6 +10,7 @@ import Answer2 from "./components/Answer/Answer2";
 import Content from "./components/Content/Content";
 import Question from "./components/Question/Question";
 import Profile from "./components/Profile/Profile";
+import Topic from './components/Topic/Topic'
 import { activeUser } from "./actions/authActions";
 import jwt_decode from "jwt-decode";
 import Messages from "./components/Messages/Messages";
@@ -48,6 +49,7 @@ class App extends Component {
             <Route exact path="/question/:question_id" component={Question} />
             <Route exact path="/profile/:email" component={Profile} />
             <Route exact path="/messages/:email" exact component={Messages} />
+            <Route exact path="/topic/:topic_name" exact component={Topic} />
           </div>
         </BrowserRouter>
       </Provider>

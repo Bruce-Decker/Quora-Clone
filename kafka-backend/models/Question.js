@@ -62,6 +62,7 @@ const QuestionSchema = new Schema({
           }
         }
       ],
+      views: [{ type: String }],
       image: {
         type: String
       },

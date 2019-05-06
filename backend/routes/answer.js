@@ -78,7 +78,6 @@ router.post("/", function(req, res) {
 });
 
 router.get("/", function(req, res) {
-  console.log("bbbbbb....", req.query);
   kafka.make_request(
     "answer",
     { method: "getanswer", answer_id: req.query.answer_id },
