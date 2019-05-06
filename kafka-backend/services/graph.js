@@ -28,6 +28,8 @@ function upvoteGraph(info, callback) {
             let answerContent = currentAnswersList[j].answerContent;
             if (answerContent != null) {
               answerContent = answerContent.replace(/<\/?.+?>/gi, "");
+              if (answerContent == "")
+                answerContent = "Preview not available for answer images";
               //answerUpvoteMap.push({"answer_id":answer_id, "upvoteCount":currentAnswersList[j].upvote.length,"answerContent":currentAnswersList[j].answerContent});
               answerUpvoteMap.push({
                 answerContent: answerContent,
@@ -74,6 +76,8 @@ function downvoteGraph(info, callback) {
             let answerContent = currentAnswersList[j].answerContent;
             if (answerContent != null) {
               answerContent = answerContent.replace(/<\/?.+?>/gi, "");
+              if (answerContent == "")
+                answerContent = "Preview not available for answer images";
               answerDownvoteMap.push({
                 answerContent: answerContent,
                 downvoteCount: currentAnswersList[j].downvote.length
@@ -118,6 +122,8 @@ function bookmarkGraph(info, callback) {
             let answerContent = currentAnswersList[j].answerContent;
             if (answerContent != null) {
               answerContent = answerContent.replace(/<\/?.+?>/gi, "");
+              if (answerContent == "")
+                answerContent = "Preview not available for answer images";
               answerBookmarkMap.push({
                 answerContent: answerContent,
                 bookmarkCount: currentAnswersList[j].bookmark.length
