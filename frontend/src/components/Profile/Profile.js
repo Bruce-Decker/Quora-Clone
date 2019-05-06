@@ -199,14 +199,12 @@ onTopicBlur = () => {
    });
  };
 
-  async componentWillReceiveProps(nextProps) {
-    console.log(nextProps.location.search);
-    console.log(this.props.location.search);
-    console.log(nextProps.location.search !== this.props.location.search);
+  componentWillReceiveProps(nextProps) {
+   console.log("fsdfsf")
+  }
 
-    if (nextProps.location.search !== this.props.location.search) {
-      window.location.reload();
-    }
+  componentDidUpdate() {
+   alert("sffs")
   }
    
 
@@ -325,6 +323,7 @@ onTopicBlur = () => {
         profile_image: response_profile.data[0].profile_image
 
       }); 
+    
     } 
     console.log("q3wsffse");
     console.log(response_profile.data);
