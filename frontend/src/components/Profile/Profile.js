@@ -19,6 +19,17 @@ const customStyles = {
   }
 };
 
+const customStylesTopics = {
+   content: {
+     top: "50%",
+     left: "50%",
+     right: "auto",
+     bottom: "auto",
+     marginRight: "-50%",
+     transform: "translate(-50%, -50%)"
+   }
+ };
+
 Modal.setAppElement("#root");
 
 var response_profile;
@@ -28,6 +39,7 @@ class Profile extends Component {
     this.state = {
       open: false,
       modalIsOpen: false,
+      topicsModalIsOpen: false,
       questions: [],
       showList: false,
       activityType: "",
@@ -68,6 +80,16 @@ class Profile extends Component {
    closeModal() {
      console.log("in close model")
     this.setState({ modalIsOpen: false });
+  }
+
+  topicsOpenModal = (e) => {
+    e.preventDefault();
+    this.setState({ topicsModalIsOpen: true });
+  }
+
+  topicsCloseModal = () => {
+    console.log("in close model")
+    this.setState({ topicsModalIsOpen: false });
   }
 
 
@@ -5592,6 +5614,33 @@ class Profile extends Component {
                                         </div>
                                       </div>
                                     </Modal>
+                                    
+                                   
+        <Modal
+          isOpen={this.state.topicsModalIsOpen}
+          onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.topicsCloseModal}
+          style={customStylesTopics}
+          contentLabel="Example Modal"
+        >
+
+          <h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>
+          <button onClick={this.topcisCloseModal}>close</button>
+          <div>I am a modal</div>
+          <form>
+            <input />
+            <button>tab navigation</button>
+            <button>stays</button>
+            <button>inside</button>
+            <button>the modal</button>
+          </form>
+        </Modal>
+
+
+
+
+
+
                                   </span>
                                 </span>
                               </span>
@@ -5647,10 +5696,11 @@ class Profile extends Component {
                           </div>
                         </div>
                       </h3>
-                      <a
+                      <Link
                         className="add_experience_cta"
                         href="#"
                         id="__w2_wYSVVNEt48_modal_link"
+                        onClick={this.topicsOpenModal}
                       >
                         <div className="add_icon_wrapper">
                           <div className="ui_icon_badge u-relative u-flex-none u-flex u-flex-align--center u-flex-justify--center ui_icon_badge_size--fluid u-border-radius--ellipse ui_icon_badge_color--blue">
@@ -5682,7 +5732,7 @@ class Profile extends Component {
                           </div>
                         </div>
                         What topics do you know about?
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>

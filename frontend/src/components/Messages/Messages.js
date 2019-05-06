@@ -9,12 +9,9 @@ class Messages extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userID: this.props.match.params.id,
-      topic: "",
-      body: "",
+      userID: this.props.auth.user.email,
       inbox: [],
       subInbox: [],
-      receiver_username: "",
       authFlag: true,
       startIndex: 0,
       currentPage: 1,
@@ -24,13 +21,13 @@ class Messages extends Component {
 
   async componentDidMount() {
     await axios
-      .get(
-        rooturl +
-          "/messages/getMessages?receiver_email=" +
-          this.props.auth.user.email
-      )
+      .get(rooturl + "/messages/getMessages/" + this.props.auth.user.email)
       .then(response => {
-        //update the state with the response data
+        //update the state with the response
+        console.log(
+          rooturl + "/messages/getMessages/" + this.props.auth.user.email
+        );
+        console.log("response", response);
 
         var firstInbox = response.data.filter(message => {
           var index = response.data.indexOf(message);
@@ -65,24 +62,6 @@ class Messages extends Component {
         });
         console.log("inbox:", this.state.inbox);
       });
-  };
-
-  usernameChangeHandler = e => {
-    this.setState({
-      receiver_username: e.target.value
-    });
-  };
-
-  topicChangeHandler = e => {
-    this.setState({
-      topic: e.target.value
-    });
-  };
-  //password change handler to update state variable with the text entered by the user
-  bodyChangeHandler = e => {
-    this.setState({
-      body: e.target.value
-    });
   };
 
   handlegotoMessage = messageID => {
@@ -125,55 +104,15 @@ class Messages extends Component {
     }
   };
 
-  submit = e => {
-    e.preventDefault();
-    const data = {
-      userID: this.state.userID,
-      topic: this.state.topic,
-      body: this.state.body,
-      receiver_username: this.state.receiver_username
-    };
-
-    //set the with credentials to true
-    axios.defaults.withCredentials = true;
-    //make a post request with the user data
-    axios
-      .post("http://" + rooturl + ":3001/sendMessage", data)
-      .then(response => {
-        console.log("Status Code in frontend : ", response.status);
-        if (response.status === 200) {
-          this.handleStateUpdate();
-          this.setState({
-            authFlag: true
-          });
-        } else {
-          this.setState({
-            authFlag: false
-          });
-        }
-      })
-      .catch(err => {
-        if (err) {
-          this.setState({
-            authFlag: false,
-            topic: "",
-            body: "",
-            receiver_username: ""
-          });
-          console.log("Error message catch1:", err);
-        }
-      });
-  };
-
   render() {
     let inboxList = null;
 
     inboxList = this.state.subInbox.map((ans, index) => {
       return (
         <tr key={index}>
-          <td>{ans.sender_name}</td>
-          <td>{ans.topic}</td>
-          <td>{ans.body}</td>
+          <td>{ans.sender_email}</td>
+          <td>{ans.subject}</td>
+          <td>{ans.message}</td>
           <button onClick={() => this.handlegotoMessage(ans._id.str)}>
             check
           </button>
@@ -195,47 +134,137 @@ class Messages extends Component {
             "ui_icon ui_icon_color--red ui_icon_size--regular ui_icon_outline--filled"
           }
         />
-        <div class="container">
-          <h2>Inbox for user {this.state.userID}</h2>
-          <table class="table">
-            <thead>
-              <tr>
-                <th>From</th>
-                <th>Topic</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/*Display the Tbale row based on data recieved*/}
-              {inboxList}
-            </tbody>
-            <div className="pagination-container center-content">
-              <span className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pad-bot-10">
-                <button
-                  className="btn btn-primary btn-lg"
-                  id="prev"
-                  onClick={this.handlePagination}
-                >
-                  Prev
-                </button>
-              </span>
-              <span className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pad-bot-10">
-                <button
-                  className="btn btn-primary btn-lg"
-                  id="next"
-                  onClick={this.handlePagination}
-                >
-                  Next
-                </button>
-              </span>
+
+        <div className="ContentWrapper">
+          <div id="__w2_wsawratU13_content">
+            <div className="UserContentMain">
+              <div className="grid_page">
+                <div className="layout_3col_left">
+                  <div className="UserContentFilters">
+                    <div className="UserContentFilter UserContentFilterContentType">
+                      <h3>Messages</h3>
+                      <ul id="__w2_wsawratU25_filter_links">
+                        <li className="filter_option">
+                          <Link
+                            className="selected filter_option_link"
+                            to={`/messages/${this.props.auth.user.email}`}
+                          >
+                            Inbox
+                          </Link>
+                        </li>
+
+                        <li className="filter_option">
+                          <Link
+                            className=" filter_option_link"
+                            to={{
+                              pathname: "/content",
+                              search: "?activityType=QuestionAsked"
+                            }}
+                          >
+                            Sent
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div className="layout_3col_center">
+                  <h3>Your Messages</h3>
+                  <div className="user_content_list_section">
+                    <div id="__w2_wsawratU18_list_wrapper">
+                      <div
+                        className="PagedList UserContentList"
+                        id="wsawratU23"
+                      >
+                        {true ? (
+                          <div>
+                            {this.state.subInbox.map(question => (
+                              <div className="pagedlist_item" id="wzr1YmKw2">
+                                <div className="PagedListItem UserContentListItem">
+                                  <span className="title">
+                                    <span id="wzr1YmKw6">
+                                      <Link
+                                        className="question_link"
+                                        to={`/question/${
+                                          question.sender_email
+                                        }`}
+                                        target="_top"
+                                        action_mousedown="QuestionLinkClickthrough"
+                                        id="__w2_wzr1YmKw7_link"
+                                      >
+                                        <span className="ui_content_title unstyled_ui_title">
+                                          <span className="ui_qtext_rendered_qtext">
+                                            {question.message}
+                                          </span>
+                                        </span>
+                                      </Link>
+                                    </span>
+                                  </span>
+                                  <div className="metadata">
+                                    {question.time}
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        ) : null}
+                        <div id="wzr1YmKw4">
+                          <div
+                            className="PagedListMoreButton"
+                            id="__w2_wzr1YmKw5_paged_list_more_button"
+                          >
+                            <div
+                              className="pager_next"
+                              id="__w2_wzr1YmKw5_loading"
+                            >
+                              <div className="__wn2_loading">
+                                <span className="__wn2_loading_spinner" />
+                              </div>
+                            </div>
+                            <div
+                              className="pager_next action_button row hidden"
+                              id="__w2_wzr1YmKw5_more"
+                            >
+                              More
+                            </div>
+                            <div
+                              className="pager_sentinel"
+                              id="__w2_wzr1YmKw5_sentinel"
+                            />
+                          </div>
+                          <div className="pagination-container center-content">
+                            <span className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pad-bot-10">
+                              <button
+                                className="btn btn-primary btn-lg"
+                                id="prev"
+                                onClick={this.handlePagination}
+                              >
+                                Prev
+                              </button>
+                            </span>
+                            <span className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pad-bot-10">
+                              <button
+                                className="btn btn-primary btn-lg"
+                                id="next"
+                                onClick={this.handlePagination}
+                              >
+                                Next
+                              </button>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </table>
+          </div>
         </div>
       </div>
     );
   }
 }
-
 const mapStateToProps = state => ({
   auth: state.auth,
   errors: state.errors
