@@ -10,7 +10,7 @@ class EditAnswer extends Component {
   };
 
   componentWillMount() {
-    let answer_id = 382462; //this.props.state.answer_id;
+    let answer_id = this.props.location.state.answer_id;
     axios.get("/answer", { params: { answer_id: answer_id } }).then(res => {
       this.setState({
         answer: res.data
@@ -23,7 +23,7 @@ class EditAnswer extends Component {
       .put("/answer", {
         currentElem: document.getElementById("editable").outerHTML,
         question_id: this.state.question,
-        owner: this.props.auth.user.email
+        answer_id: this.props.location.state.answer_id
       })
       .then(res => {
         console.log("res....", res.data);
