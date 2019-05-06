@@ -218,6 +218,15 @@ class Dashboard extends Component {
         "&pageNo=" +
         this.state.pageNo
     );
+
+    let response_profile = await axios.get(
+      rooturl + "/profile/image?email=" + this.props.auth.user.email
+    );
+    console.log("response profile..........", response_profile.data);
+    if (response_profile.data) {
+      localStorage.setItem("profileImg", response_profile.data);
+    }
+
     response = await axios.get(
       rooturl + "/topic/getUserTopic/" + this.props.auth.user.email
     );

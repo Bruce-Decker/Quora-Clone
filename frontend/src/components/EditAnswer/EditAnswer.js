@@ -1985,7 +1985,9 @@ class EditAnswer extends Component {
                                                           <span className="ui_avatar u-flex-inline ui_avatar--large u-flex-none">
                                                             <img
                                                               className="ui_avatar_photo ui_avatar--border-circular"
-                                                              src="https://qph.fs.quoracdn.net/main-thumb-135803-100-hfwmdtdhabdgeqjarswxljarsjkomepm.jpeg"
+                                                              src={localStorage.getItem(
+                                                                "profileImg"
+                                                              )}
                                                               alt="Brian Lee"
                                                             />
                                                           </span>
@@ -2798,7 +2800,6 @@ class EditAnswer extends Component {
               </div>
             </div>
           </div>
-          )}
         </div>
       </div>
     );
