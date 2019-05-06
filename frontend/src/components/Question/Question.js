@@ -72,6 +72,10 @@ class Question extends Component {
       .catch(err => console.log(err));
   };
 
+  updateAnswer = () => {
+    console.log("hello");
+  };
+
   upvoteHandler = opts => {
     console.log("aaaaa........", opts);
     var upvote = this.state.upvote;
@@ -3174,12 +3178,19 @@ class Question extends Component {
                                                                   >
                                                                     Bookmark
                                                                   </button>
-                                                                  {console.log(
-                                                                    "aaaa....",
-                                                                    answer,
-                                                                    this.props
-                                                                      .auth.user
-                                                                      .email
+                                                                  {flagVar ? (
+                                                                    <button
+                                                                      onClick={() => {
+                                                                        this.updateAnswer(
+                                                                          answer.answer_id
+                                                                        );
+                                                                      }}
+                                                                    >
+                                                                      Submit
+                                                                      Answer
+                                                                    </button>
+                                                                  ) : (
+                                                                    ""
                                                                   )}
                                                                 </div>
                                                               </div>

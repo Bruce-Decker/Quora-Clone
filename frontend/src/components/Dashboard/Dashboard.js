@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import default_image from "./default.png";
 import rooturl from "../../utility/url";
 // var dashboard_questions
-import Modal from 'react-modal';
+import Modal from "react-modal";
 
 // const customStyles = {
 //   content : {
@@ -35,8 +35,7 @@ import Modal from 'react-modal';
 //   }
 // };
 
-Modal.setAppElement('#root')
-
+Modal.setAppElement("#root");
 
 var dashboard_questions;
 var response;
@@ -53,7 +52,7 @@ class Dashboard extends Component {
       showHyperlink: false,
       hyperlink: "",
       showImage: false,
-      selectedFile: null,
+      selectedFile: null
       // modalIsOpen: false,
       // messageModalIsOpen: false
     };
@@ -67,12 +66,9 @@ class Dashboard extends Component {
     this.handleUpload = this.handleUpload.bind(this);
     this.cancelImage = this.cancelImage.bind(this);
 
-
     // this.openModal = this.openModal.bind(this);
     // this.afterOpenModal = this.afterOpenModal.bind(this);
     // this.closeModal = this.closeModal.bind(this);
-
-   
   }
 
   // openModal() {
@@ -88,8 +84,6 @@ class Dashboard extends Component {
   //   this.setState({modalIsOpen: false});
   // }
 
-
-
   // openMessageModal = () => {
   //   this.setState({messageModalIsOpen: true});
   // }
@@ -103,102 +97,98 @@ class Dashboard extends Component {
   //   this.setState({messageModalIsOpen: false});
   // }
 
-
-
-
-
   handleselectedFile = event => {
-   this.setState({
-     selectedFile: event.target.files[0],
-     loaded: 0
-   });
- };
+    this.setState({
+      selectedFile: event.target.files[0],
+      loaded: 0
+    });
+  };
 
- handleUpload = () => {
-   const fileURL = URL.createObjectURL(this.state.selectedFile);
+  handleUpload = () => {
+    const fileURL = URL.createObjectURL(this.state.selectedFile);
 
-   const data = new FormData();
-   data.append("image", this.state.selectedFile, this.state.selectedFile.name);
-   axios.post("/answer/upload", data, {}).then(res => {
-     console.log(res.data.imageUrl);
-     var x = document.createElement("img");
-     x.setAttribute("height", "300px");
-     x.setAttribute("weight", "300px");
-     x.src = res.data.imageUrl;
-     document.getElementById("editable").appendChild(x);
-   });
- };
+    const data = new FormData();
+    data.append("image", this.state.selectedFile, this.state.selectedFile.name);
+    axios.post("/answer/upload", data, {}).then(res => {
+      console.log(res.data.imageUrl);
+      var x = document.createElement("img");
+      x.setAttribute("height", "300px");
+      x.setAttribute("weight", "300px");
+      x.src = res.data.imageUrl;
+      document.getElementById("editable").appendChild(x);
+    });
+  };
 
- // componentWillMount() {
- //   axios.get("/answer", { params: { answer_id: "985865" } }).then(res => {
- //     document.getElementById("editable").outerHTML = res.data.answerContent;
- //   });
- // }
+  // componentWillMount() {
+  //   axios.get("/answer", { params: { answer_id: "985865" } }).then(res => {
+  //     document.getElementById("editable").outerHTML = res.data.answerContent;
+  //   });
+  // }
 
- test = () => {
-    alert("test")
- }
+  test = () => {
+    alert("test");
+  };
 
- answerHandler = e => {
-   console.log(e)
-    
-   this.setState({
-     currentElem: document.getElementById("editable").outerHTML
-   });
-   axios
-     .post("/answer", {
-       currentElem: document.getElementById("editable").outerHTML,
-       question_id: e
-     })
-     .then(res => {
-       console.log("res....", res.data);
-       window.location.reload()
-     });
- };
+  answerHandler = e => {
+    console.log(e);
 
- addHyperlink = e => {
-   if (this.state.hyperlink) {
-     let editable = document.getElementById("editable");
-     var aTag = document.createElement("a");
-     aTag.setAttribute("href", this.state.hyperlink);
-     aTag.innerHTML = this.state.hyperlink;
-     editable.appendChild(aTag);
-     this.setState({
-       showHyperlink: false
-     });
-   }
- };
+    this.setState({
+      currentElem: document.getElementById("editable").outerHTML
+    });
+    axios
+      .post("/answer", {
+        currentElem: document.getElementById("editable").outerHTML,
+        question_id: e,
+        owner: this.props.auth.user.email
+      })
+      .then(res => {
+        console.log("res....", res.data);
+        window.location.reload();
+      });
+  };
 
- editHyperLink = e => {
-   this.setState({
-     hyperlink: e.target.value
-   });
- };
+  addHyperlink = e => {
+    if (this.state.hyperlink) {
+      let editable = document.getElementById("editable");
+      var aTag = document.createElement("a");
+      aTag.setAttribute("href", this.state.hyperlink);
+      aTag.innerHTML = this.state.hyperlink;
+      editable.appendChild(aTag);
+      this.setState({
+        showHyperlink: false
+      });
+    }
+  };
 
- cancelHyperlink = e => {
-   this.setState({
-     showHyperlink: false
-   });
- };
+  editHyperLink = e => {
+    this.setState({
+      hyperlink: e.target.value
+    });
+  };
 
- hyperlinkHandler = e => {
-   this.setState({
-     showHyperlink: true
-   });
- };
+  cancelHyperlink = e => {
+    this.setState({
+      showHyperlink: false
+    });
+  };
 
- imageHandler = e => {
-   this.setState({
-     showImage: true
-   });
- };
+  hyperlinkHandler = e => {
+    this.setState({
+      showHyperlink: true
+    });
+  };
 
- cancelImage = e => {
-   this.setState({
-     showImage: false
-   });
- };
+  imageHandler = e => {
+    this.setState({
+      showImage: true
+    });
+  };
 
+  cancelImage = e => {
+    this.setState({
+      showImage: false
+    });
+  };
 
   onClick = keyId => {
     this.setState({
@@ -208,7 +198,6 @@ class Dashboard extends Component {
   };
 
   async componentDidMount() {
-   
     // var response = await axios.get('/topic/getUserTopic/' +  this.props.auth.user.email)
     dashboard_questions = await axios.get(
       rooturl + "/question/dashboard/?email=" + this.props.auth.user.email
@@ -216,7 +205,6 @@ class Dashboard extends Component {
     response = await axios.get(
       rooturl + "/topic/getUserTopic/" + this.props.auth.user.email
     );
-   
 
     if (response.data.topics) {
       this.setState({
@@ -225,15 +213,14 @@ class Dashboard extends Component {
       });
     }
 
-    
-    console.log(dashboard_questions.data)
+    console.log(dashboard_questions.data);
 
     if (dashboard_questions.data) {
       this.setState({
         //questions: dashboard_questions.data.docs,
         showQuestions: true
       });
-     
+
       console.log(dashboard_questions.data.docs[0].question);
     }
   }
@@ -252,23 +239,9 @@ class Dashboard extends Component {
           }
           Spaces={"nav_item_link"}
           Notifications={"nav_item_link"}
-          openModal = {this.openModal}
-          openMessageModal = {this.openMessageModal}
+          openModal={this.openModal}
+          openMessageModal={this.openMessageModal}
         />
-
-
-
-
-
-
-
-
-
-
-
-   
-
-      
 
         <div id="__w2_w2OzgLAU3_body_blur" />
         <div id="__w2_w2OzgLAU3_full_body_blur" />
@@ -1332,7 +1305,7 @@ class Dashboard extends Component {
                                                                 version="1.1"
                                                                 xmlns="http://www.w3.org/2000/svg"
                                                                 xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                             >
+                                                              >
                                                                 <g
                                                                   id="italicize"
                                                                   stroke="none"
@@ -1373,7 +1346,10 @@ class Dashboard extends Component {
                                                                 version="1.1"
                                                                 xmlns="http://www.w3.org/2000/svg"
                                                                 xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                                onClick = {this.imageHandler}
+                                                                onClick={
+                                                                  this
+                                                                    .imageHandler
+                                                                }
                                                               >
                                                                 <defs>
                                                                   <path
@@ -1435,7 +1411,11 @@ class Dashboard extends Component {
                                                                 version="1.1"
                                                                 xmlns="http://www.w3.org/2000/svg"
                                                                 xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                                onClick={this.hyperlinkHandler} >
+                                                                onClick={
+                                                                  this
+                                                                    .hyperlinkHandler
+                                                                }
+                                                              >
                                                                 <g
                                                                   id="link"
                                                                   stroke="none"
@@ -1452,10 +1432,8 @@ class Dashboard extends Component {
 
                                                               <div>
                                                                 <div
-                                                                 
                                                                   data-group="js-editable"
                                                                   w2cid="w1SM6R3W27"
-                                                                 
                                                                 >
                                                                   <div
                                                                     className="doc empty"
@@ -1474,52 +1452,82 @@ class Dashboard extends Component {
                                                                       id="editable"
                                                                       contentEditable="true"
                                                                     >
-
-                                                                  
-                                                                    
-                                                                     
-                                                                   
                                                                       <div className="content">
-                                                                          <br />
-                                                                        </div>
-                                                                        </div>
-                                                                    
+                                                                        <br />
+                                                                      </div>
+                                                                    </div>
                                                                   </div>
                                                                 </div>
-                                                                {this.state.showHyperlink == true ? (
-          <div class="d-flex justify-content-between align-items-center w-100">
-            <input
-              onChange={this.editHyperLink}
-              type="text"
-              name="hyperlink"
-              placeholder="Add Hyperlink"
-            />
-            <button onClick={this.addHyperlink} class="btn btn-primary">
-              Add
-            </button>
-            <button onClick={this.cancelHyperlink} class="btn btn-primary">
-              Cancel
-            </button>
-          </div>
-        ) : (
-          ""
-        )}
-                                                                        {this.state.showImage == true ? (
-          <div className="d-flex justify-content-between align-items-center w-100">
-            <div>
-              <input
-                type="file"
-                name="studentFile"
-                id="studentFile"
-                onChange={this.handleselectedFile}
-              />
-              <button onClick={this.handleUpload}>Upload</button>
-              <button onClick={this.cancelImage}>Cancel</button>
-            </div>
-          </div>
-        ) : (
-          ""
-        )}
+                                                                {this.state
+                                                                  .showHyperlink ==
+                                                                true ? (
+                                                                  <div class="d-flex justify-content-between align-items-center w-100">
+                                                                    <input
+                                                                      onChange={
+                                                                        this
+                                                                          .editHyperLink
+                                                                      }
+                                                                      type="text"
+                                                                      name="hyperlink"
+                                                                      placeholder="Add Hyperlink"
+                                                                    />
+                                                                    <button
+                                                                      onClick={
+                                                                        this
+                                                                          .addHyperlink
+                                                                      }
+                                                                      class="btn btn-primary"
+                                                                    >
+                                                                      Add
+                                                                    </button>
+                                                                    <button
+                                                                      onClick={
+                                                                        this
+                                                                          .cancelHyperlink
+                                                                      }
+                                                                      class="btn btn-primary"
+                                                                    >
+                                                                      Cancel
+                                                                    </button>
+                                                                  </div>
+                                                                ) : (
+                                                                  ""
+                                                                )}
+                                                                {this.state
+                                                                  .showImage ==
+                                                                true ? (
+                                                                  <div className="d-flex justify-content-between align-items-center w-100">
+                                                                    <div>
+                                                                      <input
+                                                                        type="file"
+                                                                        name="studentFile"
+                                                                        id="studentFile"
+                                                                        onChange={
+                                                                          this
+                                                                            .handleselectedFile
+                                                                        }
+                                                                      />
+                                                                      <button
+                                                                        onClick={
+                                                                          this
+                                                                            .handleUpload
+                                                                        }
+                                                                      >
+                                                                        Upload
+                                                                      </button>
+                                                                      <button
+                                                                        onClick={
+                                                                          this
+                                                                            .cancelImage
+                                                                        }
+                                                                      >
+                                                                        Cancel
+                                                                      </button>
+                                                                    </div>
+                                                                  </div>
+                                                                ) : (
+                                                                  ""
+                                                                )}
                                                               </div>
 
                                                               <hr />
@@ -1528,7 +1536,11 @@ class Dashboard extends Component {
                                                                 className="submit_button"
                                                                 action_mousedown="InlineEditorAnswerAdd"
                                                                 id="__w2_w1SM6R3W26_inline_editor_submit"
-                                                                onClick={() => this.answerHandler(question.question_id)}
+                                                                onClick={() =>
+                                                                  this.answerHandler(
+                                                                    question.question_id
+                                                                  )
+                                                                }
                                                               >
                                                                 Submit
                                                               </button>
@@ -1607,44 +1619,6 @@ class Dashboard extends Component {
                                       className="feedback_wrapper hidden negative_action"
                                       id="__w2_wIrMUyjy8_negative_feedback_message"
                                     />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                                   </div>
                                 </div>
                               </div>
@@ -1667,7 +1641,6 @@ class Dashboard extends Component {
                                       className="feedback_wrapper hidden"
                                       id="__w2_w281EJmN8_question_feedback"
                                     />
-                                    
                                   </div>
                                 </div>
                               </div>
@@ -1695,9 +1668,7 @@ class Dashboard extends Component {
                       <div
                         className="spinner_display_area"
                         id="__w2_w2OzgLAU9_spinner"
-                      >
-                       
-                      </div>
+                      />
                     </div>
                     <div id="wnuFD7sM21" />
                   </div>
