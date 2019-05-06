@@ -351,9 +351,10 @@ function createanswer(msg, callback) {
   msg = msg.body;
   let currentElem = msg.currentElem;
   let question_id = msg.question_id;
+  let owner = msg.owner;
   Question.findOneAndUpdate(
     { question_id: question_id },
-    { $push: { answers: { answerContent: currentElem } } }
+    { $push: { answers: { answerContent: currentElem, owner: owner } } }
   )
     .then(data => {
       return callback(null, msg.body);
