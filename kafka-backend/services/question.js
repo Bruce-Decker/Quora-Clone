@@ -33,8 +33,10 @@ exports.questionService = function questionService(info, callback) {
 
 function getTopicQuestions(info,callback)
 {
+  console.log("jaksgdkag")
+  console.log(info.message)
   Question.find(
-    { topics: { $in: info.topic } },
+    { topics: {$in:info.message.topic } },
 
     (err, questions) => {
       if (err) {
@@ -158,6 +160,7 @@ function dashboardQuestion(info, callback) {
     sort: { postedDate: -1 }
   };
   var email = info.message.email;
+  if(email){
   Profile.findOne({ email: email }, function(err, userTopics) {
     console.log(userTopics);
     if (userTopics) {
@@ -182,7 +185,11 @@ function dashboardQuestion(info, callback) {
         }
       );
       // });
-    } else {
+    }
+  }
+  );
+  }
+    else {
       Question.paginate({}, options, (err, questions) => {
         if (err) {
           callback(err, null);
@@ -191,7 +198,7 @@ function dashboardQuestion(info, callback) {
         }
       });
     }
-  });
+  
 }
 
 function followQuestion(info, callback) {
