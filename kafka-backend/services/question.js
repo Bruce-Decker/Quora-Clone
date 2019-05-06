@@ -200,8 +200,7 @@ function followQuestion(info, callback) {
   var email = info.body.email;
   var question_id = info.body.question_id;
   var data = {
-    email: email,
-    time: new Date().toLocaleString()
+    email: email
   };
 
   Question.findOneAndUpdate(
@@ -228,7 +227,7 @@ function unfollowQuestion(info, callback) {
 
   Question.findOneAndUpdate(
     { question_id: question_id },
-    { $pull: { followers: email } },
+    { $pull: { followers: data } },
     function(error, result) {
       if (error) {
         callback(error, "error");
