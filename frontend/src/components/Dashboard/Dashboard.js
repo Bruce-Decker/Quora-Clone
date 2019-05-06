@@ -221,7 +221,7 @@ class Dashboard extends Component {
     if (response.data.topics) {
       this.setState({
         topics: response.data.topics,
-        showQuestions: true
+        
       });
     }
 
@@ -486,6 +486,13 @@ class Dashboard extends Component {
                                       className="feedback_wrapper hidden negative_action"
                                       id="__w2_whIqsbBW17_negative_feedback_message"
                                     />
+
+
+
+
+
+
+
                                     <div id="__w2_whIqsbBW17_item">
                                       {this.state.showQuestions ? (
                                         <div>
@@ -1545,6 +1552,35 @@ class Dashboard extends Component {
                                         </div>
                                       ) : null}
                                     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                   </div>
                                 </div>
                               </div>
