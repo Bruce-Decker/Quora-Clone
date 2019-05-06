@@ -13,6 +13,9 @@ exports.graphService = function graphService(info, callback) {
     case "profileView":
       profileView(info, callback);
       break;
+    case "answerViews":
+      answerViewsGraph(info, callback);
+      break;
   }
 };
 
@@ -190,4 +193,36 @@ function profileView(info, callback) {
       callback(err, "error");
     }
   });
+}
+
+function answerViewsGraph(info,callback)
+{
+  console.log(info.message)
+  Question.find(
+    {},
+    (err, questions) => {
+      if (err) {
+        callback(err, null);
+      } else {  
+        var answerViewMap = [];
+          for(let i =0 ; i < questions.length; i++){
+              if(questions[i].answers && questions[i].answers.length>0){
+                let currentAnswersList = questions[i].answers;
+                for(let j =0 ; j<currentAnswersList.length; j++ ){
+                    let answer_id = currentAnswersList[j].answer_id;
+                    if(currentAnswersList[j].views) {
+                      answerViewMap.push({"answer_id":answer_id, "viewsCount":currentAnswersList[j].views,"answerContent":currentAnswersList[j].answerContent});
+                    }
+                      
+                }
+              }
+          }
+          answerViewMap.sort((a,b) => (a.viewsCount < b.viewsCount) ? 1 : ((b.viewsCount < a.viewsCount) ? -1 : 0));
+          
+          console.log(answerViewMap);
+          
+        callback(null, answerViewMap);
+      }
+    }
+  );
 }
