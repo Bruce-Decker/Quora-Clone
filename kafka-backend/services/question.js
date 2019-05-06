@@ -200,12 +200,13 @@ function followQuestion(info, callback) {
   var email = info.body.email;
   var question_id = info.body.question_id;
   var data = {
-    email: email
+    email: email,
+    time: new Date().toLocaleString()
   };
 
   Question.findOneAndUpdate(
     { question_id: question_id },
-    { $push: { followers: email } },
+    { $push: { followers: data } },
     (error, result) => {
       if (error) {
         callback(error, "error");
