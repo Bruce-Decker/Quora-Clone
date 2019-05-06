@@ -52,7 +52,9 @@ class Dashboard extends Component {
       showHyperlink: false,
       hyperlink: "",
       showImage: false,
-      selectedFile: null
+      selectedFile: null,
+      pageNo: 1,
+      pageTotal: 0
       // modalIsOpen: false,
       // messageModalIsOpen: false
     };
@@ -65,6 +67,7 @@ class Dashboard extends Component {
     this.handleselectedFile = this.handleselectedFile.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
     this.cancelImage = this.cancelImage.bind(this);
+    this.handlePagination = this.handlePagination.bind(this);
 
     // this.openModal = this.openModal.bind(this);
     // this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -199,8 +202,21 @@ class Dashboard extends Component {
 
   async componentDidMount() {
     // var response = await axios.get('/topic/getUserTopic/' +  this.props.auth.user.email)
+    console.log(
+      "question URL:",
+      rooturl +
+        "/question/dashboard/?email=" +
+        this.props.auth.user.email +
+        "&pageNo=" +
+        this.state.pageNo
+    );
+
     dashboard_questions = await axios.get(
-      rooturl + "/question/dashboard/?email=" + this.props.auth.user.email
+      rooturl +
+        "/question/dashboard/?email=" +
+        this.props.auth.user.email +
+        "&pageNo=" +
+        this.state.pageNo
     );
     response = await axios.get(
       rooturl + "/topic/getUserTopic/" + this.props.auth.user.email
@@ -217,10 +233,76 @@ class Dashboard extends Component {
     if (dashboard_questions.data) {
       this.setState({
         //questions: dashboard_questions.data.docs,
-        showQuestions: true
+        showQuestions: true,
+        pageTotal: dashboard_questions.data.pages
       });
 
-      console.log(dashboard_questions.data.docs[0].question);
+      console.log(
+        dashboard_questions.data.docs[0].question,
+        this.state.pageNo,
+        this.state.pageTotal
+      );
+    }
+  }
+
+  async handlePagination(event) {
+    var target = event.target;
+    var id = target.id;
+    var flag = true;
+    console.log("SI", this.state.pageNo, this.state.pageTotal);
+    if (id == "prev") {
+      console.log("SI", this.state.pageNo);
+      if (this.state.pageNo > 1) {
+        await this.setState({
+          pageNo: this.state.pageNo - 1,
+          showQuestions: true
+        });
+        dashboard_questions = await axios.get(
+          rooturl +
+            "/question/dashboard/?email=" +
+            this.props.auth.user.email +
+            "&pageNo=" +
+            this.state.pageNo
+        );
+        if (dashboard_questions.data) {
+          this.setState({
+            //questions: dashboard_questions.data.docs,
+            showQuestions: true
+          });
+        }
+      } else {
+        flag = false;
+        this.setState({
+          pageNo: 1,
+          showQuestions: true
+        });
+      }
+    } else {
+      if (this.state.pageNo < this.state.pageTotal) {
+        await this.setState({
+          pageNo: this.state.pageNo + 1,
+          showQuestions: true
+        });
+        dashboard_questions = await axios.get(
+          rooturl +
+            "/question/dashboard/?email=" +
+            this.props.auth.user.email +
+            "&pageNo=" +
+            this.state.pageNo
+        );
+        if (dashboard_questions.data) {
+          this.setState({
+            //questions: dashboard_questions.data.docs,
+            showQuestions: true
+          });
+        }
+      } else {
+        flag = false;
+        this.setState({
+          pageNo: this.state.pageTotal,
+          showQuestions: true
+        });
+      }
     }
   }
 
@@ -1556,6 +1638,26 @@ class Dashboard extends Component {
                                           )}
                                         </div>
                                       ) : null}
+                                    </div>
+                                    <div className="pagination-container center-content">
+                                      <span className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pad-bot-10">
+                                        <button
+                                          className="btn btn-primary btn-lg"
+                                          id="prev"
+                                          onClick={this.handlePagination}
+                                        >
+                                          Prev
+                                        </button>
+                                      </span>
+                                      <span className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pad-bot-10">
+                                        <button
+                                          className="btn btn-primary btn-lg"
+                                          id="next"
+                                          onClick={this.handlePagination}
+                                        >
+                                          Next
+                                        </button>
+                                      </span>
                                     </div>
                                   </div>
                                 </div>

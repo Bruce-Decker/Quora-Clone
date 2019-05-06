@@ -304,11 +304,16 @@ function getanswer(msg, callback) {
   Question.find({ "answers.answer_id": answer_id })
     .then(data => {
       if (!data.length) return callback({ msg: "No answer found" });
+      let resp;
       let answers = data[0].answers;
       let answer = answers.filter(function(answer) {
         if (answer.answer_id == answer_id) return true;
       });
-      return callback(null, answer[0]);
+      resp = data[0];
+      resp["question"] = data[0].question;
+      resp["question_id"] = data[0].question_id;
+      console.log(".....resp......", data[0]);
+      return callback(null, resp);
     })
     .catch(err => {
       return callback(err);
