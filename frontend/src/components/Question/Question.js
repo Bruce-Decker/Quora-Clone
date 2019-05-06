@@ -18,7 +18,8 @@ class Question extends Component {
       comment: "",
       upvote: 0,
       downvote: 0,
-      bookmark: 0
+      bookmark: 0,
+      flagVar: false
     };
 
     this.upvoteHandler = this.upvoteHandler.bind(this);
@@ -27,6 +28,7 @@ class Question extends Component {
   }
 
   async componentDidMount() {
+    console.log("email.......", this.props.auth.user.email);
     var response = await axios.get(
       rooturl + "/question/getQuestion/" + this.props.match.params.question_id
     );
@@ -49,52 +51,50 @@ class Question extends Component {
     console.log(response.data);
   }
 
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
-    onChange = (e) => {
-       
-        this.setState({[e.target.name]: e.target.value})
-    }
+  onClick = (email, answer_id) => {
+    var comment = this.state.comment;
+    var data = {
+      email,
+      answer_id,
+      comment,
+      question_id: this.props.match.params.question_id
+    };
 
-    onClick = (email, answer_id) => {
-     
-      var comment = this.state.comment
-      var data = {
-          email,
-          answer_id,
-          comment,
-          question_id: this.props.match.params.question_id
-      }
-     
+    axios
+      .post(rooturl + "/answer/comment", data)
+      .then(res => {
+        window.location.reload();
+      })
+      .catch(err => console.log(err));
+  };
 
-      axios.post(rooturl + '/answer/comment', data)
-         .then(res => {
-            
-             window.location.reload()
-         })
-         .catch(err => console.log(err))
-   
-       
-    }
-       
-   upvoteHandler = opts => {
-      console.log("aaaaa........",opts);
-      var upvote = this.state.upvote;
-      upvote = !upvote;
-      axios
-         .post(rooturl + "/answer/upvote",{
-            answerid: opts.answer_id,
-            email: opts.email,
+  updateAnswer = () => {
+    console.log("hello");
+  };
+
+  upvoteHandler = opts => {
+    console.log("aaaaa........", opts);
+    var upvote = this.state.upvote;
+    upvote = !upvote;
+    axios
+      .post(rooturl + "/answer/upvote", {
+        answerid: opts.answer_id,
+        email: opts.email,
+        upvote: upvote
+      })
+      .then(response => {
+        console.log("Status Code : ", response.status);
+        if (response.status === 200) {
+          this.setState({
             upvote: upvote
-         })
-         .then(response => {
-            console.log("Status Code : ",response.status);
-            if (response.status === 200) {
-               this.setState({
-                  upvote: upvote
-               });
-            }
-         })
-        };
+          });
+        }
+      });
+  };
 
   downvoteHandler = opts => {
     var downvote = this.state.downvote;
@@ -139,7 +139,7 @@ class Question extends Component {
   };
 
   // onClick = (email, answer_id, question_id) => {
-    
+
   //   var comment = this.state.comment;
   //   var data = {
   //     email,
@@ -171,6 +171,7 @@ class Question extends Component {
   //     }
   //   }
   render() {
+    var flagVar = false;
     return (
       <div>
         <Navbar
@@ -2510,6 +2511,20 @@ class Question extends Component {
                                       data-clog-event-type="ObjectView"
                                       data-clog-processed={1}
                                     >
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    
                                       <div id="wzwmJKBZ8">
                                         <a name="answer_104359258" />
 
@@ -2729,12 +2744,24 @@ class Question extends Component {
                                                                 <span className="ui_qtext_rendered_qtext">
                                                                   <div className="ui_qtext_image_outer" />
                                                                   {/* <p className="ui_qtext_para u-ltr u-text-align--start">{answer.answerContent}</p> */}
-
+                                                                  {
+                                                                    (flagVar =
+                                                                      answer.owner ==
+                                                                      this.props
+                                                                        .auth
+                                                                        .user
+                                                                        .email
+                                                                        ? true
+                                                                        : false)
+                                                                  }
                                                                   <div
                                                                     dangerouslySetInnerHTML={{
                                                                       __html:
                                                                         answer.answerContent
                                                                     }}
+                                                                    contentEditable={
+                                                                      flagVar
+                                                                    }
                                                                   />
                                                                 </span>
                                                               </div>
@@ -3165,6 +3192,20 @@ class Question extends Component {
                                                                   >
                                                                     Bookmark
                                                                   </button>
+                                                                  {flagVar ? (
+                                                                    <button
+                                                                      onClick={() => {
+                                                                        this.updateAnswer(
+                                                                          answer.answer_id
+                                                                        );
+                                                                      }}
+                                                                    >
+                                                                      Submit
+                                                                      Answer
+                                                                    </button>
+                                                                  ) : (
+                                                                    ""
+                                                                  )}
                                                                 </div>
                                                               </div>
                                                             </div>
@@ -3591,6 +3632,35 @@ class Question extends Component {
                                           </div>
                                         ))}
                                       </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                     </div>
                                   </div>
                                 </div>

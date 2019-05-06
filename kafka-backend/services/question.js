@@ -212,7 +212,7 @@ function followQuestion(info, callback) {
 
   Question.findOneAndUpdate(
     { question_id: question_id },
-    { $push: { followers: email } },
+    { $push: { followers: data } },
     (error, result) => {
       if (error) {
         callback(error, "error");
@@ -234,7 +234,7 @@ function unfollowQuestion(info, callback) {
 
   Question.findOneAndUpdate(
     { question_id: question_id },
-    { $pull: { followers: email } },
+    { $pull: { followers: data } },
     function(error, result) {
       if (error) {
         callback(error, "error");
