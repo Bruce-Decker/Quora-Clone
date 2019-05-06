@@ -90,7 +90,8 @@ class Profile extends Component {
       showProfile: false,
       showTopicSelection: false,
       topics: topics,
-      enteredTopicValue: ''
+      enteredTopicValue: '',
+      profile_image: './default.png'
     };
 
     this.openModal = this.openModal.bind(this);
@@ -318,9 +319,11 @@ onTopicBlur = () => {
       rooturl + "/profile/viewProfile?email=" + this.props.match.params.email
     );
     
-    if (response_profile.data) {
+    if (response_profile.data[0]) {
       this.setState({
-        showProfile: true
+        showProfile: true,
+        profile_image: response_profile.data[0].profile_image
+
       }); 
     } 
     console.log("q3wsffse");
@@ -372,21 +375,23 @@ onTopicBlur = () => {
                                 id="__w2_wYSVVNEt59_link"
                               >
                               {this.state.showProfile ?
+
+                              
                                   <img
                                   className="profile_photo_img"
-                                  src= {response_profile.data[0].profile_image}
+                                  src= {this.state.profile_image}
                                   alt="Bruce Decker"
                                   height={200}
                                   width={200}
                                 />
-                              :
+                                : 
                                 <img
-                                  className="profile_photo_img"
-                                  src={default_image}
-                                  alt="Bruce Decker"
-                                  height={200}
-                                  width={200}
-                                />
+                                className="profile_photo_img"
+                                src= {default_image}
+                                alt="Bruce Decker"
+                                height={200}
+                                width={200}
+                              />
                               }
                                 <span id="wYSVVNEt154" />
                               </span>
