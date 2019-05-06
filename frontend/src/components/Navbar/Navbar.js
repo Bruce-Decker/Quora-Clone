@@ -1160,7 +1160,7 @@ class Navbar extends Component {
             
              
             {this.state.topics.filter(searchingTopics(this.state.searchValue)).map(topic =>
-             <Link to = {`/topic/${topic.name}`}>
+             <Link to = {`/topic/${topic.name}`} onClick = {() => {console.log(this.props.location.pathname)}}>
                <li className="selector_result tribe" id="__w2_w4N3kpSm1_result_5">
                 
                   <div data-clog-trigger="impression" data-clog-metadata="{&quot;action_log_target&quot;: {&quot;type&quot;: 39, &quot;hash&quot;: &quot;1140612010|tribe|194|-1718384057|0&quot;}}" data-clog-event-type="ActionLogImpression" id="__w2_w4N3kpSm7_actionable" data-clog-processed={1}>

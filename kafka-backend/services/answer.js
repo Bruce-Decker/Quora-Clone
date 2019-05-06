@@ -304,15 +304,21 @@ function getanswer(msg, callback) {
   Question.find({ "answers.answer_id": answer_id })
     .then(data => {
       if (!data.length) return callback({ msg: "No answer found" });
-      let resp;
-      let answers = data[0].answers;
+      let resp = {};
+      let answers = data[0]._doc.answers;
       let answer = answers.filter(function(answer) {
         if (answer.answer_id == answer_id) return true;
       });
-      resp = data[0];
+      answer = answer[0];
       resp["question"] = data[0].question;
       resp["question_id"] = data[0].question_id;
-      console.log(".....resp......", data[0]);
+      resp["answer"] = {
+        answerContent: answer.answerContent,
+        owner: answer.owner,
+        views: answer.views,
+        answered_time: answer.answered_time
+      };
+
       return callback(null, resp);
     })
     .catch(err => {
