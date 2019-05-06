@@ -2016,7 +2016,12 @@ class EditAnswer extends Component {
                                                             <span id="__w2_wzwmJKBZ30_link">
                                                               <a
                                                                 className="user"
-                                                                href="/profile/Brian-Lee-2"
+                                                                href={
+                                                                  "/profile/" +
+                                                                  this.state
+                                                                    .answer
+                                                                    .owner
+                                                                }
                                                                 action_mousedown="UserLinkClickthrough"
                                                                 id="__w2_wzwmJKBZ30_name_link"
                                                               >

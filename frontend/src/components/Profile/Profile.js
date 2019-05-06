@@ -204,7 +204,7 @@ onTopicBlur = () => {
   }
 
   componentDidUpdate() {
-   alert("sffs")
+  // alert("sffs")
   }
    
 

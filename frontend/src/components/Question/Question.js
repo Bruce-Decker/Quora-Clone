@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import "./Question.css";
 import uuid from "uuid";
 import rooturl from "../../utility/url";
+var moment = require("moment");
 
 class Question extends Component {
   constructor() {
@@ -28,7 +29,6 @@ class Question extends Component {
   }
 
   async componentDidMount() {
-    console.log("email.......", this.props.auth.user.email);
     var response = await axios.get(
       rooturl + "/question/getQuestion/" + this.props.match.params.question_id
     );
@@ -2484,7 +2484,9 @@ class Question extends Component {
                         </div>
                         <div id="wiZEgLa412">
                           <div className="QuestionPageAnswerHeader">
-                            <div className="answer_count">2 Answers</div>
+                            <div className="answer_count">
+                              {this.state.answers.length} Answers
+                            </div>
                           </div>
                         </div>
                         <div id="wiZEgLa41">
@@ -2550,7 +2552,9 @@ class Question extends Component {
                                                               <span className="ui_avatar u-flex-inline ui_avatar--large u-flex-none">
                                                                 <img
                                                                   className="ui_avatar_photo ui_avatar--border-circular"
-                                                                  src="https://qph.fs.quoracdn.net/main-thumb-135803-100-hfwmdtdhabdgeqjarswxljarsjkomepm.jpeg"
+                                                                  src={localStorage.getItem(
+                                                                    "profileImg"
+                                                                  )}
                                                                   alt="Brian Lee"
                                                                 />
                                                               </span>
@@ -2579,7 +2583,7 @@ class Question extends Component {
                                                                 <span id="__w2_wzwmJKBZ30_link">
                                                                   <a
                                                                     className="user"
-                                                                    href="/profile/Brian-Lee-2"
+                                                                    href={"/profile/" + this.props.auth.user.email}
                                                                     action_mousedown="UserLinkClickthrough"
                                                                     id="__w2_wzwmJKBZ30_name_link"
                                                                   >
@@ -2600,8 +2604,12 @@ class Question extends Component {
                                                                   href="/Who-first-invented-the-money-Who-was-the-person-who-invented-or-made-it-How-much-was-he-paid/answer/Brian-Lee-2"
                                                                   id="__w2_wzwmJKBZ32_link"
                                                                 >
-                                                                  Answered Oct
-                                                                  17, 2018
+                                                                  Answered{" "}
+                                                                  {moment(
+                                                                    answer.answered_time
+                                                                  ).format(
+                                                                    "MMM D, YYYY"
+                                                                  )}
                                                                 </a>
                                                               </span>
                                                             </div>
@@ -2758,7 +2766,8 @@ class Question extends Component {
                                                                 id="__w2_wBch4VPF14_content_footer"
                                                               >
                                                                 <span>
-                                                                  664 views
+                                                                  {answer.views}{" "}
+                                                                  views
                                                                 </span>
                                                                 <span id="wBch4VPF17" />
                                                                 <span id="wBch4VPF19" />
@@ -3809,7 +3818,6 @@ class Question extends Component {
                 </div>
               </div>
             </div>
-            )}
           </div>
         ) : null}
       </div>
