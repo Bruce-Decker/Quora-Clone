@@ -11,7 +11,8 @@ class Graphs extends Component {
     this.state = {
       upvote: [],
       downvote: [],
-      bookmark: []
+      bookmark: [],
+      answerViews: []
     };
   }
 
@@ -68,7 +69,26 @@ class Graphs extends Component {
         bookmark: data_bookmark
       });
     }
-  }
+
+    var response_answerViews = await axios.get(rooturl + "/graph/answerViews");
+    console.log(response_answerViews.data);
+    
+    if (response_answerViews.data) {
+      let data_answerViews = response_answerViews.data.map(function(obj) {
+        return Object.keys(obj)
+          .sort()
+          .map(function(key) {
+            return obj[key];
+          });
+      });
+      data_answerViews.unshift(["Answer", "Answer Views count"]);
+      console.log(data_answerViews);
+      this.setState({
+        answerViews: data_answerViews
+      });
+    }
+  
+}
 
   render() {
     return (
@@ -137,6 +157,27 @@ class Graphs extends Component {
           data={this.state.bookmark}
           options={{
             title: "Top 10 bookmarks",
+            chartArea: { width: "50%" },
+            hAxis: {
+              title: "Top 10 Bookmarked Answers",
+              minValue: 0
+            },
+            vAxis: {
+              title: "Answers"
+            }
+          }}
+          // For tests
+          rootProps={{ "data-testid": "1" }}
+        />
+
+        <Chart
+          width={"500px"}
+          height={"300px"}
+          chartType="BarChart"
+          loader={<div>Loading Chart</div>}
+          data={this.state.answerViews}
+          options={{
+            title: "Top 10 Answer with Most Views",
             chartArea: { width: "50%" },
             hAxis: {
               title: "Top 10 Bookmarked Answers",
