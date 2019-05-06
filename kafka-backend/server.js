@@ -20,7 +20,7 @@ var content = require("./services/content");
 var message = require("./services/message");
 var answer = require("./services/answer");
 var messages = require("./services/messages");
-
+var graph=require("./services/graph")
 function handleTopicRequest(topic_name, fname) {
   //var topic_name = 'root_topic';
   var consumer = connection.getConsumer(topic_name);
@@ -92,6 +92,12 @@ function handleTopicRequest(topic_name, fname) {
           return;
         });
         break;
+        case "graph":
+        graph.graphService(data.data, function(err, res) {
+          response(data, res, producer);
+          return;
+        });
+        break;
     }
   });
 }
@@ -123,3 +129,4 @@ handleTopicRequest("answer", answer);
 handleTopicRequest("content", content);
 handleTopicRequest("message", message);
 handleTopicRequest("messages", messages);
+handleTopicRequest("graph", graph);
