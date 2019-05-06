@@ -13,7 +13,7 @@ class Content extends Component {
     this.state = {
       questionsAsked: [],
       showAskedList: false,
-      activityType: "",
+      activityType: "All",
       order_direction: ""
     };
   }
@@ -57,6 +57,9 @@ class Content extends Component {
       //     console.log(key + " -> " + values[key]);
       // }
     }
+    if (query === undefined) {
+      query = "&activityType=All";
+    }
     console.log(query);
 
     response = await axios.get(
@@ -84,7 +87,7 @@ class Content extends Component {
                   <span id="wzr1YmKw6">
                     <Link
                       className="question_link"
-                      to={`/answer/${question.answer_id}`}
+                      to={`/question/${question.question_id}`}
                       target="_top"
                       action_mousedown="QuestionLinkClickthrough"
                       id="__w2_wzr1YmKw7_link"
@@ -97,7 +100,10 @@ class Content extends Component {
                     </Link>
                   </span>
                 </span>
-                <div className="metadata">{question.time}</div>
+                <div className="metadata">
+                  {" "}
+                  This {question.type} at {question.time}
+                </div>
               </div>
             </div>
           );
@@ -122,7 +128,9 @@ class Content extends Component {
                     </Link>
                   </span>
                 </span>
-                <div className="metadata">{question.time}</div>
+                <div className="metadata">
+                  This {question.type} at {question.time}
+                </div>
               </div>
             </div>
           );
@@ -159,7 +167,7 @@ class Content extends Component {
                             className="selected filter_option_link"
                             to={{
                               pathname: "/content",
-                              search: "?activityType=all_types"
+                              search: "?activityType=All"
                             }}
                           >
                             All Types
