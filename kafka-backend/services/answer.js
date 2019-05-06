@@ -45,7 +45,7 @@ function bookmarkAnswer(info, callback) {
       { "answers.answer_id": answerid },
       {
         $push: {
-          "answers.$[element].bookmark": info.message.email
+          "answers.$[element].bookmark": { email: info.message.email }
         }
       },
       {
@@ -66,7 +66,7 @@ function bookmarkAnswer(info, callback) {
       { "answers.answer_id": answerid },
       {
         $pull: {
-          "answers.$[element].bookmark": info.message.email
+          "answers.$[element].bookmark": { email: info.message.email }
         }
       },
       {

@@ -71,6 +71,62 @@ function contentAll(info, callback) {
       }
     }
   ); */
+  QuestionModel.aggregate(
+    [
+      { $unwind: "$answers" },
+      { $unwind: "$answers.bookmark" },
+      /*  {
+        $match: {
+          "answers.bookmark.email": email
+        }
+      }, */
+
+      {
+        $match: {
+          $and: [
+            {
+              "answers.bookmark.email": email
+            },
+
+            {
+              "answers.bookmark.time": { $gte: start }
+            },
+            {
+              "answers.bookmark.time": { $lt: end }
+            }
+          ]
+        }
+      },
+
+      { $sort: { "answers.bookmark.time": order } },
+      {
+        $project: {
+          question: 1,
+          "answers.answerContent": 1,
+          question_id: 1,
+          "answers.answer_id": 1,
+          "answers.bookmark.time": 1
+        }
+      }
+    ],
+    function(err, docs) {
+      if (docs) {
+        docs.map(element => {
+          let temp = {};
+          temp.time = element.answers.bookmark.time;
+          temp.question_id = element.question_id;
+          temp.answer_id = element.answers.answer_id;
+          temp.question = element.question;
+          temp.type = "Bookmark";
+          temp.answer = element.answers.answerContent;
+          answerAns.push(temp);
+        });
+      } else {
+        console.log(err);
+        callback(err, " Answers error");
+      }
+    }
+  );
   QuestionModel.find(
     {
       $and: [
@@ -231,6 +287,67 @@ function content(info, callback) {
   console.log("start=", start, "end=", end);
   console.log(info);
   switch (activityType) {
+    case "Bookmarks":
+      QuestionModel.aggregate(
+        [
+          { $unwind: "$answers" },
+          { $unwind: "$answers.bookmark" },
+          /*  {
+            $match: {
+              "answers.bookmark.email": email
+            }
+          }, */
+
+          {
+            $match: {
+              $and: [
+                {
+                  "answers.bookmark.email": email
+                },
+
+                {
+                  "answers.bookmark.time": { $gte: start }
+                },
+                {
+                  "answers.bookmark.time": { $lt: end }
+                }
+              ]
+            }
+          },
+
+          { $sort: { "answers.bookmark.time": order } },
+          {
+            $project: {
+              question: 1,
+              "answers.answerContent": 1,
+              question_id: 1,
+              "answers.answer_id": 1,
+              "answers.bookmark.time": 1
+            }
+          }
+        ],
+        function(err, docs) {
+          if (docs) {
+            docs.map(element => {
+              let temp = {};
+              temp.time = element.answers.bookmark.time;
+              temp.question_id = element.question_id;
+              temp.answer_id = element.answers.answer_id;
+              temp.question = element.question;
+              temp.type = "Bookmark";
+              temp.answer = element.answers.answerContent;
+              answerAns.push(temp);
+            });
+            console.log(docs);
+            callback(null, answerAns);
+          } else {
+            console.log(err);
+            callback(err, " Answers error");
+          }
+        }
+      );
+      break;
+
     case "QuestionAsked":
       QuestionModel.find(
         {
