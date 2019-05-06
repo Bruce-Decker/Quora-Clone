@@ -51,7 +51,17 @@ const QuestionSchema = new Schema({
           type: String
         }
       ],
-      bookmark: [{ type: String }],
+      bookmark: [
+        {
+          email: {
+            type: String
+          },
+          time: {
+            type: Date,
+            default: new Date()
+          }
+        }
+      ],
       image: {
         type: String
       },
