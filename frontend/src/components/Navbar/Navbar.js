@@ -101,6 +101,8 @@ class Navbar extends Component {
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+
+    this.valueChangeHandler = this.valueChangeHandler.bind(this);
   }
 
 //  add_leading_zeros = (dt) => { 
@@ -214,12 +216,17 @@ class Navbar extends Component {
       searchCriteria: e.target.value
     });
   };
-  valueChangeHandler = e => {
+  async valueChangeHandler(e) {
     console.log(e.target.value);
     console.log("shagf");
     this.setState({
       searchValue: e.target.value
     });
+    var questionResponse = await axios.get(
+      rooturl + "/question/keyword?question=" + e.target.value
+   ); 
+   
+   savedAllSearchQuestions = questionResponse.data
   };
   search = e => {
     e.preventDefault();
@@ -247,11 +254,11 @@ class Navbar extends Component {
      
     document.addEventListener("mousedown", this.handleClickOutside);
     var questionResponse = await axios.get(
-       rooturl + "/question/dashboard"
+       rooturl + "/question/keyword?question=lasjflajsf9u3skajfahsfhaf923ri3hashfash"
     ); 
     
-    savedAllSearchQuestions = questionResponse.data.docs
-    console.log(savedAllSearchQuestions)
+    savedAllSearchQuestions = questionResponse.data
+   
 
 
 

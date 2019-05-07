@@ -6,15 +6,21 @@ import { connect } from "react-redux";
 import rooturl from "../../utility/url";
 import queryString from "query-string";
 import { createHashHistory } from "history";
+import Pagination from '../Pagination/Pagination'
 
 class Content extends Component {
   constructor() {
     super();
     this.state = {
       questionsAsked: [],
+      currentQuestions: [],
       showAskedList: false,
       activityType: "All",
-      order_direction: ""
+      order_direction: "",
+      currentPage: 1, 
+      totalPages: null 
+     
+
     };
   }
 
@@ -69,18 +75,38 @@ class Content extends Component {
     if (response.data) {
       this.setState({
         questionsAsked: response.data,
-        showAskedList: true
+        showAskedList: true,
+        currentQuestions: response.data.slice(0, 5)
       });
     }
     console.log(response.data);
   }
 
+  onPageChanged = data => {
+       
+    console.log("Data " + JSON.stringify(data))
+    const { questionsAsked } = this.state;
+    const { currentPage, totalPages, pageLimit } = data;
+
+    const offset = (currentPage - 1) * pageLimit;
+    const currentQuestions = questionsAsked.slice(offset, offset + pageLimit);
+
+    this.setState({ currentPage, currentQuestions, totalPages });
+  }
+
   render() {
+    
+    const { questionsAsked, currentQuestions, currentPage, totalPages } = this.state;
+    const totalQuestions = questionsAsked.length;
+
     var yourContent = {};
     if (this.state.showAskedList) {
-      yourContent = this.state.questionsAsked.map(question => {
+     
+     
+      yourContent = this.state.currentQuestions.map(question => {
         if (question.type === "Bookmark") {
           return (
+           
             <div className="pagedlist_item" id="wzr1YmKw2">
               <div className="PagedListItem UserContentListItem">
                 <span className="title">
@@ -106,6 +132,7 @@ class Content extends Component {
                 </div>
               </div>
             </div>
+            
           );
         } else {
           return (
@@ -152,6 +179,7 @@ class Content extends Component {
             "ui_icon ui_icon_color--red ui_icon_size--regular ui_icon_outline--filled"
           }
         />
+        
 
         <div className="ContentWrapper">
           <div id="__w2_wsawratU13_content">
@@ -380,6 +408,9 @@ class Content extends Component {
                   <h3>Your Content</h3>
                   <div className="user_content_list_section">
                     <div id="__w2_wsawratU18_list_wrapper">
+                   
+
+ 
                       <div
                         className="PagedList UserContentList"
                         id="wsawratU23"
@@ -410,6 +441,9 @@ class Content extends Component {
                             />
                           </div>
                         </div>
+                      </div>
+                      <div className="d-flex flex-row py-4 align-items-center">
+                      <Pagination totalRecords={ totalQuestions } pageLimit={5} pageNeighbours={1} onPageChanged={this.onPageChanged} />
                       </div>
                     </div>
                   </div>

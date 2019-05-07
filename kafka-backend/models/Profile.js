@@ -24,7 +24,10 @@ var ProfileSchema = new Schema({
     type: String
   },
   profile_image: {
-    type: String
+    type: String,
+    required: true,
+    default:
+      "https://quoraprj2.s3.us-east-2.amazonaws.com/quora%3A%20%201557185409773"
   },
   education: {
     type: String
