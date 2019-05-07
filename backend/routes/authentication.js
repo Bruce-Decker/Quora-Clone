@@ -46,6 +46,28 @@ router.post("/login", function(req, res) {
   });
 });
 
+
+router.post("/unDeleteUser", function(req, res) {
+  console.log("Sdfdfs");
+  console.log(req.body);
+  kafka.make_request("auth", { method: "undelete", body: req.body }, function(
+    error,
+    result
+  ) {
+    if (error) {
+      console.log(error);
+      res.status(400).json({ msg: "cannot delete user" });
+    } else {
+      if (result.errors) {
+        return res.status(400).json(result.errors);
+      } else {
+        res.send(result);
+      }
+    }
+  });
+});
+
+
 router.post("/deleteUser", function(req, res) {
   console.log("Sdfdfs");
   console.log(req.body);
@@ -65,6 +87,27 @@ router.post("/deleteUser", function(req, res) {
     }
   });
 });
+
+router.post("/activateUser", function(req, res) {
+  console.log("Sdfdfs");
+  console.log(req.body);
+  kafka.make_request("auth", { method: "activate", body: req.body }, function(
+    error,
+    result
+  ) {
+    if (error) {
+      console.log(error);
+      res.status(400).json({ msg: "cannot deactivate user" });
+    } else {
+      if (result.errors) {
+        return res.status(400).json(result.errors);
+      } else {
+        res.send(result);
+      }
+    }
+  });
+});
+
 
 router.post("/deactivateUser", function(req, res) {
   console.log("Sdfdfs");

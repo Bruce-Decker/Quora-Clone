@@ -221,9 +221,9 @@ class Navbar extends Component {
     axios
       .post("/deleteUser", { email: this.props.auth.user.email })
       .then(res => {
-        localStorage.clear();
-        this.props.history.push("/");
-        window.location.reload();
+        // localStorage.clear();
+        // this.props.history.push("/");
+        // window.location.reload();
         this.props.logout();
       })
       .catch(err => console.log(err));
@@ -234,9 +234,9 @@ class Navbar extends Component {
     axios
       .post("/deactivateUser", { email: this.props.auth.user.email })
       .then(res => {
-        localStorage.clear();
-        this.props.history.push("/");
-        window.location.reload();
+        // localStorage.clear();
+        // this.props.history.push("/");
+        // window.location.reload();
         this.props.logout();
       })
       .catch(err => console.log(err));
