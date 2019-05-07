@@ -69,12 +69,9 @@ class Dashboard extends Component {
     this.handleUpload = this.handleUpload.bind(this);
     this.cancelImage = this.cancelImage.bind(this);
     this.handlePagination = this.handlePagination.bind(this);
-<<<<<<< HEAD
     this.anonymousHandler = this.anonymousHandler.bind(this);
-=======
     this.followHandler = this.followHandler.bind(this);
     this.unfollowHandler = this.unfollowHandler.bind(this);
->>>>>>> 7202e2d39bc2553d71549b5fb67f6f09fbbd65d6
 
     // this.openModal = this.openModal.bind(this);
     // this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -115,17 +112,29 @@ class Dashboard extends Component {
   };
 
   followHandler = (name, e) => {
-    axios.post("/question/follow", {question_id: name, email: this.props.auth.user.email}, {}).then(res => {
-      window.location.reload();
-    });
-  }
-  
-  unfollowHandler = (name, e) => {
-    console.log(e);
-      axios.post("/question/unfollow", {question_id: name, email: this.props.auth.user.email}, {}).then(res => {
+    axios
+      .post(
+        "/question/follow",
+        { question_id: name, email: this.props.auth.user.email },
+        {}
+      )
+      .then(res => {
         window.location.reload();
       });
-  }
+  };
+
+  unfollowHandler = (name, e) => {
+    console.log(e);
+    axios
+      .post(
+        "/question/unfollow",
+        { question_id: name, email: this.props.auth.user.email },
+        {}
+      )
+      .then(res => {
+        window.location.reload();
+      });
+  };
 
   handleUpload = () => {
     const fileURL = URL.createObjectURL(this.state.selectedFile);
@@ -255,14 +264,19 @@ class Dashboard extends Component {
         this.state.pageNo
     );
     let userEmail = this.props.auth.user.email;
-    if(dashboard_questions.data){
-      dashboard_questions.data.docs.forEach(function (item, key) {
-        axios.get(`${rooturl}/question/isfollowing?email=${userEmail}&question_id=${item.question_id}`).then(
-          response => {
-            dashboard_questions.data.docs[key].isfollowing = response.data.isfollowing;
-          }
-        )
-      })
+    if (dashboard_questions.data) {
+      dashboard_questions.data.docs.forEach(function(item, key) {
+        axios
+          .get(
+            `${rooturl}/question/isfollowing?email=${userEmail}&question_id=${
+              item.question_id
+            }`
+          )
+          .then(response => {
+            dashboard_questions.data.docs[key].isfollowing =
+              response.data.isfollowing;
+          });
+      });
     }
 
     let response_profile = await axios.get(
@@ -1081,22 +1095,36 @@ class Dashboard extends Component {
                                                                       </span>
                                                                     </div>
                                                                   </div>
-                                                                  <div className="ui_button_label_count_wrapper" >
-                                                                    { question.isfollowing ? <span
-                                                                      className="ui_button_label"
-                                                                      id="__w2_wLjahHEI27_label"
-                                                                      name={question.question_id}
-                                                                      onClick = {this.unfollowHandler.bind(this,question.question_id)}
-                                                                    >
-                                                                      Unfollow
-                                                                    </span> : <span
-                                                                      className="ui_button_label"
-                                                                      id="__w2_wLjahHEI27_label"
-                                                                      name={question.question_id}
-                                                                      onClick = {this.followHandler.bind(this,question.question_id)}
-                                                                    >
-                                                                      Follow
-                                                                    </span>}
+                                                                  <div className="ui_button_label_count_wrapper">
+                                                                    {question.isfollowing ? (
+                                                                      <span
+                                                                        className="ui_button_label"
+                                                                        id="__w2_wLjahHEI27_label"
+                                                                        name={
+                                                                          question.question_id
+                                                                        }
+                                                                        onClick={this.unfollowHandler.bind(
+                                                                          this,
+                                                                          question.question_id
+                                                                        )}
+                                                                      >
+                                                                        Unfollow
+                                                                      </span>
+                                                                    ) : (
+                                                                      <span
+                                                                        className="ui_button_label"
+                                                                        id="__w2_wLjahHEI27_label"
+                                                                        name={
+                                                                          question.question_id
+                                                                        }
+                                                                        onClick={this.followHandler.bind(
+                                                                          this,
+                                                                          question.question_id
+                                                                        )}
+                                                                      >
+                                                                        Follow
+                                                                      </span>
+                                                                    )}
                                                                     <span
                                                                       className="ui_button_count"
                                                                       aria-hidden="true"
