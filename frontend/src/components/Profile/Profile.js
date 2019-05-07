@@ -319,6 +319,7 @@ onTopicBlur = () => {
         profile_image: response_profile.data[0].profile_image
 
       }); 
+    
     } 
     console.log("q3wsffse");
     console.log(response_profile.data);

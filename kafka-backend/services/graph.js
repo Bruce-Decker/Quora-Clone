@@ -13,6 +13,9 @@ exports.graphService = function graphService(info, callback) {
     case "profileView":
       profileView(info, callback);
       break;
+    case "answerViews":
+      answerViewsGraph(info, callback);
+      break;
   }
 };
 
@@ -188,6 +191,53 @@ function profileView(info, callback) {
     } else {
       console.log(err);
       callback(err, "error");
+    }
+  });
+}
+
+function answerViewsGraph(info, callback) {
+  console.log(info.message);
+  Question.find({}, (err, questions) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      var answerViewsMap = [];
+      for (let i = 0; i < questions.length; i++) {
+        if (questions[i].answers && questions[i].answers.length > 0) {
+          let currentAnswersList = questions[i].answers;
+          for (let j = 0; j < currentAnswersList.length; j++) {
+            let answerContent = currentAnswersList[j].answerContent;
+            if (answerContent != null) {
+              answerContent = answerContent.replace(/<\/?.+?>/gi, "");
+              if (answerContent == "")
+                answerContent = "Preview not available for answer images";
+              answerViewsMap.push({
+                answerContent: answerContent,
+                viewsCount: currentAnswersList[j].views
+              });
+            } else {
+              let answer_id = currentAnswersList[j].answer_id;
+              answerViewsMap.push({
+                answer_id: answer_id,
+                viewsCount: currentAnswersList[j].views
+              });
+            }
+          }
+        }
+      }
+      answerViewsMap.sort((a, b) =>
+        a.viewsCount < b.viewsCount
+          ? 1
+          : b.viewsCount < a.viewsCount
+          ? -1
+          : 0
+      );
+      let topAnswerViews = answerViewsMap.slice(0, 10);
+
+      console.log(`topAnswerViews`);
+      console.log(topAnswerViews);
+
+      callback(null, topAnswerViews);
     }
   });
 }

@@ -218,6 +218,15 @@ class Dashboard extends Component {
         "&pageNo=" +
         this.state.pageNo
     );
+
+    let response_profile = await axios.get(
+      rooturl + "/profile/image?email=" + this.props.auth.user.email
+    );
+    console.log("response profile..........", response_profile.data);
+    if (response_profile.data) {
+      localStorage.setItem("profileImg", response_profile.data);
+    }
+
     response = await axios.get(
       rooturl + "/topic/getUserTopic/" + this.props.auth.user.email
     );
@@ -349,7 +358,6 @@ class Dashboard extends Component {
                           <div id="w2OzgLAU33">
                             <div className="mweb_switcher" id="mweb_sub_header">
                               <ul className="switcher">
-                                
                                 <li className="switcher_item switcher_item_with_image is_active">
                                   <Link className="link" to="/dashboard">
                                     <div className="switcher_item_image u-flex-none u-relative is_active">
