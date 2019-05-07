@@ -245,33 +245,38 @@ function addComment(info, callback) {
       callback(err, "error");
     }
   }); */
-  Question.findOneAndUpdate(
-    {
-      $and: [{ question_id: question_id }, { "answers.answer_id": answer_id }]
-    },
-    {
-      $push: {
-        "answers.$[element].comments": {
-          email: data.email,
-          name: data.name,
-          comment: data.comment,
-          time: data.time
+  console.log("data.comment", data.comment);
+  if (data.comment) {
+    Question.findOneAndUpdate(
+      {
+        $and: [{ question_id: question_id }, { "answers.answer_id": answer_id }]
+      },
+      {
+        $push: {
+          "answers.$[element].comments": {
+            email: data.email,
+            name: data.name,
+            comment: data.comment,
+            time: data.time
+          }
+        }
+      },
+      {
+        arrayFilters: [{ "element.answer_id": answer_id }]
+      },
+      function(err, result) {
+        if (result) {
+          console.log(result);
+          callback(null, result);
+        } else {
+          console.log(err);
+          callback(err, " add comment error");
         }
       }
-    },
-    {
-      arrayFilters: [{ "element.answer_id": answer_id }]
-    },
-    function(err, result) {
-      if (result) {
-        console.log(result);
-        callback(null, result);
-      } else {
-        console.log(err);
-        callback(err, " add comment error");
-      }
-    }
-  );
+    );
+  } else {
+    callback(null, null);
+  }
 }
 
 function deleteComment(info, callback) {
