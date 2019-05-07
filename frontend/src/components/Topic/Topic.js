@@ -4,6 +4,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import rooturl from "../../utility/url";
+import Pagination from "../Pagination/Pagination";
 
 var topic_Response
 class Topic extends Component {
@@ -11,6 +12,7 @@ class Topic extends Component {
         super();
         this.state = {
             questions: [],
+            currentQuestions: [],
             showTopicQuestions: false
         }
         
@@ -41,16 +43,38 @@ class Topic extends Component {
       console.log(topic_Response.data)
       if (topic_Response.data.length > 0) {
         this.setState({
-          //questions: dashboard_questions.data.docs,
-          showTopicQuestions: true
+          questions: topic_Response.data,
+          showTopicQuestions: true,
+          currentQuestions: topic_Response.data.slice(0, 5)
         });
   
         
       }
 
+
     }
 
+    onPageChanged = data => {
+      console.log("Data " + JSON.stringify(data));
+      const { questions } = this.state;
+      const { currentPage, totalPages, pageLimit } = data;
+  
+      const offset = (currentPage - 1) * pageLimit;
+      const currentQuestions = questions.slice(offset, offset + pageLimit);
+  
+      this.setState({ currentPage, currentQuestions, totalPages });
+    };
+
     render() {
+
+      const {
+         questions,
+         currentQuestions,
+         currentPage,
+         totalPages
+       } = this.state;
+       const totalQuestions = questions.length;
+
         return (
           <div>
             <Navbar
@@ -185,7 +209,7 @@ class Topic extends Component {
 {this.state.showTopicQuestions ?
    
   <div>
-     {topic_Response.data.map(question => 
+     {this.state.currentQuestions.map(question => 
 <div className="ui_story_card u-flex u-flex-column ui_story_card--bundled">
 <div className="ui_story_card_header">
    <div className="EventHeader many_faces pass_color_to_child_links FeedReason TopicQuestionAskedReason">
@@ -228,18 +252,7 @@ class Topic extends Component {
          <div className="u-absolute u-absolute--center u-zindex--2" id="__w2_whIqsbBW26_close">
             <a className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only" href="#" role="button" aria-label="Hide" id="__w2_whIqsbBW49_button">
                <div className="ui_button_inner" id="__w2_whIqsbBW49_inner">
-                  <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                     <div id="__w2_whIqsbBW49_icon">
-                        <span className="ui_button_icon" aria-hidden="true">
-                           <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-                              <g id="small_close" className="icon_svg-stroke" fill="none" fillRule="evenodd" strokeLinecap="round" stroke="#666666" strokeWidth="1.5">
-                                 <path d="M12,6 L12,18" transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) " />
-                                 <path d="M18,12 L6,12" transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) " />
-                              </g>
-                           </svg>
-                        </span>
-                     </div>
-                  </div>
+                 
                </div>
             </a>
          </div>
@@ -265,7 +278,7 @@ class Topic extends Component {
                <span className="cant_answer_actions"><a className="undo_cant_answer" href="#" id="__w2_whIqsbBW43_undo_cant_answer">Undo</a><span className="bullet"> · </span></span><span className="cant_answer_actions"><span id="whIqsbBW44"><a className="Downvote Button Question TwoStateButton secondary_action" href="#" role="button" action_click="QuestionDownvote" action_target="{&quot;qid&quot;: 46052564, &quot;type&quot;: &quot;question&quot;}" id="__w2_whIqsbBW45_button"><span className="button_text" id="__w2_whIqsbBW45_text">Downvote</span></a></span></span>
             </div>
             <div id="whIqsbBW31">
-               <div className="ContentFooter QuestionFooter" id="__w2_whIqsbBW32_content_footer"><a className="answer_count_prominent" href="/What-is-the-square-root-of-40-41">1 Answers</a><span className="bullet"> · </span><span className="question_timestamp">Last followed 6h ago</span></div>
+               <div className="ContentFooter QuestionFooter" id="__w2_whIqsbBW32_content_footer"><a className="answer_count_prominent" href="/What-is-the-square-root-of-40-41">{question.answers.length} Answers</a><span className="bullet"> · </span><span className="question_timestamp">{question.postedDate}</span></div>
             </div>
             <div id="whIqsbBW33" />
                <div id="whIqsbBW35" /></div>
@@ -275,155 +288,25 @@ class Topic extends Component {
    <div className="hide_on_cant_answer">
    <div id="whIqsbBW21">
    <div className="icon_action_bar" id="__w2_whIqsbBW22_action_bar">
-   <div className="action_bar_inner u-flex">
-   <div className="ItemComponent WriteAnswerPrimaryActionItem primary_item u-relative">
-   <span id="wLjahHEI11">
-   <a className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--blue ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon" href="#" role="button" action_target="{&quot;qid&quot;: 46052564, &quot;type&quot;: &quot;question&quot;}" id="__w2_wLjahHEI28_button">
-   <div className="ui_button_inner" id="__w2_wLjahHEI28_inner">
-   <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-   <div id="__w2_wLjahHEI28_icon">
-   <span className="ui_button_icon" aria-hidden="true">
-   <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-   <g id="answer" transform="translate(2.500000, 3.500000)" stroke="none" strokeWidth="1.5" fill="none" fillRule="evenodd">
-   <g id="pen" transform="translate(9.000000, 9.000000) rotate(-315.000000) translate(-9.000000, -9.000000) translate(7.000000, -1.000000)">
-   <path d="M2,8.8817842e-16 L2,8.8817842e-16 L2,8.8817842e-16 C3.1045695,6.85269983e-16 4,0.8954305 4,2 L4,16 L2.00256278,20 L0,16 L0,2 L0,2 C-1.35267774e-16,0.8954305 0.8954305,1.09108686e-15 2,8.8817842e-16 Z" id="pen_body" className="icon_svg-stroke" stroke="#666" strokeLinecap="round" strokeLinejoin="round" />
-   <polygon id="pen_tip" className="icon_svg-fill_as_stroke" fill="#666" transform="translate(2.000000, 18.750000) scale(1, -1) translate(-2.000000, -18.750000) " points="2 17.5 3.25 20 0.75 20" />
-   </g>
-   <path d="M12,16 L17,16 L17,11 M7,1 L2,1 L2,6" id="bg" className="icon_svg-stroke" stroke="#666" strokeLinecap="round" strokeLinejoin="round" />
-   </g>
-   </svg>
-   </span>
-   </div>
-   </div>
-   <div className="ui_button_label_count_wrapper"><span className="ui_button_label" id="__w2_wLjahHEI28_label">Answer</span></div>
-   </div>
-   </a>
-   </span>
-   </div>
-   <div className="ItemComponent CantAnswerActionItem primary_item u-relative">
-   <a className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon" href="#" role="button" action_click="PassWritePage" id="__w2_wLjahHEI14_button">
-   <div className="ui_button_inner" id="__w2_wLjahHEI14_inner">
-   <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-   <div id="__w2_wLjahHEI14_icon">
-   <span className="ui_button_icon" aria-hidden="true">
-   <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-   <g id="cant_answer" stroke="none" fill="none" fillRule="evenodd">
-   <g id="pen" transform="translate(11.485281, 12.485281) rotate(-315.000000) translate(-11.485281, -12.485281) translate(9.485281, 2.485281)">
-   <path d="M0,7.51471863 L2.22044605e-16,1.99994543 C8.67738547e-17,0.895375929 0.8954305,-5.45711382e-05 2,-5.45711382e-05 C3.1045695,-5.45711382e-05 4,0.895375929 4,1.99994543 L4,7.51471863 M4,12.5147186 L4,16 L2.00256278,20 L0,16 L0,12.5147186" id="Rectangle-5" className="icon_svg-stroke" stroke="#666" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="round" />
-   <polygon id="pen_tip" className="icon_svg-fill_as_stroke" fill="#666" transform="translate(2.000000, 18.750000) scale(1, -1) translate(-2.000000, -18.750000) " points="2 17.5 3.25 20 0.75 20" />
-   </g>
-   <path d="M4.63603897,5.63603897 L18.5,19.5" id="Line" className="icon_svg-stroke" stroke="#666" strokeWidth="1.5" strokeLinecap="round" />
-   </g>
-   </svg>
-   </span>
-   </div>
-   </div>
-   <div className="ui_button_label_count_wrapper"><span className="ui_button_label" id="__w2_wLjahHEI14_label">Pass</span></div>
-   </div>
-   </a>
-   </div>
-   <div className="ItemComponent FollowActionItem primary_item u-relative">
-   <span id="wLjahHEI15">
-   <a className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon" href="#" role="button" action_click="QuestionFollow" action_target="{&quot;qid&quot;: 46052564, &quot;type&quot;: &quot;question&quot;}" id="__w2_wLjahHEI27_button">
-   <div className="ui_button_inner" id="__w2_wLjahHEI27_inner">
-   <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-   <div id="__w2_wLjahHEI27_icon">
-   <span className="ui_button_icon" aria-hidden="true">
-   <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-   <g stroke="none" fill="none" fillRule="evenodd" strokeLinecap="round">
-   <g id="follow" className="icon_svg-stroke" stroke="#666" strokeWidth="1.5">
-   <path d="M14.5,19 C14.5,13.3369229 11.1630771,10 5.5,10 M19.5,19 C19.5,10.1907689 14.3092311,5 5.5,5" id="lines" />
-   <circle id="circle" cx="7.5" cy={17} r={2} className="icon_svg-fill" fill="none" />
-   </g>
-   </g>
-   </svg>
-   </span>
-   </div>
-   </div>
-   <div className="ui_button_label_count_wrapper"><span className="ui_button_label" id="__w2_wLjahHEI27_label">Follow</span><span className="ui_button_count" aria-hidden="true" id="__w2_wLjahHEI27_count_wrapper"><span className="bullet"> · </span><span className="ui_button_count_inner" id="__w2_wLjahHEI27_count">1</span></span></div>
-   </div>
-   </a>
-   </span>
-   </div>
-   <div className="ActionItemComponent ItemComponent FacebookShareActionItem action_item secondary_item u-relative">
-   <a className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only" href="#" role="button" aria-label="Share on Facebook" id="__w2_wLjahHEI19_button">
-   <div className="ui_button_inner" id="__w2_wLjahHEI19_inner">
-   <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-   <div id="__w2_wLjahHEI19_icon">
-   <span className="ui_button_icon" aria-hidden="true">
-   <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-   <g className="icon_svg-fill_as_stroke" stroke="none" fill="#4267B2" fillRule="evenodd">
-   <path d="M15.0352899,20 L15.0352899,13.8064419 L17.1142712,13.8064419 L17.4255221,11.3926592 L15.0352899,11.3926592 L15.0352899,9.85156554 C15.0352899,9.1527191 15.2293273,8.67649438 16.2315146,8.67649438 L17.5097169,8.67589513 L17.5097169,6.51703371 C17.2885933,6.48767041 16.5298816,6.42193258 15.647185,6.42193258 C13.8043086,6.42193258 12.5427056,7.54678652 12.5427056,9.61258427 L12.5427056,11.3926592 L10.4584509,11.3926592 L10.4584509,13.8064419 L12.5427056,13.8064419 L12.5427056,20 L4.88270262,20 C4.39509213,20 4.00000599,19.6047341 4.00000599,19.1173034 L4.00000599,4.88904869 C4.00000599,4.4014382 4.39509213,4.00629213 4.88270262,4.00629213 L19.1108974,4.00629213 C19.5983281,4.00629213 19.993594,4.4014382 19.993594,4.88904869 L19.993594,19.1173034 C19.993594,19.6047341 19.5983281,20 19.1108974,20 L15.0352899,20 Z" />
-   </g>
-   </svg>
-   </span>
-   </div>
-   </div>
-   </div>
-   </a>
-   </div>
-   <div className="ActionItemComponent ItemComponent TwitterShareActionItem action_item secondary_item u-relative">
-   <a className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only" href="#" role="button" aria-label="Share on Twitter" id="__w2_wLjahHEI22_button">
-   <div className="ui_button_inner" id="__w2_wLjahHEI22_inner">
-   <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-   <div id="__w2_wLjahHEI22_icon">
-   <span className="ui_button_icon" aria-hidden="true">
-   <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-   <g className="icon_svg-fill_as_stroke" stroke="none" fill="#1DA1F2" fillRule="nonzero">
-   <path d="M8.84616,19.3134989 C15.26128,19.3134989 18.77008,13.9986189 18.77008,9.38957894 C18.77008,9.23861894 18.77008,9.08833894 18.75988,8.93873894 C19.4424853,8.44499832 20.0317217,7.83365693 20.5,7.13333894 C19.8634378,7.41540415 19.1881639,7.60038242 18.49672,7.68209894 C19.2248259,7.24620674 19.769764,6.56062389 20.03012,5.75293894 C19.3454671,6.15920856 18.5964393,6.44552712 17.81536,6.59953894 C16.7342163,5.44992705 15.0162892,5.1685555 13.6248935,5.91320129 C12.2334978,6.65784709 11.514667,8.24332044 11.87148,9.78057894 C9.0670891,9.63998863 6.45424353,8.31539877 4.6832,6.13645894 C3.75746347,7.73013736 4.23031176,9.76892339 5.76304,10.7924189 C5.20798402,10.7759681 4.66502997,10.6262359 4.18,10.3558589 C4.18,10.3701389 4.18,10.3850989 4.18,10.4000589 C4.18045433,12.0603422 5.35079101,13.4903429 6.9782,13.8190989 C6.46471132,13.9591382 5.9259548,13.9796091 5.40332,13.8789389 C5.86024459,15.2997465 7.1696707,16.273072 8.66188,16.3010989 C7.42681983,17.2717527 5.90112047,17.7986818 4.33028,17.7970989 C4.05277443,17.7965662 3.77553876,17.779764 3.5,17.7467789 C5.09503245,18.770367 6.95094111,19.3133064 8.84616,19.3107789" />
-   </g>
-   </svg>
-   </span>
-   </div>
-   </div>
-   </div>
-   </a>
-   </div>
-   <div className="OverflowShareActionItem ActionItemComponent ItemComponent action_item secondary_item u-relative">
-   <div className="hover_menu hidden hover_share_menu show_nub" id="__w2_wLjahHEI23_menu">
-   <div className="hover_menu_contents" id="__w2_wLjahHEI23_menu_contents"> </div>
-   </div>
-   <div className="HoverMenu QuestionQuickShare _QuickShare" role="button" id="__w2_wLjahHEI23_link">
-   <a className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only" href="#" role="button" aria-label="More sharing options" id="__w2_wLjahHEI26_button">
-   <div className="ui_button_inner" id="__w2_wLjahHEI26_inner">
-   <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-   <div id="__w2_wLjahHEI26_icon">
-   <span className="ui_button_icon" aria-hidden="true">
-   <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-   <g id="share" className="icon_svg-stroke" stroke="#666" fill="none" strokeWidth="1.5" fillRule="evenodd" strokeLinejoin="round">
-   <path d="M12.0001053,2.99989467 L4.00010533,12.7776724 L9.33343867,12.7776724 C9.78266695,14.7041066 10.5048892,16.2782509 11.5001053,17.5001053 C12.4953215,18.7219597 13.9953215,19.8886264 16.0001053,21.0001053 C15.3415908,19.6668553 14.8428108,18.1668553 14.5037654,16.5001053 C14.16472,14.8333553 14.2190556,13.5925444 14.666772,12.7776724 L20.0001053,12.7776724 L12.0001053,2.99989467 Z" transform="translate(12.000105, 12.000000) rotate(90.000000) translate(-12.000105, -12.000000) " />
-   </g>
-   </svg>
-   </span>
-   </div>
-   </div>
-   </div>
-   </a>
-   </div>
-   </div>
-   <div className="action_bar_inner_spacer u-margin-left--auto">&nbsp;</div>
-   <div className="overflow action_item overflow_link u-relative u-pointer-events--auto">
-   <div className="overflow_link" id="__w2_whIqsbBW22_overflow_link">
-   <a className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only" href="#" role="button" aria-label="More options" id="__w2_wLjahHEI8_button">
-   <div className="ui_button_inner" id="__w2_wLjahHEI8_inner">
-   <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-   <div id="__w2_wLjahHEI8_icon">
-   <span className="ui_button_icon" aria-hidden="true">
-   <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-   <g id="overflow" className="icon_svg-stroke" strokeWidth="1.5" stroke="#666" fill="none" fillRule="evenodd">
-   <path d="M5,14 C3.8954305,14 3,13.1045695 3,12 C3,10.8954305 3.8954305,10 5,10 C6.1045695,10 7,10.8954305 7,12 C7,13.1045695 6.1045695,14 5,14 Z M12,14 C10.8954305,14 10,13.1045695 10,12 C10,10.8954305 10.8954305,10 12,10 C13.1045695,10 14,10.8954305 14,12 C14,13.1045695 13.1045695,14 12,14 Z M19,14 C17.8954305,14 17,13.1045695 17,12 C17,10.8954305 17.8954305,10 19,10 C20.1045695,10 21,10.8954305 21,12 C21,13.1045695 20.1045695,14 19,14 Z" />
-   </g>
-   </svg>
-   </span>
-   </div>
-   </div>
-   </div>
-   </a>
-   </div>
-   </div>
-   <div className="hover_menu hidden show_nub right_align fixed_menu_width no_body_attach" id="__w2_whIqsbBW22_overflow_menu">
-   <div className="hover_menu_contents lazy" id="__w2_whIqsbBW22_overflow_menu_contents" /></div>
-   </div>
+   
+   
+   
+   
+   
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
    <div id="wLjahHEI9">
    <div className="hidden answer_editor_wrapper" id="__w2_wLjahHEI10_add_answer_editor_wrapper" /></div>
    </div>
@@ -455,7 +338,17 @@ class Topic extends Component {
    
    
    
-   </div></div>
+   </div>
+   <Pagination
+                          totalRecords={totalQuestions}
+                          pageLimit={5}
+                          pageNeighbours={1}
+                          onPageChanged={this.onPageChanged}
+                        />
+   
+   
+   
+   </div>
    </div>
    </div>
 </div>
