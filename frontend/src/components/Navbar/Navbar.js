@@ -92,6 +92,7 @@ function searchingProfile(query) {
 
 var savedAllSearchQuestions = [];
 var savedAllProfiles = [];
+var questionResponse
 class Navbar extends Component {
   constructor() {
     super();
@@ -211,6 +212,7 @@ class Navbar extends Component {
       .post(rooturl + "/question/createQuestion", data)
       .then(res => {
         console.log(res.data);
+        window.location.reload()
       })
       .catch(err => console.log(err));
   };
@@ -357,13 +359,13 @@ class Navbar extends Component {
     );
     savedAllProfiles = profileResponse.data;
 
-    // var questionResponse = await axios.get(
-    //    rooturl + "/question/keyword?question=lasjflajsf9u3skajfahsfhaf923ri3hashfash"
-    // );
+    var questionResponse = await axios.get(
+       rooturl + "/question/keyword?question=lasjflajsf9u3skajfahsfhaf923ri3hashfash"
+    );
 
-    // savedAllSearchQuestions = questionResponse.data
+    savedAllSearchQuestions = questionResponse.data
 
-    savedAllSearchQuestions = questionResponse.data;
+    
   }
 
   componentWillUnmount() {
@@ -1244,18 +1246,7 @@ class Navbar extends Component {
                             />
                           )}
 
-                          <input
-                            className="selector_input text"
-                            type="text"
-                            data-lpignore="true"
-                            data-group="js-editable"
-                            placeholder="Search Quora"
-                            w2cid="wGp3JsZF12"
-                            id="__w2_wGp3JsZF12_input"
-                            onChange={this.valueChangeHandler}
-                            onFocus={this.onFocus}
-                            onBlur={this.onBlur}
-                          />
+                         
                           <div
                             className="selector_spinner hidden"
                             id="__w2_wGp3JsZF12_spinner"

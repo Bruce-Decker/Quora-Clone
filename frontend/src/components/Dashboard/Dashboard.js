@@ -447,9 +447,9 @@ class Dashboard extends Component {
                                   let escapeImage = image.replace(/ /g, "_");
                                   return (
                                     <li className="switcher_item switcher_item_with_image">
-                                      <a
+                                      <Link
                                         className="link"
-                                        href={encodeURI(image)}
+                                        to= {`/topic/${topic}`}
                                       >
                                         <div className="switcher_item_image u-flex-none u-relative">
                                           <div
@@ -462,7 +462,7 @@ class Dashboard extends Component {
                                           <div className="u-absolute unread_dot u-border-radius--ellipse" />
                                         </div>
                                         <div className="label">{topic}</div>
-                                      </a>
+                                      </Link>
                                     </li>
                                   );
                                 })}
