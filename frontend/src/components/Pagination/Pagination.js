@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import './Pagination.css'
 
 const LEFT_PAGE = 'LEFT';
 const RIGHT_PAGE = 'RIGHT';
@@ -21,10 +22,11 @@ class Pagination extends Component {
 
   constructor(props) {
     super(props);
-    const { totalRecords = null, pageLimit = 30, pageNeighbours = 0 } = props;
+    const { totalRecords = null, pageLimit = 100, pageNeighbours = 0 } = props;
 
-    this.pageLimit = typeof pageLimit === 'number' ? pageLimit : 30;
+    this.pageLimit = typeof pageLimit === 'number' ? pageLimit : 100;
     this.totalRecords = typeof totalRecords === 'number' ? totalRecords : 0;
+
 
     this.pageNeighbours = typeof pageNeighbours === 'number'
       ? Math.max(0, Math.min(pageNeighbours, 0))
@@ -154,31 +156,42 @@ class Pagination extends Component {
     return (
       <Fragment>
         <nav aria-label="Pagination">
-          <ul className="pagination">
+          <ul className = "ul.pagination" id="menu">
             { pages.map((page, index) => {
 
               if (page === LEFT_PAGE) return (
+                <span>
                 <li key={index} className="page-item">
                   <a className="page-link" href="#" aria-label="Previous" onClick={this.handleMoveLeft}>
                     <span aria-hidden="true">&laquo;</span>
                     <span className="sr-only">Previous</span>
                   </a>
                 </li>
+                <span>   </span>
+                </span>
               );
 
               if (page === RIGHT_PAGE) return (
+                <span>
                 <li key={index} className="page-item">
                   <a className="page-link" href="#" aria-label="Next" onClick={this.handleMoveRight}>
                     <span aria-hidden="true">&raquo;</span>
                     <span className="sr-only">Next</span>
                   </a>
                 </li>
+                <span>   </span>
+                </span>
               );
 
               return (
+                <span>
                 <li key={index} className={`page-item${ currentPage === page ? ' active' : ''}`}>
                   <a className="page-link" href="#" onClick={ this.handleClick(page) }>{ page }</a>
+                  
                 </li>
+                <span>   </span>
+                </span>
+              
               );
 
             }) }
@@ -199,4 +212,12 @@ Pagination.propTypes = {
 };
 
 export default Pagination;
+
+
+
+
+
+
+
+
 
