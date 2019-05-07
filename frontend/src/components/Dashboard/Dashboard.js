@@ -54,7 +54,8 @@ class Dashboard extends Component {
       showImage: false,
       selectedFile: null,
       pageNo: 1,
-      pageTotal: 0
+      pageTotal: 0,
+      isAnonymous: false
       // modalIsOpen: false,
       // messageModalIsOpen: false
     };
@@ -68,6 +69,7 @@ class Dashboard extends Component {
     this.handleUpload = this.handleUpload.bind(this);
     this.cancelImage = this.cancelImage.bind(this);
     this.handlePagination = this.handlePagination.bind(this);
+    this.anonymousHandler = this.anonymousHandler.bind(this);
 
     // this.openModal = this.openModal.bind(this);
     // this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -122,6 +124,21 @@ class Dashboard extends Component {
     });
   };
 
+  async anonymousHandler() {
+    console.log("annnnnnnn111", this.state.isAnonymous);
+
+    if (this.state.isAnonymous === false)
+      await this.setState({
+        isAnonymous: true
+      });
+    else {
+      await this.setState({
+        isAnonymous: false
+      });
+    }
+    console.log("annnnnnnn", this.state.isAnonymous);
+  }
+
   // componentWillMount() {
   //   axios.get("/answer", { params: { answer_id: "985865" } }).then(res => {
   //     document.getElementById("editable").outerHTML = res.data.answerContent;
@@ -142,7 +159,8 @@ class Dashboard extends Component {
       .post("/answer", {
         currentElem: document.getElementById("editable").outerHTML,
         question_id: e,
-        owner: this.props.auth.user.email
+        owner: this.props.auth.user.email,
+        isAnonymous: this.state.isAnonymous
       })
       .then(res => {
         console.log("res....", res.data);
@@ -1292,13 +1310,30 @@ class Dashboard extends Component {
                                                                       >
                                                                         <a
                                                                           className="u-flex-inline"
-                                                                          href="/profile/Bruce-Decker-12"
+                                                                          href={
+                                                                            this
+                                                                              .state
+                                                                              .isAnonymous
+                                                                              ? null
+                                                                              : "/profile/" +
+                                                                                this
+                                                                                  .props
+                                                                                  .auth
+                                                                                  .user
+                                                                                  .email
+                                                                          }
                                                                         >
                                                                           <span className="ui_avatar u-flex-inline ui_avatar--large u-flex-none">
                                                                             <img
                                                                               className="ui_avatar_photo ui_avatar--border-circular"
                                                                               src={
-                                                                                default_image
+                                                                                this
+                                                                                  .state
+                                                                                  .isAnonymous
+                                                                                  ? default_image
+                                                                                  : localStorage.getItem(
+                                                                                      "profileImg"
+                                                                                    )
                                                                               }
                                                                               alt="Bruce Decker"
                                                                             />
@@ -1314,21 +1349,34 @@ class Dashboard extends Component {
                                                                           <span id="__w2_w1SM6R3W24_link">
                                                                             <a
                                                                               className="user"
-                                                                              href="/profile/Bruce-Decker-12"
+                                                                              href={
+                                                                                this
+                                                                                  .state
+                                                                                  .isAnonymous
+                                                                                  ? null
+                                                                                  : "/profile/" +
+                                                                                    this
+                                                                                      .props
+                                                                                      .auth
+                                                                                      .user
+                                                                                      .email
+                                                                              }
                                                                               action_mousedown="UserLinkClickthrough"
                                                                               id="__w2_w1SM6R3W24_name_link"
                                                                             >
-                                                                              {
-                                                                                response
-                                                                                  .data
-                                                                                  .first_name
-                                                                              }{" "}
-                                                                              {}{" "}
-                                                                              {
-                                                                                response
-                                                                                  .data
-                                                                                  .last_name
-                                                                              }
+                                                                              {this
+                                                                                .state
+                                                                                .isAnonymous
+                                                                                ? "Anonymous"
+                                                                                : `${
+                                                                                    response
+                                                                                      .data
+                                                                                      .first_name
+                                                                                  } ${
+                                                                                    response
+                                                                                      .data
+                                                                                      .last_name
+                                                                                  }`}
                                                                             </a>
                                                                           </span>
                                                                         </span>
@@ -1635,6 +1683,30 @@ class Dashboard extends Component {
                                                               >
                                                                 Submit
                                                               </button>
+
+                                                              <span
+                                                                className="ui_button_icon"
+                                                                aria-hidden="true"
+                                                              >
+                                                                <label>
+                                                                  Anonymous
+                                                                </label>
+                                                                <input
+                                                                  type="checkbox"
+                                                                  class="custom-control-input"
+                                                                  id="same-address"
+                                                                  value="true"
+                                                                  checked={
+                                                                    this.state
+                                                                      .isAnonymous ===
+                                                                    true
+                                                                  }
+                                                                  onChange={
+                                                                    this
+                                                                      .anonymousHandler
+                                                                  }
+                                                                />
+                                                              </span>
                                                             </div>
                                                           ) : null}
                                                         </div>
