@@ -53,8 +53,6 @@ class EditAnswer extends Component {
   }
 
   async anonymousHandler() {
-    console.log("annnnnnnn111", this.state.isAnonymous);
-
     if (this.state.isAnonymous === false)
       await this.setState({
         isAnonymous: true
@@ -64,10 +62,11 @@ class EditAnswer extends Component {
         isAnonymous: false
       });
     }
-    console.log("annnnnnnn", this.state.isAnonymous);
   }
 
   render() {
+    var defaultImg =
+      "https://quoraprj2.s3.us-east-2.amazonaws.com/quora%3A%20%201557185409773";
     return (
       <div>
         <Navbar
@@ -1995,7 +1994,6 @@ class EditAnswer extends Component {
                                                               .isAnonymous
                                                               ? null
                                                               : "/profile/" +
-                                                                "/profile/" +
                                                                 this.state
                                                                   .answer.owner
                                                           }
@@ -2006,7 +2004,7 @@ class EditAnswer extends Component {
                                                               src={
                                                                 this.state
                                                                   .isAnonymous
-                                                                  ? null
+                                                                  ? defaultImg
                                                                   : localStorage.getItem(
                                                                       "profileImg"
                                                                     )
