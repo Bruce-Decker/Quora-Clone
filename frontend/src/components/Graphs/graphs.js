@@ -72,7 +72,7 @@ class Graphs extends Component {
 
     var response_answerViews = await axios.get(rooturl + "/graph/answerViews");
     console.log(response_answerViews.data);
-    
+
     if (response_answerViews.data) {
       let data_answerViews = response_answerViews.data.map(function(obj) {
         return Object.keys(obj)
@@ -87,8 +87,7 @@ class Graphs extends Component {
         answerViews: data_answerViews
       });
     }
-  
-}
+  }
 
   render() {
     return (
@@ -105,91 +104,109 @@ class Graphs extends Component {
           Spaces={"nav_item_link"}
           Notifications={"nav_item_link"}
         />
+
         <div>
-          <Chart
-            width={"500px"}
-            height={"300px"}
-            chartType="BarChart"
-            loader={<div>Loading Chart</div>}
-            data={this.state.upvote}
-            options={{
-              title: "Top 10 upvotes",
-              chartArea: { width: "50%" },
-              hAxis: {
-                title: "Top 10 upvoted Answers",
-                minValue: 0
-              },
-              vAxis: {
-                title: "Answers"
-              }
-            }}
-            // For tests
-            rootProps={{ "data-testid": "1" }}
-          />
+          <div className="ContentWrapper">
+            <div id="__w2_w6AYVNK716_content">
+              <div
+                className="NewGridQuestionPage QuestionMain cardified"
+                id="__w2_w6AYVNK72_grid"
+              >
+                <div className="grid_page">
+                  <div className="layout_2col_main">
+                    <div className="question_main_col">
+                      <div>
+                        <Chart
+                          width={"500px"}
+                          height={"300px"}
+                          chartType="BarChart"
+                          loader={<div>Loading Chart</div>}
+                          data={this.state.upvote}
+                          options={{
+                            title: "Top 10 upvotes",
+                            chartArea: { width: "50%" },
+                            hAxis: {
+                              title: "Top 10 upvoted Answers",
+                              minValue: 0
+                            },
+                            vAxis: {
+                              title: "Answers"
+                            }
+                          }}
+                          // For tests
+                          rootProps={{ "data-testid": "1" }}
+                        />
+                      </div>
+
+                      <Chart
+                        width={"500px"}
+                        height={"300px"}
+                        chartType="BarChart"
+                        loader={<div>Loading Chart</div>}
+                        data={this.state.downvote}
+                        options={{
+                          title: "Top 10 downvotes",
+                          chartArea: { width: "50%" },
+                          hAxis: {
+                            title: "Top 10 downvoted Answers",
+                            minValue: 0
+                          },
+                          vAxis: {
+                            title: "Answers"
+                          }
+                        }}
+                        // For tests
+                        rootProps={{ "data-testid": "1" }}
+                      />
+
+                      <Chart
+                        width={"500px"}
+                        height={"300px"}
+                        chartType="BarChart"
+                        loader={<div>Loading Chart</div>}
+                        data={this.state.bookmark}
+                        options={{
+                          title: "Top 10 bookmarks",
+                          chartArea: { width: "50%" },
+                          hAxis: {
+                            title: "Top 10 Bookmarked Answers",
+                            minValue: 0
+                          },
+                          vAxis: {
+                            title: "Answers"
+                          }
+                        }}
+                        // For tests
+                        rootProps={{ "data-testid": "1" }}
+                      />
+
+                      <Chart
+                        width={"500px"}
+                        height={"300px"}
+                        chartType="BarChart"
+                        loader={<div>Loading Chart</div>}
+                        data={this.state.answerViews}
+                        options={{
+                          title: "Top 10 Answer with Most Views",
+                          chartArea: { width: "50%" },
+                          hAxis: {
+                            title: "Top 10 Bookmarked Answers",
+                            minValue: 0
+                          },
+                          vAxis: {
+                            title: "Answers"
+                          }
+                        }}
+                        // For tests
+                        rootProps={{ "data-testid": "1" }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <Chart
-          width={"500px"}
-          height={"300px"}
-          chartType="BarChart"
-          loader={<div>Loading Chart</div>}
-          data={this.state.downvote}
-          options={{
-            title: "Top 10 downvotes",
-            chartArea: { width: "50%" },
-            hAxis: {
-              title: "Top 10 downvoted Answers",
-              minValue: 0
-            },
-            vAxis: {
-              title: "Answers"
-            }
-          }}
-          // For tests
-          rootProps={{ "data-testid": "1" }}
-        />
-
-        <Chart
-          width={"500px"}
-          height={"300px"}
-          chartType="BarChart"
-          loader={<div>Loading Chart</div>}
-          data={this.state.bookmark}
-          options={{
-            title: "Top 10 bookmarks",
-            chartArea: { width: "50%" },
-            hAxis: {
-              title: "Top 10 Bookmarked Answers",
-              minValue: 0
-            },
-            vAxis: {
-              title: "Answers"
-            }
-          }}
-          // For tests
-          rootProps={{ "data-testid": "1" }}
-        />
-
-        <Chart
-          width={"500px"}
-          height={"300px"}
-          chartType="BarChart"
-          loader={<div>Loading Chart</div>}
-          data={this.state.answerViews}
-          options={{
-            title: "Top 10 Answer with Most Views",
-            chartArea: { width: "50%" },
-            hAxis: {
-              title: "Top 10 Bookmarked Answers",
-              minValue: 0
-            },
-            vAxis: {
-              title: "Answers"
-            }
-          }}
-          // For tests
-          rootProps={{ "data-testid": "1" }}
-        />
       </div>
     );
   }

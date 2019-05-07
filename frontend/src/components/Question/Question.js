@@ -172,6 +172,8 @@ class Question extends Component {
   //   }
   render() {
     var flagVar = false;
+    var defaultImg =
+      "https://quoraprj2.s3.us-east-2.amazonaws.com/quora%3A%20%201557185409773";
     return (
       <div>
         <Navbar
@@ -457,7 +459,21 @@ class Question extends Component {
                                             id="__w2_wEimc2ML40_inner"
                                           >
                                             <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                                              <div id="__w2_wEimc2ML40_icon">
+                                              <div
+                                                id="__w2_wEimc2ML40_icon"
+                                                onClick={() => {
+                                                  this.props.history.push({
+                                                    pathname: "/answer",
+                                                    state: {
+                                                      question_id: this.props
+                                                        .match.params
+                                                        .question_id,
+                                                      question: this.state
+                                                        .question
+                                                    }
+                                                  });
+                                                }}
+                                              >
                                                 <span
                                                   className="ui_button_icon"
                                                   aria-hidden="true"
@@ -2552,9 +2568,13 @@ class Question extends Component {
                                                               <span className="ui_avatar u-flex-inline ui_avatar--large u-flex-none">
                                                                 <img
                                                                   className="ui_avatar_photo ui_avatar--border-circular"
-                                                                  src={localStorage.getItem(
-                                                                    "profileImg"
-                                                                  )}
+                                                                  src={
+                                                                    answer.isAnonymous
+                                                                      ? defaultImg
+                                                                      : localStorage.getItem(
+                                                                          "profileImg"
+                                                                        )
+                                                                  }
                                                                   alt="Brian Lee"
                                                                 />
                                                               </span>
@@ -2583,13 +2603,22 @@ class Question extends Component {
                                                                 <span id="__w2_wzwmJKBZ30_link">
                                                                   <a
                                                                     className="user"
-                                                                    href={"/profile/" + this.props.auth.user.email}
+                                                                    href={
+                                                                      answer.isAnonymous
+                                                                        ? null
+                                                                        : "/profile/" +
+                                                                          this
+                                                                            .props
+                                                                            .auth
+                                                                            .user
+                                                                            .email
+                                                                    }
                                                                     action_mousedown="UserLinkClickthrough"
                                                                     id="__w2_wzwmJKBZ30_name_link"
                                                                   >
-                                                                    {
-                                                                      answer.owner
-                                                                    }
+                                                                    {answer.isAnonymous
+                                                                      ? "Anonymous"
+                                                                      : answer.owner}
                                                                   </a>
                                                                 </span>
                                                               </span>
@@ -2641,6 +2670,15 @@ class Question extends Component {
                                                                           aria-hidden="true"
                                                                         >
                                                                           <svg
+                                                                            onClick={() => {
+                                                                              this.bookmarkHandler(
+                                                                                {
+                                                                                  answer_id:
+                                                                                    answer.answer_id,
+                                                                                  email: answer.owner
+                                                                                }
+                                                                              );
+                                                                            }}
                                                                             width={
                                                                               24
                                                                             }

@@ -8,6 +8,7 @@ import default_image from "./default.png";
 import rooturl from "../../utility/url";
 // var dashboard_questions
 import Modal from "react-modal";
+var moment = require("moment");
 
 // const customStyles = {
 //   content : {
@@ -54,7 +55,8 @@ class Dashboard extends Component {
       showImage: false,
       selectedFile: null,
       pageNo: 1,
-      pageTotal: 0
+      pageTotal: 0,
+      isAnonymous: false
       // modalIsOpen: false,
       // messageModalIsOpen: false
     };
@@ -68,6 +70,9 @@ class Dashboard extends Component {
     this.handleUpload = this.handleUpload.bind(this);
     this.cancelImage = this.cancelImage.bind(this);
     this.handlePagination = this.handlePagination.bind(this);
+    this.anonymousHandler = this.anonymousHandler.bind(this);
+    this.followHandler = this.followHandler.bind(this);
+    this.unfollowHandler = this.unfollowHandler.bind(this);
 
     // this.openModal = this.openModal.bind(this);
     // this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -107,6 +112,31 @@ class Dashboard extends Component {
     });
   };
 
+  followHandler = (name, e) => {
+    axios
+      .post(
+        "/question/follow",
+        { question_id: name, email: this.props.auth.user.email },
+        {}
+      )
+      .then(res => {
+        window.location.reload();
+      });
+  };
+
+  unfollowHandler = (name, e) => {
+    console.log(e);
+    axios
+      .post(
+        "/question/unfollow",
+        { question_id: name, email: this.props.auth.user.email },
+        {}
+      )
+      .then(res => {
+        window.location.reload();
+      });
+  };
+
   handleUpload = () => {
     const fileURL = URL.createObjectURL(this.state.selectedFile);
 
@@ -121,6 +151,21 @@ class Dashboard extends Component {
       document.getElementById("editable").appendChild(x);
     });
   };
+
+  async anonymousHandler() {
+    console.log("annnnnnnn111", this.state.isAnonymous);
+
+    if (this.state.isAnonymous === false)
+      await this.setState({
+        isAnonymous: true
+      });
+    else {
+      await this.setState({
+        isAnonymous: false
+      });
+    }
+    console.log("annnnnnnn", this.state.isAnonymous);
+  }
 
   // componentWillMount() {
   //   axios.get("/answer", { params: { answer_id: "985865" } }).then(res => {
@@ -142,7 +187,8 @@ class Dashboard extends Component {
       .post("/answer", {
         currentElem: document.getElementById("editable").outerHTML,
         question_id: e,
-        owner: this.props.auth.user.email
+        owner: this.props.auth.user.email,
+        isAnonymous: this.state.isAnonymous
       })
       .then(res => {
         console.log("res....", res.data);
@@ -218,11 +264,28 @@ class Dashboard extends Component {
         "&pageNo=" +
         this.state.pageNo
     );
+    let userEmail = this.props.auth.user.email;
+    if (dashboard_questions.data) {
+      dashboard_questions.data.docs.forEach(function(item, key) {
+        axios
+          .get(
+            `${rooturl}/question/isfollowing?email=${userEmail}&question_id=${
+              item.question_id
+            }`
+          )
+          .then(response => {
+            dashboard_questions.data.docs[key].isfollowing =
+              response.data.isfollowing;
+          });
+      });
+    }
 
     let response_profile = await axios.get(
       rooturl + "/profile/image?email=" + this.props.auth.user.email
     );
-    console.log("response profile..........", response_profile.data);
+
+    localStorage.setItem("currEmail", this.props.auth.user.email);
+
     if (response_profile.data) {
       localStorage.setItem("profileImg", response_profile.data);
     }
@@ -237,7 +300,13 @@ class Dashboard extends Component {
       });
     }
 
-    console.log(dashboard_questions.data);
+    if (response.data.first_name) {
+      localStorage.setItem("first_name", response.data.first_name);
+    }
+
+    if (response.data.last_name) {
+      localStorage.setItem("last_name", response.data.last_name);
+    }
 
     if (dashboard_questions.data) {
       this.setState({
@@ -246,11 +315,11 @@ class Dashboard extends Component {
         pageTotal: dashboard_questions.data.pages
       });
 
-      console.log(
-        dashboard_questions.data.docs[0].question,
-        this.state.pageNo,
-        this.state.pageTotal
-      );
+      // console.log(
+      //   dashboard_questions.data.docs[0].question,
+      //   this.state.pageNo,
+      //   this.state.pageTotal
+      // );
     }
   }
 
@@ -775,8 +844,11 @@ class Dashboard extends Component {
                                                               ·{" "}
                                                             </span>
                                                             <span className="question_timestamp">
-                                                              Last followed 6h
-                                                              ago
+                                                              {moment(
+                                                                question.postedDate
+                                                              ).format(
+                                                                "MMM D, YYYY"
+                                                              )}
                                                             </span>
                                                           </div>
                                                         </div>
@@ -1028,12 +1100,35 @@ class Dashboard extends Component {
                                                                     </div>
                                                                   </div>
                                                                   <div className="ui_button_label_count_wrapper">
-                                                                    <span
-                                                                      className="ui_button_label"
-                                                                      id="__w2_wLjahHEI27_label"
-                                                                    >
-                                                                      Follow
-                                                                    </span>
+                                                                    {question.isfollowing ? (
+                                                                      <span
+                                                                        className="ui_button_label"
+                                                                        id="__w2_wLjahHEI27_label"
+                                                                        name={
+                                                                          question.question_id
+                                                                        }
+                                                                        onClick={this.unfollowHandler.bind(
+                                                                          this,
+                                                                          question.question_id
+                                                                        )}
+                                                                      >
+                                                                        Unfollow
+                                                                      </span>
+                                                                    ) : (
+                                                                      <span
+                                                                        className="ui_button_label"
+                                                                        id="__w2_wLjahHEI27_label"
+                                                                        name={
+                                                                          question.question_id
+                                                                        }
+                                                                        onClick={this.followHandler.bind(
+                                                                          this,
+                                                                          question.question_id
+                                                                        )}
+                                                                      >
+                                                                        Follow
+                                                                      </span>
+                                                                    )}
                                                                     <span
                                                                       className="ui_button_count"
                                                                       aria-hidden="true"
@@ -1292,13 +1387,30 @@ class Dashboard extends Component {
                                                                       >
                                                                         <a
                                                                           className="u-flex-inline"
-                                                                          href="/profile/Bruce-Decker-12"
+                                                                          href={
+                                                                            this
+                                                                              .state
+                                                                              .isAnonymous
+                                                                              ? null
+                                                                              : "/profile/" +
+                                                                                this
+                                                                                  .props
+                                                                                  .auth
+                                                                                  .user
+                                                                                  .email
+                                                                          }
                                                                         >
                                                                           <span className="ui_avatar u-flex-inline ui_avatar--large u-flex-none">
                                                                             <img
                                                                               className="ui_avatar_photo ui_avatar--border-circular"
                                                                               src={
-                                                                                default_image
+                                                                                this
+                                                                                  .state
+                                                                                  .isAnonymous
+                                                                                  ? default_image
+                                                                                  : localStorage.getItem(
+                                                                                      "profileImg"
+                                                                                    )
                                                                               }
                                                                               alt="Bruce Decker"
                                                                             />
@@ -1314,21 +1426,34 @@ class Dashboard extends Component {
                                                                           <span id="__w2_w1SM6R3W24_link">
                                                                             <a
                                                                               className="user"
-                                                                              href="/profile/Bruce-Decker-12"
+                                                                              href={
+                                                                                this
+                                                                                  .state
+                                                                                  .isAnonymous
+                                                                                  ? null
+                                                                                  : "/profile/" +
+                                                                                    this
+                                                                                      .props
+                                                                                      .auth
+                                                                                      .user
+                                                                                      .email
+                                                                              }
                                                                               action_mousedown="UserLinkClickthrough"
                                                                               id="__w2_w1SM6R3W24_name_link"
                                                                             >
-                                                                              {
-                                                                                response
-                                                                                  .data
-                                                                                  .first_name
-                                                                              }{" "}
-                                                                              {}{" "}
-                                                                              {
-                                                                                response
-                                                                                  .data
-                                                                                  .last_name
-                                                                              }
+                                                                              {this
+                                                                                .state
+                                                                                .isAnonymous
+                                                                                ? "Anonymous"
+                                                                                : `${
+                                                                                    response
+                                                                                      .data
+                                                                                      .first_name
+                                                                                  } ${
+                                                                                    response
+                                                                                      .data
+                                                                                      .last_name
+                                                                                  }`}
                                                                             </a>
                                                                           </span>
                                                                         </span>
@@ -1528,7 +1653,6 @@ class Dashboard extends Component {
                                                                 >
                                                                   <div
                                                                     className="doc empty"
-                                                                    contentEditable="true"
                                                                     data-kind="doc"
                                                                     placeholder="Write your answer"
                                                                   >
@@ -1540,10 +1664,11 @@ class Dashboard extends Component {
                                                                       }
                                                                       data-kind="section"
                                                                       data-dir="LTR"
-                                                                      id="editable"
-                                                                      contentEditable="true"
                                                                     >
-                                                                      <div className="content">
+                                                                      <div
+                                                                        id="editable"
+                                                                        contentEditable="true"
+                                                                      >
                                                                         <br />
                                                                       </div>
                                                                     </div>
@@ -1635,6 +1760,30 @@ class Dashboard extends Component {
                                                               >
                                                                 Submit
                                                               </button>
+
+                                                              <span
+                                                                className="ui_button_icon"
+                                                                aria-hidden="true"
+                                                              >
+                                                                <label>
+                                                                  Anonymous
+                                                                </label>
+                                                                <input
+                                                                  type="checkbox"
+                                                                  class="custom-control-input"
+                                                                  id="same-address"
+                                                                  value="true"
+                                                                  checked={
+                                                                    this.state
+                                                                      .isAnonymous ===
+                                                                    true
+                                                                  }
+                                                                  onChange={
+                                                                    this
+                                                                      .anonymousHandler
+                                                                  }
+                                                                />
+                                                              </span>
                                                             </div>
                                                           ) : null}
                                                         </div>
