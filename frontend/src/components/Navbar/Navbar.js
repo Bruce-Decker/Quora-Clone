@@ -136,6 +136,11 @@ class Navbar extends Component {
   //     return (dt < 10 ? '0' : '') + dt;
   //  }
 
+  redirect = (link) => {
+    this.props.history.push(link)
+    window.location.reload()
+  }
+
   onFocus = () => {
     this.setState({
       showSearchModal: true
@@ -1451,6 +1456,9 @@ class Navbar extends Component {
                                             to={`/question/${
                                               question.question_id
                                             }`}
+                                            onClick = {() => this.redirect(`/question/${
+                                              question.question_id
+                                            }`)}
                                           >
                                             <li
                                               className="selector_result tribe"

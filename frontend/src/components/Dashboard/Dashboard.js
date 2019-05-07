@@ -706,40 +706,23 @@ class Dashboard extends Component {
                                                             key={question}
                                                           >
                                                             <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                                                              <div id="__w2_whIqsbBW49_icon">
-                                                                <span
-                                                                  className="ui_button_icon"
-                                                                  aria-hidden="true"
-                                                                >
-                                                                  <svg
-                                                                    width="24px"
-                                                                    height="24px"
-                                                                    viewBox="0 0 24 24"
-                                                                    version="1.1"
-                                                                    xmlns="http://www.w3.org/2000/svg"
-                                                                    xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                                  >
-                                                                    <g
-                                                                      id="small_close"
-                                                                      className="icon_svg-stroke"
-                                                                      fill="none"
-                                                                      fillRule="evenodd"
-                                                                      strokeLinecap="round"
-                                                                      stroke="#666666"
-                                                                      strokeWidth="1.5"
-                                                                    >
-                                                                      <path
-                                                                        d="M12,6 L12,18"
-                                                                        transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) "
-                                                                      />
-                                                                      <path
-                                                                        d="M18,12 L6,12"
-                                                                        transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) "
-                                                                      />
-                                                                    </g>
-                                                                  </svg>
-                                                                </span>
-                                                              </div>
+                                                             
+                                                             
+                                                             
+                                                             
+                                                             
+                                                             
+
+
+
+
+
+
+
+
+
+
+
                                                             </div>
                                                           </div>
                                                         </a>
