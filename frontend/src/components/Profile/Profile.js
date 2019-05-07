@@ -207,13 +207,13 @@ onTopicBlur = () => {
 
 followHandler() {
   axios.post("/follow/followUser", {leader_email: this.state.profileEmail, follower_email: this.props.auth.user.email}, {}).then(res => {
-    console.log("hello")
+    window.location.reload();
   });
 }
 
   unfollowHandler() {
     axios.post("/follow/unfollowUser", {leader_email: this.state.profileEmail, follower_email: this.props.auth.user.email}, {}).then(res => {
-      console.log("hello")
+      window.location.reload();
     });
 }
   
