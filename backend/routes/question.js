@@ -153,4 +153,20 @@ router.post("/unfollow", function(req, res) {
   );
 });
 
+router.get("/isfollowing", function(req, res) {
+  kafka.make_request(
+    "question",
+    { method: "isfollowing", message: req.query },
+    function(error, result) {
+      if (error) {
+        console.log(error);
+        res.status(400).json({ msg: "cannot find questions" });
+      } else {
+        console.log(`result`);
+        console.log(result);
+        res.send(result);
+      }
+    }
+  );
+});
 module.exports = router;

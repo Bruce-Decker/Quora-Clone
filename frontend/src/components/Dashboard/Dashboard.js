@@ -69,7 +69,12 @@ class Dashboard extends Component {
     this.handleUpload = this.handleUpload.bind(this);
     this.cancelImage = this.cancelImage.bind(this);
     this.handlePagination = this.handlePagination.bind(this);
+<<<<<<< HEAD
     this.anonymousHandler = this.anonymousHandler.bind(this);
+=======
+    this.followHandler = this.followHandler.bind(this);
+    this.unfollowHandler = this.unfollowHandler.bind(this);
+>>>>>>> 7202e2d39bc2553d71549b5fb67f6f09fbbd65d6
 
     // this.openModal = this.openModal.bind(this);
     // this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -108,6 +113,19 @@ class Dashboard extends Component {
       loaded: 0
     });
   };
+
+  followHandler = (name, e) => {
+    axios.post("/question/follow", {question_id: name, email: this.props.auth.user.email}, {}).then(res => {
+      window.location.reload();
+    });
+  }
+  
+  unfollowHandler = (name, e) => {
+    console.log(e);
+      axios.post("/question/unfollow", {question_id: name, email: this.props.auth.user.email}, {}).then(res => {
+        window.location.reload();
+      });
+  }
 
   handleUpload = () => {
     const fileURL = URL.createObjectURL(this.state.selectedFile);
@@ -236,11 +254,23 @@ class Dashboard extends Component {
         "&pageNo=" +
         this.state.pageNo
     );
+    let userEmail = this.props.auth.user.email;
+    if(dashboard_questions.data){
+      dashboard_questions.data.docs.forEach(function (item, key) {
+        axios.get(`${rooturl}/question/isfollowing?email=${userEmail}&question_id=${item.question_id}`).then(
+          response => {
+            dashboard_questions.data.docs[key].isfollowing = response.data.isfollowing;
+          }
+        )
+      })
+    }
 
     let response_profile = await axios.get(
       rooturl + "/profile/image?email=" + this.props.auth.user.email
     );
-    console.log("response profile..........", response_profile.data);
+
+    localStorage.setItem("currEmail", this.props.auth.user.email);
+
     if (response_profile.data) {
       localStorage.setItem("profileImg", response_profile.data);
     }
@@ -255,7 +285,13 @@ class Dashboard extends Component {
       });
     }
 
-    console.log(dashboard_questions.data);
+    if (response.data.first_name) {
+      localStorage.setItem("first_name", response.data.first_name);
+    }
+
+    if (response.data.last_name) {
+      localStorage.setItem("last_name", response.data.last_name);
+    }
 
     if (dashboard_questions.data) {
       this.setState({
@@ -1045,13 +1081,22 @@ class Dashboard extends Component {
                                                                       </span>
                                                                     </div>
                                                                   </div>
-                                                                  <div className="ui_button_label_count_wrapper">
-                                                                    <span
+                                                                  <div className="ui_button_label_count_wrapper" >
+                                                                    { question.isfollowing ? <span
                                                                       className="ui_button_label"
                                                                       id="__w2_wLjahHEI27_label"
+                                                                      name={question.question_id}
+                                                                      onClick = {this.unfollowHandler.bind(this,question.question_id)}
+                                                                    >
+                                                                      Unfollow
+                                                                    </span> : <span
+                                                                      className="ui_button_label"
+                                                                      id="__w2_wLjahHEI27_label"
+                                                                      name={question.question_id}
+                                                                      onClick = {this.followHandler.bind(this,question.question_id)}
                                                                     >
                                                                       Follow
-                                                                    </span>
+                                                                    </span>}
                                                                     <span
                                                                       className="ui_button_count"
                                                                       aria-hidden="true"
@@ -1576,7 +1621,6 @@ class Dashboard extends Component {
                                                                 >
                                                                   <div
                                                                     className="doc empty"
-                                                                    contentEditable="true"
                                                                     data-kind="doc"
                                                                     placeholder="Write your answer"
                                                                   >
@@ -1588,10 +1632,11 @@ class Dashboard extends Component {
                                                                       }
                                                                       data-kind="section"
                                                                       data-dir="LTR"
-                                                                      id="editable"
-                                                                      contentEditable="true"
                                                                     >
-                                                                      <div className="content">
+                                                                      <div
+                                                                        id="editable"
+                                                                        contentEditable="true"
+                                                                      >
                                                                         <br />
                                                                       </div>
                                                                     </div>

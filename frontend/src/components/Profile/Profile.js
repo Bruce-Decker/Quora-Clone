@@ -7,6 +7,8 @@ import Modal from "react-modal";
 import default_image from "./default.png";
 import rooturl from "../../utility/url";
 import queryString from "query-string";
+
+
 var lodash = require('lodash');
 
 const topics = [
@@ -55,6 +57,21 @@ const customStylesTopics = {
    }
  };
 
+
+ const customStyleFollowers = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    width: "220px",
+    height: "300px"
+    
+  }
+};
+
 Modal.setAppElement("#root");
 
 function searchingTopics(query) {
@@ -64,6 +81,7 @@ function searchingTopics(query) {
  } 
 
 var response_profile;
+var response_following;
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -71,6 +89,9 @@ class Profile extends Component {
       open: false,
       modalIsOpen: false,
       topicsModalIsOpen: false,
+      followerModalIsOpen: false,
+      viewModalIsOpen: false,
+      followingModalIsOpen: false,
       questions: [],
       showList: false,
       activityType: "",
@@ -90,6 +111,7 @@ class Profile extends Component {
       selectedFile: null,
       showProfile: false,
       showTopicSelection: false,
+      showFollowing: false,
       topics: topics,
       enteredTopicValue: '',
       profile_image: './default.png',
@@ -106,6 +128,18 @@ class Profile extends Component {
     this.followHandler = this.followHandler.bind(this);
     this.unfollowHandler = this.unfollowHandler.bind(this);
   }
+
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.match.params.email !== this.props.match.params.email) {
+        window.location.reload()
+  }
+}
+
+redirectProfile = (link) => {
+  this.props.history.push(link)
+  window.location.reload()
+}
 
   followTopic = (topic_name) => {
      var data = {
@@ -189,6 +223,34 @@ onTopicBlur = () => {
   topicsCloseModal = () => {
     console.log("in close model")
     this.setState({ topicsModalIsOpen: false });
+  }
+
+
+
+  openFollowerModal = () => {
+    this.setState({followerModalIsOpen: true});
+  }
+
+  closeFollowerModal = () => {
+    this.setState({followerModalIsOpen: false});
+  }
+
+
+  openViewModal = () => {
+    this.setState({viewModalIsOpen: true});
+  }
+
+  closeViewModal = () => {
+    this.setState({viewModalIsOpen: false});
+  }
+
+
+  openFollowingModal = () => {
+    this.setState({followingModalIsOpen: true});
+  }
+
+  closeFollowingModal = () => {
+    this.setState({followingModalIsOpen: false});
   }
 
 
@@ -332,6 +394,10 @@ followHandler() {
     response_profile = await axios.get(
       rooturl + "/profile/viewProfile?email=" + this.props.match.params.email
     );
+
+    response_following = await axios.get(
+      rooturl + "/follow/userFollowing?email=" + this.props.match.params.email
+    )
     
     if (response_profile.data[0]) {
       this.setState({
@@ -356,7 +422,14 @@ followHandler() {
         showList: true
       });
     }
-    console.log(response.data);
+
+    if (response_following.data.length > 0) {
+      this.setState({
+         showFollowing: true
+      })
+    } 
+
+    console.log(response_following);
     console.log("11231092314 " + this.props.location.search);
   }
 
@@ -576,8 +649,12 @@ followHandler() {
                         <h1> Career Information: {response_profile.data[0].career_information} </h1>
                         <h1> Profile Credential: {response_profile.data[0].profile_credential} </h1>
                         <br />
-                        <h1>Followers: {response_profile.data[0].followers.length}</h1>
-                        <h1>Views: {response_profile.data[0].views.length}</h1>
+                        <Link onClick = {this.openFollowerModal}><h1>Followers: {response_profile.data[0].followers.length}</h1></Link>
+                        <Link onClick = {this.openViewModal}><h1>Views: {response_profile.data[0].views.length}</h1> </Link>
+                        {this.state.showFollowing ?
+                           <Link onClick = {this.openFollowingModal}><h1>Following: {response_following.data.length}</h1></Link>
+                           : null
+                        }
                         </div>
                        
                         : null }
@@ -2099,6 +2176,18 @@ followHandler() {
                                   }}
                                 >
                                   Questions<span className="list_count">1</span>
+                                </Link>
+                              </li>
+                            </div>
+                          </div>
+                          <div>
+                            <div id="wIYwSz7m75">
+                              <li className="NavItem QuestionsNavItem EditableListItem NavListItem not_removable">
+                                <Link
+                                  to={{
+                                    pathname:`/profileviewsgraph`}}
+                                >
+                                  Views
                                 </Link>
                               </li>
                             </div>
@@ -6025,6 +6114,64 @@ followHandler() {
       </div>
    </div>
 </div>
+        </Modal>
+        
+        <Modal
+          isOpen={this.state.followerModalIsOpen}
+          onRequestClose={this.closeFollowerModal}
+          style={customStyleFollowers}
+          contentLabel="Example Modal"
+          name = "Follower Modal"
+        >
+          
+             {this.state.showProfile ?  
+                 <div style={{height: '220px', width: '190px', border: '1px solid #ccc', font: '16px/26px Georgia, Garamond, Serif', overflow: 'auto'}}>
+                    {response_profile.data[0].followers.map(follower => 
+                      <span>
+                           <Link to = {`/profile/${follower.email}`} onClick = {() => this.redirectProfile(`/profile/${follower.email}`)} > <h1> {follower.email} </h1> </Link>
+                       </span>
+                    )}  
+                 </div>
+              : null }
+        </Modal>
+
+        <Modal
+          isOpen={this.state.viewModalIsOpen}
+          onRequestClose={this.closeViewModal}
+          style={customStyleFollowers}
+          contentLabel="Example Modal"
+          name = "Follower Modal"
+        >
+          
+             {this.state.showProfile ?  
+                 <div style={{height: '220px', width: '190px', border: '1px solid #ccc', font: '16px/26px Georgia, Garamond, Serif', overflow: 'auto'}}>
+                    {response_profile.data[0].views.map(view => 
+                      <span>
+                           <h1> {view.time} </h1> 
+                       </span>
+                    )}  
+                 </div>
+              : null }
+        </Modal>
+
+        <Modal
+          isOpen={this.state.followingModalIsOpen}
+          onRequestClose={this.closeFollowingModal}
+          style={customStyleFollowers}
+          contentLabel="Example Modal"
+          name = "Follower Modal"
+        >
+          
+             {this.state.showProfile ?  
+                 <div style={{height: '220px', width: '190px', border: '1px solid #ccc', font: '16px/26px Georgia, Garamond, Serif', overflow: 'auto'}}>
+                    {response_following.data.map(following => 
+                      <span>
+                          
+                           <Link to = {`/profile/${following.email}`} onClick = {() => this.redirectProfile(`/profile/${following.email}`)} > <h1> {following.email} </h1> </Link>
+                       </span>
+                    )}  
+                 </div>
+              : null }
         </Modal>
 
 

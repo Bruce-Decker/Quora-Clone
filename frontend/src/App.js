@@ -17,6 +17,9 @@ import Messages from "./components/Messages/Messages";
 import EditAnswer from "./components/EditAnswer/EditAnswer";
 import Graph from "./components/Graphs/graphs";
 import ProfileViewsGraph from "./components/Graphs/profileViewsGraph";
+import SecureRoutes from './components/SecureRoutes'
+
+
 if (localStorage.token) {
   if (localStorage.getItem("token") === "undefined") {
     localStorage.removeItem("token");
@@ -44,17 +47,39 @@ class App extends Component {
           <div className="App">
             <Route exact path="/" component={Login} />
             <Route exact path="/register" component={Register} />
-            <Route exact path="/dashboard" component={Dashboard} />
-            <Route exact path="/answer" component={Answer} />
-            <Route exact path="/answer2" component={Answer2} />
-            <Route exact path="/content" component={Content} />
-            <Route exact path="/question/:question_id" component={Question} />
-            <Route exact path="/profile/:email" component={Profile} />
-            <Route exact path="/messages/:email" exact component={Messages} />
-            <Route exact path="/editanswer" exact component={EditAnswer} />
-            <Route exact path="/topic/:topic_name" exact component={Topic} />
-            <Route exact path="/graph" exact component={Graph} />
-            <Route exact path="/profileviewsgraph" exact component={ProfileViewsGraph} />
+            <Switch>
+               <SecureRoutes exact path="/dashboard" component={Dashboard} />
+            </Switch>
+            <Switch>
+               <SecureRoutes exact path="/answer" component={Answer} />
+            </Switch>
+            <Switch>
+               <SecureRoutes exact path="/answer2" component={Answer2} />
+            </Switch>
+            <Switch>
+               <SecureRoutes exact path="/content" component={Content} />
+            </Switch>
+            <Switch>
+               <SecureRoutes exact path="/question/:question_id" component={Question} />
+            </Switch>
+            <Switch>
+               <SecureRoutes exact path="/profile/:email" component={Profile} />
+            </Switch>
+            <Switch>
+               <SecureRoutes exact path="/messages/:email" exact component={Messages} />
+            </Switch>
+            <Switch>
+                <SecureRoutes exact path="/editanswer" exact component={EditAnswer} />
+            </Switch>
+            <Switch>
+                <SecureRoutes exact path="/topic/:topic_name" exact component={Topic} />
+            </Switch>
+            <Switch>
+                <SecureRoutes exact path="/graph" exact component={Graph} />
+            </Switch>
+            <Switch>
+                <SecureRoutes exact path="/profileviewsgraph" exact component={ProfileViewsGraph} />
+            </Switch>
           </div>
         </BrowserRouter>
       </Provider>
