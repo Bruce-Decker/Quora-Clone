@@ -843,8 +843,7 @@ class Dashboard extends Component {
                                                               ·{" "}
                                                             </span>
                                                             <span className="question_timestamp">
-                                                              Last followed 6h
-                                                              ago
+                                                              {question.postedDate}
                                                             </span>
                                                           </div>
                                                         </div>
