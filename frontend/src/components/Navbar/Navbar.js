@@ -1169,7 +1169,7 @@ class Navbar extends Component {
                     </span>
                     <span id="wGp3JsZF3">
                       <div className="SiteHeaderNavItem WriteNavItem HoverMenu">
-                        <Link
+                        {/* <Link
                           to="/answer"
                           className={this.props.Answer}
                           target
@@ -1202,7 +1202,7 @@ class Navbar extends Component {
                           <span className="expanded">Answer</span>
                           <span className="truncated">Answer</span>
                           <div id="wGp3JsZF19" />
-                        </Link>
+                        </Link> */}
                       </div>
                     </span>
 

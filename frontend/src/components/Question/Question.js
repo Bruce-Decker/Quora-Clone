@@ -255,13 +255,7 @@ class Question extends Component {
                                           </div>
                                         </span>
                                       ))}
-                                      <span id="w0Ia0Toj1">
-                                        <div
-                                          className="QuestionTopicEditButton edit_topics_link u-inline"
-                                          alt="Edit Topics"
-                                          id="__w2_w0Ia0Toj2_edit_link"
-                                        />
-                                      </span>
+                                    
                                     </div>
                                   </div>
                                 </div>
@@ -626,65 +620,32 @@ class Question extends Component {
                                       </span>
                                     </div>
                                     <div className="ItemComponent RequestPrimaryActionItem primary_item u-relative">
-                                      <a
-                                        className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon"
-                                        href="#"
-                                        role="button"
-                                        id="__w2_wEimc2ML20_button"
-                                      >
-                                        <div
-                                          className="ui_button_inner"
-                                          id="__w2_wEimc2ML20_inner"
-                                        >
-                                          <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                                            <div id="__w2_wEimc2ML20_icon">
-                                              <span
-                                                className="ui_button_icon"
-                                                aria-hidden="true"
-                                              >
-                                                <svg
-                                                  width="24px"
-                                                  height="24px"
-                                                  viewBox="0 0 24 24"
-                                                  version="1.1"
-                                                  xmlns="http://www.w3.org/2000/svg"
-                                                  xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                >
-                                                  <g
-                                                    id="request"
-                                                    className="icon_svg-stroke"
-                                                    stroke="#666"
-                                                    strokeWidth="1.5"
-                                                    fill="none"
-                                                    fillRule="evenodd"
-                                                  >
-                                                    <g
-                                                      transform="translate(10.000000, 5.000000)"
-                                                      className="icon_svg-fill"
-                                                      fill="none"
-                                                    >
-                                                      <path d="M10,15.5 C10,12.7385763 7.76142375,10.5 5,10.5 C2.23857625,10.5 0,12.7385763 0,15.5 M5,8 C7.209139,8 9,6.209139 9,4 C9,1.790861 7.209139,0 5,0 C2.790861,0 1,1.790861 1,4 C1,6.209139 2.790861,8 5,8 Z" />
-                                                    </g>
-                                                    <path
-                                                      d="M6,10 L8.5,13 L6,16 M3,13.0244257 L8.49508293,13.0244257"
-                                                      strokeLinecap="round"
-                                                      strokeLinejoin="round"
-                                                    />
-                                                  </g>
-                                                </svg>
-                                              </span>
-                                            </div>
-                                          </div>
-                                          <div className="ui_button_label_count_wrapper">
-                                            <span
-                                              className="ui_button_label"
-                                              id="__w2_wEimc2ML20_label"
-                                            >
-                                              Request
-                                            </span>
-                                          </div>
-                                        </div>
-                                      </a>
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                       <div className="u-relative">
                                         <div
                                           className="RequestActionCaret hidden"
@@ -2983,84 +2944,34 @@ class Question extends Component {
                                                       </span>
                                                       <div className="QuoraShareActionItem ItemComponent ActionItemComponent action_item u-relative">
                                                         <div id="wTzJejgH32">
-                                                          <a
-                                                            className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon"
-                                                            href="#"
-                                                            role="button"
-                                                            id="__w2_wTzJejgH41_button"
-                                                          >
-                                                            <div
-                                                              className="ui_button_inner"
-                                                              id="__w2_wTzJejgH41_inner"
-                                                            >
-                                                              <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                                                                <div id="__w2_wTzJejgH41_icon">
-                                                                  <span
-                                                                    className="ui_button_icon"
-                                                                    aria-hidden="true"
-                                                                  >
-                                                                    <svg
-                                                                      width="24px"
-                                                                      height="24px"
-                                                                      viewBox="0 0 24 24"
-                                                                      version="1.1"
-                                                                      xmlns="http://www.w3.org/2000/svg"
-                                                                      xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                                    >
-                                                                      <g
-                                                                        id="sync"
-                                                                        className="icon_svg-stroke"
-                                                                        stroke="#666"
-                                                                        strokeWidth="1.5"
-                                                                        fill="none"
-                                                                        fillRule="evenodd"
-                                                                        strokeLinecap="round"
-                                                                      >
-                                                                        <path
-                                                                          d="M19.7477789,9.99927692 C18.8594418,6.54918939 15.7274185,4 12,4 C8.27166139,4 5.13901185,6.55044813 4.25156364,10.0018321 M4.25328626,14.0048552 C5.14305933,17.4528459 8.2740698,20 12,20 C15.7261126,20 18.8572473,17.4525964 19.7468444,14.0043488"
-                                                                          id="circle"
-                                                                        />
-                                                                        <polyline
-                                                                          id="arrow"
-                                                                          transform="translate(4.742997, 8.742997) rotate(-20.000000) translate(-4.742997, -8.742997) "
-                                                                          points="2.99299734 6.99299734 2.99299734 10.4929973 6.49299734 10.4929973"
-                                                                        />
-                                                                        <polyline
-                                                                          id="arrow"
-                                                                          transform="translate(19.242997, 15.242997) scale(-1, -1) rotate(-20.000000) translate(-19.242997, -15.242997) "
-                                                                          points="17.4929973 13.4929973 17.4929973 16.9929973 20.9929973 16.9929973"
-                                                                        />
-                                                                      </g>
-                                                                    </svg>
-                                                                  </span>
-                                                                </div>
-                                                              </div>
-                                                              <div className="ui_button_label_count_wrapper">
-                                                                <span
-                                                                  className="ui_button_label"
-                                                                  id="__w2_wTzJejgH41_label"
-                                                                >
-                                                                  Share
-                                                                </span>
-                                                                <span
-                                                                  className="ui_button_count hidden"
-                                                                  aria-hidden="true"
-                                                                  id="__w2_wTzJejgH41_count_wrapper"
-                                                                >
-                                                                  <span className="bullet">
-                                                                    {" "}
-                                                                    ·{" "}
-                                                                  </span>
-                                                                  <span
-                                                                    className="ui_button_count_inner"
-                                                                    id="__w2_wTzJejgH41_count"
-                                                                  >
-                                                                    0
-                                                                  </span>
-                                                                </span>
-                                                              </div>
-                                                            </div>
-                                                          </a>
+                                                          
+                                                          
+                                                          
+                                                          
+                                                          
+                                                          
+                                                          
+                                                         
+                                                         
+                                                         
+                                                         
+                                                         
+                                                         
+                                                         
+                                                         
+                                                         
+                                                          
+
+
+
+
+
+
+
+
+
+
+
                                                           <div id="__w2_wTzJejgH33_quora_share_tooltip" />
                                                         </div>
                                                       </div>
