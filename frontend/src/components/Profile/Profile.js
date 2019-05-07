@@ -199,13 +199,9 @@ onTopicBlur = () => {
    });
  };
 
-  componentWillReceiveProps(nextProps) {
-   console.log("fsdfsf")
-  }
+  
 
-  componentDidUpdate() {
-   alert("sffs")
-  }
+  
    
 
   firstnameHandler = e => {
