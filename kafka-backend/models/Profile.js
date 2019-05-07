@@ -74,6 +74,10 @@ var ProfileSchema = new Schema({
         type: String,
         required: true
       },
+      subject: {
+        type: String,
+        required: true
+      },
       isRead: {
         type: Boolean,
         required: true

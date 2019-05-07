@@ -183,21 +183,12 @@ class Messages extends Component {
                                 <div className="PagedListItem UserContentListItem">
                                   <span className="title">
                                     <span id="wzr1YmKw6">
-                                      <Link
-                                        className="question_link"
-                                        to={`/question/${
-                                          question.sender_email
-                                        }`}
-                                        target="_top"
-                                        action_mousedown="QuestionLinkClickthrough"
-                                        id="__w2_wzr1YmKw7_link"
-                                      >
-                                        <span className="ui_content_title unstyled_ui_title">
-                                          <span className="ui_qtext_rendered_qtext">
-                                            {question.message}
-                                          </span>
+                                      <span className="ui_content_title unstyled_ui_title">
+                                        <span className="ui_qtext_rendered_qtext">
+                                          {question.subject}
+                                          {question.message}
                                         </span>
-                                      </Link>
+                                      </span>
                                     </span>
                                   </span>
                                   <div className="metadata">
