@@ -35,6 +35,21 @@ router.get("/getMessages/:receiver_email", function(req, res) {
     }
   );
 });
+
+router.get("/getSentMessages/:sender_email", function(req, res) {
+  kafka.make_request(
+    "message",
+    { method: "get_sentMessages", sender_email: req.params.sender_email },
+    function(error, result) {
+      if (error) {
+        console.log(error);
+        res.status(400).json({ msg: "message not found" });
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
 router.get(
   "/getExchangedMessages/:receiver_email/:sender_email/:subject",
   function(req, res) {

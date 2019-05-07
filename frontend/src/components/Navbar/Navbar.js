@@ -2821,9 +2821,22 @@ class Navbar extends Component {
                               type="text"
                               autofocus="True"
                               data-group="js-editable"
-                              placeholder="Enter a name"
+                              placeholder="Enter an email"
                               w2cid="wbuTulbL3"
                               id="__w2_wbuTulbL3_input"
+                              name = "email_address"
+                              onChange = {this.onChange}
+                            />
+                            <input
+                              className="modal_message_recipient_selector selector_input text"
+                              type="text"
+                              autofocus="True"
+                              data-group="js-editable"
+                              placeholder="Enter a subject"
+                              w2cid="wbuTulbL3"
+                              id="__w2_wbuTulbL3_input"
+                              name = "email_subject"
+                              onChange = {this.onChange}
                             />
                             <div
                               className="selector_spinner hidden"
@@ -2872,6 +2885,8 @@ class Navbar extends Component {
                       w2cid="wbuTulbL2"
                       id="__w2_wbuTulbL2_message_editor"
                       defaultValue={""}
+                      name = "email_message"
+                      onChange = {this.onChange}
                     />
                   </div>
                   <div
@@ -2893,12 +2908,13 @@ class Navbar extends Component {
                           Cancel
                         </Link>
                       </span>
-                      <a
+                      <button
                         className="submit_button modal_action"
                         id="__w2_wbuTulbL2_submit_button"
+                        onClick = {this.sendMessage}
                       >
                         Send
-                      </a>
+                      </button>
                     </div>
                   </div>
                 </div>
