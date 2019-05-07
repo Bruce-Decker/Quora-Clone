@@ -50,6 +50,13 @@ exports.authService = function authService(info, callback) {
       console.log(info);
       deleteUser(info, callback);
       break;
+    case "undelete":
+      console.log(info);
+      unDeleteUser(info, callback);
+      break;
+    case "activate":
+      activateUser(info, callback);
+      break;
     case "deactivate":
       deactivateUser(info, callback);
       break;
@@ -71,6 +78,24 @@ function search(info, callback) {
   });
 }
 
+function unDeleteUser(info, callback) {
+  //var email = info.message.email;
+  console.log("===================");
+  console.log(info.body);
+  Auth.update(
+    { email: info.body.email },
+    { $set: { isDeleted: false } },
+    function(err, docs) {
+      if (err) {
+        //res.send("Fail")
+        callback(err, "error");
+      } else {
+        callback(null, docs);
+      }
+    }
+  );
+}
+
 function deleteUser(info, callback) {
   //var email = info.message.email;
   console.log("===================");
@@ -87,6 +112,22 @@ function deleteUser(info, callback) {
       }
     }
   );
+}
+
+function activateUser(info, callback) {
+  var email = info.body.email;
+
+  Auth.update({ email: email }, { $set: { isDeactivated: false } }, function(
+    err,
+    docs
+  ) {
+    if (err) {
+      //res.send("Fail")
+      callback(err, "error");
+    } else {
+      callback(null, docs);
+    }
+  });
 }
 
 function deactivateUser(info, callback) {

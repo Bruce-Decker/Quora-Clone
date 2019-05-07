@@ -44,6 +44,7 @@ class Login extends Component {
 
   render() {
     const { errors } = this.state;
+    
 
     return (
       <div className="web_page logged_out lang_en q_ltr logged_out_page_big_signup">
@@ -425,6 +426,8 @@ class Login extends Component {
                                 </div>
 
                                 <div className="inputError">{errors.email}</div>
+                                <div className="inputError">{errors.isDeleted}</div>
+                                <div className="inputError">{errors.isDeactivated}</div>
 
                                 <div className="form_column">
                                   <input

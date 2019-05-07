@@ -33,20 +33,45 @@ export const registerUser = (userData, history) => dispatch => {
 
 export const loginUser = userData => dispatch => {
   console.log("user");
+  const errors = {}
   axios
     .post(rooturl + "/login", userData)
     .then(res => {
       const { token } = res.data;
       console.log(res.data);
-      localStorage.setItem("token", token);
-      tokenHeader(token);
-      const decrypt_data = jwt_decode(token);
-      decrypt_data.token = token;
-      console.log("data is 1" + JSON.stringify(decrypt_data));
-      dispatch(activeUser(decrypt_data));
+      // localStorage.setItem("token", token);
+      // tokenHeader(token);
+      // const decrypt_data = jwt_decode(token);
+      // decrypt_data.token = token;
+      // console.log("data is 1" + JSON.stringify(decrypt_data));
+      if (res.data.user.isDeactivated == "true") {
+           errors.isDeactivated = "User is deactivated"
+      }
+      if (res.data.user.isDeleted == "true") {
+         errors.isDeleted = "User is deleted"
+      }
+      if (res.data.user.isDeactivated == "true" || res.data.user.isDeleted == "true") {
+        dispatch({
+          type: GET_ERRORS,
+          payload: errors
+        })
+       console.log(errors)
+      } else {
+        console.log(res.data.user)
+        localStorage.setItem("token", token);
+        tokenHeader(token);
+        const decrypt_data = jwt_decode(token);
+        decrypt_data.token = token;
+        console.log("data is 1" + JSON.stringify(decrypt_data));
+        dispatch(activeUser(decrypt_data));
+      
+        console.log("sdfsf")
+      }
+
+     
     })
     .catch(err => {
-      
+      console.log(err.response.data)
       if (err.response) {
         dispatch({
           type: GET_ERRORS,
