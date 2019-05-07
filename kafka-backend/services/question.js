@@ -248,7 +248,7 @@ function unfollowQuestion(info, callback) {
 function isfollowing(info, callback) {
   console.log(info.message);
   Question.findOne(
-    { question_id:info.message.question_id},
+    { question_id: info.message.question_id },
 
     (err, questions) => {
       if (err) {
@@ -256,14 +256,16 @@ function isfollowing(info, callback) {
         callback(err, null);
       } else {
         let isfollowing = false;
-        questions.followers.forEach(function(element) {
-          console.log(`element.email`);
-          console.log(element.email);
-          if(isfollowing ===false && element.email == info.message.email)
-            isfollowing = true;
-        });
-        
-        callback(null, {"isfollowing":isfollowing});
+        if (questions && questions.followers) {
+          questions.followers.forEach(function(element) {
+            console.log(`element.email`);
+            console.log(element.email);
+            if (isfollowing === false && element.email == info.message.email)
+              isfollowing = true;
+          });
+
+          callback(null, { isfollowing: isfollowing });
+        }
       }
     }
   );

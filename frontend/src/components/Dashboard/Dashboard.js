@@ -449,7 +449,7 @@ class Dashboard extends Component {
                                     <li className="switcher_item switcher_item_with_image">
                                       <Link
                                         className="link"
-                                        to= {`/topic/${topic}`}
+                                        to={`/topic/${topic}`}
                                       >
                                         <div className="switcher_item_image u-flex-none u-relative">
                                           <div
@@ -654,7 +654,6 @@ class Dashboard extends Component {
                                                               </div>
                                                               <Link
                                                                 className="TopicNameLink HoverMenu topic_name"
-                                                             
                                                                 action_mousedown="TopicLinkClickthrough"
                                                                 id="__w2_whIqsbBW47_link"
                                                               >
@@ -705,25 +704,7 @@ class Dashboard extends Component {
                                                             id="__w2_whIqsbBW49_inner"
                                                             key={question}
                                                           >
-                                                            <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                                                             
-                                                             
-                                                             
-                                                             
-                                                             
-                                                             
-
-
-
-
-
-
-
-
-
-
-
-                                                            </div>
+                                                            <div className="ui_button_icon_wrapper u-relative u-flex-inline" />
                                                           </div>
                                                         </a>
                                                       </div>
@@ -816,10 +797,9 @@ class Dashboard extends Component {
                                                               className="answer_count_prominent"
                                                               href="/What-is-the-square-root-of-40-41"
                                                             >
-                                                              {
+                                                              {question.answers &&
                                                                 question.answers
-                                                                  .length
-                                                              }{" "}
+                                                                  .length}{" "}
                                                               Answers
                                                             </a>
                                                             <span className="bullet">
@@ -943,25 +923,7 @@ class Dashboard extends Component {
                                                             </span>
                                                           </div>
 
-                                                          <div className="ItemComponent CantAnswerActionItem primary_item u-relative">
-                                                           
-                                                           
-                                                           
-                                                           
-                                                           
-                                                           
-
-
-
-
-
-
-
-
-
-
-
-                                                          </div>
+                                                          <div className="ItemComponent CantAnswerActionItem primary_item u-relative" />
                                                           <div className="ItemComponent FollowActionItem primary_item u-relative">
                                                             <span id="wLjahHEI15">
                                                               <a
@@ -1067,11 +1029,10 @@ class Dashboard extends Component {
                                                                         className="ui_button_count_inner"
                                                                         id="__w2_wLjahHEI27_count"
                                                                       >
-                                                                        {
+                                                                        {question.followers &&
                                                                           question
                                                                             .followers
-                                                                            .length
-                                                                        }
+                                                                            .length}
                                                                       </span>
                                                                     </span>
                                                                   </div>
@@ -1096,9 +1057,7 @@ class Dashboard extends Component {
                                                                     <span
                                                                       className="ui_button_icon"
                                                                       aria-hidden="true"
-                                                                    >
-                                                                     
-                                                                    </span>
+                                                                    />
                                                                   </div>
                                                                 </div>
                                                               </div>
@@ -1116,14 +1075,7 @@ class Dashboard extends Component {
                                                                 className="ui_button_inner"
                                                                 id="__w2_wLjahHEI22_inner"
                                                               >
-                                                                <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                                                                  
-                                                                  
-                                                                  
-
-
-
-                                                                </div>
+                                                                <div className="ui_button_icon_wrapper u-relative u-flex-inline" />
                                                               </div>
                                                             </a>
                                                           </div>
@@ -1155,14 +1107,7 @@ class Dashboard extends Component {
                                                                   className="ui_button_inner"
                                                                   id="__w2_wLjahHEI26_inner"
                                                                 >
-                                                                  <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                                                                    
-                                                                    
-                                                                   
-
-
-
-                                                                  </div>
+                                                                  <div className="ui_button_icon_wrapper u-relative u-flex-inline" />
                                                                 </div>
                                                               </a>
                                                             </div>
@@ -1186,17 +1131,7 @@ class Dashboard extends Component {
                                                                   className="ui_button_inner"
                                                                   id="__w2_wLjahHEI8_inner"
                                                                 >
-                                                                  <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                                                                    
-                                                                    
-                                                                    
-
-
-
-
-
-
-                                                                  </div>
+                                                                  <div className="ui_button_icon_wrapper u-relative u-flex-inline" />
                                                                 </div>
                                                               </a>
                                                             </div>
