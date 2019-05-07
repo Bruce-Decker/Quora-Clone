@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Navbar from "../Navbar/Navbar";
 import "./EditAnswer.css";
 import axios from "axios";
+import default_image from "./default.png";
+
 var moment = require("moment");
 
 class EditAnswer extends Component {
