@@ -1889,7 +1889,26 @@ class Navbar extends Component {
                                           Your Content
                                         </Link>
                                       </li>
+                            {this.props.auth.user.email == "adminUser@gmail.com" ?
                                       <li>
+                                        <Link
+                                          className="hover_menu_item"
+                                          to="/graph"
+                                        >
+                                          Graph
+                                        </Link>
+                                      </li>
+                                       : null }
+                                        <li>
+                                        <Link
+                                          className="hover_menu_item"
+                                          to="/profileviewsgraph"
+                                        >
+                                          Profile Graph
+                                        </Link>
+                                      </li>
+                                      <li>
+                                      
                                         <Link
                                           className="hover_menu_item"
                                           onClick={this.openDeleteModal}
@@ -1897,6 +1916,7 @@ class Navbar extends Component {
                                           Delete Profile
                                         </Link>
                                       </li>
+                                      
                                       <li>
                                         <Link
                                           className="hover_menu_item"

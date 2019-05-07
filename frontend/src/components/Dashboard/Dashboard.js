@@ -652,9 +652,9 @@ class Dashboard extends Component {
                                                                   {" "}
                                                                 </div>
                                                               </div>
-                                                              <a
+                                                              <Link
                                                                 className="TopicNameLink HoverMenu topic_name"
-                                                                href="/topic/Mathematics"
+                                                             
                                                                 action_mousedown="TopicLinkClickthrough"
                                                                 id="__w2_whIqsbBW47_link"
                                                               >
@@ -682,7 +682,7 @@ class Dashboard extends Component {
                                                                     </span>
                                                                   </span>
                                                                 </span>
-                                                              </a>
+                                                              </Link>
                                                             </div>
                                                           </div>
                                                         </div>
@@ -1097,23 +1097,7 @@ class Dashboard extends Component {
                                                                       className="ui_button_icon"
                                                                       aria-hidden="true"
                                                                     >
-                                                                      <svg
-                                                                        width="24px"
-                                                                        height="24px"
-                                                                        viewBox="0 0 24 24"
-                                                                        version="1.1"
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                                      >
-                                                                        <g
-                                                                          className="icon_svg-fill_as_stroke"
-                                                                          stroke="none"
-                                                                          fill="#4267B2"
-                                                                          fillRule="evenodd"
-                                                                        >
-                                                                          <path d="M15.0352899,20 L15.0352899,13.8064419 L17.1142712,13.8064419 L17.4255221,11.3926592 L15.0352899,11.3926592 L15.0352899,9.85156554 C15.0352899,9.1527191 15.2293273,8.67649438 16.2315146,8.67649438 L17.5097169,8.67589513 L17.5097169,6.51703371 C17.2885933,6.48767041 16.5298816,6.42193258 15.647185,6.42193258 C13.8043086,6.42193258 12.5427056,7.54678652 12.5427056,9.61258427 L12.5427056,11.3926592 L10.4584509,11.3926592 L10.4584509,13.8064419 L12.5427056,13.8064419 L12.5427056,20 L4.88270262,20 C4.39509213,20 4.00000599,19.6047341 4.00000599,19.1173034 L4.00000599,4.88904869 C4.00000599,4.4014382 4.39509213,4.00629213 4.88270262,4.00629213 L19.1108974,4.00629213 C19.5983281,4.00629213 19.993594,4.4014382 19.993594,4.88904869 L19.993594,19.1173034 C19.993594,19.6047341 19.5983281,20 19.1108974,20 L15.0352899,20 Z" />
-                                                                        </g>
-                                                                      </svg>
+                                                                     
                                                                     </span>
                                                                   </div>
                                                                 </div>
@@ -1133,30 +1117,12 @@ class Dashboard extends Component {
                                                                 id="__w2_wLjahHEI22_inner"
                                                               >
                                                                 <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                                                                  <div id="__w2_wLjahHEI22_icon">
-                                                                    <span
-                                                                      className="ui_button_icon"
-                                                                      aria-hidden="true"
-                                                                    >
-                                                                      <svg
-                                                                        width="24px"
-                                                                        height="24px"
-                                                                        viewBox="0 0 24 24"
-                                                                        version="1.1"
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                                      >
-                                                                        <g
-                                                                          className="icon_svg-fill_as_stroke"
-                                                                          stroke="none"
-                                                                          fill="#1DA1F2"
-                                                                          fillRule="nonzero"
-                                                                        >
-                                                                          <path d="M8.84616,19.3134989 C15.26128,19.3134989 18.77008,13.9986189 18.77008,9.38957894 C18.77008,9.23861894 18.77008,9.08833894 18.75988,8.93873894 C19.4424853,8.44499832 20.0317217,7.83365693 20.5,7.13333894 C19.8634378,7.41540415 19.1881639,7.60038242 18.49672,7.68209894 C19.2248259,7.24620674 19.769764,6.56062389 20.03012,5.75293894 C19.3454671,6.15920856 18.5964393,6.44552712 17.81536,6.59953894 C16.7342163,5.44992705 15.0162892,5.1685555 13.6248935,5.91320129 C12.2334978,6.65784709 11.514667,8.24332044 11.87148,9.78057894 C9.0670891,9.63998863 6.45424353,8.31539877 4.6832,6.13645894 C3.75746347,7.73013736 4.23031176,9.76892339 5.76304,10.7924189 C5.20798402,10.7759681 4.66502997,10.6262359 4.18,10.3558589 C4.18,10.3701389 4.18,10.3850989 4.18,10.4000589 C4.18045433,12.0603422 5.35079101,13.4903429 6.9782,13.8190989 C6.46471132,13.9591382 5.9259548,13.9796091 5.40332,13.8789389 C5.86024459,15.2997465 7.1696707,16.273072 8.66188,16.3010989 C7.42681983,17.2717527 5.90112047,17.7986818 4.33028,17.7970989 C4.05277443,17.7965662 3.77553876,17.779764 3.5,17.7467789 C5.09503245,18.770367 6.95094111,19.3133064 8.84616,19.3107789" />
-                                                                        </g>
-                                                                      </svg>
-                                                                    </span>
-                                                                  </div>
+                                                                  
+                                                                  
+                                                                  
+
+
+
                                                                 </div>
                                                               </div>
                                                             </a>
@@ -1190,36 +1156,12 @@ class Dashboard extends Component {
                                                                   id="__w2_wLjahHEI26_inner"
                                                                 >
                                                                   <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                                                                    <div id="__w2_wLjahHEI26_icon">
-                                                                      <span
-                                                                        className="ui_button_icon"
-                                                                        aria-hidden="true"
-                                                                      >
-                                                                        <svg
-                                                                          width="24px"
-                                                                          height="24px"
-                                                                          viewBox="0 0 24 24"
-                                                                          version="1.1"
-                                                                          xmlns="http://www.w3.org/2000/svg"
-                                                                          xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                                        >
-                                                                          <g
-                                                                            id="share"
-                                                                            className="icon_svg-stroke"
-                                                                            stroke="#666"
-                                                                            fill="none"
-                                                                            strokeWidth="1.5"
-                                                                            fillRule="evenodd"
-                                                                            strokeLinejoin="round"
-                                                                          >
-                                                                            <path
-                                                                              d="M12.0001053,2.99989467 L4.00010533,12.7776724 L9.33343867,12.7776724 C9.78266695,14.7041066 10.5048892,16.2782509 11.5001053,17.5001053 C12.4953215,18.7219597 13.9953215,19.8886264 16.0001053,21.0001053 C15.3415908,19.6668553 14.8428108,18.1668553 14.5037654,16.5001053 C14.16472,14.8333553 14.2190556,13.5925444 14.666772,12.7776724 L20.0001053,12.7776724 L12.0001053,2.99989467 Z"
-                                                                              transform="translate(12.000105, 12.000000) rotate(90.000000) translate(-12.000105, -12.000000) "
-                                                                            />
-                                                                          </g>
-                                                                        </svg>
-                                                                      </span>
-                                                                    </div>
+                                                                    
+                                                                    
+                                                                   
+
+
+
                                                                   </div>
                                                                 </div>
                                                               </a>
@@ -1245,32 +1187,15 @@ class Dashboard extends Component {
                                                                   id="__w2_wLjahHEI8_inner"
                                                                 >
                                                                   <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                                                                    <div id="__w2_wLjahHEI8_icon">
-                                                                      <span
-                                                                        className="ui_button_icon"
-                                                                        aria-hidden="true"
-                                                                      >
-                                                                        <svg
-                                                                          width="24px"
-                                                                          height="24px"
-                                                                          viewBox="0 0 24 24"
-                                                                          version="1.1"
-                                                                          xmlns="http://www.w3.org/2000/svg"
-                                                                          xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                                        >
-                                                                          <g
-                                                                            id="overflow"
-                                                                            className="icon_svg-stroke"
-                                                                            strokeWidth="1.5"
-                                                                            stroke="#666"
-                                                                            fill="none"
-                                                                            fillRule="evenodd"
-                                                                          >
-                                                                            <path d="M5,14 C3.8954305,14 3,13.1045695 3,12 C3,10.8954305 3.8954305,10 5,10 C6.1045695,10 7,10.8954305 7,12 C7,13.1045695 6.1045695,14 5,14 Z M12,14 C10.8954305,14 10,13.1045695 10,12 C10,10.8954305 10.8954305,10 12,10 C13.1045695,10 14,10.8954305 14,12 C14,13.1045695 13.1045695,14 12,14 Z M19,14 C17.8954305,14 17,13.1045695 17,12 C17,10.8954305 17.8954305,10 19,10 C20.1045695,10 21,10.8954305 21,12 C21,13.1045695 20.1045695,14 19,14 Z" />
-                                                                          </g>
-                                                                        </svg>
-                                                                      </span>
-                                                                    </div>
+                                                                    
+                                                                    
+                                                                    
+
+
+
+
+
+
                                                                   </div>
                                                                 </div>
                                                               </a>
