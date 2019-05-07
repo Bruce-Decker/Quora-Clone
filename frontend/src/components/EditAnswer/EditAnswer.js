@@ -1994,7 +1994,10 @@ class EditAnswer extends Component {
                                                             this.state
                                                               .isAnonymous
                                                               ? null
-                                                              : "/profile/Brian-Lee-2"
+                                                              : "/profile/" +
+                                                                "/profile/" +
+                                                                this.state
+                                                                  .answer.owner
                                                           }
                                                         >
                                                           <span className="ui_avatar u-flex-inline ui_avatar--large u-flex-none">
@@ -2040,7 +2043,10 @@ class EditAnswer extends Component {
                                                                   this.state
                                                                     .isAnonymous
                                                                     ? null
-                                                                    : "/profile/Brian-Lee-2"
+                                                                    : "/profile/" +
+                                                                      this.state
+                                                                        .answer
+                                                                        .owner
                                                                 }
                                                                 action_mousedown="UserLinkClickthrough"
                                                                 id="__w2_wzwmJKBZ30_name_link"

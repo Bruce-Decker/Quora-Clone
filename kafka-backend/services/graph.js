@@ -174,6 +174,8 @@ function profileView(info, callback) {
       }
       let todayDate = new Date();
       let SECONDS_ONE_DAY = 86400;
+      let previousDayProfileMap = [];
+      previousDayProfileMap.push(["Day","Number of views"]);
       docs.views.forEach(function(item, key) {
         let currentDate = new Date(item.time);
         let diffCurrentDate = todayDate - currentDate;
@@ -183,9 +185,13 @@ function profileView(info, callback) {
           }
         }
       });
+      for(let i = 1; i <= 30; i++) {
+        if(daysResultMap[i])
+          previousDayProfileMap.push([i, daysResultMap[i]]);
+      }
       let data = {
         email: email,
-        count: daysResultMap
+        count: previousDayProfileMap
       };
       callback(null, data);
     } else {
