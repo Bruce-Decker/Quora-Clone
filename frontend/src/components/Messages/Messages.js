@@ -16,7 +16,8 @@ class Messages extends Component {
       authFlag: true,
       startIndex: 0,
       currentPage: 1,
-      pagesPerPage: 5
+      pagesPerPage: 5,
+      type: "inbox"
     };
     this.handleButton = this.handleButton.bind(this);
   }
@@ -86,7 +87,8 @@ class Messages extends Component {
           });
           this.setState({
             inbox: response.data,
-            subInbox: firstInbox
+            subInbox: firstInbox,
+            type: "Sent"
           });
 
           console.log("inbox:", this.state.inbox);
@@ -107,7 +109,8 @@ class Messages extends Component {
           });
           this.setState({
             inbox: response.data,
-            subInbox: firstInbox
+            subInbox: firstInbox,
+            type: "inbox"
           });
 
           console.log("inbox:", this.state.inbox);
@@ -229,8 +232,15 @@ class Messages extends Component {
                                     <span id="wzr1YmKw6">
                                       <span className="ui_content_title unstyled_ui_title">
                                         <span className="ui_qtext_rendered_qtext">
-                                          {question.subject}
-                                          {question.message}
+                                          <h3>Subject: {question.subject}</h3>
+                                          <h3>
+                                            {this.state.type === "inbox"
+                                              ? `From:${question.sender_email}`
+                                              : `To :${
+                                                  question.receiver_email
+                                                }`}{" "}
+                                          </h3>
+                                          <h5>{question.message}</h5>
                                         </span>
                                       </span>
                                     </span>
