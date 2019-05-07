@@ -3,6 +3,7 @@ import Navbar from "../Navbar/Navbar";
 import "./EditAnswer.css";
 import axios from "axios";
 import default_image from "./default.png";
+import rooturl from "../../utility/url";
 
 var moment = require("moment");
 
@@ -23,7 +24,7 @@ class EditAnswer extends Component {
   async componentWillMount() {
     let answer_id = this.props.location.state.answer_id;
     await axios
-      .get("/answer", { params: { answer_id: answer_id } })
+      .get(rooturl + "/answer", { params: { answer_id: answer_id } })
       .then(res => {
         this.setState({
           answer: res.data.answer,
@@ -41,7 +42,7 @@ class EditAnswer extends Component {
 
   answerHandler() {
     axios
-      .put("/answer", {
+      .put(rooturl + "/answer", {
         currentElem: document.getElementById("editableProp").outerHTML,
         question_id: this.state.resData.question_id,
         answer_id: this.props.location.state.answer_id,

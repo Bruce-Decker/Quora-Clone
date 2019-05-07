@@ -193,7 +193,7 @@ class Navbar extends Component {
     console.log(topics);
 
     axios
-      .post("/question/createQuestion", data)
+      .post(rooturl + "/question/createQuestion", data)
       .then(res => {
         console.log(res.data);
         window.location.reload();
@@ -1849,6 +1849,14 @@ class Navbar extends Component {
                                           id="__w2_wsnWwGwm2_messages_modal"
                                         >
                                           Messages
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link
+                                          className="hover_menu_item"
+                                          to={`/messages/${this.props.auth.user.email}`}
+                                        >
+                                          Inbox
                                         </Link>
                                       </li>
                                       <li>

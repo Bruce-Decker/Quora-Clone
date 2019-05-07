@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "../Navbar/Navbar";
 import axios from "axios";
+import rooturl from "../../utility/url";
 var moment = require("moment");
 
 class EditAnswer extends Component {
@@ -101,7 +102,7 @@ class EditAnswer extends Component {
 
     const data = new FormData();
     data.append("image", this.state.selectedFile, this.state.selectedFile.name);
-    axios.post("/answer/upload", data, {}).then(res => {
+    axios.post(rooturl + "/answer/upload", data, {}).then(res => {
       console.log(res.data.imageUrl);
       var x = document.createElement("img");
       x.setAttribute("height", "300px");
@@ -113,7 +114,7 @@ class EditAnswer extends Component {
 
   answerHandler() {
     axios
-      .post("/answer", {
+      .post(rooturl + "/answer", {
         currentElem: document.getElementById("editable").outerHTML,
         question_id: this.state.question_id,
         owner: localStorage.getItem("currEmail"),
