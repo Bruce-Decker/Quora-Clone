@@ -80,7 +80,18 @@ function searchingQuestion(query) {
   };
 }
 
+function searchingProfile(query) {
+  return function(x) {
+    if (x.first_name) {
+      return x.first_name.toLowerCase().includes(query.toLowerCase()) || !query;
+    } else {
+      return "nothing";
+    }
+  };
+}
+
 var savedAllSearchQuestions = [];
+var savedAllProfiles = [];
 class Navbar extends Component {
   constructor() {
     super();
@@ -102,7 +113,10 @@ class Navbar extends Component {
       topics: topics,
       searchTopicOption: false,
       deleteModalIsOpen: false,
-      deactivateModalIsOpen: false
+      deactivateModalIsOpen: false,
+      email_address: '',
+      email_subject: '',
+      email_message: ''
       //savedAllSearchQuestions: []
     };
     this.filterHandler = this.filterHandler.bind(this);
@@ -114,6 +128,7 @@ class Navbar extends Component {
     this.closeModal = this.closeModal.bind(this);
     //this.openDeleteModal = this.openDeleteModal.bind(this);
     this.valueChangeHandler = this.valueChangeHandler.bind(this);
+    this.profileSearchHandler = this.profileSearchHandler.bind(this);
   }
 
   //  add_leading_zeros = (dt) => {
@@ -131,6 +146,27 @@ class Navbar extends Component {
       //showSearchModal: false
     });
   };
+
+  sendMessage = () => {
+    var message = this.state.email_message
+    var sender_email = this.props.auth.user.email
+    var receiver_email = this.state.email_address
+    var subject = this.state.email_subject
+    var data = {
+      message,
+      sender_email,
+      receiver_email,
+      subject
+    }
+
+    axios.post(rooturl + '/messages/sendMessage', data)
+       .then(res => {
+         console.log(res)
+         window.location.reload()
+       })
+       .catch(err => console.log(err))
+    console.log(data)
+ }
 
   onSubmit = () => {
     var topics = [];
@@ -274,7 +310,24 @@ class Navbar extends Component {
     );
 
     savedAllSearchQuestions = questionResponse.data;
+    console.log(savedAllSearchQuestions);		
+    //  var profileResponse = await axios.get(		
+    //   rooturl + "/profile/searchProfile?name=" + e.target.value		
+    //  )		
+    //  savedAllProfiles = profileResponse.data
   }
+
+  async profileSearchHandler(e) {		
+    this.setState({		
+      searchValue: e.target.value		
+    });		
+    console.log(this.state.searchValue);		
+    var profileResponse = await axios.get(		
+      rooturl + "/profile/searchProfile?name=" + e.target.value		
+    );		
+    savedAllProfiles = profileResponse.data;		
+  }
+
   search = e => {
     e.preventDefault();
     let url = rooturl;
@@ -299,10 +352,16 @@ class Navbar extends Component {
   };
   async componentDidMount() {
     document.addEventListener("mousedown", this.handleClickOutside);
-    var questionResponse = await axios.get(
-      rooturl +
-        "/question/keyword?question=lasjflajsf9u3skajfahsfhaf923ri3hashfash"
+    var profileResponse = await axios.get(
+      rooturl + "/profile/searchProfile?name=Steve"
     );
+    savedAllProfiles = profileResponse.data;
+
+    // var questionResponse = await axios.get(
+    //    rooturl + "/question/keyword?question=lasjflajsf9u3skajfahsfhaf923ri3hashfash"
+    // );
+
+    // savedAllSearchQuestions = questionResponse.data
 
     savedAllSearchQuestions = questionResponse.data;
   }
@@ -1156,6 +1215,34 @@ class Navbar extends Component {
                       >
                         <div className="selector_input_interaction">
                           {/* input */}
+                          {this.state.searchCriteria == "topic" ||
+                          this.state.searchCriteria == "question" ? (
+                            <input
+                              className="selector_input text"
+                              type="text"
+                              data-lpignore="true"
+                              data-group="js-editable"
+                              placeholder="Search Quora"
+                              w2cid="wGp3JsZF12"
+                              id="__w2_wGp3JsZF12_input"
+                              onChange={this.valueChangeHandler}
+                              onFocus={this.onFocus}
+                              onBlur={this.onBlur}
+                            />
+                          ) : (
+                            <input
+                              className="selector_input text"
+                              type="text"
+                              data-lpignore="true"
+                              data-group="js-editable"
+                              placeholder="Search Quora"
+                              w2cid="wGp3JsZF12"
+                              id="__w2_wGp3JsZF12_input"
+                              onChange={this.profileSearchHandler}
+                              onFocus={this.onFocus}
+                              onBlur={this.onBlur}
+                            />
+                          )}
 
                           <input
                             className="selector_input text"
@@ -1492,7 +1579,156 @@ class Navbar extends Component {
                               </div>
                             </div>
                           ) : null}
+                          {this.state.showSearchModal &&
+                          this.state.searchCriteria == "people" ? (
+                            <div
+                              className="lookup_bar_results_wrapper"
+                              id="__w2_wTZ9qVEp12_results_wrapper"
+                              style={{ width: "246.578px" }}
+                            >
+                              <div className="results_wrapper">
+                                <div
+                                  className="hidden resistance_wrapper server_message"
+                                  id="__w2_wTZ9qVEp12_server_message"
+                                >
+                                  <div
+                                    className="fixit_title"
+                                    id="__w2_wTZ9qVEp12_server_message_title"
+                                  />
+                                  <span
+                                    className="fixit_note"
+                                    id="__w2_wTZ9qVEp12_server_message_note"
+                                  />
+                                </div>
+                                <div className="interstitials_and_results">
+                                  <div
+                                    className="hidden ask_interstitial"
+                                    id="__w2_wTZ9qVEp12_ask_mode_interstitial"
+                                  >
+                                    <p className="ask_interstitial_content">
+                                      <strong
+                                        className="ask_interstitial_title"
+                                        id="__w2_wTZ9qVEp12_interstitial_title"
+                                      />
+                                      <span id="__w2_wTZ9qVEp12_interstitial_text" />
+                                    </p>
+                                  </div>
+                                  <div
+                                    className="results"
+                                    id="__w2_wTZ9qVEp12_results"
+                                  >
+                                    <ul
+                                      className="SelectorResults LookupBarResults"
+                                      id="__w2_w4N3kpSm1_wrapper"
+                                    >
+                                      <li
+                                        className="selector_result search selector_highlighted"
+                                        id="__w2_w4N3kpSm1_result_0"
+                                      >
+                                        <div
+                                          data-clog-trigger="impression"
+                                          data-clog-metadata='{"action_log_target": {"type": 39, "hash": "1140612010|search|0|-1718384057|0"}}'
+                                          data-clog-event-type="ActionLogImpression"
+                                          id="__w2_w4N3kpSm2_actionable"
+                                          data-clog-processed={1}
+                                        >
+                                          <span className="search_icon_wrapper">
+                                            <img
+                                              src="https://qsf.fs.quoracdn.net/-3-images.new_grid.QuoraSearch_2x.png-26-c1b5774d1aad0f68.png"
+                                              width={20}
+                                              height={20}
+                                            />
+                                          </span>
+                                          <span className="selector_result_type">
+                                            Search:{" "}
+                                          </span>
+                                          <span className="matched_term">
+                                            {this.state.searchValue}
+                                          </span>
+                                        </div>
+                                      </li>
 
+                                      {savedAllProfiles
+                                        .filter(
+                                          searchingProfile(
+                                            this.state.searchValue
+                                          )
+                                        )
+                                        .map(profile => (
+                                          <Link
+                                            to={`/profile/${profile.email}`}
+                                          >
+                                            <li
+                                              className="selector_result tribe"
+                                              id="__w2_w4N3kpSm1_result_5"
+                                            >
+                                              <div
+                                                data-clog-trigger="impression"
+                                                data-clog-metadata='{"action_log_target": {"type": 39, "hash": "1140612010|tribe|194|-1718384057|0"}}'
+                                                data-clog-event-type="ActionLogImpression"
+                                                id="__w2_w4N3kpSm7_actionable"
+                                                data-clog-processed={1}
+                                              >
+                                                <span className="image_wrapper">
+                                                  <div
+                                                    className="hover_menu hidden show_nub"
+                                                    id="__w2_w4N3kpSm29_menu"
+                                                  >
+                                                    <div
+                                                      className="hover_menu_contents"
+                                                      id="__w2_w4N3kpSm29_menu_contents"
+                                                    >
+                                                      {" "}
+                                                    </div>
+                                                  </div>
+
+                                                  <span
+                                                    className="photo_tooltip u-inline"
+                                                    id="__w2_w4N3kpSm29_link"
+                                                  >
+                                                    <img
+                                                      className="u-inline-block u-border-radius--ellipse tribe-blue TribeIconMedium TribeIcon"
+                                                      src="https://qph.fs.quoracdn.net/main-thumb-ti-194-100-whjmgyflzmfmeqmrdtiieuqjcbkifbps.jpeg"
+                                                    />
+                                                  </span>
+                                                </span>
+
+                                                <span className="rendered_qtext">
+                                                  {" "}
+                                                  {profile.first_name}{" "}
+                                                </span>
+                                                <div className="u-inline-block u-margin-left--xs" />
+                                              </div>
+                                            </li>
+                                          </Link>
+                                        ))}
+
+                                      <li
+                                        className="selector_result ask_new_question"
+                                        id="__w2_w4N3kpSm1_result_6"
+                                      >
+                                        <div
+                                          data-clog-trigger="impression"
+                                          data-clog-metadata='{"action_log_target": {"type": 39, "hash": null}}'
+                                          data-clog-event-type="ActionLogImpression"
+                                          id="__w2_w4N3kpSm8_actionable"
+                                          data-clog-processed={1}
+                                        >
+                                          <a
+                                            className="LookupBarAskQuestionModalButton AskQuestionButton"
+                                            href="#"
+                                            id="__w2_w4N3kpSm24_button"
+                                          >
+                                            Add New Question
+                                          </a>
+                                        </div>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          ) : null}
                           <div id="__w2_wGp3JsZF12_empty_input_prompt" />
                         </div>
                       </div>
@@ -1751,7 +1987,10 @@ class Navbar extends Component {
                                   >
                                     <img
                                       className="profile_photo_img"
-                                      src={default_image}
+                                      src={
+                                        localStorage.getItem("profileImg") ||
+                                        default_image
+                                      }
                                       height={150}
                                       width={150}
                                       onClick={this.onClick}
@@ -2788,9 +3027,22 @@ class Navbar extends Component {
                               type="text"
                               autofocus="True"
                               data-group="js-editable"
-                              placeholder="Enter a name"
+                              placeholder="Enter an email"
                               w2cid="wbuTulbL3"
                               id="__w2_wbuTulbL3_input"
+                              name = "email_address"		
+                              onChange = {this.onChange}
+                            />
+                            <input		
+                              className="modal_message_recipient_selector selector_input text"		
+                              type="text"		
+                              autofocus="True"		
+                              data-group="js-editable"		
+                              placeholder="Enter a subject"		
+                              w2cid="wbuTulbL3"		
+                              id="__w2_wbuTulbL3_input"		
+                              name = "email_subject"		
+                              onChange = {this.onChange}		
                             />
                             <div
                               className="selector_spinner hidden"
@@ -2839,6 +3091,8 @@ class Navbar extends Component {
                       w2cid="wbuTulbL2"
                       id="__w2_wbuTulbL2_message_editor"
                       defaultValue={""}
+                      name = "email_message"
+                      onChange = {this.onChange}
                     />
                   </div>
                   <div
@@ -2860,12 +3114,13 @@ class Navbar extends Component {
                           Cancel
                         </Link>
                       </span>
-                      <a
+                      <button
                         className="submit_button modal_action"
                         id="__w2_wbuTulbL2_submit_button"
+                        onClick={this.sendMessage}
                       >
                         Send
-                      </a>
+                      </button>
                     </div>
                   </div>
                 </div>
