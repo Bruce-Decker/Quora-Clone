@@ -1609,6 +1609,7 @@ class Navbar extends Component {
                                         .map(profile => (
                                           <Link
                                             to={`/profile/${profile.email}`}
+                                            onClick = {() => this.redirect(`/profile/${profile.email}`)}
                                           >
                                             <li
                                               className="selector_result tribe"
