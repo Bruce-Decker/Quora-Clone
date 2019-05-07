@@ -314,11 +314,11 @@ class Dashboard extends Component {
         pageTotal: dashboard_questions.data.pages
       });
 
-      console.log(
-        dashboard_questions.data.docs[0].question,
-        this.state.pageNo,
-        this.state.pageTotal
-      );
+      // console.log(
+      //   dashboard_questions.data.docs[0].question,
+      //   this.state.pageNo,
+      //   this.state.pageTotal
+      // );
     }
   }
 
