@@ -7,6 +7,7 @@ aws.config.update({
   accessKeyId: "AKIAIQUYHKBS77MAD34A",
   region: "us-east-2"
 });
+//aa
 
 const s3 = new aws.S3();
 

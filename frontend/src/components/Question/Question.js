@@ -32,13 +32,15 @@ class Question extends Component {
     var response = await axios.get(
       rooturl + "/question/getQuestion/" + this.props.match.params.question_id
     );
+    console.log("aaaa..gewquyfgquyweg...", response.data);
     if (response.data) {
       this.setState({
         answers: response.data.answers,
         question: response.data.question,
         topics: response.data.topics,
         showAnswers: true,
-        follower_count: response.data.followers.length
+        follower_count:
+          response.data.followers && response.data.followers.length
       });
     }
 
@@ -255,7 +257,6 @@ class Question extends Component {
                                           </div>
                                         </span>
                                       ))}
-                                    
                                     </div>
                                   </div>
                                 </div>
@@ -620,32 +621,6 @@ class Question extends Component {
                                       </span>
                                     </div>
                                     <div className="ItemComponent RequestPrimaryActionItem primary_item u-relative">
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                                       <div className="u-relative">
                                         <div
                                           className="RequestActionCaret hidden"
@@ -656,53 +631,9 @@ class Question extends Component {
                                     <div
                                       className="CommentsActionItem ItemComponent ActionItemComponent action_item secondary_item u-relative"
                                       id="__w2_wEimc2ML4_link"
-                                    >
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
-                                    
-
-
-
-
-
-
-
-
-                                    </div>
+                                    />
                                     <div className="ItemComponent ActionItemComponent DownvoteActionItem action_item secondary_item u-relative">
-                                      <span id="wEimc2ML23">
-
-
-
-
-
-
-
-
-
-
-
-
-                                      
-
-
-
-
-
-
-
-
-
-
-
-                                      </span>
+                                      <span id="wEimc2ML23" />
                                     </div>
                                     <div className="FacebookShareActionItem ActionItemComponent ItemComponent action_item secondary_item u-relative">
                                       <a
@@ -716,32 +647,11 @@ class Question extends Component {
                                           className="ui_button_inner"
                                           id="__w2_wEimc2ML27_inner"
                                         >
-                                          <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                                            
-                                          </div>
+                                          <div className="ui_button_icon_wrapper u-relative u-flex-inline" />
                                         </div>
                                       </a>
                                     </div>
-                                    <div className="ItemComponent ActionItemComponent TwitterShareActionItem action_item secondary_item u-relative">
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
-
-
-
-
-
-
-
-
-
-
-
-
-                                    </div>
+                                    <div className="ItemComponent ActionItemComponent TwitterShareActionItem action_item secondary_item u-relative" />
                                     <div className="OverflowShareActionItem ActionItemComponent ItemComponent action_item secondary_item u-relative">
                                       <div
                                         className="hover_menu hidden hover_share_menu show_nub"
@@ -758,22 +668,7 @@ class Question extends Component {
                                         className="_QuickShare QuestionQuickShare HoverMenu"
                                         role="button"
                                         id="__w2_wEimc2ML31_link"
-                                      >
-                                       
-                                       
-                                       
-                                       
-                                       
-                                       
-                                       
-                                      
-
-
-
-
-
-
-                                      </div>
+                                      />
                                     </div>
                                     <div className="action_bar_inner_spacer u-margin-left--auto">
                                       &nbsp;
@@ -2513,7 +2408,8 @@ class Question extends Component {
                                                                                 {
                                                                                   answer_id:
                                                                                     answer.answer_id,
-                                                                                  email: answer.owner
+                                                                                  email:
+                                                                                    answer.owner
                                                                                 }
                                                                               );
                                                                             }}
@@ -2821,34 +2717,6 @@ class Question extends Component {
                                                       </span>
                                                       <div className="QuoraShareActionItem ItemComponent ActionItemComponent action_item u-relative">
                                                         <div id="wTzJejgH32">
-                                                          
-                                                          
-                                                          
-                                                          
-                                                          
-                                                          
-                                                          
-                                                         
-                                                         
-                                                         
-                                                         
-                                                         
-                                                         
-                                                         
-                                                         
-                                                         
-                                                          
-
-
-
-
-
-
-
-
-
-
-
                                                           <div id="__w2_wTzJejgH33_quora_share_tooltip" />
                                                         </div>
                                                       </div>
