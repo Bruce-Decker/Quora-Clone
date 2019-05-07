@@ -249,65 +249,7 @@ class Content extends Component {
                         </li>
                       </ul>
                     </div>
-                    <div className="UserContentFilterTopics UserContentFilter">
-                      <h3>By Topic</h3>
-                      <ul>
-                        <li className="filter_option">
-                          <a
-                            className="selected"
-                            href="#"
-                            id="__w2_wsawratU27_all_topics"
-                          >
-                            All Topics
-                          </a>
-                        </li>
-                        <li
-                          className="filter_option clearfix"
-                          id="__w2_wsawratU27_topic_selector_row"
-                        >
-                          <div className="filter_to_topic">
-                            <div
-                              className="TopicSelector UserContentFilterTopicSelector Selector"
-                              tabIndex={-1}
-                              id="__w2_wsawratU32_wrapper"
-                            >
-                              <div className="selector_input_interaction">
-                                <input
-                                  className="selector_input text"
-                                  type="text"
-                                  defaultValue
-                                  data-lpignore="true"
-                                  data-group="js-editable"
-                                  placeholder="Search for a topic"
-                                  w2cid="wsawratU32"
-                                  id="__w2_wsawratU32_input"
-                                />
-                                <div
-                                  className="selector_spinner hidden"
-                                  id="__w2_wsawratU32_spinner"
-                                >
-                                  <div className="LoadingDots tiny">
-                                    <div className="dot first" />
-                                    <div className="dot second" />
-                                    <div className="dot third" />
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className="selector_results_container hidden"
-                                id="__w2_wsawratU32_results_container"
-                              >
-                                <div
-                                  className="selector_results_container_inner hidden"
-                                  id="__w2_wsawratU32_results"
-                                />
-                                <div id="__w2_wsawratU32_empty_input_prompt" />
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
+
                     <div className="UserContentFilterTime UserContentFilter">
                       <h3>By Year</h3>
                       <ul id="__w2_wsawratU29_filter_links">
