@@ -115,7 +115,7 @@ class Dashboard extends Component {
   followHandler = (name, e) => {
     axios
       .post(
-        "/question/follow",
+        rooturl + "/question/follow",
         { question_id: name, email: this.props.auth.user.email },
         {}
       )
@@ -128,7 +128,7 @@ class Dashboard extends Component {
     console.log(e);
     axios
       .post(
-        "/question/unfollow",
+        rooturl + "/question/unfollow",
         { question_id: name, email: this.props.auth.user.email },
         {}
       )
@@ -142,7 +142,7 @@ class Dashboard extends Component {
 
     const data = new FormData();
     data.append("image", this.state.selectedFile, this.state.selectedFile.name);
-    axios.post("/answer/upload", data, {}).then(res => {
+    axios.post(rooturl + "/answer/upload", data, {}).then(res => {
       console.log(res.data.imageUrl);
       var x = document.createElement("img");
       x.setAttribute("height", "300px");
@@ -184,7 +184,7 @@ class Dashboard extends Component {
       currentElem: document.getElementById("editable").outerHTML
     });
     axios
-      .post("/answer", {
+      .post(rooturl + "/answer", {
         currentElem: document.getElementById("editable").outerHTML,
         question_id: e,
         owner: this.props.auth.user.email,

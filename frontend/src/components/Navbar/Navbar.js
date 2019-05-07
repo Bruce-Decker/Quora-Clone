@@ -53,6 +53,19 @@ const modelCustomStyles = {
   }
 };
 
+const modelAlertStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    height: "20%",
+    width: "40%"
+  }
+};
+
 Modal.setAppElement("#root");
 
 function searchingTopics(query) {
@@ -99,6 +112,8 @@ class Navbar extends Component {
       showSearchModal: false,
       topics: topics,
       searchTopicOption: false,
+      deleteModalIsOpen: false,
+      deactivateModalIsOpen: false,
       email_address: '',
       email_subject: '',
       email_message: ''
@@ -111,7 +126,7 @@ class Navbar extends Component {
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
-
+    //this.openDeleteModal = this.openDeleteModal.bind(this);
     this.valueChangeHandler = this.valueChangeHandler.bind(this);
     this.profileSearchHandler = this.profileSearchHandler.bind(this);
   }
@@ -132,7 +147,7 @@ class Navbar extends Component {
     });
   };
 
- sendMessage = () => {
+  sendMessage = () => {
     var message = this.state.email_message
     var sender_email = this.props.auth.user.email
     var receiver_email = this.state.email_address
@@ -193,10 +208,36 @@ class Navbar extends Component {
     console.log(topics);
 
     axios
-      .post("/question/createQuestion", data)
+      .post(rooturl + "/question/createQuestion", data)
       .then(res => {
         console.log(res.data);
+      })
+      .catch(err => console.log(err));
+  };
+
+  deleteProfile = () => {
+    console.log(this.props.auth.user.email);
+
+    axios
+      .post("/deleteUser", { email: this.props.auth.user.email })
+      .then(res => {
+        localStorage.clear();
+        this.props.history.push("/");
         window.location.reload();
+        this.props.logout();
+      })
+      .catch(err => console.log(err));
+  };
+
+  deactivateProfile = () => {
+    console.log(this.props.auth.user.email);
+    axios
+      .post("/deactivateUser", { email: this.props.auth.user.email })
+      .then(res => {
+        localStorage.clear();
+        this.props.history.push("/");
+        window.location.reload();
+        this.props.logout();
       })
       .catch(err => console.log(err));
   };
@@ -224,13 +265,33 @@ class Navbar extends Component {
     this.setState({ messageModalIsOpen: true });
   };
 
+  openDeleteModal = e => {
+    e.preventDefault();
+    this.setState({ deleteModalIsOpen: true });
+  };
+  openDeactivateModal = e => {
+    e.preventDefault();
+    this.setState({ deactivateModalIsOpen: true });
+  };
+
   afterOpenMessageModal = () => {
     // references are now sync'd and can be accessed.
     // this.subtitle.style.color = '#f00';
   };
-
+  afterOpenDeleteModal = () => {
+    // references are now sync'd and can be accessed.
+    // this.subtitle.style.color = '#f00';
+  };
   closeMessageModal = () => {
     this.setState({ messageModalIsOpen: false });
+  };
+
+  closeDeleteModal = () => {
+    this.setState({ deleteModalIsOpen: false });
+  };
+
+  closeDeactivateModal = () => {
+    this.setState({ deactivateModalIsOpen: false });
   };
 
   filterHandler = e => {
@@ -249,25 +310,22 @@ class Navbar extends Component {
     );
 
     savedAllSearchQuestions = questionResponse.data;
-    console.log(savedAllSearchQuestions);
-
-    //  var profileResponse = await axios.get(
-    //   rooturl + "/profile/searchProfile?name=" + e.target.value
-    //  )
-
+    console.log(savedAllSearchQuestions);		
+    //  var profileResponse = await axios.get(		
+    //   rooturl + "/profile/searchProfile?name=" + e.target.value		
+    //  )		
     //  savedAllProfiles = profileResponse.data
   }
 
-  async profileSearchHandler(e) {
-    this.setState({
-      searchValue: e.target.value
-    });
-    console.log(this.state.searchValue);
-
-    var profileResponse = await axios.get(
-      rooturl + "/profile/searchProfile?name=" + e.target.value
-    );
-    savedAllProfiles = profileResponse.data;
+  async profileSearchHandler(e) {		
+    this.setState({		
+      searchValue: e.target.value		
+    });		
+    console.log(this.state.searchValue);		
+    var profileResponse = await axios.get(		
+      rooturl + "/profile/searchProfile?name=" + e.target.value		
+    );		
+    savedAllProfiles = profileResponse.data;		
   }
 
   search = e => {
@@ -294,7 +352,6 @@ class Navbar extends Component {
   };
   async componentDidMount() {
     document.addEventListener("mousedown", this.handleClickOutside);
-
     var profileResponse = await axios.get(
       rooturl + "/profile/searchProfile?name=Steve"
     );
@@ -305,6 +362,8 @@ class Navbar extends Component {
     // );
 
     // savedAllSearchQuestions = questionResponse.data
+
+    savedAllSearchQuestions = questionResponse.data;
   }
 
   componentWillUnmount() {
@@ -1185,6 +1244,18 @@ class Navbar extends Component {
                             />
                           )}
 
+                          <input
+                            className="selector_input text"
+                            type="text"
+                            data-lpignore="true"
+                            data-group="js-editable"
+                            placeholder="Search Quora"
+                            w2cid="wGp3JsZF12"
+                            id="__w2_wGp3JsZF12_input"
+                            onChange={this.valueChangeHandler}
+                            onFocus={this.onFocus}
+                            onBlur={this.onBlur}
+                          />
                           <div
                             className="selector_spinner hidden"
                             id="__w2_wGp3JsZF12_spinner"
@@ -1508,7 +1579,6 @@ class Navbar extends Component {
                               </div>
                             </div>
                           ) : null}
-
                           {this.state.showSearchModal &&
                           this.state.searchCriteria == "people" ? (
                             <div
@@ -1659,7 +1729,6 @@ class Navbar extends Component {
                               </div>
                             </div>
                           ) : null}
-
                           <div id="__w2_wGp3JsZF12_empty_input_prompt" />
                         </div>
                       </div>
@@ -1854,9 +1923,33 @@ class Navbar extends Component {
                                       <li>
                                         <Link
                                           className="hover_menu_item"
+                                          to={`/messages/${this.props.auth.user.email}`}
+                                        >
+                                          Inbox
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link
+                                          className="hover_menu_item"
                                           to="/content"
                                         >
                                           Your Content
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link
+                                          className="hover_menu_item"
+                                          onClick={this.openDeleteModal}
+                                        >
+                                          Delete Profile
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link
+                                          className="hover_menu_item"
+                                          onClick={this.openDeactivateModal}
+                                        >
+                                          Deactivate Profile
                                         </Link>
                                       </li>
                                     </ul>
@@ -2728,6 +2821,119 @@ class Navbar extends Component {
         </Modal>
 
         <Modal
+          isOpen={this.state.deleteModalIsOpen}
+          onAfterOpen={this.afterOpenDeleteModal}
+          onRequestClose={this.closeDeleteModal}
+          style={modelAlertStyles}
+          contentLabel="Example Modal"
+        >
+          <div id="__w2_modal_container_">
+            <div className="modal_overlay" id="__w2_modal_overlay_">
+              <div className="modal_wrapper normal" id="__w2_modal_wrapper_">
+                <div className="MessagesModalComposer MessagesModal MultiStepModal Modal">
+                  <div className="modal_header">
+                    <div
+                      className="modal_close"
+                      id="__w2_wbuTulbL2_close_button"
+                    >
+                      <a
+                        className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only"
+                        href="#"
+                        role="button"
+                        aria-label="Close"
+                        id="__w2_wbuTulbL4_button"
+                      >
+                        <div
+                          className="ui_button_inner"
+                          id="__w2_wbuTulbL4_inner"
+                        >
+                          <div className="ui_button_icon_wrapper u-relative u-flex-inline">
+                            <div id="__w2_wbuTulbL4_icon">
+                              <span
+                                className="ui_button_icon"
+                                aria-hidden="true"
+                              >
+                                <svg
+                                  width="24px"
+                                  height="24px"
+                                  viewBox="0 0 24 24"
+                                  version="1.1"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  xmlnsXlink="http://www.w3.org/1999/xlink"
+                                >
+                                  <g
+                                    id="small_close"
+                                    className="icon_svg-stroke"
+                                    fill="none"
+                                    fillRule="evenodd"
+                                    strokeLinecap="round"
+                                    stroke="#666666"
+                                    strokeWidth="1.5"
+                                  >
+                                    <path
+                                      d="M12,6 L12,18"
+                                      transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) "
+                                    />
+                                    <path
+                                      d="M18,12 L6,12"
+                                      transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) "
+                                    />
+                                  </g>
+                                </svg>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                    <div
+                      className="modal_title"
+                      id="__w2_wbuTulbL2_modal_title"
+                    >
+                      <a
+                        className="modal_back_button"
+                        id="__w2_wbuTulbL2_back_button"
+                      />
+                      Are you sure you want to delete profile?
+                    </div>
+                  </div>
+
+                  <div
+                    className="modal_footer"
+                    id="__w2_wbuTulbL2_modal_footer"
+                  >
+                    <div className="modal_actions">
+                      <span className="text_links">
+                        <a
+                          className="modal_cancel modal_action"
+                          href="#"
+                          id="__w2_wbuTulbL2_cancel_button"
+                        />
+                        <Link
+                          className="modal_action"
+                          id="__w2_wbuTulbL2_footer_back_button"
+                          onClick={this.closeDeleteModal}
+                        >
+                          Cancel
+                        </Link>
+                      </span>
+                      <Link
+                        to={"/"}
+                        className="submit_button modal_action"
+                        id="__w2_wbuTulbL2_submit_button"
+                        onClick={this.deleteProfile}
+                      >
+                        Yes
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Modal>
+
+        <Modal
           isOpen={this.state.messageModalIsOpen}
           onAfterOpen={this.afterOpenMessageModal}
           onRequestClose={this.closeMessageModal}
@@ -2824,19 +3030,19 @@ class Navbar extends Component {
                               placeholder="Enter an email"
                               w2cid="wbuTulbL3"
                               id="__w2_wbuTulbL3_input"
-                              name = "email_address"
+                              name = "email_address"		
                               onChange = {this.onChange}
                             />
-                            <input
-                              className="modal_message_recipient_selector selector_input text"
-                              type="text"
-                              autofocus="True"
-                              data-group="js-editable"
-                              placeholder="Enter a subject"
-                              w2cid="wbuTulbL3"
-                              id="__w2_wbuTulbL3_input"
-                              name = "email_subject"
-                              onChange = {this.onChange}
+                            <input		
+                              className="modal_message_recipient_selector selector_input text"		
+                              type="text"		
+                              autofocus="True"		
+                              data-group="js-editable"		
+                              placeholder="Enter a subject"		
+                              w2cid="wbuTulbL3"		
+                              id="__w2_wbuTulbL3_input"		
+                              name = "email_subject"		
+                              onChange = {this.onChange}		
                             />
                             <div
                               className="selector_spinner hidden"
@@ -2911,10 +3117,123 @@ class Navbar extends Component {
                       <button
                         className="submit_button modal_action"
                         id="__w2_wbuTulbL2_submit_button"
-                        onClick = {this.sendMessage}
+                        onClick={this.sendMessage}
                       >
                         Send
                       </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Modal>
+
+        <Modal
+          isOpen={this.state.deactivateModalIsOpen}
+          onAfterOpen={this.afterOpenDeleteModal}
+          onRequestClose={this.closeDeactivateModal}
+          style={modelAlertStyles}
+          contentLabel="Example Modal"
+        >
+          <div id="__w2_modal_container_">
+            <div className="modal_overlay" id="__w2_modal_overlay_">
+              <div className="modal_wrapper normal" id="__w2_modal_wrapper_">
+                <div className="MessagesModalComposer MessagesModal MultiStepModal Modal">
+                  <div className="modal_header">
+                    <div
+                      className="modal_close"
+                      id="__w2_wbuTulbL2_close_button"
+                    >
+                      <a
+                        className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only"
+                        href="#"
+                        role="button"
+                        aria-label="Close"
+                        id="__w2_wbuTulbL4_button"
+                      >
+                        <div
+                          className="ui_button_inner"
+                          id="__w2_wbuTulbL4_inner"
+                        >
+                          <div className="ui_button_icon_wrapper u-relative u-flex-inline">
+                            <div id="__w2_wbuTulbL4_icon">
+                              <span
+                                className="ui_button_icon"
+                                aria-hidden="true"
+                              >
+                                <svg
+                                  width="24px"
+                                  height="24px"
+                                  viewBox="0 0 24 24"
+                                  version="1.1"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  xmlnsXlink="http://www.w3.org/1999/xlink"
+                                >
+                                  <g
+                                    id="small_close"
+                                    className="icon_svg-stroke"
+                                    fill="none"
+                                    fillRule="evenodd"
+                                    strokeLinecap="round"
+                                    stroke="#666666"
+                                    strokeWidth="1.5"
+                                  >
+                                    <path
+                                      d="M12,6 L12,18"
+                                      transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) "
+                                    />
+                                    <path
+                                      d="M18,12 L6,12"
+                                      transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) "
+                                    />
+                                  </g>
+                                </svg>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                    <div
+                      className="modal_title"
+                      id="__w2_wbuTulbL2_modal_title"
+                    >
+                      <a
+                        className="modal_back_button"
+                        id="__w2_wbuTulbL2_back_button"
+                      />
+                      Are you sure you want to deactivate profile?
+                    </div>
+                  </div>
+
+                  <div
+                    className="modal_footer"
+                    id="__w2_wbuTulbL2_modal_footer"
+                  >
+                    <div className="modal_actions">
+                      <span className="text_links">
+                        <a
+                          className="modal_cancel modal_action"
+                          href="#"
+                          id="__w2_wbuTulbL2_cancel_button"
+                        />
+                        <Link
+                          className="modal_action"
+                          id="__w2_wbuTulbL2_footer_back_button"
+                          onClick={this.closeDeactivateModal}
+                        >
+                          Cancel
+                        </Link>
+                      </span>
+                      <Link
+                        to={"/"}
+                        className="submit_button modal_action"
+                        id="__w2_wbuTulbL2_submit_button"
+                        onClick={this.deactivateProfile}
+                      >
+                        Yes
+                      </Link>
                     </div>
                   </div>
                 </div>

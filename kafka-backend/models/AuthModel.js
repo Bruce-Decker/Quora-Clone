@@ -13,6 +13,14 @@ var AuthSchema = new Schema({
   password: {
     type: String,
     required: true
+  },
+  isDeleted: {
+    type: String,
+    default: false
+  },
+  isDeactivated: {
+    type: String,
+    default: false
   }
 });
 

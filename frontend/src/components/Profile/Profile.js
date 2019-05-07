@@ -263,7 +263,7 @@ onTopicBlur = () => {
 
    const data = new FormData();
    data.append("image", event.target.files[0], event.target.files[0].name);
-   axios.post("/profile/upload", data, {}).then(res => {
+   axios.post(rooturl + "/profile/upload", data, {}).then(res => {
      console.log(res.data.imageUrl);
       this.setState({
          profileimg: res.data.imageUrl
@@ -272,13 +272,13 @@ onTopicBlur = () => {
  };
 
 followHandler() {
-  axios.post("/follow/followUser", {leader_email: this.state.profileEmail, follower_email: this.props.auth.user.email}, {}).then(res => {
+  axios.post(rooturl + "/follow/followUser", {leader_email: this.state.profileEmail, follower_email: this.props.auth.user.email}, {}).then(res => {
     window.location.reload();
   });
 }
 
   unfollowHandler() {
-    axios.post("/follow/unfollowUser", {leader_email: this.state.profileEmail, follower_email: this.props.auth.user.email}, {}).then(res => {
+    axios.post(rooturl + "/follow/unfollowUser", {leader_email: this.state.profileEmail, follower_email: this.props.auth.user.email}, {}).then(res => {
       window.location.reload();
     });
 }
@@ -2157,37 +2157,9 @@ followHandler() {
                             </div>
                           </div>
                           <div>
-                            <div id="wIYwSz7m73">
-                              <li className="AnswersNavItem NavItem EditableListItem NavListItem not_removable">
-                                <Link
-                                  to={{
-                                    pathname:
-                                      `/profile/` +
-                                      this.props.match.params.email,
-                                    search: "?activityType=QuestionAnswered"
-                                  }}
-                                >
-                                  Answers<span className="list_count">2</span>
-                                </Link>
-                              </li>
-                            </div>
+                            
                           </div>
-                          <div>
-                            <div id="wIYwSz7m75">
-                              <li className="NavItem QuestionsNavItem EditableListItem NavListItem not_removable">
-                                <Link
-                                  to={{
-                                    pathname:
-                                      `/profile/` +
-                                      this.props.match.params.email,
-                                    search: "?activityType=QuestionFollowed"
-                                  }}
-                                >
-                                  Questions<span className="list_count">1</span>
-                                </Link>
-                              </li>
-                            </div>
-                          </div>
+                          
                           <div>
                             <div id="wIYwSz7m75">
                               <li className="NavItem QuestionsNavItem EditableListItem NavListItem not_removable">

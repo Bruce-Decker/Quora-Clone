@@ -46,6 +46,13 @@ exports.authService = function authService(info, callback) {
     case "search":
       search(info, callback);
       break;
+    case "delete":
+      console.log(info);
+      deleteUser(info, callback);
+      break;
+    case "deactivate":
+      deactivateUser(info, callback);
+      break;
   }
 };
 
@@ -60,6 +67,40 @@ function search(info, callback) {
     } else {
       console.log(err);
       callback(err, "error");
+    }
+  });
+}
+
+function deleteUser(info, callback) {
+  //var email = info.message.email;
+  console.log("===================");
+  console.log(info.body);
+  Auth.update(
+    { email: info.body.email },
+    { $set: { isDeleted: true } },
+    function(err, docs) {
+      if (err) {
+        //res.send("Fail")
+        callback(err, "error");
+      } else {
+        callback(null, docs);
+      }
+    }
+  );
+}
+
+function deactivateUser(info, callback) {
+  var email = info.body.email;
+
+  Auth.update({ email: email }, { $set: { isDeactivated: true } }, function(
+    err,
+    docs
+  ) {
+    if (err) {
+      //res.send("Fail")
+      callback(err, "error");
+    } else {
+      callback(null, docs);
     }
   });
 }
@@ -86,7 +127,11 @@ function login(info, callback) {
         const payload = { id: user.id, email: user.email, name: user.name }; //Create JWT payload
         console.log(payload);
         jwt.sign(payload, "secret", { expiresIn: 3600 }, (err, token) => {
-          callback(null, { success: true, token: "Bearer " + token });
+          callback(null, {
+            success: true,
+            token: "Bearer " + token,
+            user: user
+          });
         });
       } else {
         errors.password = "Password incorrect";
