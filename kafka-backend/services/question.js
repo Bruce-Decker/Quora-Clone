@@ -28,6 +28,9 @@ exports.questionService = function questionService(info, callback) {
     case "getTopicQuestions":
       getTopicQuestions(info, callback);
       break;
+    case "isfollowing":
+      isfollowing(info, callback);
+      break;
   }
 };
 
@@ -237,6 +240,30 @@ function unfollowQuestion(info, callback) {
       } else {
         console.log(result);
         callback(null, data);
+      }
+    }
+  );
+}
+
+function isfollowing(info, callback) {
+  console.log(info.message);
+  Question.findOne(
+    { question_id:info.message.question_id},
+
+    (err, questions) => {
+      if (err) {
+        console.log(`err`);
+        callback(err, null);
+      } else {
+        let isfollowing = false;
+        questions.followers.forEach(function(element) {
+          console.log(`element.email`);
+          console.log(element.email);
+          if(isfollowing ===false && element.email == info.message.email)
+            isfollowing = true;
+        });
+        
+        callback(null, {"isfollowing":isfollowing});
       }
     }
   );
