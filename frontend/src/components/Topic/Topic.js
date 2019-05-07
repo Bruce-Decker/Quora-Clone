@@ -66,7 +66,14 @@ class Topic extends Component {
 <div className="HomeMain FeedMain">
 <div className="grid_page">
 <div className="layout_3col_left" id="__w2_w2OzgLAU2_left_col">
-<div className="fixable_clone" style={{height: '488px', width: '142px', margin: '0px'}}><div id="__w2_w2OzgLAU2_left_col_inner" className="fixable_fixed" style={{top: '83px', position: 'fixed', width: '142px'}}>
+<div className="fixable_clone" style={{height: '488px', width: '142px', margin: '0px'}}>
+
+
+
+
+
+{/* 
+<div id="__w2_w2OzgLAU2_left_col_inner" className="fixable_fixed" style={{top: '83px', position: 'fixed', width: '142px'}}>
 <div className="row section">
    <div id="w2OzgLAU31">
       <div id="w2OzgLAU33">
@@ -106,7 +113,13 @@ class Topic extends Component {
             </ul>
             </div></div></div>
          </div>
-      </div>
+      </div> */}
+
+
+
+
+
+
    </div>
 </div>
 <div className="layout_3col_center">
