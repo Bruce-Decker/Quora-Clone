@@ -361,9 +361,9 @@ class Navbar extends Component {
     //    rooturl + "/question/keyword?question=lasjflajsf9u3skajfahsfhaf923ri3hashfash"
     // );
 
-    // savedAllSearchQuestions = questionResponse.data
+    //savedAllSearchQuestions = questionResponse.data
 
-    savedAllSearchQuestions = questionResponse.data;
+   // savedAllSearchQuestions = questionResponse.data;
   }
 
   componentWillUnmount() {
