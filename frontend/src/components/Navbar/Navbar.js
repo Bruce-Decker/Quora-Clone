@@ -103,6 +103,9 @@ class Navbar extends Component {
       showSearchModal: false,
       topics: topics,
       searchTopicOption: false,
+      email_address: '',
+      email_subject: '',
+      email_message: ''
       //savedAllSearchQuestions: []
     };
     this.filterHandler = this.filterHandler.bind(this);
@@ -132,6 +135,27 @@ class Navbar extends Component {
     this.setState({
       //showSearchModal: false
     })
+ }
+
+ sendMessage = () => {
+    var message = this.state.email_message
+    var sender_email = this.props.auth.user.email
+    var receiver_email = this.state.email_address
+    var subject = this.state.email_subject
+    var data = {
+      message,
+      sender_email,
+      receiver_email,
+      subject
+    }
+
+    axios.post(rooturl + '/messages/sendMessage', data)
+       .then(res => {
+         console.log(res)
+         window.location.reload()
+       })
+       .catch(err => console.log(err))
+    console.log(data)
  }
 
   onSubmit = () => {
@@ -2056,7 +2080,7 @@ class Navbar extends Component {
          <div className="ui_button_inner" id="__w2_wbuTulbL4_inner">
             <div className="ui_button_icon_wrapper u-relative u-flex-inline">
                <div id="__w2_wbuTulbL4_icon">
-                  <span className="ui_button_icon" aria-hidden="true">
+                  <span className="ui_button_icon" aria-hidden="true" onClick = {this.closeMessageModal}>
                      <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
                         <g id="small_close" className="icon_svg-stroke" fill="none" fillRule="evenodd" strokeLinecap="round" stroke="#666666" strokeWidth="1.5">
                            <path d="M12,6 L12,18" transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) " />
@@ -2077,7 +2101,13 @@ class Navbar extends Component {
 <div className="modal_content modal_body" id="__w2_wbuTulbL2_modal_body"><div className="people_picker">
 <div id="__w2_wbuTulbL2_pick_people"><div className="Selector PeopleSelector ModalMessageRecipientSelector" tabIndex={-1} id="__w2_wbuTulbL3_wrapper">
 <div className="selector_input_interaction">
-<input className="modal_message_recipient_selector selector_input text" type="text"  autofocus="True" data-group="js-editable" placeholder="Enter a name" w2cid="wbuTulbL3" id="__w2_wbuTulbL3_input" />
+
+<input className="modal_message_recipient_selector selector_input text" name = "email_address" onChange = {this.onChange} type="text"  autofocus="True" data-group="js-editable" placeholder="Enter an email" w2cid="wbuTulbL3" id="__w2_wbuTulbL3_input" />
+
+<input className="modal_message_recipient_selector selector_input text" name = "email_subject" onChange = {this.onChange} type="text"  autofocus="True" data-group="js-editable" placeholder="Enter a subject" w2cid="wbuTulbL3" id="__w2_wbuTulbL3_input" />
+
+
+
 <div className="selector_spinner hidden" id="__w2_wbuTulbL3_spinner">
 <div className="LoadingDots tiny"><div className="dot first" />
 <div className="dot second" /><div className="dot third" /></div></div></div>
@@ -2090,8 +2120,19 @@ class Navbar extends Component {
 <div className="hidden" id="__w2_wbuTulbL2_picked_person"><span id="__w2_wbuTulbL2_to_name" />
 <div className="change_person">
 <span className="bullet"> · </span>
-<a href="#" id="__w2_wbuTulbL2_change_person">(Change)</a></div><input type="hidden" data-group="js-editable" w2cid="wbuTulbL2" id="__w2_wbuTulbL2_compose_message_to_uid" /></div></div><textarea className="message_editor" data-group="js-editable" placeholder="Type a message..." w2cid="wbuTulbL2" id="__w2_wbuTulbL2_message_editor" defaultValue={""} /></div><div className="modal_footer" id="__w2_wbuTulbL2_modal_footer"><div className="modal_actions"><span className="text_links"><a className="modal_cancel modal_action" href="#" id="__w2_wbuTulbL2_cancel_button" />
-<Link className="modal_action" id="__w2_wbuTulbL2_footer_back_button" onClick = {this.closeMessageModal}>Cancel</Link></span><a className="submit_button modal_action" id="__w2_wbuTulbL2_submit_button">Send</a></div></div></div></div></div></div>
+<a href="#" id="__w2_wbuTulbL2_change_person">(Change)</a></div>
+
+<input type="hidden" data-group="js-editable" w2cid="wbuTulbL2" id="__w2_wbuTulbL2_compose_message_to_uid" /></div></div>
+
+
+
+<textarea className="message_editor" data-group="js-editable" name = "email_message" onChange = {this.onChange} placeholder="Type a message..." w2cid="wbuTulbL2" id="__w2_wbuTulbL2_message_editor" defaultValue={""} />
+
+
+
+</div><div className="modal_footer" id="__w2_wbuTulbL2_modal_footer"><div className="modal_actions"><span className="text_links"><a className="modal_cancel modal_action" href="#" id="__w2_wbuTulbL2_cancel_button" />
+<Link className="modal_action" id="__w2_wbuTulbL2_footer_back_button" onClick = {this.closeMessageModal}>Cancel</Link></span>
+<button className="submit_button modal_action" id="__w2_wbuTulbL2_submit_button" onClick = {this.sendMessage}>Send</button></div></div></div></div></div></div>
         
         </Modal>
        </div>
