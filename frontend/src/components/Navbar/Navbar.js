@@ -500,43 +500,19 @@ class Navbar extends Component {
                         </div>
                       </ul>
                     </div>
+
+
+
+
                     <div className="ask_modal_header">
-                      <div className="user_asks_header">
-                        <span className="user_action">
-                          <span className="IdentityNameWithPhoto NameWithPhoto">
-                            <span id="wdgZpkyi14">
-                              <span
-                                className="photo_tooltip PhotoSpan HoverMenu Photo IdentityPhoto"
-                                id="__w2_wdgZpkyi15_link"
-                              >
-                                <a
-                                  href="https://www.quora.com/profile/Bruce-Decker-12"
-                                  id="__w2_wdgZpkyi18_link"
-                                >
-                                  <img
-                                    className="profile_photo_img"
-                                    src="default-image.png"
-                                    alt=" "
-                                    height={50}
-                                    width={50}
-                                  />
-                                </a>
-                              </span>
-                            </span>
-                            <span id="wdgZpkyi16">
-                              <span id="__w2_wdgZpkyi17_link">
-                                <a
-                                  className="user"
-                                  href="https://www.quora.com/profile/Bruce-Decker-12"
-                                  action_mousedown="UserLinkClickthrough"
-                                  id="__w2_wdgZpkyi17_name_link"
-                                />
-                              </span>
-                            </span>
-                          </span>{" "}
-                          asked
-                        </span>
-                      </div>
+                      
+
+
+
+
+
+
+
                       <div className="mini_distribution_switcher">
                         <div
                           className="u-relative button_area"
@@ -957,42 +933,19 @@ class Navbar extends Component {
                   >
                     <div className="QuoraShareEditor">
                       <div className="ask_modal_header">
-                        <div className="user_asks_header">
-                          <span className="user_action">
-                            <span className="IdentityNameWithPhoto NameWithPhoto">
-                              <span id="wdgZpkyi30">
-                                <span
-                                  className="photo_tooltip PhotoSpan HoverMenu Photo IdentityPhoto"
-                                  id="__w2_wdgZpkyi31_link"
-                                >
-                                  <a
-                                    href="https://www.quora.com/profile/Bruce-Decker-12"
-                                    id="__w2_wdgZpkyi34_link"
-                                  >
-                                    <img
-                                      className="profile_photo_img"
-                                      src="default-image.png"
-                                      alt=""
-                                      height={50}
-                                      width={50}
-                                    />
-                                  </a>
-                                </span>
-                              </span>
-                              <span id="wdgZpkyi32">
-                                <span id="__w2_wdgZpkyi33_link">
-                                  <a
-                                    className="user"
-                                    href="https://www.quora.com/profile/Bruce-Decker-12"
-                                    action_mousedown="UserLinkClickthrough"
-                                    id="__w2_wdgZpkyi33_name_link"
-                                  />
-                                </span>
-                              </span>
-                            </span>{" "}
-                            shared
-                          </span>
-                        </div>
+
+
+
+
+
+
+                        
+
+
+
+
+
+
                       </div>
                       <div className="selector_input_interaction">
                         <div cname="quora_share_editor" id="share_input">
@@ -2101,9 +2054,18 @@ class Navbar extends Component {
                       >
                         Add Question
                       </div>
-                      <div className="tab" id="__w2_wnDsdkCJ1_link_tab">
-                        Share Link
-                      </div>
+                      
+                      
+                      
+                      
+                      
+                      
+                      
+                      
+                      
+                      
+                      
+                      
                     </div>
                   </div>
                   <div
@@ -2112,44 +2074,26 @@ class Navbar extends Component {
                   >
                     <div id="__w2_wnDsdkCJ1_content_inner_question">
                       <div className="ask_modal_header u-flex">
-                        <div className="user_asks_header">
-                          <span className="user_action">
-                            <span className="IdentityNameWithPhoto NameWithPhoto">
-                              <span id="wnDsdkCJ11">
-                                <span
-                                  className="photo_tooltip IdentityPhoto PhotoSpan Photo HoverMenu"
-                                  id="__w2_wnDsdkCJ12_link"
-                                >
-                                  <a
-                                    href="/profile/Bruce-Decker-12"
-                                    id="__w2_wnDsdkCJ15_link"
-                                  >
-                                    <img
-                                      className="profile_photo_img"
-                                      src="https://qph.fs.quoracdn.net/main-thumb-782622776-50-yelobhtpkmogsmcnnoowexfiripfrhwb.jpeg"
-                                      alt="Bruce Decker"
-                                      height={50}
-                                      width={50}
-                                    />
-                                  </a>
-                                </span>
-                              </span>
-                              <span id="wnDsdkCJ13">
-                                <span id="__w2_wnDsdkCJ14_link">
-                                  <a
-                                    className="user"
-                                    href="/profile/Bruce-Decker-12"
-                                    action_mousedown="UserLinkClickthrough"
-                                    id="__w2_wnDsdkCJ14_name_link"
-                                  >
-                                    Bruce Decker
-                                  </a>
-                                </span>
-                              </span>
-                            </span>{" "}
-                            asked
-                          </span>
-                        </div>
+
+
+
+
+
+
+
+
+
+
+
+                        
+
+
+
+
+
+
+
+
                         <div className="mini_distribution_switcher">
                           <div
                             className="u-relative button_area"
@@ -2159,85 +2103,35 @@ class Navbar extends Component {
                               className="multi_state_button"
                               id="__w2_wnDsdkCJ4_button_0"
                             >
-                              <a
-                                className="ui_button u-nowrap ui_button--styled ui_button--PillStyle ui_button--PillStyle--gray ui_button--size_small u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon"
-                                href="#"
-                                role="button"
-                                id="__w2_wnDsdkCJ32_button"
-                              >
-                                <div
-                                  className="ui_button_inner"
-                                  id="__w2_wnDsdkCJ32_inner"
-                                >
-                                  <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                                    <div id="__w2_wnDsdkCJ32_icon">
-                                      <span
-                                        className="ui_button_icon"
-                                        aria-hidden="true"
-                                      >
-                                        <svg
-                                          width="24px"
-                                          height="24px"
-                                          viewBox="0 0 24 24"
-                                          version="1.1"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          xmlnsXlink="http://www.w3.org/1999/xlink"
-                                        >
-                                          <g
-                                            stroke="none"
-                                            fill="none"
-                                            fillRule="evenodd"
-                                          >
-                                            <g
-                                              className="icon_svg-stroke"
-                                              transform="translate(4.000000, 4.000000)"
-                                              stroke="#666666"
-                                              strokeWidth="1.5"
-                                            >
-                                              <path d="M10,15.5 C10,12.7385763 7.76142375,10.5 5,10.5 C2.23857625,10.5 0,12.7385763 0,15.5" />
-                                              <path d="M17,15.5 C17,12.7385763 14.7614237,10.5 12,10.5 C11.2764674,10.5 10.588829,10.6536817 9.96794692,10.930183" />
-                                              <circle cx={5} cy={4} r={4} />
-                                              <path d="M9.67845014,7.25774619 C10.3330402,7.72505997 11.1344123,8 12,8 C14.209139,8 16,6.209139 16,4 C16,1.790861 14.209139,0 12,0 C11.183578,0 10.424284,0.24459363 9.79139875,0.664499992" />
-                                            </g>
-                                          </g>
-                                        </svg>
-                                      </span>
-                                    </div>
-                                  </div>
-                                  <div className="ui_button_label_count_wrapper">
-                                    <span
-                                      className="ui_button_label"
-                                      id="__w2_wnDsdkCJ32_label"
-                                    >
-                                      Public
-                                    </span>
-                                  </div>
-                                  <span
-                                    className="ui_button-chevron_suffix u-flex-inline ui_button-vertically_flippable_chevron"
-                                    aria-hidden="true"
-                                  >
-                                    <svg
-                                      width="24px"
-                                      height="24px"
-                                      viewBox="0 0 24 24"
-                                      version="1.1"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      xmlnsXlink="http://www.w3.org/1999/xlink"
-                                    >
-                                      <g
-                                        className="icon_svg-stroke"
-                                        stroke="#666"
-                                        strokeWidth="1.5"
-                                        fill="none"
-                                        fillRule="evenodd"
-                                        strokeLinecap="round"
-                                      >
-                                        <polyline points="5 8.5 12 15.5 19.0048307 8.5" />
-                                      </g>
-                                    </svg>
-                                  </span>
-                                </div>
-                              </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                             </span>
                             <span
                               className="multi_state_button hidden"
