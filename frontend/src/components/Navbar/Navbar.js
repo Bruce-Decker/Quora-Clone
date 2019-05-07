@@ -53,6 +53,19 @@ const modelCustomStyles = {
   }
 };
 
+const modelAlertStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    height: "20%",
+    width: "40%"
+  }
+};
+
 Modal.setAppElement("#root");
 
 function searchingTopics(query) {
@@ -67,18 +80,7 @@ function searchingQuestion(query) {
   };
 }
 
-function searchingProfile(query) {
-  return function(x) {
-    if (x.first_name) {
-      return x.first_name.toLowerCase().includes(query.toLowerCase()) || !query;
-    } else {
-      return "nothing";
-    }
-  };
-}
-
 var savedAllSearchQuestions = [];
-var savedAllProfiles = [];
 class Navbar extends Component {
   constructor() {
     super();
@@ -99,9 +101,8 @@ class Navbar extends Component {
       showSearchModal: false,
       topics: topics,
       searchTopicOption: false,
-      email_address: '',
-      email_subject: '',
-      email_message: ''
+      deleteModalIsOpen: false,
+      deactivateModalIsOpen: false
       //savedAllSearchQuestions: []
     };
     this.filterHandler = this.filterHandler.bind(this);
@@ -111,9 +112,8 @@ class Navbar extends Component {
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
-
+    //this.openDeleteModal = this.openDeleteModal.bind(this);
     this.valueChangeHandler = this.valueChangeHandler.bind(this);
-    this.profileSearchHandler = this.profileSearchHandler.bind(this);
   }
 
   //  add_leading_zeros = (dt) => {
@@ -131,27 +131,6 @@ class Navbar extends Component {
       //showSearchModal: false
     });
   };
-
- sendMessage = () => {
-    var message = this.state.email_message
-    var sender_email = this.props.auth.user.email
-    var receiver_email = this.state.email_address
-    var subject = this.state.email_subject
-    var data = {
-      message,
-      sender_email,
-      receiver_email,
-      subject
-    }
-
-    axios.post(rooturl + '/messages/sendMessage', data)
-       .then(res => {
-         console.log(res)
-         window.location.reload()
-       })
-       .catch(err => console.log(err))
-    console.log(data)
- }
 
   onSubmit = () => {
     var topics = [];
@@ -196,7 +175,33 @@ class Navbar extends Component {
       .post(rooturl + "/question/createQuestion", data)
       .then(res => {
         console.log(res.data);
+      })
+      .catch(err => console.log(err));
+  };
+
+  deleteProfile = () => {
+    console.log(this.props.auth.user.email);
+
+    axios
+      .post("/deleteUser", { email: this.props.auth.user.email })
+      .then(res => {
+        localStorage.clear();
+        this.props.history.push("/");
         window.location.reload();
+        this.props.logout();
+      })
+      .catch(err => console.log(err));
+  };
+
+  deactivateProfile = () => {
+    console.log(this.props.auth.user.email);
+    axios
+      .post("/deactivateUser", { email: this.props.auth.user.email })
+      .then(res => {
+        localStorage.clear();
+        this.props.history.push("/");
+        window.location.reload();
+        this.props.logout();
       })
       .catch(err => console.log(err));
   };
@@ -224,13 +229,33 @@ class Navbar extends Component {
     this.setState({ messageModalIsOpen: true });
   };
 
+  openDeleteModal = e => {
+    e.preventDefault();
+    this.setState({ deleteModalIsOpen: true });
+  };
+  openDeactivateModal = e => {
+    e.preventDefault();
+    this.setState({ deactivateModalIsOpen: true });
+  };
+
   afterOpenMessageModal = () => {
     // references are now sync'd and can be accessed.
     // this.subtitle.style.color = '#f00';
   };
-
+  afterOpenDeleteModal = () => {
+    // references are now sync'd and can be accessed.
+    // this.subtitle.style.color = '#f00';
+  };
   closeMessageModal = () => {
     this.setState({ messageModalIsOpen: false });
+  };
+
+  closeDeleteModal = () => {
+    this.setState({ deleteModalIsOpen: false });
+  };
+
+  closeDeactivateModal = () => {
+    this.setState({ deactivateModalIsOpen: false });
   };
 
   filterHandler = e => {
@@ -249,27 +274,7 @@ class Navbar extends Component {
     );
 
     savedAllSearchQuestions = questionResponse.data;
-    console.log(savedAllSearchQuestions);
-
-    //  var profileResponse = await axios.get(
-    //   rooturl + "/profile/searchProfile?name=" + e.target.value
-    //  )
-
-    //  savedAllProfiles = profileResponse.data
   }
-
-  async profileSearchHandler(e) {
-    this.setState({
-      searchValue: e.target.value
-    });
-    console.log(this.state.searchValue);
-
-    var profileResponse = await axios.get(
-      rooturl + "/profile/searchProfile?name=" + e.target.value
-    );
-    savedAllProfiles = profileResponse.data;
-  }
-
   search = e => {
     e.preventDefault();
     let url = rooturl;
@@ -294,17 +299,12 @@ class Navbar extends Component {
   };
   async componentDidMount() {
     document.addEventListener("mousedown", this.handleClickOutside);
-
-    var profileResponse = await axios.get(
-      rooturl + "/profile/searchProfile?name=Steve"
+    var questionResponse = await axios.get(
+      rooturl +
+        "/question/keyword?question=lasjflajsf9u3skajfahsfhaf923ri3hashfash"
     );
-    savedAllProfiles = profileResponse.data;
 
-    // var questionResponse = await axios.get(
-    //    rooturl + "/question/keyword?question=lasjflajsf9u3skajfahsfhaf923ri3hashfash"
-    // );
-
-    // savedAllSearchQuestions = questionResponse.data
+    savedAllSearchQuestions = questionResponse.data;
   }
 
   componentWillUnmount() {
@@ -1156,35 +1156,19 @@ class Navbar extends Component {
                       >
                         <div className="selector_input_interaction">
                           {/* input */}
-                          {this.state.searchCriteria == "topic" ||
-                          this.state.searchCriteria == "question" ? (
-                            <input
-                              className="selector_input text"
-                              type="text"
-                              data-lpignore="true"
-                              data-group="js-editable"
-                              placeholder="Search Quora"
-                              w2cid="wGp3JsZF12"
-                              id="__w2_wGp3JsZF12_input"
-                              onChange={this.valueChangeHandler}
-                              onFocus={this.onFocus}
-                              onBlur={this.onBlur}
-                            />
-                          ) : (
-                            <input
-                              className="selector_input text"
-                              type="text"
-                              data-lpignore="true"
-                              data-group="js-editable"
-                              placeholder="Search Quora"
-                              w2cid="wGp3JsZF12"
-                              id="__w2_wGp3JsZF12_input"
-                              onChange={this.profileSearchHandler}
-                              onFocus={this.onFocus}
-                              onBlur={this.onBlur}
-                            />
-                          )}
 
+                          <input
+                            className="selector_input text"
+                            type="text"
+                            data-lpignore="true"
+                            data-group="js-editable"
+                            placeholder="Search Quora"
+                            w2cid="wGp3JsZF12"
+                            id="__w2_wGp3JsZF12_input"
+                            onChange={this.valueChangeHandler}
+                            onFocus={this.onFocus}
+                            onBlur={this.onBlur}
+                          />
                           <div
                             className="selector_spinner hidden"
                             id="__w2_wGp3JsZF12_spinner"
@@ -1509,157 +1493,6 @@ class Navbar extends Component {
                             </div>
                           ) : null}
 
-                          {this.state.showSearchModal &&
-                          this.state.searchCriteria == "people" ? (
-                            <div
-                              className="lookup_bar_results_wrapper"
-                              id="__w2_wTZ9qVEp12_results_wrapper"
-                              style={{ width: "246.578px" }}
-                            >
-                              <div className="results_wrapper">
-                                <div
-                                  className="hidden resistance_wrapper server_message"
-                                  id="__w2_wTZ9qVEp12_server_message"
-                                >
-                                  <div
-                                    className="fixit_title"
-                                    id="__w2_wTZ9qVEp12_server_message_title"
-                                  />
-                                  <span
-                                    className="fixit_note"
-                                    id="__w2_wTZ9qVEp12_server_message_note"
-                                  />
-                                </div>
-                                <div className="interstitials_and_results">
-                                  <div
-                                    className="hidden ask_interstitial"
-                                    id="__w2_wTZ9qVEp12_ask_mode_interstitial"
-                                  >
-                                    <p className="ask_interstitial_content">
-                                      <strong
-                                        className="ask_interstitial_title"
-                                        id="__w2_wTZ9qVEp12_interstitial_title"
-                                      />
-                                      <span id="__w2_wTZ9qVEp12_interstitial_text" />
-                                    </p>
-                                  </div>
-                                  <div
-                                    className="results"
-                                    id="__w2_wTZ9qVEp12_results"
-                                  >
-                                    <ul
-                                      className="SelectorResults LookupBarResults"
-                                      id="__w2_w4N3kpSm1_wrapper"
-                                    >
-                                      <li
-                                        className="selector_result search selector_highlighted"
-                                        id="__w2_w4N3kpSm1_result_0"
-                                      >
-                                        <div
-                                          data-clog-trigger="impression"
-                                          data-clog-metadata='{"action_log_target": {"type": 39, "hash": "1140612010|search|0|-1718384057|0"}}'
-                                          data-clog-event-type="ActionLogImpression"
-                                          id="__w2_w4N3kpSm2_actionable"
-                                          data-clog-processed={1}
-                                        >
-                                          <span className="search_icon_wrapper">
-                                            <img
-                                              src="https://qsf.fs.quoracdn.net/-3-images.new_grid.QuoraSearch_2x.png-26-c1b5774d1aad0f68.png"
-                                              width={20}
-                                              height={20}
-                                            />
-                                          </span>
-                                          <span className="selector_result_type">
-                                            Search:{" "}
-                                          </span>
-                                          <span className="matched_term">
-                                            {this.state.searchValue}
-                                          </span>
-                                        </div>
-                                      </li>
-
-                                      {savedAllProfiles
-                                        .filter(
-                                          searchingProfile(
-                                            this.state.searchValue
-                                          )
-                                        )
-                                        .map(profile => (
-                                          <Link
-                                            to={`/profile/${profile.email}`}
-                                          >
-                                            <li
-                                              className="selector_result tribe"
-                                              id="__w2_w4N3kpSm1_result_5"
-                                            >
-                                              <div
-                                                data-clog-trigger="impression"
-                                                data-clog-metadata='{"action_log_target": {"type": 39, "hash": "1140612010|tribe|194|-1718384057|0"}}'
-                                                data-clog-event-type="ActionLogImpression"
-                                                id="__w2_w4N3kpSm7_actionable"
-                                                data-clog-processed={1}
-                                              >
-                                                <span className="image_wrapper">
-                                                  <div
-                                                    className="hover_menu hidden show_nub"
-                                                    id="__w2_w4N3kpSm29_menu"
-                                                  >
-                                                    <div
-                                                      className="hover_menu_contents"
-                                                      id="__w2_w4N3kpSm29_menu_contents"
-                                                    >
-                                                      {" "}
-                                                    </div>
-                                                  </div>
-
-                                                  <span
-                                                    className="photo_tooltip u-inline"
-                                                    id="__w2_w4N3kpSm29_link"
-                                                  >
-                                                    <img
-                                                      className="u-inline-block u-border-radius--ellipse tribe-blue TribeIconMedium TribeIcon"
-                                                      src="https://qph.fs.quoracdn.net/main-thumb-ti-194-100-whjmgyflzmfmeqmrdtiieuqjcbkifbps.jpeg"
-                                                    />
-                                                  </span>
-                                                </span>
-
-                                                <span className="rendered_qtext">
-                                                  {" "}
-                                                  {profile.first_name}{" "}
-                                                </span>
-                                                <div className="u-inline-block u-margin-left--xs" />
-                                              </div>
-                                            </li>
-                                          </Link>
-                                        ))}
-
-                                      <li
-                                        className="selector_result ask_new_question"
-                                        id="__w2_w4N3kpSm1_result_6"
-                                      >
-                                        <div
-                                          data-clog-trigger="impression"
-                                          data-clog-metadata='{"action_log_target": {"type": 39, "hash": null}}'
-                                          data-clog-event-type="ActionLogImpression"
-                                          id="__w2_w4N3kpSm8_actionable"
-                                          data-clog-processed={1}
-                                        >
-                                          <a
-                                            className="LookupBarAskQuestionModalButton AskQuestionButton"
-                                            href="#"
-                                            id="__w2_w4N3kpSm24_button"
-                                          >
-                                            Add New Question
-                                          </a>
-                                        </div>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          ) : null}
-
                           <div id="__w2_wGp3JsZF12_empty_input_prompt" />
                         </div>
                       </div>
@@ -1867,6 +1700,22 @@ class Navbar extends Component {
                                           Your Content
                                         </Link>
                                       </li>
+                                      <li>
+                                        <Link
+                                          className="hover_menu_item"
+                                          onClick={this.openDeleteModal}
+                                        >
+                                          Delete Profile
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link
+                                          className="hover_menu_item"
+                                          onClick={this.openDeactivateModal}
+                                        >
+                                          Deactivate Profile
+                                        </Link>
+                                      </li>
                                     </ul>
                                     <ul className="LegalNavLinks">
                                       <li />
@@ -1902,10 +1751,7 @@ class Navbar extends Component {
                                   >
                                     <img
                                       className="profile_photo_img"
-                                      src={
-                                        localStorage.getItem("profileImg") ||
-                                        default_image
-                                      }
+                                      src={default_image}
                                       height={150}
                                       width={150}
                                       onClick={this.onClick}
@@ -2736,6 +2582,119 @@ class Navbar extends Component {
         </Modal>
 
         <Modal
+          isOpen={this.state.deleteModalIsOpen}
+          onAfterOpen={this.afterOpenDeleteModal}
+          onRequestClose={this.closeDeleteModal}
+          style={modelAlertStyles}
+          contentLabel="Example Modal"
+        >
+          <div id="__w2_modal_container_">
+            <div className="modal_overlay" id="__w2_modal_overlay_">
+              <div className="modal_wrapper normal" id="__w2_modal_wrapper_">
+                <div className="MessagesModalComposer MessagesModal MultiStepModal Modal">
+                  <div className="modal_header">
+                    <div
+                      className="modal_close"
+                      id="__w2_wbuTulbL2_close_button"
+                    >
+                      <a
+                        className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only"
+                        href="#"
+                        role="button"
+                        aria-label="Close"
+                        id="__w2_wbuTulbL4_button"
+                      >
+                        <div
+                          className="ui_button_inner"
+                          id="__w2_wbuTulbL4_inner"
+                        >
+                          <div className="ui_button_icon_wrapper u-relative u-flex-inline">
+                            <div id="__w2_wbuTulbL4_icon">
+                              <span
+                                className="ui_button_icon"
+                                aria-hidden="true"
+                              >
+                                <svg
+                                  width="24px"
+                                  height="24px"
+                                  viewBox="0 0 24 24"
+                                  version="1.1"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  xmlnsXlink="http://www.w3.org/1999/xlink"
+                                >
+                                  <g
+                                    id="small_close"
+                                    className="icon_svg-stroke"
+                                    fill="none"
+                                    fillRule="evenodd"
+                                    strokeLinecap="round"
+                                    stroke="#666666"
+                                    strokeWidth="1.5"
+                                  >
+                                    <path
+                                      d="M12,6 L12,18"
+                                      transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) "
+                                    />
+                                    <path
+                                      d="M18,12 L6,12"
+                                      transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) "
+                                    />
+                                  </g>
+                                </svg>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                    <div
+                      className="modal_title"
+                      id="__w2_wbuTulbL2_modal_title"
+                    >
+                      <a
+                        className="modal_back_button"
+                        id="__w2_wbuTulbL2_back_button"
+                      />
+                      Are you sure you want to delete profile?
+                    </div>
+                  </div>
+
+                  <div
+                    className="modal_footer"
+                    id="__w2_wbuTulbL2_modal_footer"
+                  >
+                    <div className="modal_actions">
+                      <span className="text_links">
+                        <a
+                          className="modal_cancel modal_action"
+                          href="#"
+                          id="__w2_wbuTulbL2_cancel_button"
+                        />
+                        <Link
+                          className="modal_action"
+                          id="__w2_wbuTulbL2_footer_back_button"
+                          onClick={this.closeDeleteModal}
+                        >
+                          Cancel
+                        </Link>
+                      </span>
+                      <Link
+                        to={"/"}
+                        className="submit_button modal_action"
+                        id="__w2_wbuTulbL2_submit_button"
+                        onClick={this.deleteProfile}
+                      >
+                        Yes
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Modal>
+
+        <Modal
           isOpen={this.state.messageModalIsOpen}
           onAfterOpen={this.afterOpenMessageModal}
           onRequestClose={this.closeMessageModal}
@@ -2829,22 +2788,9 @@ class Navbar extends Component {
                               type="text"
                               autofocus="True"
                               data-group="js-editable"
-                              placeholder="Enter an email"
+                              placeholder="Enter a name"
                               w2cid="wbuTulbL3"
                               id="__w2_wbuTulbL3_input"
-                              name = "email_address"
-                              onChange = {this.onChange}
-                            />
-                            <input
-                              className="modal_message_recipient_selector selector_input text"
-                              type="text"
-                              autofocus="True"
-                              data-group="js-editable"
-                              placeholder="Enter a subject"
-                              w2cid="wbuTulbL3"
-                              id="__w2_wbuTulbL3_input"
-                              name = "email_subject"
-                              onChange = {this.onChange}
                             />
                             <div
                               className="selector_spinner hidden"
@@ -2893,8 +2839,6 @@ class Navbar extends Component {
                       w2cid="wbuTulbL2"
                       id="__w2_wbuTulbL2_message_editor"
                       defaultValue={""}
-                      name = "email_message"
-                      onChange = {this.onChange}
                     />
                   </div>
                   <div
@@ -2916,13 +2860,125 @@ class Navbar extends Component {
                           Cancel
                         </Link>
                       </span>
-                      <button
+                      <a
                         className="submit_button modal_action"
                         id="__w2_wbuTulbL2_submit_button"
-                        onClick = {this.sendMessage}
                       >
                         Send
-                      </button>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Modal>
+
+        <Modal
+          isOpen={this.state.deactivateModalIsOpen}
+          onAfterOpen={this.afterOpenDeleteModal}
+          onRequestClose={this.closeDeactivateModal}
+          style={modelAlertStyles}
+          contentLabel="Example Modal"
+        >
+          <div id="__w2_modal_container_">
+            <div className="modal_overlay" id="__w2_modal_overlay_">
+              <div className="modal_wrapper normal" id="__w2_modal_wrapper_">
+                <div className="MessagesModalComposer MessagesModal MultiStepModal Modal">
+                  <div className="modal_header">
+                    <div
+                      className="modal_close"
+                      id="__w2_wbuTulbL2_close_button"
+                    >
+                      <a
+                        className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only"
+                        href="#"
+                        role="button"
+                        aria-label="Close"
+                        id="__w2_wbuTulbL4_button"
+                      >
+                        <div
+                          className="ui_button_inner"
+                          id="__w2_wbuTulbL4_inner"
+                        >
+                          <div className="ui_button_icon_wrapper u-relative u-flex-inline">
+                            <div id="__w2_wbuTulbL4_icon">
+                              <span
+                                className="ui_button_icon"
+                                aria-hidden="true"
+                              >
+                                <svg
+                                  width="24px"
+                                  height="24px"
+                                  viewBox="0 0 24 24"
+                                  version="1.1"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  xmlnsXlink="http://www.w3.org/1999/xlink"
+                                >
+                                  <g
+                                    id="small_close"
+                                    className="icon_svg-stroke"
+                                    fill="none"
+                                    fillRule="evenodd"
+                                    strokeLinecap="round"
+                                    stroke="#666666"
+                                    strokeWidth="1.5"
+                                  >
+                                    <path
+                                      d="M12,6 L12,18"
+                                      transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) "
+                                    />
+                                    <path
+                                      d="M18,12 L6,12"
+                                      transform="translate(12.000000, 12.000000) rotate(45.000000) translate(-12.000000, -12.000000) "
+                                    />
+                                  </g>
+                                </svg>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                    <div
+                      className="modal_title"
+                      id="__w2_wbuTulbL2_modal_title"
+                    >
+                      <a
+                        className="modal_back_button"
+                        id="__w2_wbuTulbL2_back_button"
+                      />
+                      Are you sure you want to deactivate profile?
+                    </div>
+                  </div>
+
+                  <div
+                    className="modal_footer"
+                    id="__w2_wbuTulbL2_modal_footer"
+                  >
+                    <div className="modal_actions">
+                      <span className="text_links">
+                        <a
+                          className="modal_cancel modal_action"
+                          href="#"
+                          id="__w2_wbuTulbL2_cancel_button"
+                        />
+                        <Link
+                          className="modal_action"
+                          id="__w2_wbuTulbL2_footer_back_button"
+                          onClick={this.closeDeactivateModal}
+                        >
+                          Cancel
+                        </Link>
+                      </span>
+                      <Link
+                        to={"/"}
+                        className="submit_button modal_action"
+                        id="__w2_wbuTulbL2_submit_button"
+                        onClick={this.deactivateProfile}
+                      >
+                        Yes
+                      </Link>
                     </div>
                   </div>
                 </div>

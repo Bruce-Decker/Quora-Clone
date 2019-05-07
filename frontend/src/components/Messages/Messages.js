@@ -11,6 +11,7 @@ class Messages extends Component {
     this.state = {
       userID: this.props.auth.user.email,
       inbox: [],
+      sent: [],
       subInbox: [],
       authFlag: true,
       startIndex: 0,
@@ -155,11 +156,8 @@ class Messages extends Component {
 
                         <li className="filter_option">
                           <Link
-                            className=" filter_option_link"
-                            to={{
-                              pathname: "/content",
-                              search: "?activityType=QuestionAsked"
-                            }}
+                            className="selected filter_option_link"
+                            to={`/messages/${this.props.auth.user.email}`}
                           >
                             Sent
                           </Link>
