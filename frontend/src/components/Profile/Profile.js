@@ -7,6 +7,7 @@ import Modal from "react-modal";
 import default_image from "./default.png";
 import rooturl from "../../utility/url";
 import queryString from "query-string";
+var lodash = require('lodash');
 
 const topics = [
    {
@@ -64,8 +65,8 @@ function searchingTopics(query) {
 
 var response_profile;
 class Profile extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       open: false,
       modalIsOpen: false,
@@ -91,7 +92,10 @@ class Profile extends Component {
       showTopicSelection: false,
       topics: topics,
       enteredTopicValue: '',
-      profile_image: './default.png'
+      profile_image: './default.png',
+      profileEmail: "",
+      followerData: [],
+      currEmail: this.props.auth.user.email
     };
 
     this.openModal = this.openModal.bind(this);
@@ -99,6 +103,8 @@ class Profile extends Component {
     this.closeModal = this.closeModal.bind(this);
     this.submitEmploymentDetails = this.submitEmploymentDetails.bind(this);
     this.handleFile = this.handleFile.bind(this);
+    this.followHandler = this.followHandler.bind(this);
+    this.unfollowHandler = this.unfollowHandler.bind(this);
   }
 
   followTopic = (topic_name) => {
@@ -199,7 +205,21 @@ onTopicBlur = () => {
    });
  };
 
+followHandler() {
+  axios.post("/follow/followUser", {leader_email: this.state.profileEmail, follower_email: this.props.auth.user.email}, {}).then(res => {
+    window.location.reload();
+  });
+}
+
+  unfollowHandler() {
+    axios.post("/follow/unfollowUser", {leader_email: this.state.profileEmail, follower_email: this.props.auth.user.email}, {}).then(res => {
+      window.location.reload();
+    });
+}
   
+  componentWillReceiveProps(nextProps) {
+   console.log("fsdfsf")
+  }
 
   
    
@@ -289,7 +309,7 @@ onTopicBlur = () => {
 
   
   
-
+  
   async componentDidMount() {
      
     console.log("sdfsdf3324 " + this.props.location.search);
@@ -319,6 +339,12 @@ onTopicBlur = () => {
         profile_image: response_profile.data[0].profile_image
 
       }); 
+      this.setState({
+        profileEmail: response_profile.data[0].email
+      })
+      this.setState({
+        followerData: response_profile.data[0].followers
+      })
     
     } 
     console.log("q3wsffse");
@@ -335,6 +361,9 @@ onTopicBlur = () => {
   }
 
   render() {
+    var userEmail = this.state.followerData;
+    var currEmail = this.state.currEmail;
+    var doesFollow = lodash.find(userEmail,function (o) { return o.email === currEmail });
     return (
       <div>
         <Navbar
@@ -554,8 +583,11 @@ onTopicBlur = () => {
                         : null }
                        
                        
-                        <button> Follow </button>
-                      
+                        {
+                          
+                          (this.state.profileEmail != this.state.currEmail) ? (doesFollow ? 
+                          <button onClick={this.unfollowHandler}> Unfollow </button> :  <button onClick={this.followHandler}> Follow </button>): null
+                        }
                       </div>
                       <div id="wYSVVNEt26">
                         <div className="ProfileDescriptionPreviewSection">
