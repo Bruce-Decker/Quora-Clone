@@ -2568,10 +2568,13 @@ class Question extends Component {
                                                               <span className="ui_avatar u-flex-inline ui_avatar--large u-flex-none">
                                                                 <img
                                                                   className="ui_avatar_photo ui_avatar--border-circular"
-                                                                  src={answer.isAnonymous
-                                                                    ? defaultImg: localStorage.getItem(
-                                                                    "profileImg"
-                                                                  )}
+                                                                  src={
+                                                                    answer.isAnonymous
+                                                                      ? defaultImg
+                                                                      : localStorage.getItem(
+                                                                          "profileImg"
+                                                                        )
+                                                                  }
                                                                   alt="Brian Lee"
                                                                 />
                                                               </span>
@@ -2667,6 +2670,15 @@ class Question extends Component {
                                                                           aria-hidden="true"
                                                                         >
                                                                           <svg
+                                                                            onClick={() => {
+                                                                              this.bookmarkHandler(
+                                                                                {
+                                                                                  answer_id:
+                                                                                    answer.answer_id,
+                                                                                  email: answer.owner
+                                                                                }
+                                                                              );
+                                                                            }}
                                                                             width={
                                                                               24
                                                                             }
@@ -3204,7 +3216,7 @@ class Question extends Component {
                                                                     className="ui_button_icon"
                                                                     aria-hidden="true"
                                                                   />
-                                                                  {(flagVar) ? (
+                                                                  {flagVar ? (
                                                                     <Link
                                                                       to={{
                                                                         pathname:
