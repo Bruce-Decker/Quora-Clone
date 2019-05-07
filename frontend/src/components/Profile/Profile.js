@@ -2103,6 +2103,18 @@ followHandler() {
                               </li>
                             </div>
                           </div>
+                          <div>
+                            <div id="wIYwSz7m75">
+                              <li className="NavItem QuestionsNavItem EditableListItem NavListItem not_removable">
+                                <Link
+                                  to={{
+                                    pathname:`/profileviewsgraph`}}
+                                >
+                                  Views
+                                </Link>
+                              </li>
+                            </div>
+                          </div>
                         </ul>
                         <div className="edit_mode_only" />
                       </div>
