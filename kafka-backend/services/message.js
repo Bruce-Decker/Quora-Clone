@@ -60,7 +60,7 @@ function createMessage(info, callback) {
 function viewMessage(info, callback) {
   console.log(`info.body`);
   console.log(info.body);
-  Profile.findOne({ email: sender_email }, (err, res) => {
+  Profile.findOne({ email: info.body.email }, (err, res) => {
     if (err) {
       callback(err, "error");
     } else {

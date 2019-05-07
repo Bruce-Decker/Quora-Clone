@@ -98,7 +98,10 @@ class Navbar extends Component {
       History_Topic: false,
       showSearchModal: false,
       topics: topics,
-      searchTopicOption: false
+      searchTopicOption: false,
+      email_address: '',
+      email_subject: '',
+      email_message: ''
       //savedAllSearchQuestions: []
     };
     this.filterHandler = this.filterHandler.bind(this);
@@ -128,6 +131,27 @@ class Navbar extends Component {
       //showSearchModal: false
     });
   };
+
+ sendMessage = () => {
+    var message = this.state.email_message
+    var sender_email = this.props.auth.user.email
+    var receiver_email = this.state.email_address
+    var subject = this.state.email_subject
+    var data = {
+      message,
+      sender_email,
+      receiver_email,
+      subject
+    }
+
+    axios.post(rooturl + '/messages/sendMessage', data)
+       .then(res => {
+         console.log(res)
+         window.location.reload()
+       })
+       .catch(err => console.log(err))
+    console.log(data)
+ }
 
   onSubmit = () => {
     var topics = [];
