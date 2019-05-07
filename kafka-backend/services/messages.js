@@ -9,6 +9,9 @@ exports.messagesService = function messagesService(info, callback) {
     case "get_getMessages":
       get_getMessages(info, callback);
       break;
+    case "get_sentMessages":
+      get_sentMessages(info, callback);
+      break;
     case "getExchangedMessages":
       getExchangedMessages(info, callback);
       break;
@@ -54,6 +57,24 @@ function post_sendMessage(info, callback) {
 function get_getMessages(info, callback) {
   var receiver_email = info.receiver_email;
   Message.find({ receiver_email: receiver_email })
+    .sort({ time: "desc" })
+    .exec(function(err, docs) {
+      if (docs) {
+        //  var result = []
+        //  result.push(docs)
+        //res.send(docs)
+        callback(null, docs);
+      } else {
+        //res.send({})
+        callback(null, {});
+      }
+    });
+}
+
+function get_sentMessages(info, callback) {
+  console.log("here", info);
+  var sender_email = info.sender_email;
+  Message.find({ sender_email: sender_email })
     .sort({ time: "desc" })
     .exec(function(err, docs) {
       if (docs) {

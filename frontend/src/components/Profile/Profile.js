@@ -2157,37 +2157,9 @@ followHandler() {
                             </div>
                           </div>
                           <div>
-                            <div id="wIYwSz7m73">
-                              <li className="AnswersNavItem NavItem EditableListItem NavListItem not_removable">
-                                <Link
-                                  to={{
-                                    pathname:
-                                      `/profile/` +
-                                      this.props.match.params.email,
-                                    search: "?activityType=QuestionAnswered"
-                                  }}
-                                >
-                                  Answers<span className="list_count">2</span>
-                                </Link>
-                              </li>
-                            </div>
+                            
                           </div>
-                          <div>
-                            <div id="wIYwSz7m75">
-                              <li className="NavItem QuestionsNavItem EditableListItem NavListItem not_removable">
-                                <Link
-                                  to={{
-                                    pathname:
-                                      `/profile/` +
-                                      this.props.match.params.email,
-                                    search: "?activityType=QuestionFollowed"
-                                  }}
-                                >
-                                  Questions<span className="list_count">1</span>
-                                </Link>
-                              </li>
-                            </div>
-                          </div>
+                          
                           <div>
                             <div id="wIYwSz7m75">
                               <li className="NavItem QuestionsNavItem EditableListItem NavListItem not_removable">

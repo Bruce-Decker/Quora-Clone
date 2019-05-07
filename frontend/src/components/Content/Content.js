@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import rooturl from "../../utility/url";
 import queryString from "query-string";
 import { createHashHistory } from "history";
-import Pagination from '../Pagination/Pagination'
+import Pagination from "../Pagination/Pagination";
 
 class Content extends Component {
   constructor() {
@@ -17,10 +17,8 @@ class Content extends Component {
       showAskedList: false,
       activityType: "All",
       order_direction: "",
-      currentPage: 1, 
-      totalPages: null 
-     
-
+      currentPage: 1,
+      totalPages: null
     };
   }
 
@@ -83,8 +81,7 @@ class Content extends Component {
   }
 
   onPageChanged = data => {
-       
-    console.log("Data " + JSON.stringify(data))
+    console.log("Data " + JSON.stringify(data));
     const { questionsAsked } = this.state;
     const { currentPage, totalPages, pageLimit } = data;
 
@@ -92,21 +89,22 @@ class Content extends Component {
     const currentQuestions = questionsAsked.slice(offset, offset + pageLimit);
 
     this.setState({ currentPage, currentQuestions, totalPages });
-  }
+  };
 
   render() {
-    
-    const { questionsAsked, currentQuestions, currentPage, totalPages } = this.state;
+    const {
+      questionsAsked,
+      currentQuestions,
+      currentPage,
+      totalPages
+    } = this.state;
     const totalQuestions = questionsAsked.length;
 
     var yourContent = {};
     if (this.state.showAskedList) {
-     
-     
       yourContent = this.state.currentQuestions.map(question => {
         if (question.type === "Bookmark") {
           return (
-           
             <div className="pagedlist_item" id="wzr1YmKw2">
               <div className="PagedListItem UserContentListItem">
                 <span className="title">
@@ -120,7 +118,11 @@ class Content extends Component {
                     >
                       <span className="ui_content_title unstyled_ui_title">
                         <span className="ui_qtext_rendered_qtext">
-                          {question.answer}
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: question.answer
+                            }}
+                          />
                         </span>
                       </span>
                     </Link>
@@ -132,7 +134,6 @@ class Content extends Component {
                 </div>
               </div>
             </div>
-            
           );
         } else {
           return (
@@ -179,7 +180,6 @@ class Content extends Component {
             "ui_icon ui_icon_color--red ui_icon_size--regular ui_icon_outline--filled"
           }
         />
-        
 
         <div className="ContentWrapper">
           <div id="__w2_wsawratU13_content">
@@ -408,9 +408,6 @@ class Content extends Component {
                   <h3>Your Content</h3>
                   <div className="user_content_list_section">
                     <div id="__w2_wsawratU18_list_wrapper">
-                   
-
- 
                       <div
                         className="PagedList UserContentList"
                         id="wsawratU23"
@@ -443,7 +440,12 @@ class Content extends Component {
                         </div>
                       </div>
                       <div className="d-flex flex-row py-4 align-items-center">
-                      <Pagination totalRecords={ totalQuestions } pageLimit={5} pageNeighbours={1} onPageChanged={this.onPageChanged} />
+                        <Pagination
+                          totalRecords={totalQuestions}
+                          pageLimit={5}
+                          pageNeighbours={1}
+                          onPageChanged={this.onPageChanged}
+                        />
                       </div>
                     </div>
                   </div>
