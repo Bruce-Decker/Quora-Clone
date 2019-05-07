@@ -657,99 +657,51 @@ class Question extends Component {
                                       className="CommentsActionItem ItemComponent ActionItemComponent action_item secondary_item u-relative"
                                       id="__w2_wEimc2ML4_link"
                                     >
-                                      <div id="wEimc2ML21">
-                                        <a
-                                          className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only"
-                                          href="#"
-                                          role="button"
-                                          aria-label="Comments"
-                                          id="__w2_wEimc2ML39_button"
-                                        >
-                                          <div
-                                            className="ui_button_inner"
-                                            id="__w2_wEimc2ML39_inner"
-                                          >
-                                            <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                                              <div id="__w2_wEimc2ML39_icon">
-                                                <span
-                                                  className="ui_button_icon"
-                                                  aria-hidden="true"
-                                                >
-                                                  <svg
-                                                    width="24px"
-                                                    height="24px"
-                                                    viewBox="0 0 24 24"
-                                                    version="1.1"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                  >
-                                                    <g
-                                                      id="comment"
-                                                      className="icon_svg-stroke icon_svg-fill"
-                                                      stroke="#666"
-                                                      strokeWidth="1.5"
-                                                      fill="none"
-                                                      fillRule="evenodd"
-                                                    >
-                                                      <path d="M12.0711496,18.8605911 C16.1739904,18.8605911 19.5,15.7577921 19.5,11.9302955 C19.5,8.102799 16.1739904,5 12.0711496,5 C7.96830883,5 4.64229922,8.102799 4.64229922,11.9302955 C4.64229922,13.221057 5.02055525,14.429401 5.67929998,15.4641215 C5.99817082,15.9649865 4.1279592,18.5219189 4.56718515,18.9310749 C5.02745574,19.3598348 7.80252458,17.6358115 8.37002246,17.9406001 C9.45969688,18.5258363 10.7235179,18.8605911 12.0711496,18.8605911 Z" />
-                                                    </g>
-                                                  </svg>
-                                                </span>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </a>
-                                      </div>
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+                                    
+
+
+
+
+
+
+
+
                                     </div>
                                     <div className="ItemComponent ActionItemComponent DownvoteActionItem action_item secondary_item u-relative">
                                       <span id="wEimc2ML23">
-                                        <a
-                                          className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only"
-                                          href="#"
-                                          role="button"
-                                          aria-label="Downvote"
-                                          action_click="QuestionDownvote"
-                                          action_target='{"qid": 31450631, "type": "question"}'
-                                          id="__w2_wEimc2ML36_button"
-                                        >
-                                          <div
-                                            className="ui_button_inner"
-                                            id="__w2_wEimc2ML36_inner"
-                                          >
-                                            <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                                              <div id="__w2_wEimc2ML36_icon">
-                                                <span
-                                                  className="ui_button_icon"
-                                                  aria-hidden="true"
-                                                >
-                                                  <svg
-                                                    width="24px"
-                                                    height="24px"
-                                                    viewBox="0 0 24 24"
-                                                    version="1.1"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                  >
-                                                    <g
-                                                      id="downvote"
-                                                      className="icon_svg-stroke icon_svg-fill"
-                                                      stroke="#666"
-                                                      fill="none"
-                                                      strokeWidth="1.5"
-                                                      fillRule="evenodd"
-                                                      strokeLinejoin="round"
-                                                    >
-                                                      <polygon
-                                                        transform="translate(12.000000, 12.000000) rotate(-180.000000) translate(-12.000000, -12.000000) "
-                                                        points="12 4 3 15 9 15 9 20 15 20 15 15 21 15"
-                                                      />
-                                                    </g>
-                                                  </svg>
-                                                </span>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </a>
+
+
+
+
+
+
+
+
+
+
+
+
+                                      
+
+
+
+
+
+
+
+
+
+
+
                                       </span>
                                     </div>
                                     <div className="FacebookShareActionItem ActionItemComponent ItemComponent action_item secondary_item u-relative">
@@ -765,74 +717,30 @@ class Question extends Component {
                                           id="__w2_wEimc2ML27_inner"
                                         >
                                           <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                                            <div id="__w2_wEimc2ML27_icon">
-                                              <span
-                                                className="ui_button_icon"
-                                                aria-hidden="true"
-                                              >
-                                                <svg
-                                                  width="24px"
-                                                  height="24px"
-                                                  viewBox="0 0 24 24"
-                                                  version="1.1"
-                                                  xmlns="http://www.w3.org/2000/svg"
-                                                  xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                >
-                                                  <g
-                                                    className="icon_svg-fill_as_stroke"
-                                                    stroke="none"
-                                                    fill="#4267B2"
-                                                    fillRule="evenodd"
-                                                  >
-                                                    <path d="M15.0352899,20 L15.0352899,13.8064419 L17.1142712,13.8064419 L17.4255221,11.3926592 L15.0352899,11.3926592 L15.0352899,9.85156554 C15.0352899,9.1527191 15.2293273,8.67649438 16.2315146,8.67649438 L17.5097169,8.67589513 L17.5097169,6.51703371 C17.2885933,6.48767041 16.5298816,6.42193258 15.647185,6.42193258 C13.8043086,6.42193258 12.5427056,7.54678652 12.5427056,9.61258427 L12.5427056,11.3926592 L10.4584509,11.3926592 L10.4584509,13.8064419 L12.5427056,13.8064419 L12.5427056,20 L4.88270262,20 C4.39509213,20 4.00000599,19.6047341 4.00000599,19.1173034 L4.00000599,4.88904869 C4.00000599,4.4014382 4.39509213,4.00629213 4.88270262,4.00629213 L19.1108974,4.00629213 C19.5983281,4.00629213 19.993594,4.4014382 19.993594,4.88904869 L19.993594,19.1173034 C19.993594,19.6047341 19.5983281,20 19.1108974,20 L15.0352899,20 Z" />
-                                                  </g>
-                                                </svg>
-                                              </span>
-                                            </div>
+                                            
                                           </div>
                                         </div>
                                       </a>
                                     </div>
                                     <div className="ItemComponent ActionItemComponent TwitterShareActionItem action_item secondary_item u-relative">
-                                      <a
-                                        className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only"
-                                        href="#"
-                                        role="button"
-                                        aria-label="Share on Twitter"
-                                        id="__w2_wEimc2ML30_button"
-                                      >
-                                        <div
-                                          className="ui_button_inner"
-                                          id="__w2_wEimc2ML30_inner"
-                                        >
-                                          <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                                            <div id="__w2_wEimc2ML30_icon">
-                                              <span
-                                                className="ui_button_icon"
-                                                aria-hidden="true"
-                                              >
-                                                <svg
-                                                  width="24px"
-                                                  height="24px"
-                                                  viewBox="0 0 24 24"
-                                                  version="1.1"
-                                                  xmlns="http://www.w3.org/2000/svg"
-                                                  xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                >
-                                                  <g
-                                                    className="icon_svg-fill_as_stroke"
-                                                    stroke="none"
-                                                    fill="#1DA1F2"
-                                                    fillRule="nonzero"
-                                                  >
-                                                    <path d="M8.84616,19.3134989 C15.26128,19.3134989 18.77008,13.9986189 18.77008,9.38957894 C18.77008,9.23861894 18.77008,9.08833894 18.75988,8.93873894 C19.4424853,8.44499832 20.0317217,7.83365693 20.5,7.13333894 C19.8634378,7.41540415 19.1881639,7.60038242 18.49672,7.68209894 C19.2248259,7.24620674 19.769764,6.56062389 20.03012,5.75293894 C19.3454671,6.15920856 18.5964393,6.44552712 17.81536,6.59953894 C16.7342163,5.44992705 15.0162892,5.1685555 13.6248935,5.91320129 C12.2334978,6.65784709 11.514667,8.24332044 11.87148,9.78057894 C9.0670891,9.63998863 6.45424353,8.31539877 4.6832,6.13645894 C3.75746347,7.73013736 4.23031176,9.76892339 5.76304,10.7924189 C5.20798402,10.7759681 4.66502997,10.6262359 4.18,10.3558589 C4.18,10.3701389 4.18,10.3850989 4.18,10.4000589 C4.18045433,12.0603422 5.35079101,13.4903429 6.9782,13.8190989 C6.46471132,13.9591382 5.9259548,13.9796091 5.40332,13.8789389 C5.86024459,15.2997465 7.1696707,16.273072 8.66188,16.3010989 C7.42681983,17.2717527 5.90112047,17.7986818 4.33028,17.7970989 C4.05277443,17.7965662 3.77553876,17.779764 3.5,17.7467789 C5.09503245,18.770367 6.95094111,19.3133064 8.84616,19.3107789" />
-                                                  </g>
-                                                </svg>
-                                              </span>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </a>
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+
+
+
+
+
+
+
+
+
+
+
+
                                     </div>
                                     <div className="OverflowShareActionItem ActionItemComponent ItemComponent action_item secondary_item u-relative">
                                       <div
@@ -851,51 +759,20 @@ class Question extends Component {
                                         role="button"
                                         id="__w2_wEimc2ML31_link"
                                       >
-                                        <a
-                                          className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon ui_button--icon_only"
-                                          href="#"
-                                          role="button"
-                                          aria-label="More sharing options"
-                                          id="__w2_wEimc2ML34_button"
-                                        >
-                                          <div
-                                            className="ui_button_inner"
-                                            id="__w2_wEimc2ML34_inner"
-                                          >
-                                            <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                                              <div id="__w2_wEimc2ML34_icon">
-                                                <span
-                                                  className="ui_button_icon"
-                                                  aria-hidden="true"
-                                                >
-                                                  <svg
-                                                    width="24px"
-                                                    height="24px"
-                                                    viewBox="0 0 24 24"
-                                                    version="1.1"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                  >
-                                                    <g
-                                                      id="share"
-                                                      className="icon_svg-stroke"
-                                                      stroke="#666"
-                                                      fill="none"
-                                                      strokeWidth="1.5"
-                                                      fillRule="evenodd"
-                                                      strokeLinejoin="round"
-                                                    >
-                                                      <path
-                                                        d="M12.0001053,2.99989467 L4.00010533,12.7776724 L9.33343867,12.7776724 C9.78266695,14.7041066 10.5048892,16.2782509 11.5001053,17.5001053 C12.4953215,18.7219597 13.9953215,19.8886264 16.0001053,21.0001053 C15.3415908,19.6668553 14.8428108,18.1668553 14.5037654,16.5001053 C14.16472,14.8333553 14.2190556,13.5925444 14.666772,12.7776724 L20.0001053,12.7776724 L12.0001053,2.99989467 Z"
-                                                        transform="translate(12.000105, 12.000000) rotate(90.000000) translate(-12.000105, -12.000000) "
-                                                      />
-                                                    </g>
-                                                  </svg>
-                                                </span>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </a>
+                                       
+                                       
+                                       
+                                       
+                                       
+                                       
+                                       
+                                      
+
+
+
+
+
+
                                       </div>
                                     </div>
                                     <div className="action_bar_inner_spacer u-margin-left--auto">

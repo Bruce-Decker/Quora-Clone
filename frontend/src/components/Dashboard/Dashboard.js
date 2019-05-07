@@ -961,81 +961,23 @@ class Dashboard extends Component {
                                                           </div>
 
                                                           <div className="ItemComponent CantAnswerActionItem primary_item u-relative">
-                                                            <a
-                                                              className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--gray ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon ui_button--has_icon"
-                                                              href="#"
-                                                              role="button"
-                                                              action_click="PassWritePage"
-                                                              id="__w2_wLjahHEI14_button"
-                                                            >
-                                                              <div
-                                                                className="ui_button_inner"
-                                                                id="__w2_wLjahHEI14_inner"
-                                                              >
-                                                                <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                                                                  <div id="__w2_wLjahHEI14_icon">
-                                                                    <span
-                                                                      className="ui_button_icon"
-                                                                      aria-hidden="true"
-                                                                    >
-                                                                      <svg
-                                                                        width="24px"
-                                                                        height="24px"
-                                                                        viewBox="0 0 24 24"
-                                                                        version="1.1"
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                                      >
-                                                                        <g
-                                                                          id="cant_answer"
-                                                                          stroke="none"
-                                                                          fill="none"
-                                                                          fillRule="evenodd"
-                                                                        >
-                                                                          <g
-                                                                            id="pen"
-                                                                            transform="translate(11.485281, 12.485281) rotate(-315.000000) translate(-11.485281, -12.485281) translate(9.485281, 2.485281)"
-                                                                          >
-                                                                            <path
-                                                                              d="M0,7.51471863 L2.22044605e-16,1.99994543 C8.67738547e-17,0.895375929 0.8954305,-5.45711382e-05 2,-5.45711382e-05 C3.1045695,-5.45711382e-05 4,0.895375929 4,1.99994543 L4,7.51471863 M4,12.5147186 L4,16 L2.00256278,20 L0,16 L0,12.5147186"
-                                                                              id="Rectangle-5"
-                                                                              className="icon_svg-stroke"
-                                                                              stroke="#666"
-                                                                              strokeWidth="1.5"
-                                                                              strokeLinecap="square"
-                                                                              strokeLinejoin="round"
-                                                                            />
-                                                                            <polygon
-                                                                              id="pen_tip"
-                                                                              className="icon_svg-fill_as_stroke"
-                                                                              fill="#666"
-                                                                              transform="translate(2.000000, 18.750000) scale(1, -1) translate(-2.000000, -18.750000) "
-                                                                              points="2 17.5 3.25 20 0.75 20"
-                                                                            />
-                                                                          </g>
-                                                                          <path
-                                                                            d="M4.63603897,5.63603897 L18.5,19.5"
-                                                                            id="Line"
-                                                                            className="icon_svg-stroke"
-                                                                            stroke="#666"
-                                                                            strokeWidth="1.5"
-                                                                            strokeLinecap="round"
-                                                                          />
-                                                                        </g>
-                                                                      </svg>
-                                                                    </span>
-                                                                  </div>
-                                                                </div>
-                                                                <div className="ui_button_label_count_wrapper">
-                                                                  <span
-                                                                    className="ui_button_label"
-                                                                    id="__w2_wLjahHEI14_label"
-                                                                  >
-                                                                    Pass
-                                                                  </span>
-                                                                </div>
-                                                              </div>
-                                                            </a>
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+
+
+
+
+
+
+
+
+
+
+
                                                           </div>
                                                           <div className="ItemComponent FollowActionItem primary_item u-relative">
                                                             <span id="wLjahHEI15">
