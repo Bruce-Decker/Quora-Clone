@@ -21,7 +21,6 @@ function userFollowers(info, callback) {
   console.log("Inside Kafka Backend userFollowers");
 
   var email = info.message.email;
-  console.log("email:", email);
 
   Model.find({ email: email }, { "followers.email": 1 }, (err, result) => {
     if (err) {

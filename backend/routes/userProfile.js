@@ -156,7 +156,6 @@ router.post("/upload", function(req, res) {
         errors: [{ title: "Image Upload Error", detail: err.message }]
       });
     }
-    console.log("Aaaaaaa", req.file);
     return res.json({ imageUrl: req.file.location });
   });
 });
