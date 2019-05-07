@@ -222,7 +222,9 @@ class Dashboard extends Component {
     let response_profile = await axios.get(
       rooturl + "/profile/image?email=" + this.props.auth.user.email
     );
-    console.log("response profile..........", response_profile.data);
+
+    localStorage.setItem("currEmail", this.props.auth.user.email);
+
     if (response_profile.data) {
       localStorage.setItem("profileImg", response_profile.data);
     }
@@ -237,7 +239,13 @@ class Dashboard extends Component {
       });
     }
 
-    console.log(dashboard_questions.data);
+    if (response.data.first_name) {
+      localStorage.setItem("first_name", response.data.first_name);
+    }
+
+    if (response.data.last_name) {
+      localStorage.setItem("last_name", response.data.last_name);
+    }
 
     if (dashboard_questions.data) {
       this.setState({
@@ -1297,9 +1305,9 @@ class Dashboard extends Component {
                                                                           <span className="ui_avatar u-flex-inline ui_avatar--large u-flex-none">
                                                                             <img
                                                                               className="ui_avatar_photo ui_avatar--border-circular"
-                                                                              src={
-                                                                                default_image
-                                                                              }
+                                                                              src={localStorage.getItem(
+                                                                                "profileImg"
+                                                                              )}
                                                                               alt="Bruce Decker"
                                                                             />
                                                                           </span>
@@ -1528,7 +1536,6 @@ class Dashboard extends Component {
                                                                 >
                                                                   <div
                                                                     className="doc empty"
-                                                                    contentEditable="true"
                                                                     data-kind="doc"
                                                                     placeholder="Write your answer"
                                                                   >
@@ -1540,10 +1547,11 @@ class Dashboard extends Component {
                                                                       }
                                                                       data-kind="section"
                                                                       data-dir="LTR"
-                                                                      id="editable"
-                                                                      contentEditable="true"
                                                                     >
-                                                                      <div className="content">
+                                                                      <div
+                                                                        id="editable"
+                                                                        contentEditable="true"
+                                                                      >
                                                                         <br />
                                                                       </div>
                                                                     </div>
