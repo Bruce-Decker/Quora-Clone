@@ -3204,7 +3204,7 @@ class Question extends Component {
                                                                     className="ui_button_icon"
                                                                     aria-hidden="true"
                                                                   />
-                                                                  {(flagVar  && !answer.isAnonymous) ? (
+                                                                  {(flagVar) ? (
                                                                     <Link
                                                                       to={{
                                                                         pathname:
