@@ -123,7 +123,7 @@ class Question extends Component {
     axios
       .post(rooturl + "/answer/bookmark", {
         answerid: opts.answer_id,
-        email: opts.email,
+        email: this.props.auth.user.email,
         bookmark: bookmark
       })
       .then(response => {
