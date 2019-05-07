@@ -221,9 +221,7 @@ followHandler() {
    console.log("fsdfsf")
   }
 
-  componentDidUpdate() {
-  // alert("sffs")
-  }
+  
    
 
   firstnameHandler = e => {
