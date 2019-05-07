@@ -172,6 +172,8 @@ class Question extends Component {
   //   }
   render() {
     var flagVar = false;
+    var defaultImg =
+      "https://quoraprj2.s3.us-east-2.amazonaws.com/quora%3A%20%201557185409773";
     return (
       <div>
         <Navbar
@@ -466,7 +468,8 @@ class Question extends Component {
                                                       question_id: this.props
                                                         .match.params
                                                         .question_id,
-                                                      question: this.state.question
+                                                      question: this.state
+                                                        .question
                                                     }
                                                   });
                                                 }}
@@ -2565,7 +2568,8 @@ class Question extends Component {
                                                               <span className="ui_avatar u-flex-inline ui_avatar--large u-flex-none">
                                                                 <img
                                                                   className="ui_avatar_photo ui_avatar--border-circular"
-                                                                  src={localStorage.getItem(
+                                                                  src={answer.isAnonymous
+                                                                    ? defaultImg: localStorage.getItem(
                                                                     "profileImg"
                                                                   )}
                                                                   alt="Brian Lee"
@@ -2597,18 +2601,21 @@ class Question extends Component {
                                                                   <a
                                                                     className="user"
                                                                     href={
-                                                                      "/profile/" +
-                                                                      this.props
-                                                                        .auth
-                                                                        .user
-                                                                        .email
+                                                                      answer.isAnonymous
+                                                                        ? null
+                                                                        : "/profile/" +
+                                                                          this
+                                                                            .props
+                                                                            .auth
+                                                                            .user
+                                                                            .email
                                                                     }
                                                                     action_mousedown="UserLinkClickthrough"
                                                                     id="__w2_wzwmJKBZ30_name_link"
                                                                   >
-                                                                    {
-                                                                      answer.owner
-                                                                    }
+                                                                    {answer.isAnonymous
+                                                                      ? "Anonymous"
+                                                                      : answer.owner}
                                                                   </a>
                                                                 </span>
                                                               </span>
@@ -3197,7 +3204,7 @@ class Question extends Component {
                                                                     className="ui_button_icon"
                                                                     aria-hidden="true"
                                                                   />
-                                                                  {flagVar ? (
+                                                                  {(flagVar) ? (
                                                                     <Link
                                                                       to={{
                                                                         pathname:

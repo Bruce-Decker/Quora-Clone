@@ -82,7 +82,7 @@ class EditAnswer extends Component {
       this.setState({
         showHyperlink: false
       });
-   //   editable.appendChild(document.createTextNode(" "));
+      //   editable.appendChild(document.createTextNode(" "));
       this.setState({
         hyperlink: ""
       });
@@ -116,7 +116,7 @@ class EditAnswer extends Component {
       .post("/answer", {
         currentElem: document.getElementById("editable").outerHTML,
         question_id: this.state.question_id,
-
+        owner: localStorage.getItem("currEmail"),
         isAnonymous: this.state.isAnonymous
       })
       .then(res => {
@@ -135,6 +135,8 @@ class EditAnswer extends Component {
   }
 
   render() {
+    var defaultImg =
+      "https://quoraprj2.s3.us-east-2.amazonaws.com/quora%3A%20%201557185409773";
     return (
       <div>
         <Navbar
@@ -211,7 +213,6 @@ class EditAnswer extends Component {
                                           >
                                             <div
                                               className="doc"
-                                              
                                               data-kind="doc"
                                               placeholder
                                             >
@@ -2069,9 +2070,15 @@ class EditAnswer extends Component {
                                                                       <span className="ui_avatar u-flex-inline ui_avatar--large u-flex-none">
                                                                         <img
                                                                           className="ui_avatar_photo ui_avatar--border-circular"
-                                                                          src={localStorage.getItem(
-                                                                            "profileImg"
-                                                                          )}
+                                                                          src={
+                                                                            this
+                                                                              .state
+                                                                              .isAnonymous
+                                                                              ? defaultImg
+                                                                              : localStorage.getItem(
+                                                                                  "profileImg"
+                                                                                )
+                                                                          }
                                                                           alt="Bruce Decker"
                                                                         />
                                                                       </span>
@@ -2095,13 +2102,17 @@ class EditAnswer extends Component {
                                                                           action_mousedown="UserLinkClickthrough"
                                                                           id="__w2_w1SM6R3W24_name_link"
                                                                         >
-                                                                          {localStorage.getItem(
-                                                                            "first_name"
-                                                                          )}{" "}
-                                                                          {}{" "}
-                                                                          {localStorage.getItem(
-                                                                            "last_name"
-                                                                          )}
+                                                                          {this
+                                                                            .state
+                                                                            .isAnonymous
+                                                                            ? "Anonymous"
+                                                                            : localStorage.getItem(
+                                                                                "first_name"
+                                                                              ) +
+                                                                              "  " +
+                                                                              localStorage.getItem(
+                                                                                "last_name"
+                                                                              )}
                                                                         </a>
                                                                       </span>
                                                                     </span>
@@ -2278,7 +2289,6 @@ class EditAnswer extends Component {
                                                         >
                                                           <div
                                                             className="doc empty"
-                                                            
                                                             data-kind="doc"
                                                             placeholder="Write your answer"
                                                           >
@@ -2466,7 +2476,6 @@ class EditAnswer extends Component {
                                                     className="ui_button u-nowrap ui_button--styled ui_button--FlatStyle ui_button--FlatStyle--blue ui_button--size_regular u-inline-block ui_button--non_link ui_button--supports_icon u-tap-highlight--none ui_button--has_icon"
                                                     href="#"
                                                     role="button"
-                                                    
                                                     action_target='{"aid": 104359258, "type": "answer"}'
                                                     id="__w2_wFDFurfC8_button"
                                                   >

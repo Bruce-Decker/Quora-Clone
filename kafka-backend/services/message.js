@@ -20,10 +20,12 @@ function createMessage(info, callback) {
   var message = info.body.message;
   var sender_email = info.body.sender_email;
   var receiver_email = info.body.receiver_email;
+  var subject = info.body.subject;
   var isRead = false;
   var time = new Date().toLocaleString();
   var isDeleted = false;
   var data = {
+    subject,
     message,
     sender_email,
     receiver_email,
