@@ -316,7 +316,8 @@ function getanswer(msg, callback) {
         answerContent: answer.answerContent,
         owner: answer.owner,
         views: answer.views,
-        answered_time: answer.answered_time
+        answered_time: answer.answered_time,
+        isAnonymous: answer.isAnonymous
       };
 
       return callback(null, resp);
@@ -362,10 +363,19 @@ function createanswer(msg, callback) {
   msg = msg.body;
   let currentElem = msg.currentElem;
   let question_id = msg.question_id;
-  let owner = msg.owner ? msg.owner : "Anonymous";
+  let isAnonymous = msg.isAnonymous;
+  let owner = msg.owner;
   Question.findOneAndUpdate(
     { question_id: question_id },
-    { $push: { answers: { answerContent: currentElem, owner: owner } } }
+    {
+      $push: {
+        answers: {
+          answerContent: currentElem,
+          owner: owner,
+          isAnonymous: isAnonymous
+        }
+      }
+    }
   )
     .then(data => {
       return callback(null, msg.body);
@@ -403,6 +413,7 @@ function updateAnswer(msg, callback) {
   let currentElem = msg.currentElem;
   let question_id = msg.question_id;
   let answer_id = msg.answer_id;
+  let isAnonymous = msg.isAnonymous;
 
   Question.find({
     question_id: question_id,
@@ -423,6 +434,8 @@ function updateAnswer(msg, callback) {
 
     if (index == -1) return callback("Answer does not exist");
     answers[index].answerContent = currentElem;
+    answers[index].isAnonymous = isAnonymous;
+
     answers[index].answered_time = new Date();
     Question.findOneAndUpdate(
       { question_id: question_id },

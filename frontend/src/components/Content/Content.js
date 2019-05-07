@@ -17,7 +17,7 @@ class Content extends Component {
       showAskedList: false,
       activityType: "All",
       order_direction: "",
-      currentPage: null, 
+      currentPage: 1, 
       totalPages: null 
      
 
@@ -75,7 +75,8 @@ class Content extends Component {
     if (response.data) {
       this.setState({
         questionsAsked: response.data,
-        showAskedList: true
+        showAskedList: true,
+        currentQuestions: response.data.slice(0, 5)
       });
     }
     console.log(response.data);
@@ -441,9 +442,9 @@ class Content extends Component {
                           </div>
                         </div>
                       </div>
-                     
+                      <div className="d-flex flex-row py-4 align-items-center">
                       <Pagination totalRecords={ totalQuestions } pageLimit={5} pageNeighbours={1} onPageChanged={this.onPageChanged} />
-                      
+                      </div>
                     </div>
                   </div>
                 </div>
