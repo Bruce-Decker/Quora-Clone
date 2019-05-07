@@ -112,6 +112,7 @@ class Profile extends Component {
       showProfile: false,
       showTopicSelection: false,
       showFollowing: false,
+      showEditProfile:true,
       topics: topics,
       enteredTopicValue: '',
       profile_image: './default.png',
@@ -390,6 +391,7 @@ followHandler() {
       query = "&" + key + "=" + values[key];
     }
     console.log(query);
+     
 
     var response = await axios.get(
       rooturl + "/content?email=" + this.props.match.params.email + query
@@ -415,7 +417,18 @@ followHandler() {
       this.setState({
         followerData: response_profile.data[0].followers
       })
-    
+      if(this.props.match.params.email!==this.props.auth.user.email){
+        console.log("here");
+       this.setState({
+         showEditProfile:false
+       })
+     }else{
+       this.setState({
+         showEditProfile:true
+       })
+     }
+     console.log('kfjkdfskjf',this.props.match.params.email,this.props.auth.user.email,this.state.showEditProfile)
+
     } 
     console.log("q3wsffse");
     console.log(response_profile.data);
@@ -2718,38 +2731,40 @@ followHandler() {
                                   className="ui_icon ui_icon_color--blue_dark ui_icon_size--small_medium ui_icon_outline--default"
                                   aria-hidden="true"
                                 >
-                                  <svg
-                                    width="24px"
-                                    height="24px"
-                                    viewBox="0 0 24 24"
-                                    version="1.1"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    xmlnsXlink="http://www.w3.org/1999/xlink"
+                                {(this.state.showEditProfile)?(<svg
+                                  width="24px"
+                                  height="24px"
+                                  viewBox="0 0 24 24"
+                                  version="1.1"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  xmlnsXlink="http://www.w3.org/1999/xlink"
+                                >
+                                  <g
+                                    className="icon_svg-stroke"
+                                    stroke="#666"
+                                    strokeWidth="1.5"
+                                    fill="none"
+                                    fillRule="evenodd"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
                                   >
-                                    <g
-                                      className="icon_svg-stroke"
-                                      stroke="#666"
-                                      strokeWidth="1.5"
-                                      fill="none"
-                                      fillRule="evenodd"
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                    >
-                                      <path d="M20.5,11 L20.5,18 C20.5,18.5522847 20.0522847,19 19.5,19 L4.5,19 C3.94771525,19 3.5,18.5522847 3.5,18 L3.5,11 M10.40625,15 L5.625,15 C4.45139491,15 3.5,13.9766509 3.5,12.7142857 L3.5,7 L3.5,7 L20.5,7 L20.5,12.7142857 C20.5,13.9766509 19.5486051,15 18.375,15 L13.59375,15 M9,7 L9,6 C9,4.8954305 9.8954305,4 11,4 L11,4 L13,4 C14.1045695,4 15,4.8954305 15,6 L15,7 M11,13.5 L13,13.5 C13.2761424,13.5 13.5,13.7238576 13.5,14 L13.5,16 C13.5,16.2761424 13.2761424,16.5 13,16.5 L11,16.5 C10.7238576,16.5 10.5,16.2761424 10.5,16 L10.5,14 C10.5,13.7238576 10.7238576,13.5 11,13.5 Z" />
-                                    </g>
-                                  </svg>
+                                    <path d="M20.5,11 L20.5,18 C20.5,18.5522847 20.0522847,19 19.5,19 L4.5,19 C3.94771525,19 3.5,18.5522847 3.5,18 L3.5,11 M10.40625,15 L5.625,15 C4.45139491,15 3.5,13.9766509 3.5,12.7142857 L3.5,7 L3.5,7 L20.5,7 L20.5,12.7142857 C20.5,13.9766509 19.5486051,15 18.375,15 L13.59375,15 M9,7 L9,6 C9,4.8954305 9.8954305,4 11,4 L11,4 L13,4 C14.1045695,4 15,4.8954305 15,6 L15,7 M11,13.5 L13,13.5 C13.2761424,13.5 13.5,13.7238576 13.5,14 L13.5,16 C13.5,16.2761424 13.2761424,16.5 13,16.5 L11,16.5 C10.7238576,16.5 10.5,16.2761424 10.5,16 L10.5,14 C10.5,13.7238576 10.7238576,13.5 11,13.5 Z" />
+                                  </g>
+                                </svg>):null}
+                                  
                                 </span>
                               </div>
                               <span className="body_text">
                                 <span className="main_text">
                                   <span id="woVa9VIC10">
-                                    <Link
-                                      className="EditCredentialModalLink CredentialModalLink"
-                                      id="__w2_woVa9VIC11_modal_link"
-                                      onClick={this.openModal}
-                                    >
-                                      Edit Profile
-                                    </Link>
+                                  {(this.state.showEditProfile)?(<Link
+                                    className="EditCredentialModalLink CredentialModalLink"
+                                    id="__w2_woVa9VIC11_modal_link"
+                                    onClick={this.openModal}
+                                  >
+                                    Edit Profile
+                                  </Link>):null}
+                                   
 
                                     <Modal
                                       isOpen={this.state.modalIsOpen}
@@ -6214,7 +6229,8 @@ followHandler() {
                           </div>
                         </div>
                       </h3>
-                      <Link
+                      
+                      {(this.state.showEditProfile)?(<Link
                         className="add_experience_cta"
                         href="#"
                         id="__w2_wYSVVNEt48_modal_link"
@@ -6251,7 +6267,8 @@ followHandler() {
                           </div>
                         </div>
                         What topics do you know about?
-                      </Link>
+                      </Link>):null}
+                      
                     </div>
                   </div>
                 </div>
