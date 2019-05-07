@@ -8,6 +8,7 @@ import default_image from "./default.png";
 import rooturl from "../../utility/url";
 // var dashboard_questions
 import Modal from "react-modal";
+var moment = require("moment");
 
 // const customStyles = {
 //   content : {
@@ -314,11 +315,11 @@ class Dashboard extends Component {
         pageTotal: dashboard_questions.data.pages
       });
 
-      console.log(
-        dashboard_questions.data.docs[0].question,
-        this.state.pageNo,
-        this.state.pageTotal
-      );
+      // console.log(
+      //   dashboard_questions.data.docs[0].question,
+      //   this.state.pageNo,
+      //   this.state.pageTotal
+      // );
     }
   }
 
@@ -843,8 +844,11 @@ class Dashboard extends Component {
                                                               ·{" "}
                                                             </span>
                                                             <span className="question_timestamp">
-                                                              Last followed 6h
-                                                              ago
+                                                              {moment(
+                                                                question.postedDate
+                                                              ).format(
+                                                                "MMM D, YYYY"
+                                                              )}
                                                             </span>
                                                           </div>
                                                         </div>

@@ -127,6 +127,7 @@ class Profile extends Component {
     this.handleFile = this.handleFile.bind(this);
     this.followHandler = this.followHandler.bind(this);
     this.unfollowHandler = this.unfollowHandler.bind(this);
+    this.graphHandler = this.graphHandler.bind(this);
   }
 
 
@@ -136,6 +137,9 @@ class Profile extends Component {
   }
 }
 
+  graphHandler() {
+    this.props.history.push("/graph");
+}
 redirectProfile = (link) => {
   this.props.history.push(link)
   window.location.reload()
@@ -664,6 +668,10 @@ followHandler() {
                           
                           (this.state.profileEmail != this.state.currEmail) ? (doesFollow ? 
                           <button onClick={this.unfollowHandler}> Unfollow </button> :  <button onClick={this.followHandler}> Follow </button>): null
+                        }
+                        {
+                          this.state.currEmail === "adminUser@gmail.com" ? 
+                          <Link onClick={this.graphHandler}><h1>View Graph</h1> </Link> : null
                         }
                       </div>
                       <div id="wYSVVNEt26">

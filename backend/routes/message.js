@@ -47,7 +47,7 @@ router.get("/", function(req, res) {
   );
   //res.status(200).json({success:`success`});
 });
-router.get("inbox", function(req, res) {
+router.get("/inbox", function(req, res) {
   kafka.make_request(
     "message",
     { method: "inbox", message: req.query },
