@@ -16,8 +16,9 @@ class Messages extends Component {
       authFlag: true,
       startIndex: 0,
       currentPage: 1,
-      pagesPerPage: 3
+      pagesPerPage: 5
     };
+    this.handleButton = this.handleButton.bind(this);
   }
 
   async componentDidMount() {
@@ -32,7 +33,7 @@ class Messages extends Component {
 
         var firstInbox = response.data.filter(message => {
           var index = response.data.indexOf(message);
-          return index >= 0 && index < 3;
+          return index >= 0 && index < 5;
         });
         this.setState({
           inbox: response.data,
@@ -55,7 +56,7 @@ class Messages extends Component {
         //update the state with the response data
         var firstInbox = response.data.filter(message => {
           var index = response.data.indexOf(message);
-          return index >= 0 && index < 3;
+          return index >= 0 && index < 5;
         });
         this.setState({
           inbox: response.data,
@@ -71,6 +72,49 @@ class Messages extends Component {
     });
   };
 
+  async handleButton(event) {
+    var target = event.target.id;
+    if (target == "Sent") {
+      await axios
+        .get(
+          rooturl + "/messages/getSentMessages/" + this.props.auth.user.email
+        )
+        .then(response => {
+          var firstInbox = response.data.filter(message => {
+            var index = response.data.indexOf(message);
+            return index >= 0 && index < 5;
+          });
+          this.setState({
+            inbox: response.data,
+            subInbox: firstInbox
+          });
+
+          console.log("inbox:", this.state.inbox);
+        });
+    } else {
+      await axios
+        .get(rooturl + "/messages/getMessages/" + this.props.auth.user.email)
+        .then(response => {
+          //update the state with the response
+          console.log(
+            rooturl + "/messages/getMessages/" + this.props.auth.user.email
+          );
+          console.log("response", response);
+
+          var firstInbox = response.data.filter(message => {
+            var index = response.data.indexOf(message);
+            return index >= 0 && index < 5;
+          });
+          this.setState({
+            inbox: response.data,
+            subInbox: firstInbox
+          });
+
+          console.log("inbox:", this.state.inbox);
+        });
+    }
+  }
+
   handlePagination = event => {
     var target = event.target;
     var id = target.id;
@@ -84,7 +128,7 @@ class Messages extends Component {
       }
     } else {
       var startIndex = this.state.startIndex + this.state.pagesPerPage;
-      if (startIndex > this.state.inbox.length) {
+      if (startIndex > this.state.inbox.length - 1) {
         flag = false;
       }
     }
@@ -146,21 +190,23 @@ class Messages extends Component {
                       <h3>Messages</h3>
                       <ul id="__w2_wsawratU25_filter_links">
                         <li className="filter_option">
-                          <Link
+                          <button
                             className="selected filter_option_link"
-                            to={`/messages/${this.props.auth.user.email}`}
+                            id="Inbox"
+                            onClick={this.handleButton}
                           >
                             Inbox
-                          </Link>
+                          </button>
                         </li>
 
                         <li className="filter_option">
-                          <Link
+                          <button
                             className="selected filter_option_link"
-                            to={`/messages/${this.props.auth.user.email}`}
+                            id="Sent"
+                            onClick={this.handleButton}
                           >
                             Sent
-                          </Link>
+                          </button>
                         </li>
                       </ul>
                     </div>
