@@ -457,7 +457,20 @@ class Question extends Component {
                                             id="__w2_wEimc2ML40_inner"
                                           >
                                             <div className="ui_button_icon_wrapper u-relative u-flex-inline">
-                                              <div id="__w2_wEimc2ML40_icon">
+                                              <div
+                                                id="__w2_wEimc2ML40_icon"
+                                                onClick={() => {
+                                                  this.props.history.push({
+                                                    pathname: "/answer",
+                                                    state: {
+                                                      question_id: this.props
+                                                        .match.params
+                                                        .question_id,
+                                                      question: this.state.question
+                                                    }
+                                                  });
+                                                }}
+                                              >
                                                 <span
                                                   className="ui_button_icon"
                                                   aria-hidden="true"
@@ -2583,7 +2596,13 @@ class Question extends Component {
                                                                 <span id="__w2_wzwmJKBZ30_link">
                                                                   <a
                                                                     className="user"
-                                                                    href={"/profile/" + this.props.auth.user.email}
+                                                                    href={
+                                                                      "/profile/" +
+                                                                      this.props
+                                                                        .auth
+                                                                        .user
+                                                                        .email
+                                                                    }
                                                                     action_mousedown="UserLinkClickthrough"
                                                                     id="__w2_wzwmJKBZ30_name_link"
                                                                   >

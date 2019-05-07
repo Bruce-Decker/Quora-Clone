@@ -68,7 +68,8 @@ const QuestionSchema = new Schema({
         type: String
       },
       isAnonymous: {
-        type: Boolean
+        type: Boolean,
+        default: false
       },
       comments: [
         {

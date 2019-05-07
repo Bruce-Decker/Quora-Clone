@@ -18,19 +18,23 @@ class EditAnswer extends Component {
     this.answerHandler = this.answerHandler.bind(this);
   }
 
-  componentWillMount() {
+  async componentWillMount() {
     let answer_id = this.props.location.state.answer_id;
-    axios.get("/answer", { params: { answer_id: answer_id } }).then(res => {
-      this.setState({
-        answer: res.data.answer
+    await axios
+      .get("/answer", { params: { answer_id: answer_id } })
+      .then(res => {
+        this.setState({
+          answer: res.data.answer,
+          isAnonymous:
+            res.data.answer.isAnonymous === undefined
+              ? false
+              : res.data.answer.isAnonymous,
+          question: res.data.question,
+          resData: res.data
+        });
+        console.log("states:", this.state.isAnonymous, answer_id);
+        console.log("res", res);
       });
-      this.setState({
-        question: res.data.question
-      });
-      this.setState({
-        resData: res.data
-      });
-    });
   }
 
   answerHandler() {
@@ -48,13 +52,19 @@ class EditAnswer extends Component {
       });
   }
 
-  anonymousHandler() {
-    let isAnonymous = this.state.isAnonymous;
-    isAnonymous = !isAnonymous;
-    this.setState({
-      isAnonymous: isAnonymous
-    });
-    console.log("annnnnnnn", isAnonymous);
+  async anonymousHandler() {
+    console.log("annnnnnnn111", this.state.isAnonymous);
+
+    if (this.state.isAnonymous === false)
+      await this.setState({
+        isAnonymous: true
+      });
+    else {
+      await this.setState({
+        isAnonymous: false
+      });
+    }
+    console.log("annnnnnnn", this.state.isAnonymous);
   }
 
   render() {
@@ -1980,14 +1990,27 @@ class EditAnswer extends Component {
                                                       >
                                                         <a
                                                           className="u-flex-inline"
-                                                          href="/profile/Brian-Lee-2"
+                                                          href={
+                                                            this.state
+                                                              .isAnonymous
+                                                              ? null
+                                                              : "/profile/" +
+                                                                "/profile/" +
+                                                                this.state
+                                                                  .answer.owner
+                                                          }
                                                         >
                                                           <span className="ui_avatar u-flex-inline ui_avatar--large u-flex-none">
                                                             <img
                                                               className="ui_avatar_photo ui_avatar--border-circular"
-                                                              src={localStorage.getItem(
-                                                                "profileImg"
-                                                              )}
+                                                              src={
+                                                                this.state
+                                                                  .isAnonymous
+                                                                  ? null
+                                                                  : localStorage.getItem(
+                                                                      "profileImg"
+                                                                    )
+                                                              }
                                                               alt="Brian Lee"
                                                             />
                                                           </span>
@@ -2017,19 +2040,23 @@ class EditAnswer extends Component {
                                                               <a
                                                                 className="user"
                                                                 href={
-                                                                  "/profile/" +
                                                                   this.state
-                                                                    .answer
-                                                                    .owner
+                                                                    .isAnonymous
+                                                                    ? null
+                                                                    : "/profile/" +
+                                                                      this.state
+                                                                        .answer
+                                                                        .owner
                                                                 }
                                                                 action_mousedown="UserLinkClickthrough"
                                                                 id="__w2_wzwmJKBZ30_name_link"
                                                               >
-                                                                {
-                                                                  this.state
-                                                                    .answer
-                                                                    .owner
-                                                                }
+                                                                {this.state
+                                                                  .isAnonymous
+                                                                  ? "Anonymous"
+                                                                  : this.state
+                                                                      .answer
+                                                                      .owner}
                                                               </a>
                                                             </span>
                                                           </span>
@@ -2423,7 +2450,13 @@ class EditAnswer extends Component {
                                                                   type="checkbox"
                                                                   class="custom-control-input"
                                                                   id="same-address"
-                                                                  onClick={
+                                                                  value="true"
+                                                                  checked={
+                                                                    this.state
+                                                                      .isAnonymous ===
+                                                                    true
+                                                                  }
+                                                                  onChange={
                                                                     this
                                                                       .anonymousHandler
                                                                   }
